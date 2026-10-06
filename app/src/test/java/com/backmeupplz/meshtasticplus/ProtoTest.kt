@@ -16,6 +16,11 @@ class ProtoTest {
         // Known bytes: ToRadio { want_config_id = 150 } and an empty Heartbeat.
         assertArrayEquals(byteArrayOf(0x18, 0x96.toByte(), 0x01), Pb().uint(3, 150).build())
         assertArrayEquals(byteArrayOf(0x3A, 0x00), Pb().msg(7, Pb()).build())
+        // saveRegion relies on an appended field overriding the original (protobuf last-one-wins).
+        val lora = Pb().uint(1, 1).uint(7, 0).uint(8, 3).build()
+        val patched = Msg(lora + Pb().uint(7, 3).build())
+        assertEquals(3L, patched.long(7))
+        assertEquals(3L, patched.long(8))
     }
 
     @Test fun deframeSkipsLogNoise() {

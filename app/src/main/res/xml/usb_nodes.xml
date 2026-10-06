@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- USB chips found on Meshtastic boards: plugging one in offers to open the app. -->
+<resources>
+    <usb-device vendor-id="9114" />  <!-- 0x239A nRF52 native USB (Heltec T114, RAK4631) -->
+    <usb-device vendor-id="12346" /> <!-- 0x303A ESP32-S3 native USB -->
+    <usb-device vendor-id="4292" />  <!-- 0x10C4 CP210x (Heltec V3) -->
+    <usb-device vendor-id="6790" />  <!-- 0x1A86 CH340/CH9102 -->
+</resources>
