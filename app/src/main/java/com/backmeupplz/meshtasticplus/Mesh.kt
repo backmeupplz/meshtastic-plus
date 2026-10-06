@@ -78,6 +78,7 @@ private const val ADMIN_APP = 6L
 private const val TELEMETRY_APP = 67L
 private const val USB_PERMISSION = "com.backmeupplz.meshtasticplus.USB_PERMISSION"
 private const val INVITE = "https://meshtastic.org/e/#"
+const val USB = "usb" // [Mesh.saved] key for whatever node is on the cable
 private val DEFAULT_NAME = Regex("Meshtastic [0-9a-f]{4}")
 
 /** The whole app state. Lives as long as the process, so rotation/backgrounding keeps the connection. */
@@ -89,7 +90,8 @@ object Mesh {
     val nodes = mutableStateMapOf<Long, Node>()
     val rooms = mutableStateMapOf<Int, Room>() // by channel index, 0 = primary
     val lastRead = mutableStateMapOf<String, Long>() // conversation -> time it was last open
-    val saved = mutableStateListOf<Pair<String, String>>() // Bluetooth nodes used before: address to name
+    val saved = mutableStateListOf<Pair<String, String>>() // devices used before: Bluetooth address (or USB) to name
+    var current by mutableStateOf<String?>(null) // key of the device we're on, as in [saved]
     var status by mutableStateOf("")
     var transport by mutableStateOf("") // "Bluetooth" / "USB cable"
     var active by mutableStateOf(false) // a link exists: pairing, connecting or connected
@@ -105,7 +107,6 @@ object Mesh {
     private lateinit var file: File
     private val main = Handler(Looper.getMainLooper())
     private var link: Link? = null
-    private var bleAddress: String? = null
     private var lora: ByteArray? = null // the node's LoRaConfig as received, so we can change one field and send it back
     private var viaUsb = false // keep reconnecting over USB when the node re-enumerates (e.g. reboot)
 
@@ -168,6 +169,9 @@ object Mesh {
     fun canUseBluetooth() =
         ctx.checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED
 
+    /** Connects to a device from [saved]. */
+    fun connect(key: String) = if (key == USB) connectUsb() else connectBle(key)
+
     fun connectBle(address: String) {
         ctx.getSystemService(BluetoothManager::class.java).adapter?.let { connectBle(it.getRemoteDevice(address)) }
     }
@@ -176,7 +180,7 @@ object Mesh {
         disconnect()
         active = true
         transport = "Bluetooth"
-        bleAddress = device.address
+        current = device.address
         prefs().edit { putString("ble", device.address) }
         if (device.bondState != BluetoothDevice.BOND_BONDED) {
             status = "Type the PIN shown on the node's screen.\nNo screen? It's usually 123456."
@@ -212,8 +216,8 @@ object Mesh {
             port.rts = true
             link = UsbLink(port)
             viaUsb = true
-            bleAddress = null
             transport = "USB cable"
+            current = USB
             active = true
             status = "Connecting over USB…"
             linkUp(link!!)
@@ -235,6 +239,7 @@ object Mesh {
 
     fun disconnect() {
         closeLink()
+        current = null
         viaUsb = false
         active = false
         ready = false
@@ -317,9 +322,9 @@ object Mesh {
             admin(Pb().fixed32(43, System.currentTimeMillis() / 1000)) // set_time_only
             if (!ready) askName = DEFAULT_NAME.matches(myLong) && !prefs().getBoolean("named", false)
             ready = true
-            bleAddress?.let { address ->
-                saved.removeAll { it.first == address }
-                saved.add(0, address to myLong)
+            current?.let { key ->
+                saved.removeAll { it.first == key }
+                saved.add(0, key to myLong)
                 saveSaved()
             }
         }

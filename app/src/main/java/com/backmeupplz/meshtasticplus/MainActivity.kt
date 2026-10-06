@@ -70,6 +70,7 @@ import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Done
+import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.PersonAdd
 import androidx.compose.material.icons.rounded.QrCode2
@@ -167,19 +168,48 @@ fun App() {
 
 // ---------- Setup: blocks the app until a node is connected ----------
 
+/** Asks for Bluetooth permission (and to turn Bluetooth on), then calls [onReady]. */
+@Composable
+fun rememberBluetooth(onReady: () -> Unit): () -> Unit {
+    val ctx = LocalContext.current
+    val enable = rememberLauncherForActivityResult(StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) onReady()
+    }
+    val ask = rememberLauncherForActivityResult(RequestMultiplePermissions()) { granted ->
+        if (!granted.values.all { it }) return@rememberLauncherForActivityResult
+        if (ctx.getSystemService(BluetoothManager::class.java).adapter?.isEnabled == true) onReady()
+        else enable.launch(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+    }
+    return { ask.launch(arrayOf(Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT)) }
+}
+
+/** Devices used before, with the current one checked. Tapping another one switches to it. */
+@Composable
+fun DeviceRows(onPick: (String) -> Unit) {
+    Mesh.saved.toList().forEach { (key, name) ->
+        if (key != USB && !Mesh.canUseBluetooth()) return@forEach
+        val current = key == Mesh.current
+        ElevatedCard({ if (!current) onPick(key) }, Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+            ListItem(
+                leadingContent = { Icon(if (key == USB) Icons.Rounded.Usb else Icons.Rounded.Bluetooth, null) },
+                headlineContent = { Text(name.ifEmpty { key }, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                supportingContent = {
+                    Text(if (current) Mesh.status else if (key == USB) "USB cable · tap to connect" else "Bluetooth · tap to switch")
+                },
+                trailingContent = {
+                    if (current) Icon(Icons.Rounded.Check, "Connected", tint = MaterialTheme.colorScheme.primary)
+                    else IconButton({ Mesh.forgetSaved(key) }) { Icon(Icons.Rounded.Close, "Forget this device") }
+                },
+                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+            )
+        }
+    }
+}
+
 @Composable
 fun SetupScreen() {
-    val ctx = LocalContext.current
     var scanning by remember { mutableStateOf(false) }
-    val enableBluetooth = rememberLauncherForActivityResult(StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) scanning = true
-    }
-    val askBluetooth = rememberLauncherForActivityResult(RequestMultiplePermissions()) { granted ->
-        if (!granted.values.all { it }) return@rememberLauncherForActivityResult
-        val adapter = ctx.getSystemService(BluetoothManager::class.java).adapter
-        if (adapter?.isEnabled == true) scanning = true
-        else enableBluetooth.launch(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
-    }
+    val askBluetooth = rememberBluetooth { scanning = true }
 
     Surface(Modifier.fillMaxSize()) {
         Column(
@@ -216,28 +246,13 @@ fun SetupScreen() {
                 }
                 Spacer(Modifier.height(24.dp))
             }
-            if (Mesh.saved.isNotEmpty() && Mesh.canUseBluetooth()) {
-                Text("Your nodes", style = MaterialTheme.typography.titleMedium, modifier = Modifier.fillMaxWidth())
+            if (Mesh.saved.isNotEmpty()) {
+                Text("Your devices", style = MaterialTheme.typography.titleMedium, modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(8.dp))
-                Mesh.saved.toList().forEach { (address, name) ->
-                    ElevatedCard({ Mesh.connectBle(address) }, Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-                        ListItem(
-                            leadingContent = { Icon(Icons.Rounded.Bluetooth, null) },
-                            headlineContent = { Text(name.ifEmpty { address }) },
-                            supportingContent = { Text("Tap to connect") },
-                            trailingContent = {
-                                IconButton({ Mesh.forgetSaved(address) }) { Icon(Icons.Rounded.Close, "Forget this node") }
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                        )
-                    }
-                }
+                DeviceRows { Mesh.connect(it) }
                 Spacer(Modifier.height(24.dp))
             }
-            Button(
-                { askBluetooth.launch(arrayOf(Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT)) },
-                Modifier.fillMaxWidth().height(56.dp),
-            ) {
+            Button(askBluetooth, Modifier.fillMaxWidth().height(56.dp)) {
                 Icon(Icons.Rounded.Bluetooth, null)
                 Spacer(Modifier.width(10.dp))
                 Text(if (Mesh.saved.isEmpty()) "Connect with Bluetooth" else "Find another node")
@@ -273,6 +288,7 @@ fun HeroIcon(icon: ImageVector) {
 @SuppressLint("MissingPermission")
 @Composable
 fun NearbyNodes(onPick: (BluetoothDevice) -> Unit) {
+    val known = Mesh.saved.map { it.first }.toSet()
     val ctx = LocalContext.current
     val found = remember { mutableStateMapOf<String, Pair<BluetoothDevice, String>>() }
     DisposableEffect(Unit) {
@@ -293,13 +309,14 @@ fun NearbyNodes(onPick: (BluetoothDevice) -> Unit) {
             CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
         }
         Spacer(Modifier.height(8.dp))
-        if (found.isEmpty()) {
+        val fresh = found.values.filter { it.first.address !in known }
+        if (fresh.isEmpty()) {
             Text(
                 "Looking… make sure the node is on and not connected to another phone.",
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        found.values.forEach { (device, name) ->
+        fresh.forEach { (device, name) ->
             ElevatedCard({ onPick(device) }, Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
                 ListItem(
                     leadingContent = { Icon(Icons.Outlined.Router, null) },
@@ -503,6 +520,7 @@ fun StatusTitle(title: String, subtitle: String, ok: Boolean) {
 fun HomeScreen(onOpen: (String) -> Unit, onProfile: (Long) -> Unit, onEditName: () -> Unit, onEditRegion: () -> Unit) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
     var settings by remember { mutableStateOf(false) }
+    var devices by remember { mutableStateOf(false) }
     var newRoom by remember { mutableStateOf(false) }
     val now = rememberNow()
     val online = Mesh.nodes.values.count { it.num != Mesh.myNum && it.online(now) }
@@ -511,7 +529,12 @@ fun HomeScreen(onOpen: (String) -> Unit, onProfile: (Long) -> Unit, onEditName: 
         topBar = {
             Column {
                 TopAppBar(
-                    title = { StatusTitle(Mesh.myLong, Mesh.status, Mesh.connected) },
+                    title = {
+                        Row(Modifier.clickable { devices = true }, verticalAlignment = Alignment.CenterVertically) {
+                            StatusTitle(Mesh.myLong, Mesh.status, Mesh.connected)
+                            Icon(Icons.Rounded.ExpandMore, "Switch device", Modifier.padding(start = 4.dp))
+                        }
+                    },
                     actions = { IconButton({ settings = true }) { Icon(Icons.Outlined.Settings, "Settings") } },
                 )
                 PrimaryTabRow(selectedTabIndex = tab) {
@@ -532,7 +555,8 @@ fun HomeScreen(onOpen: (String) -> Unit, onProfile: (Long) -> Unit, onEditName: 
     ) { padding ->
         if (tab == 0) ChatsTab(padding, onOpen) else NodesTab(padding, now, onProfile)
     }
-    if (settings) SettingsSheet({ settings = false }, onEditName, onEditRegion)
+    if (settings) SettingsSheet({ settings = false }, onEditName, onEditRegion) { devices = true }
+    if (devices) DevicesSheet { devices = false }
     if (newRoom) NewRoomSheet({ newRoom = false }, onOpen)
 }
 
@@ -712,7 +736,7 @@ fun Detail(icon: ImageVector, text: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: () -> Unit) {
+fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: () -> Unit, onDevices: () -> Unit) {
     ModalBottomSheet(onDismiss) {
         Column(Modifier.padding(bottom = 24.dp)) {
             ListItem(
@@ -729,15 +753,54 @@ fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: (
             )
             ListItem(
                 leadingContent = { Icon(if (Mesh.transport == "Bluetooth") Icons.Rounded.Bluetooth else Icons.Rounded.Usb, null) },
-                headlineContent = { Text("Connected over ${Mesh.transport}") },
-                supportingContent = { Text(Mesh.status) },
+                headlineContent = { Text("Your devices") },
+                supportingContent = { Text("Connected over ${Mesh.transport} · tap to switch") },
+                modifier = Modifier.clickable { onDismiss(); onDevices() },
             )
             ListItem(
                 leadingContent = { Icon(Icons.AutoMirrored.Outlined.Logout, null, tint = MaterialTheme.colorScheme.error) },
                 headlineContent = { Text("Disconnect", color = MaterialTheme.colorScheme.error) },
-                supportingContent = { Text("Switch to another node") },
                 modifier = Modifier.clickable { onDismiss(); Mesh.forget() },
             )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DevicesSheet(onDismiss: () -> Unit) {
+    var adding by remember { mutableStateOf(false) }
+    val askBluetooth = rememberBluetooth { adding = true }
+    val switch = { key: String -> onDismiss(); Mesh.connect(key) }
+    ModalBottomSheet(onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
+        Column(Modifier.padding(horizontal = 24.dp).padding(bottom = 24.dp).verticalScroll(rememberScrollState())) {
+            Text(if (adding) "Add a device" else "Your devices", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+            if (adding) {
+                Text(
+                    "Turn the node on and keep it close. Devices you already have aren't listed.",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                NearbyNodes { onDismiss(); Mesh.connectBle(it) }
+                TextButton({ adding = false }, Modifier.padding(top = 8.dp)) { Text("Back to your devices") }
+            } else {
+                Spacer(Modifier.height(8.dp))
+                DeviceRows(switch)
+                Spacer(Modifier.height(12.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    OutlinedButton(askBluetooth, Modifier.weight(1f).height(52.dp)) {
+                        Icon(Icons.Rounded.Add, null)
+                        Spacer(Modifier.width(8.dp))
+                        Text("Add device")
+                    }
+                    if (Mesh.saved.none { it.first == USB }) {
+                        OutlinedButton({ switch(USB) }, Modifier.weight(1f).height(52.dp)) {
+                            Icon(Icons.Rounded.Usb, null)
+                            Spacer(Modifier.width(8.dp))
+                            Text("USB cable")
+                        }
+                    }
+                }
+            }
         }
     }
 }
