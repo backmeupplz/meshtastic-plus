@@ -5,8 +5,9 @@ A tiny Android app for Meshtastic: connect to your node, send and receive messag
 1. **Connect**: plug the node into your phone with a USB-C cable (the app opens by itself and the phone powers the node), or tap *Connect with Bluetooth*, pick your node and type the PIN from its screen.
 2. **Region**: a brand-new node stays silent until it knows its radio band, so the app asks once (pre-selected from your phone's country).
 3. **Name**: pick how you show up on the mesh; initials become your short name. Change it later with the pencil.
-4. **Chat** with everyone on your primary channel. Your messages show a clock while sending, a check once another node relays them, and "Nobody heard it · Tap to retry" if no one did.
-5. **Nodes** lists everyone your radio has heard, with online/offline badges (online = heard in the last 2 hours).
+4. **Chats**: rooms and direct messages in one list with unread badges. *Public* is the open channel everyone nearby shares. Tap **+ Room** to create a private, encrypted room and invite people with a QR code or link, or to join one by scanning or pasting an invite (links from the official Meshtastic apps work too). DMs are end-to-end encrypted by the firmware. A check under your message means another node relayed it (rooms) or the recipient got it (DMs).
+5. **Nodes**: everyone your radio has heard, favorites first, with online/offline badges (online = heard in the last 2 hours). Tap one for their profile (last heard, hops, signal, battery) to message or favorite them; favorites are stored on your node.
+6. **Settings** (gear): name, region, disconnect / switch node. Nodes you've used over Bluetooth are listed on the connect screen for one-tap reconnecting.
 
 The node restarts when its region or name changes; the app reconnects by itself. History is saved on the phone.
 
