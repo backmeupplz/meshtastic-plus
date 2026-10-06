@@ -187,7 +187,7 @@ object Mesh {
             device.createBond() // continues in the bond receiver above
             return
         }
-        status = "Connecting to ${device.name ?: device.address}…"
+        status = "Connecting to ${savedName(device.address) ?: device.name ?: device.address}…"
         link = BleLink(ctx, device)
     }
 
@@ -219,7 +219,7 @@ object Mesh {
             transport = "USB cable"
             current = USB
             active = true
-            status = "Connecting over USB…"
+            status = "Connecting to ${savedName(USB) ?: "your node"} over USB…"
             linkUp(link!!)
         } catch (e: Exception) {
             status = "USB error: ${e.message}"
@@ -256,6 +256,8 @@ object Mesh {
         disconnect()
     }
 
+    private fun savedName(key: String) = saved.firstOrNull { it.first == key }?.second?.ifEmpty { null }
+
     fun forgetSaved(address: String) {
         saved.removeAll { it.first == address }
         saveSaved()
@@ -265,7 +267,7 @@ object Mesh {
 
     fun linkUp(from: Link) = main.post {
         if (from !== link) return@post
-        status = "Syncing…"
+        status = status.replace("Connecting to", "Syncing with").ifEmpty { "Syncing…" }
         from.send(Pb().uint(3, Random.nextLong(1, 0xFFFFFFFF)).build()) // want_config_id: node replays its state + queued messages
         main.removeCallbacks(heartbeat)
         main.postDelayed(heartbeat, 60_000)
