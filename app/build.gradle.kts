@@ -29,5 +29,7 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended") // R8 strips unused icons
     implementation("androidx.activity:activity-compose:1.13.0")
     implementation("com.github.mik3y:usb-serial-for-android:3.11.0")
+    implementation("com.google.zxing:core:3.5.4") // QR codes for room invites
+    implementation("com.google.android.gms:play-services-code-scanner:16.1.0") // QR scanning, no camera permission
     testImplementation("junit:junit:4.13.2")
 }

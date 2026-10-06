@@ -93,3 +93,12 @@ class Deframer(private val onFrame: (ByteArray) -> Unit) {
         }
     }
 }
+
+/** Channel settings inside a meshtastic.org/e/#... invite link (a base64url-encoded ChannelSet). */
+fun inviteRooms(link: String): List<ByteArray> {
+    val encoded = link.trim().substringAfter('#', "").replace('+', '-').replace('/', '_')
+    if (encoded.isEmpty()) return emptyList()
+    return runCatching {
+        Msg(java.util.Base64.getUrlDecoder().decode(encoded)).fields[1]?.filterIsInstance<ByteArray>()
+    }.getOrNull().orEmpty()
+}

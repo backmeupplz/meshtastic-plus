@@ -40,16 +40,28 @@ import kotlin.random.Random
 
 data class Message(
     val id: Long, val name: String, val text: String, val time: Long,
-    val mine: Boolean, val dm: Boolean = false, val status: String = "", val from: Long = 0,
-)
+    val mine: Boolean, val status: String = "", val from: Long = 0,
+    val channel: Int = 0, val peer: Long = 0, // peer != 0: direct message with that node
+) {
+    val convo get() = convoKey(channel, peer)
+}
+
+fun convoKey(channel: Int, peer: Long) = if (peer != 0L) "dm:$peer" else "ch:$channel"
 
 data class Node(
     val num: Long, val long: String = "", val short: String = "",
     val lastHeard: Long = 0, val snr: Float? = null, val hops: Int? = null,
+    val favorite: Boolean = false, val battery: Int? = null,
 ) {
-    val name get() = long.ifEmpty { "!%08x".format(num) }
-    val initials get() = short.ifEmpty { "%04x".format(num and 0xFFFF) }
+    val name get() = long.ifEmpty { id }
+    val id get() = "!%08x".format(num)
     fun online(now: Long) = now - lastHeard < 2 * 3600_000 // same 2h rule as the official apps
+}
+
+/** A Meshtastic channel ("room"): anyone with its name and key can read and write it. */
+class Room(val index: Int, val name: String, val psk: ByteArray, val primary: Boolean, val settings: ByteArray) {
+    val title get() = name.ifEmpty { if (psk.contentEquals(byteArrayOf(1))) "Public" else "Primary" }
+    val public get() = psk.size <= 1 // no key, or one of the well-known default keys
 }
 
 interface Link {
@@ -62,7 +74,9 @@ private const val TEXT_APP = 1L
 private const val NODEINFO_APP = 4L
 private const val ROUTING_APP = 5L
 private const val ADMIN_APP = 6L
+private const val TELEMETRY_APP = 67L
 private const val USB_PERMISSION = "com.backmeupplz.meshtasticplus.USB_PERMISSION"
+private const val INVITE = "https://meshtastic.org/e/#"
 private val DEFAULT_NAME = Regex("Meshtastic [0-9a-f]{4}")
 
 /** The whole app state. Lives as long as the process, so rotation/backgrounding keeps the connection. */
@@ -70,13 +84,17 @@ private val DEFAULT_NAME = Regex("Meshtastic [0-9a-f]{4}")
 object Mesh {
     val messages = mutableStateListOf<Message>()
     val nodes = mutableStateMapOf<Long, Node>()
+    val rooms = mutableStateMapOf<Int, Room>() // by channel index, 0 = primary
+    val lastRead = mutableStateMapOf<String, Long>() // conversation -> time it was last open
+    val saved = mutableStateListOf<Pair<String, String>>() // Bluetooth nodes used before: address to name
     var status by mutableStateOf("")
+    var transport by mutableStateOf("") // "Bluetooth" / "USB cable"
     var active by mutableStateOf(false) // a link exists: pairing, connecting or connected
     var ready by mutableStateOf(false) // synced with the node at least once on this link
     var connected by mutableStateOf(false) // link is up right now
     var askName by mutableStateOf(false) // node still has its factory name: offer to pick one
-    var myNum by mutableStateOf(0L)
     var region by mutableIntStateOf(-1) // LoRa region code, 0 = unset (radio won't transmit), -1 = not known yet
+    var myNum by mutableStateOf(0L)
     var myLong by mutableStateOf("")
     var myShort by mutableStateOf("")
 
@@ -84,6 +102,7 @@ object Mesh {
     private lateinit var file: File
     private val main = Handler(Looper.getMainLooper())
     private var link: Link? = null
+    private var bleAddress: String? = null
     private var lora: ByteArray? = null // the node's LoRaConfig as received, so we can change one field and send it back
     private var viaUsb = false // keep reconnecting over USB when the node re-enumerates (e.g. reboot)
 
@@ -102,8 +121,13 @@ object Mesh {
             val a = JSONArray(file.readText())
             for (i in 0 until a.length()) a.getJSONObject(i).run {
                 messages += Message(getLong("id"), getString("name"), getString("text"), getLong("time"),
-                    getBoolean("mine"), optBoolean("dm"), optString("status"), optLong("from"))
+                    getBoolean("mine"), optString("status"), optLong("from"), optInt("channel"), optLong("peer"))
             }
+        }
+        runCatching { JSONObject(prefs().getString("read", "{}")!!).run { keys().forEach { lastRead[it] = getLong(it) } } }
+        runCatching {
+            val a = JSONArray(prefs().getString("saved", "[]"))
+            for (i in 0 until a.length()) a.getJSONArray(i).run { saved += getString(0) to getString(1) }
         }
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(c: Context, i: Intent) {
@@ -130,18 +154,25 @@ object Mesh {
 
         // Reconnect on launch: last Bluetooth node, else a node already plugged in.
         val last = prefs().getString("ble", null)
-        if (last != null && ctx.checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
-            ctx.getSystemService(BluetoothManager::class.java).adapter?.let { connectBle(it.getRemoteDevice(last)) }
-        } else {
-            connectUsb(ask = false)
-        }
+        if (last != null && canUseBluetooth()) connectBle(last) else connectUsb(ask = false)
     }
 
+    val appContext: Context get() = ctx
+
     private fun prefs() = ctx.getSharedPreferences("mesh", Context.MODE_PRIVATE)
+
+    fun canUseBluetooth() =
+        ctx.checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED
+
+    fun connectBle(address: String) {
+        ctx.getSystemService(BluetoothManager::class.java).adapter?.let { connectBle(it.getRemoteDevice(address)) }
+    }
 
     fun connectBle(device: BluetoothDevice) {
         disconnect()
         active = true
+        transport = "Bluetooth"
+        bleAddress = device.address
         prefs().edit { putString("ble", device.address) }
         if (device.bondState != BluetoothDevice.BOND_BONDED) {
             status = "Enter the PIN shown on the node's screen"
@@ -177,6 +208,8 @@ object Mesh {
             port.rts = true
             link = UsbLink(port)
             viaUsb = true
+            bleAddress = null
+            transport = "USB cable"
             active = true
             status = "Connecting over USB…"
             linkUp(link!!)
@@ -203,6 +236,7 @@ object Mesh {
         ready = false
         connected = false
         status = ""
+        rooms.clear()
     }
 
     /** User pressed Disconnect: also forget the node so we don't auto-reconnect next launch. */
@@ -210,6 +244,13 @@ object Mesh {
         prefs().edit { remove("ble") }
         disconnect()
     }
+
+    fun forgetSaved(address: String) {
+        saved.removeAll { it.first == address }
+        saveSaved()
+    }
+
+    private fun saveSaved() = prefs().edit { putString("saved", JSONArray(saved.map { JSONArray(listOf(it.first, it.second)) }).toString()) }
 
     fun linkUp(from: Link) = main.post {
         if (from !== link) return@post
@@ -244,18 +285,33 @@ object Mesh {
                 lastHeard = maxOf(old.lastHeard, ni.long(5) * 1000),
                 snr = if (ni.has(4)) Float.fromBits(ni.long(4).toInt()) else old.snr,
                 hops = if (ni.has(9)) ni.long(9).toInt() else old.hops,
+                favorite = ni.long(10) == 1L,
+                battery = ni.msg(6)?.takeIf { it.has(1) }?.long(1)?.toInt() ?: old.battery,
             )
             ni.msg(2)?.let { user(num, it) }
         }
         fr.msg(5)?.bytes(6)?.let { lora = it; region = Msg(it).long(7).toInt() } // Config.lora.region
+        fr.msg(10)?.let { c ->
+            val index = c.long(1).toInt()
+            val role = c.long(3)
+            if (role == 0L) rooms.remove(index) else rooms[index] = room(index, c.bytes(2) ?: ByteArray(0), role == 1L)
+        }
         if (fr.has(7)) {
             connected = true
             status = "Connected"
             if (!ready) askName = DEFAULT_NAME.matches(myLong) && !prefs().getBoolean("named", false)
             ready = true
+            bleAddress?.let { address ->
+                saved.removeAll { it.first == address }
+                saved.add(0, address to myLong)
+                saveSaved()
+            }
         }
         fr.msg(2)?.let(::packet)
     }
+
+    private fun room(index: Int, settings: ByteArray, primary: Boolean) =
+        Msg(settings).let { Room(index, it.str(3), it.bytes(2) ?: ByteArray(0), primary, settings) }
 
     private fun user(num: Long, u: Msg) {
         nodes[num] = (nodes[num] ?: Node(num)).copy(long = u.str(2), short = u.str(3))
@@ -281,14 +337,18 @@ object Mesh {
                 if (id != 0L && messages.any { it.id == id && !it.mine }) return // node replays its queue on reconnect
                 val rx = p.long(7) * 1000
                 val time = if (rx > 1_600_000_000_000) rx else System.currentTimeMillis()
-                val name = nodes[from]?.name ?: "!%08x".format(from)
-                add(Message(id, name, payload.decodeToString(), time, mine = from == myNum, dm = p.long(2) == myNum, from = from))
+                val dm = p.long(2) == myNum && from != myNum
+                add(Message(id, nodes[from]?.name ?: "!%08x".format(from), payload.decodeToString(), time,
+                    mine = from == myNum, from = from, channel = if (dm) 0 else p.long(3).toInt(), peer = if (dm) from else 0))
             }
             NODEINFO_APP -> user(from, Msg(payload))
+            TELEMETRY_APP -> Msg(payload).msg(2)?.takeIf { it.has(1) }?.let { m ->
+                nodes[from]?.let { nodes[from] = it.copy(battery = m.long(1).toInt()) }
+            }
             ROUTING_APP -> {
                 val i = messages.indexOfFirst { it.mine && it.id == d.long(6) }
                 if (i >= 0) {
-                    // Implicit ack = another node rebroadcast it. error_reason (3) != 0 = gave up.
+                    // Broadcast: implicit ack = someone rebroadcast it. DM: real ack from the recipient. error_reason != 0 = gave up.
                     messages[i] = messages[i].copy(status = if (Msg(payload).long(3) == 0L) "✓" else "✗")
                     save()
                 }
@@ -296,23 +356,40 @@ object Mesh {
         }
     }
 
-    fun send(text: String) {
+    /** Channel message when [peer] is 0, else a DM (the firmware picks the channel and end-to-end encrypts it). */
+    fun send(text: String, channel: Int, peer: Long) {
         val id = Random.nextLong(1, 0xFFFFFFFF)
         val data = Pb().uint(1, TEXT_APP).str(2, text)
-        val packet = Pb().fixed32(2, BROADCAST).msg(4, data).fixed32(6, id).uint(10, 1) // want_ack
+        val packet = Pb().fixed32(2, if (peer != 0L) peer else BROADCAST).uint(3, channel.toLong())
+            .msg(4, data).fixed32(6, id).uint(10, 1) // want_ack
         link?.send(Pb().msg(1, packet).build())
-        add(Message(id, myLong, text, System.currentTimeMillis(), mine = true, status = "…", from = myNum))
+        add(Message(id, myLong, text, System.currentTimeMillis(), mine = true, status = "…", from = myNum, channel = channel, peer = peer))
+        markRead(convoKey(channel, peer))
     }
 
     fun retry(m: Message) {
         messages.remove(m)
-        send(m.text)
+        send(m.text, m.channel, m.peer)
+    }
+
+    fun unread(convo: String): Int {
+        val since = lastRead[convo] ?: 0
+        return messages.count { !it.mine && it.convo == convo && it.time > since }
+    }
+
+    fun markRead(convo: String) {
+        lastRead[convo] = System.currentTimeMillis()
+        prefs().edit { putString("read", JSONObject(lastRead.toMap()).toString()) }
+    }
+
+    /** Sends an AdminMessage to our own node. */
+    private fun admin(m: Pb) {
+        val packet = Pb().fixed32(2, myNum).msg(4, Pb().uint(1, ADMIN_APP).msg(2, m)).fixed32(6, Random.nextLong(1, 0xFFFFFFFF))
+        link?.send(Pb().msg(1, packet).build())
     }
 
     fun setOwner(long: String, short: String) {
-        val admin = Pb().msg(32, Pb().str(2, long).str(3, short)) // AdminMessage.set_owner
-        val packet = Pb().fixed32(2, myNum).msg(4, Pb().uint(1, ADMIN_APP).msg(2, admin)).fixed32(6, Random.nextLong(1, 0xFFFFFFFF))
-        link?.send(Pb().msg(1, packet).build())
+        admin(Pb().msg(32, Pb().str(2, long).str(3, short))) // set_owner
         myLong = long; myShort = short
         status = "Saving, the node restarts to apply it…"
         nodes[myNum] = (nodes[myNum] ?: Node(myNum)).copy(long = long, short = short)
@@ -322,11 +399,55 @@ object Mesh {
     fun saveRegion(code: Int) {
         val config = lora ?: return
         // Appending a field overrides the earlier value (protobuf last-one-wins), keeping the rest of the LoRa config.
-        val admin = Pb().msg(34, Pb().bytes(6, config + Pb().uint(7, code.toLong()).build())) // AdminMessage.set_config
-        val packet = Pb().fixed32(2, myNum).msg(4, Pb().uint(1, ADMIN_APP).msg(2, admin)).fixed32(6, Random.nextLong(1, 0xFFFFFFFF))
-        link?.send(Pb().msg(1, packet).build())
+        admin(Pb().msg(34, Pb().bytes(6, config + Pb().uint(7, code.toLong()).build()))) // set_config
         region = code
         status = "Saving, the node restarts to apply it…"
+    }
+
+    fun setFavorite(num: Long, favorite: Boolean) {
+        admin(Pb().uint(if (favorite) 39 else 40, num)) // set_favorite_node / remove_favorite_node, stored on the node
+        nodes[num]?.let { nodes[num] = it.copy(favorite = favorite) }
+    }
+
+    private fun setRoom(index: Int, settings: ByteArray, role: Int) {
+        admin(Pb().msg(33, Pb().uint(1, index.toLong()).bytes(2, settings).uint(3, role.toLong()))) // set_channel
+        if (role == 0) rooms.remove(index) else rooms[index] = room(index, settings, role == 1)
+    }
+
+    private fun freeSlot() = (1..7).firstOrNull { it !in rooms }
+
+    /** New private room with a random 256-bit key. Returns its index, or null when all 8 slots are used. */
+    fun createRoom(name: String): Int? {
+        val index = freeSlot() ?: return null
+        val psk = ByteArray(32).also { java.security.SecureRandom().nextBytes(it) }
+        setRoom(index, Pb().bytes(2, psk).str(3, name).build(), 2)
+        return index
+    }
+
+    fun leaveRoom(index: Int) {
+        if (index != 0) setRoom(index, ByteArray(0), 0)
+    }
+
+    /** Invite link in the format every Meshtastic app understands (meshtastic.org/e/#ChannelSet). */
+    fun inviteLink(room: Room): String {
+        val set = Pb().bytes(1, room.settings).also { p -> lora?.let { p.bytes(2, it) } }
+        return INVITE + java.util.Base64.getUrlEncoder().withoutPadding().encodeToString(set.build())
+    }
+
+    /** Adds the rooms from an invite link. Returns a message for the user and the first joined room, if any. */
+    fun join(link: String): Pair<String, Int?> {
+        val settings = inviteRooms(link)
+        if (settings.isEmpty()) return "That doesn't look like a Meshtastic invite" to null
+        var first: Int? = null
+        for (s in settings) {
+            val r = room(0, s, false)
+            val existing = rooms.values.firstOrNull { it.name == r.name && it.psk.contentEquals(r.psk) }
+            if (existing != null) { first = first ?: existing.index; continue }
+            val index = freeSlot() ?: return "Your node already has 8 rooms. Leave one first." to first
+            setRoom(index, s, 2)
+            first = first ?: index
+        }
+        return "Joined" to first
     }
 
     fun nameAsked() {
@@ -344,7 +465,8 @@ object Mesh {
         val a = JSONArray()
         messages.forEach {
             a.put(JSONObject().put("id", it.id).put("name", it.name).put("text", it.text).put("time", it.time)
-                .put("mine", it.mine).put("dm", it.dm).put("status", it.status).put("from", it.from))
+                .put("mine", it.mine).put("status", it.status).put("from", it.from)
+                .put("channel", it.channel).put("peer", it.peer))
         }
         file.writeText(a.toString())
     }

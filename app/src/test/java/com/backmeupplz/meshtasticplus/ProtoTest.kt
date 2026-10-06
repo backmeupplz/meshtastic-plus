@@ -23,6 +23,15 @@ class ProtoTest {
         assertEquals(3L, patched.long(8))
     }
 
+    @Test fun parsesOfficialInvite() {
+        // Default LongFast invite as shared by the official apps: one channel with the well-known key 0x01.
+        val rooms = inviteRooms("https://meshtastic.org/e/#CgMSAQESBggBQANIAQ")
+        assertEquals(1, rooms.size)
+        assertArrayEquals(byteArrayOf(1), Msg(rooms[0]).bytes(2))
+        assertEquals(0, inviteRooms("https://example.com/no-fragment").size)
+        assertEquals(0, inviteRooms("https://meshtastic.org/e/#!!!").size)
+    }
+
     @Test fun deframeSkipsLogNoise() {
         val got = mutableListOf<ByteArray>()
         val d = Deframer { got += it }
