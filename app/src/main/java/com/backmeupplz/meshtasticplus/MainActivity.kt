@@ -239,10 +239,13 @@ fun DeviceRow(
 fun SetupScreen(onRescue: () -> Unit) {
     var scanning by remember { mutableStateOf(false) }
     val askBluetooth = rememberBluetooth { scanning = true }
+    val scroll = rememberScrollState()
+    // The scan list sits below the buttons, off screen on most phones: bring it into view.
+    LaunchedEffect(scanning) { if (scanning) { delay(100); scroll.animateScrollTo(scroll.maxValue) } }
 
     Surface(Modifier.fillMaxSize()) {
         Column(
-            Modifier.fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState()).padding(24.dp),
+            Modifier.fillMaxSize().systemBarsPadding().verticalScroll(scroll).padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(Modifier.height(56.dp))
@@ -340,7 +343,10 @@ fun NearbyNodes(onPick: (BluetoothDevice) -> Unit) {
             CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
         }
         Spacer(Modifier.height(8.dp))
-        val fresh = found.values.filter { it.first.address !in known }
+        // nRF52 and ESP32 nodes derive their node number from the Bluetooth address's last 4 bytes.
+        val usbNum = Mesh.usbNum
+        fun isUsbNode(d: BluetoothDevice) = usbNum != 0L && d.address.replace(":", "").takeLast(8).toLongOrNull(16) == usbNum
+        val fresh = found.values.filter { it.first.address !in known }.sortedByDescending { isUsbNode(it.first) }
         if (fresh.isEmpty()) {
             Text(
                 "Looking… make sure the node is on and not connected to another phone.",
@@ -349,7 +355,8 @@ fun NearbyNodes(onPick: (BluetoothDevice) -> Unit) {
         }
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             fresh.forEach { (device, name) ->
-                DeviceRow(Icons.Outlined.Router, name, "Tap to connect", onClick = { onPick(device) }) {
+                val subtitle = if (isUsbNode(device)) "Your USB node · tap to use Bluetooth" else "Tap to connect"
+                DeviceRow(Icons.Outlined.Router, name, subtitle, highlighted = isUsbNode(device), onClick = { onPick(device) }) {
                     Icon(Icons.Rounded.ChevronRight, null, Modifier.padding(end = 12.dp))
                 }
             }

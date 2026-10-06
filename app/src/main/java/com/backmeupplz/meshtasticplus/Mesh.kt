@@ -172,6 +172,9 @@ object Mesh {
 
     private fun prefs() = ctx.getSharedPreferences("mesh", Context.MODE_PRIVATE)
 
+    /** Node number of the node last used over USB, to recognize it in a Bluetooth scan. */
+    val usbNum get() = prefs().getLong("usbNum", 0)
+
     fun canUseBluetooth() =
         ctx.checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED
 
@@ -334,6 +337,7 @@ object Mesh {
             admin(Pb().fixed32(43, System.currentTimeMillis() / 1000)) // set_time_only
             if (!ready) askName = DEFAULT_NAME.matches(myLong) && !prefs().getBoolean("named", false)
             ready = true
+            if (current == USB) prefs().edit { putLong("usbNum", myNum) }
             current?.let { key ->
                 saved.removeAll { it.first == key }
                 saved.add(0, key to myLong)
@@ -425,7 +429,7 @@ object Mesh {
     fun setOwner(long: String, short: String) {
         admin(Pb().msg(32, Pb().str(2, long).str(3, short))) // set_owner
         myLong = long; myShort = short
-        status = "Saving, the node restarts to apply it…"
+        status = "Restarting to apply changes…"
         nodes[myNum] = (nodes[myNum] ?: Node(myNum)).copy(long = long, short = short)
         nameAsked()
     }
@@ -435,7 +439,7 @@ object Mesh {
         // Appending a field overrides the earlier value (protobuf last-one-wins), keeping the rest of the LoRa config.
         admin(Pb().msg(34, Pb().bytes(6, config + Pb().uint(7, code.toLong()).build()))) // set_config
         region = code
-        status = "Saving, the node restarts to apply it…"
+        status = "Restarting to apply changes…"
     }
 
     /**
@@ -449,7 +453,7 @@ object Mesh {
         admin(Pb().uint(65, 1)) // commit_edit_settings: save + restart
         changes.forEach { (section, fields) -> configs[section] = (configs[section] ?: ByteArray(0)) + fields.build() }
         configs[6]?.let { region = Msg(it).long(7).toInt() }
-        status = "Saving, the node restarts to apply it…"
+        status = "Restarting to apply changes…"
     }
 
     /** nRF52: the node reboots into its bootloader, which takes new firmware over the same USB cable. */
@@ -467,14 +471,14 @@ object Mesh {
 
     fun resumeAfterUpdate() {
         updating = false
-        status = "Restarting with the new firmware…"
+        status = "Restarting with new firmware…"
         main.postDelayed({ if (link == null) connectUsb(ask = false) }, 4000)
     }
 
     /** 100 = clear node list (favorites stay), 99 = settings back to defaults, 94 = everything incl. keys and Bluetooth pairings. */
     fun reset(kind: Int) {
         admin(Pb().uint(kind, 1)) // nodedb_reset / factory_reset_config / factory_reset_device
-        status = "Resetting, the node restarts…"
+        status = "Resetting the node…"
         if (kind == 100) nodes.values.filter { !it.favorite && it.num != myNum }.forEach { nodes.remove(it.num) }
         else prefs().edit { remove("named") } // its name is back to the default: offer to pick one again
         val address = current
@@ -636,7 +640,7 @@ class BleLink(ctx: Context, private val device: BluetoothDevice) : BluetoothGatt
         } else {
             synchronized(this) { ops.clear(); busy = false; readQueued = false }
             g.connect()
-            Mesh.linkDown(this, "Node out of reach, will reconnect automatically…")
+            Mesh.linkDown(this, "Out of reach, reconnecting…")
         }
     }
 

@@ -88,7 +88,13 @@ object Updater {
                 try {
                     port.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE)
                     port.dtr = true
-                    Dfu(port).flash(dat, bin) { s, p -> ui { step = s; progress = p } }
+                    val dfu = Dfu(port)
+                    try {
+                        dfu.flash(dat, bin) { s, p -> ui { step = s; progress = p } }
+                    } catch (e: Exception) {
+                        if (!dfu.started) inBootloader = false // never answered: it's still running its normal firmware
+                        throw e
+                    }
                 } finally {
                     runCatching { port.close() }
                 }
@@ -143,10 +149,15 @@ object Updater {
  */
 class Dfu(private val port: UsbSerialPort) {
     private var seq = 0
+    var started = false // the bootloader acked the start packet: from here on the node stays in update mode until flashed
 
     fun flash(dat: ByteArray, bin: ByteArray, progress: (String, Float) -> Unit) {
         progress("Erasing the old firmware…", -1f)
-        send(int32(3) + int32(4) + int32(0) + int32(0) + int32(bin.size)) // start: application mode, sizes sd/bl/app
+        // The bootloader shows up as the same USB device as the firmware and may need a moment after enumerating:
+        // resend the start packet (same sequence number, so it's never applied twice) until it answers.
+        Thread.sleep(1000)
+        send(int32(3) + int32(4) + int32(0) + int32(0) + int32(bin.size), tries = 8) // start: application mode, sizes sd/bl/app
+        started = true
         Thread.sleep(eraseTime(bin.size))
         send(int32(1) + dat + byteArrayOf(0, 0)) // init packet, zero-padded
         val chunks = (bin.indices step 512).map { bin.copyOfRange(it, minOf(it + 512, bin.size)) }
@@ -164,17 +175,27 @@ class Dfu(private val port: UsbSerialPort) {
     private fun eraseTime(size: Int) = maxOf(500L, ((size / 4096) + 1) * 90L) // 89.7ms per 4K page
 
     /** One reliable HCI packet, then wait for the bootloader's ack frame. */
-    private fun send(payload: ByteArray) {
+    private fun send(payload: ByteArray, tries: Int = 1) {
         seq = (seq + 1) % 8
-        port.write(packet(seq, payload), 5000)
+        val p = packet(seq, payload)
+        repeat(tries) {
+            port.write(p, 5000)
+            if (acked()) return
+        }
+        error(if (started) "The node stopped responding during the update. Try again." else "The node didn't switch to update mode.")
+    }
+
+    /** Waits up to 1s for an ack frame (two SLIP 0xC0 markers). */
+    private fun acked(): Boolean {
         val buf = ByteArray(64)
         var frameMarks = 0
         val deadline = System.currentTimeMillis() + 1000
         while (frameMarks < 2) {
-            if (System.currentTimeMillis() > deadline) error("The node stopped responding during the update. Try again.")
+            if (System.currentTimeMillis() > deadline) return false
             val n = port.read(buf, 200)
             for (k in 0 until n) if (buf[k] == 0xC0.toByte()) frameMarks++
         }
+        return true
     }
 
     companion object {
