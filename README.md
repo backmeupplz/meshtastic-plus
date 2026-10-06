@@ -8,7 +8,7 @@ A tiny Android app for Meshtastic: connect to your node, send and receive messag
 
 Messages go to the primary channel. Incoming direct messages are shown with a `DM` tag. `✓` means another node relayed your message and `✗` means nobody did. History is saved on the phone.
 
-Speaks the Meshtastic BLE and serial APIs from firmware 2.x (Heltec V3 uses a CP2102 USB chip; newer boards use native USB). Requires Android 12+.
+Speaks the Meshtastic BLE and serial APIs from firmware 2.x (tested on a Heltec Mesh Node T114 over USB; ESP32 boards with CP210x/CH340 USB chips like the Heltec V3 use the same path but are untested). Requires Android 12+.
 
 ## Build
 

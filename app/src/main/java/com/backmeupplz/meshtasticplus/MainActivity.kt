@@ -130,7 +130,7 @@ fun App() {
         }
         if (Mesh.messages.isEmpty()) {
             Box(Modifier.fillMaxSize().padding(padding).padding(32.dp), contentAlignment = Alignment.Center) {
-                Text("Connect your node over Bluetooth or a USB cable, then say hi to the mesh.")
+                Text(if (Mesh.connected) "No messages yet. Say hi to the mesh!" else "Connect your node over Bluetooth or a USB cable.")
             }
         }
         LazyColumn(
