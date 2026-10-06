@@ -102,12 +102,18 @@ object Mesh {
     var myNum by mutableStateOf(0L)
     var myLong by mutableStateOf("")
     var myShort by mutableStateOf("")
+    val configs = mutableStateMapOf<Int, ByteArray>() // the node's Config sections as received, by oneof field (6 = LoRa)
+    var firmware by mutableStateOf("") // DeviceMetadata.firmware_version
+    var hwModel by mutableIntStateOf(0) // HardwareModel enum
+    var pioEnv by mutableStateOf("") // exact firmware build target, e.g. heltec-mesh-node-t114 (firmware 2.6+)
+    var hasWifi by mutableStateOf(false)
+    var updating = false // firmware update owns the USB port: don't auto-connect to whatever enumerates
 
     private lateinit var ctx: Context
     private lateinit var file: File
     private val main = Handler(Looper.getMainLooper())
     private var link: Link? = null
-    private var lora: ByteArray? = null // the node's LoRaConfig as received, so we can change one field and send it back
+    private val lora get() = configs[6]
     private var viaUsb = false // keep reconnecting over USB when the node re-enumerates (e.g. reboot)
 
     private val heartbeat = object : Runnable {
@@ -228,7 +234,7 @@ object Mesh {
 
     /** A node was plugged in (or came back after rebooting): pick it up if we're not busy with another link. */
     fun usbAttached() {
-        if (link == null && (viaUsb || !active)) connectUsb(ask = false)
+        if (!updating && link == null && (viaUsb || !active)) connectUsb(ask = false)
     }
 
     private fun closeLink() {
@@ -246,6 +252,8 @@ object Mesh {
         connected = false
         status = ""
         rooms.clear()
+        configs.clear()
+        firmware = ""; hwModel = 0; pioEnv = ""; hasWifi = false
         nodes.clear() // each node has its own node list and favorites
         myNum = 0
     }
@@ -298,7 +306,7 @@ object Mesh {
     }
 
     private fun handle(fr: Msg) {
-        fr.msg(3)?.let { myNum = it.long(1) }
+        fr.msg(3)?.let { myNum = it.long(1); pioEnv = it.str(13) }
         fr.msg(4)?.let { ni ->
             val num = ni.long(1)
             val old = nodes[num] ?: Node(num)
@@ -311,7 +319,9 @@ object Mesh {
             )
             ni.msg(2)?.let { user(num, it) }
         }
-        fr.msg(5)?.bytes(6)?.let { lora = it; region = Msg(it).long(7).toInt() } // Config.lora.region
+        fr.msg(5)?.let { c -> c.fields.keys.forEach { configs[it] = c.bytes(it) ?: ByteArray(0) } } // Config: one section per frame
+        fr.msg(5)?.bytes(6)?.let { region = Msg(it).long(7).toInt() } // Config.lora.region
+        fr.msg(13)?.let { firmware = it.str(1); hwModel = it.long(9).toInt(); hasWifi = it.long(4) == 1L } // DeviceMetadata
         fr.msg(10)?.let { c ->
             val index = c.long(1).toInt()
             val role = c.long(3)
@@ -338,7 +348,7 @@ object Mesh {
 
     private fun user(num: Long, u: Msg) {
         nodes[num] = (nodes[num] ?: Node(num)).copy(long = u.str(2), short = u.str(3))
-        if (num == myNum) { myLong = u.str(2); myShort = u.str(3) }
+        if (num == myNum) { myLong = u.str(2); myShort = u.str(3); if (hwModel == 0) hwModel = u.long(5).toInt() }
     }
 
     private fun packet(p: Msg) {
@@ -426,6 +436,39 @@ object Mesh {
         admin(Pb().msg(34, Pb().bytes(6, config + Pb().uint(7, code.toLong()).build()))) // set_config
         region = code
         status = "Saving, the node restarts to apply it…"
+    }
+
+    /**
+     * Changes several config fields at once: [changes] maps Config section (1 = device … 7 = bluetooth) to the fields
+     * to override. Wrapped in an edit transaction so the node saves everything and restarts once.
+     */
+    fun saveSettings(changes: Map<Int, Pb>) {
+        admin(Pb().uint(64, 1)) // begin_edit_settings
+        // Appending fields overrides earlier values (protobuf last-one-wins), keeping the rest of each section.
+        changes.forEach { (section, fields) -> admin(Pb().msg(34, Pb().bytes(section, (configs[section] ?: ByteArray(0)) + fields.build()))) }
+        admin(Pb().uint(65, 1)) // commit_edit_settings: save + restart
+        changes.forEach { (section, fields) -> configs[section] = (configs[section] ?: ByteArray(0)) + fields.build() }
+        configs[6]?.let { region = Msg(it).long(7).toInt() }
+        status = "Saving, the node restarts to apply it…"
+    }
+
+    /** nRF52: the node reboots into its bootloader, which takes new firmware over the same USB cable. */
+    fun enterUpdateMode() {
+        admin(Pb().uint(21, 1)) // enter_dfu_mode_request
+        main.postDelayed({ pauseForUpdate() }, 300) // let the request reach the node before we let go of the port
+    }
+
+    fun pauseForUpdate() {
+        updating = true
+        closeLink()
+        connected = false
+        status = "Updating firmware…"
+    }
+
+    fun resumeAfterUpdate() {
+        updating = false
+        status = "Restarting with the new firmware…"
+        main.postDelayed({ if (link == null) connectUsb(ask = false) }, 4000)
     }
 
     fun setFavorite(num: Long, favorite: Boolean) {

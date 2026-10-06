@@ -14,6 +14,8 @@ class Pb {
     }
 
     fun uint(field: Int, v: Long) = apply { if (v != 0L) { varint((field shl 3).toLong()); varint(v) } }
+    /** Like [uint] but also writes 0, to override an earlier value. Negative int32 works too (10-byte varint). */
+    fun set(field: Int, v: Long) = apply { varint((field shl 3).toLong()); varint(v) }
     fun fixed32(field: Int, v: Long) = apply {
         varint(((field shl 3) or 5).toLong())
         repeat(4) { out.write((v ushr (8 * it)).toInt() and 0xFF) }

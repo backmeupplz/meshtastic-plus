@@ -63,6 +63,7 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.SignalCellularAlt
 import androidx.compose.material.icons.outlined.StarBorder
+import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Bluetooth
 import androidx.compose.material.icons.rounded.CellTower
@@ -145,17 +146,22 @@ fun App() {
     var editingRegion by remember { mutableStateOf(false) }
     var open by rememberSaveable { mutableStateOf<String?>(null) }
     var profile by rememberSaveable { mutableStateOf<Long?>(null) }
+    var nodeSettings by rememberSaveable { mutableStateOf(false) }
+    var firmware by rememberSaveable { mutableStateOf<Boolean?>(null) } // true = rescue a node stuck in update mode
     when {
+        firmware != null -> FirmwareScreen(firmware!!) { firmware = null }
         editingName -> NameScreen(editing = true) { editingName = false }
-        !Mesh.ready -> SetupScreen()
+        !Mesh.ready -> SetupScreen { firmware = true }
         Mesh.region == 0 || editingRegion -> RegionScreen(editing = editingRegion) { editingRegion = false }
         Mesh.askName -> NameScreen(editing = false) {}
+        nodeSettings -> NodeSettingsScreen({ nodeSettings = false }) { firmware = false }
         open != null -> ConversationScreen(open!!, onBack = { open = null }, onProfile = { profile = it })
         else -> HomeScreen(
             onOpen = { open = it },
             onProfile = { profile = it },
             onEditName = { editingName = true },
             onEditRegion = { editingRegion = true },
+            onNodeSettings = { nodeSettings = true },
         )
     }
     if (Mesh.ready) {
@@ -230,7 +236,7 @@ fun DeviceRow(
 }
 
 @Composable
-fun SetupScreen() {
+fun SetupScreen(onRescue: () -> Unit) {
     var scanning by remember { mutableStateOf(false) }
     val askBluetooth = rememberBluetooth { scanning = true }
 
@@ -294,6 +300,8 @@ fun SetupScreen() {
                 textAlign = TextAlign.Center,
             )
             if (scanning) NearbyNodes { scanning = false; Mesh.connectBle(it) }
+            Spacer(Modifier.height(24.dp))
+            TextButton(onRescue) { Text("Node stuck in update mode?") }
         }
     }
 }
@@ -352,7 +360,7 @@ fun NearbyNodes(onPick: (BluetoothDevice) -> Unit) {
 // ---------- Region: a fresh node stays silent until it knows which radio band is legal here ----------
 
 /** Meshtastic RegionCode values (config.proto), minus the amateur-radio bands that need a license. */
-private val REGIONS = listOf(
+val REGIONS = listOf(
     1 to "United States, Canada, Mexico", 3 to "Europe & UK 868 MHz", 2 to "Europe & UK 433 MHz",
     6 to "Australia / New Zealand", 11 to "New Zealand 865 MHz", 22 to "Australia / New Zealand 433 MHz",
     26 to "Brazil", 4 to "China", 10 to "India", 5 to "Japan", 24 to "Kazakhstan 863 MHz", 23 to "Kazakhstan 433 MHz",
@@ -536,7 +544,7 @@ fun StatusTitle(title: String, subtitle: String, ok: Boolean) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(onOpen: (String) -> Unit, onProfile: (Long) -> Unit, onEditName: () -> Unit, onEditRegion: () -> Unit) {
+fun HomeScreen(onOpen: (String) -> Unit, onProfile: (Long) -> Unit, onEditName: () -> Unit, onEditRegion: () -> Unit, onNodeSettings: () -> Unit) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
     var settings by remember { mutableStateOf(false) }
     var devices by remember { mutableStateOf(false) }
@@ -574,7 +582,7 @@ fun HomeScreen(onOpen: (String) -> Unit, onProfile: (Long) -> Unit, onEditName: 
     ) { padding ->
         if (tab == 0) ChatsTab(padding, onOpen) else NodesTab(padding, now, onProfile)
     }
-    if (settings) SettingsSheet({ settings = false }, onEditName, onEditRegion) { devices = true }
+    if (settings) SettingsSheet({ settings = false }, onEditName, onEditRegion, onNodeSettings) { devices = true }
     if (devices) DevicesSheet { devices = false }
     if (newRoom) NewRoomSheet({ newRoom = false }, onOpen)
 }
@@ -755,7 +763,7 @@ fun Detail(icon: ImageVector, text: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: () -> Unit, onDevices: () -> Unit) {
+fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: () -> Unit, onNodeSettings: () -> Unit, onDevices: () -> Unit) {
     ModalBottomSheet(onDismiss) {
         Column(Modifier.padding(bottom = 24.dp)) {
             ListItem(
@@ -769,6 +777,12 @@ fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: (
                 headlineContent = { Text("Region") },
                 supportingContent = { Text(regionName(Mesh.region)) },
                 modifier = Modifier.clickable { onDismiss(); onEditRegion() },
+            )
+            ListItem(
+                leadingContent = { Icon(Icons.Outlined.Tune, null) },
+                headlineContent = { Text("Node settings") },
+                supportingContent = { Text(listOfNotNull(currentBoard()?.name, "role, radio, Bluetooth, firmware").joinToString(" · ")) },
+                modifier = Modifier.clickable { onDismiss(); onNodeSettings() },
             )
             ListItem(
                 leadingContent = { Icon(if (Mesh.transport == "Bluetooth") Icons.Rounded.Bluetooth else Icons.Rounded.Usb, null) },
