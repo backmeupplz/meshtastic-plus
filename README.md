@@ -2,11 +2,13 @@
 
 A tiny Android app for Meshtastic: connect to your node, send and receive messages. That's it.
 
-- **Bluetooth**: tap *Bluetooth*, pick your node, and enter the PIN shown on the node's screen the first time. The app reconnects to the same node by itself on launch and when it comes back in range.
-- **USB-C cable**: plug the node into the phone and tap *USB*. The phone powers the node over the cable (USB OTG), so you don't need a battery.
-- **Identity**: tap *Name* to set the long and short name your node shows to the mesh.
+1. **Connect**: plug the node into your phone with a USB-C cable (the app opens by itself and the phone powers the node), or tap *Connect with Bluetooth*, pick your node and type the PIN from its screen.
+2. **Region**: a brand-new node stays silent until it knows its radio band, so the app asks once (pre-selected from your phone's country).
+3. **Name**: pick how you show up on the mesh; initials become your short name. Change it later with the pencil.
+4. **Chat** with everyone on your primary channel. Your messages show a clock while sending, a check once another node relays them, and "Nobody heard it · Tap to retry" if no one did.
+5. **Nodes** lists everyone your radio has heard, with online/offline badges (online = heard in the last 2 hours).
 
-Messages go to the primary channel. Incoming direct messages are shown with a `DM` tag. `✓` means another node relayed your message and `✗` means nobody did. History is saved on the phone.
+The node restarts when its region or name changes; the app reconnects by itself. History is saved on the phone.
 
 Speaks the Meshtastic BLE and serial APIs from firmware 2.x (tested on a Heltec Mesh Node T114 over USB; ESP32 boards with CP210x/CH340 USB chips like the Heltec V3 use the same path but are untested). Requires Android 12+.
 
