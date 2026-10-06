@@ -42,6 +42,7 @@ data class Message(
     val id: Long, val name: String, val text: String, val time: Long,
     val mine: Boolean, val status: String = "", val from: Long = 0,
     val channel: Int = 0, val peer: Long = 0, // peer != 0: direct message with that node
+    val me: Long = 0, // the node this message belongs to, so each node keeps its own history
 ) {
     val convo get() = convoKey(channel, peer)
 }
@@ -82,7 +83,9 @@ private val DEFAULT_NAME = Regex("Meshtastic [0-9a-f]{4}")
 /** The whole app state. Lives as long as the process, so rotation/backgrounding keeps the connection. */
 @SuppressLint("MissingPermission", "StaticFieldLeak") // permissions are requested in MainActivity; ctx is the app context
 object Mesh {
-    val messages = mutableStateListOf<Message>()
+    private val all = mutableStateListOf<Message>()
+    /** History of the connected node only. */
+    val messages: List<Message> get() = all.filter { it.me == myNum }
     val nodes = mutableStateMapOf<Long, Node>()
     val rooms = mutableStateMapOf<Int, Room>() // by channel index, 0 = primary
     val lastRead = mutableStateMapOf<String, Long>() // conversation -> time it was last open
@@ -120,8 +123,8 @@ object Mesh {
         if (file.exists()) runCatching {
             val a = JSONArray(file.readText())
             for (i in 0 until a.length()) a.getJSONObject(i).run {
-                messages += Message(getLong("id"), getString("name"), getString("text"), getLong("time"),
-                    getBoolean("mine"), optString("status"), optLong("from"), optInt("channel"), optLong("peer"))
+                all += Message(getLong("id"), getString("name"), getString("text"), getLong("time"),
+                    getBoolean("mine"), optString("status"), optLong("from"), optInt("channel"), optLong("peer"), optLong("me"))
             }
         }
         runCatching { JSONObject(prefs().getString("read", "{}")!!).run { keys().forEach { lastRead[it] = getLong(it) } } }
@@ -146,11 +149,12 @@ object Mesh {
                 }
             }
         }
-        val filter = IntentFilter(USB_PERMISSION).apply {
-            addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
-            addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
-        }
+        val filter = IntentFilter(USB_PERMISSION).apply { addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED) }
         ContextCompat.registerReceiver(ctx, receiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED)
+        // Bond changes come from the Bluetooth app, not the system uid, so a not-exported receiver never hears them.
+        // Safe to export: it's a protected broadcast other apps can't send.
+        val bond = IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
+        ContextCompat.registerReceiver(ctx, receiver, bond, ContextCompat.RECEIVER_EXPORTED)
 
         // Reconnect on launch: last Bluetooth node, else a node already plugged in.
         val last = prefs().getString("ble", null)
@@ -175,7 +179,7 @@ object Mesh {
         bleAddress = device.address
         prefs().edit { putString("ble", device.address) }
         if (device.bondState != BluetoothDevice.BOND_BONDED) {
-            status = "Enter the PIN shown on the node's screen"
+            status = "Type the PIN shown on the node's screen.\nNo screen? It's usually 123456."
             device.createBond() // continues in the bond receiver above
             return
         }
@@ -260,6 +264,14 @@ object Mesh {
         main.postDelayed(heartbeat, 60_000)
     }
 
+    fun restartBle(from: Link, device: BluetoothDevice) = main.postDelayed({
+        if (from !== link) return@postDelayed
+        closeLink()
+        connected = false
+        status = "Reconnecting…"
+        link = BleLink(ctx, device)
+    }, 1000)
+
     fun linkDown(from: Link, reason: String) = main.post {
         if (from !== link) return@post
         if (from is UsbLink) closeLink() // dead port; usbAttached() reopens it when the node is back
@@ -341,7 +353,7 @@ object Mesh {
                 val time = if (rx > 1_600_000_000_000) rx else System.currentTimeMillis()
                 val dm = p.long(2) == myNum && from != myNum
                 add(Message(id, nodes[from]?.name ?: "!%08x".format(from), payload.decodeToString(), time,
-                    mine = from == myNum, from = from, channel = if (dm) 0 else p.long(3).toInt(), peer = if (dm) from else 0))
+                    mine = from == myNum, from = from, channel = if (dm) 0 else p.long(3).toInt(), peer = if (dm) from else 0, me = myNum))
             }
             NODEINFO_APP -> user(from, Msg(payload))
             TELEMETRY_APP -> Msg(payload).msg(2)?.takeIf { it.has(1) }?.let { m ->
@@ -349,10 +361,10 @@ object Mesh {
             }
             ROUTING_APP -> {
                 Log.i("Mesh", "routing reply for ${d.long(6)}: error ${Msg(payload).long(3)} from ${"%08x".format(from)}")
-                val i = messages.indexOfFirst { it.mine && it.id == d.long(6) }
+                val i = all.indexOfFirst { it.mine && it.me == myNum && it.id == d.long(6) }
                 if (i >= 0) {
                     // Broadcast: implicit ack = someone rebroadcast it. DM: real ack from the recipient. error_reason != 0 = gave up.
-                    messages[i] = messages[i].copy(status = if (Msg(payload).long(3) == 0L) "✓" else "✗")
+                    all[i] = all[i].copy(status = if (Msg(payload).long(3) == 0L) "✓" else "✗")
                     save()
                 }
             }
@@ -366,22 +378,22 @@ object Mesh {
         val packet = Pb().fixed32(2, if (peer != 0L) peer else BROADCAST).uint(3, channel.toLong())
             .msg(4, data).fixed32(6, id).uint(10, 1) // want_ack
         link?.send(Pb().msg(1, packet).build())
-        add(Message(id, myLong, text, System.currentTimeMillis(), mine = true, status = "…", from = myNum, channel = channel, peer = peer))
+        add(Message(id, myLong, text, System.currentTimeMillis(), mine = true, status = "…", from = myNum, channel = channel, peer = peer, me = myNum))
         markRead(convoKey(channel, peer))
     }
 
     fun retry(m: Message) {
-        messages.remove(m)
+        all.remove(m)
         send(m.text, m.channel, m.peer)
     }
 
     fun unread(convo: String): Int {
-        val since = lastRead[convo] ?: 0
+        val since = lastRead["$myNum/$convo"] ?: 0
         return messages.count { !it.mine && it.convo == convo && it.time > since }
     }
 
     fun markRead(convo: String) {
-        lastRead[convo] = System.currentTimeMillis()
+        lastRead["$myNum/$convo"] = System.currentTimeMillis()
         prefs().edit { putString("read", JSONObject(lastRead.toMap()).toString()) }
     }
 
@@ -459,17 +471,17 @@ object Mesh {
     }
 
     private fun add(m: Message) {
-        messages += m
+        all += m
         save()
     }
 
     // ponytail: rewrites the whole file per message; switch to append-only if history gets huge
     private fun save() {
         val a = JSONArray()
-        messages.forEach {
+        all.forEach {
             a.put(JSONObject().put("id", it.id).put("name", it.name).put("text", it.text).put("time", it.time)
                 .put("mine", it.mine).put("status", it.status).put("from", it.from)
-                .put("channel", it.channel).put("peer", it.peer))
+                .put("channel", it.channel).put("peer", it.peer).put("me", it.me))
         }
         file.writeText(a.toString())
     }
@@ -487,10 +499,13 @@ private val CCCD = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
  */
 @SuppressLint("MissingPermission")
 @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION") // pre-Android 13 GATT APIs, used only below SDK 33
-class BleLink(ctx: Context, device: BluetoothDevice) : BluetoothGattCallback(), Link {
+class BleLink(ctx: Context, private val device: BluetoothDevice) : BluetoothGattCallback(), Link {
     private val ops = ArrayDeque<(BluetoothGatt) -> Boolean>() // GATT allows one operation in flight
     private var busy = false
     private var readQueued = false
+    private var discovering = false // Android can report the MTU twice; discovering again would cancel in-flight ops
+    private var opSeq = 0
+    private val timer = Handler(Looper.getMainLooper())
     private var toRadio: BluetoothGattCharacteristic? = null
     private var fromRadio: BluetoothGattCharacteristic? = null
     private val gatt = device.connectGatt(ctx, true, this, BluetoothDevice.TRANSPORT_LE)
@@ -498,6 +513,7 @@ class BleLink(ctx: Context, device: BluetoothDevice) : BluetoothGattCallback(), 
     override fun send(toRadio: ByteArray) = enqueue { g -> this.toRadio?.let { write(g, it, toRadio) } ?: false }
 
     override fun close() {
+        timer.removeCallbacksAndMessages(null)
         gatt.disconnect()
         gatt.close()
     }
@@ -510,8 +526,19 @@ class BleLink(ctx: Context, device: BluetoothDevice) : BluetoothGattCallback(), 
     @Synchronized private fun next() {
         busy = false
         while (ops.isNotEmpty()) {
-            if (ops.removeFirst()(gatt)) { busy = true; return }
+            if (!ops.removeFirst()(gatt)) return wedged() // Android refused it: this GATT handle is stuck busy
+            busy = true
+            val seq = ++opSeq
+            timer.postDelayed({ synchronized(this) { if (busy && opSeq == seq) wedged() } }, 5000) // callback never came
+            return
         }
+    }
+
+    /** A lost GATT callback leaves Android's handle busy forever; the only cure is a fresh connection. */
+    private fun wedged() {
+        Log.w("BleLink", "GATT stuck, reconnecting")
+        ops.clear()
+        Mesh.restartBle(this, device)
     }
 
     @Synchronized private fun readFromRadio() {
@@ -531,6 +558,7 @@ class BleLink(ctx: Context, device: BluetoothDevice) : BluetoothGattCallback(), 
 
     override fun onConnectionStateChange(g: BluetoothGatt, status: Int, state: Int) {
         if (state == BluetoothProfile.STATE_CONNECTED) {
+            discovering = false
             g.requestMtu(512)
         } else {
             synchronized(this) { ops.clear(); busy = false; readQueued = false }
@@ -538,8 +566,14 @@ class BleLink(ctx: Context, device: BluetoothDevice) : BluetoothGattCallback(), 
         }
     }
 
+    // When the link survived from an earlier session, Android answers requestMtu from cache *and* the node later
+    // rejects the repeated exchange; anything sent in between is lost. So start only once MTU replies go quiet.
+    // ponytail: 300ms debounce, tuned on a OnePlus 8 + nRF52 node (reject arrives ~90ms later)
+    private val discover = Runnable { if (!discovering) { discovering = true; gatt.discoverServices() } }
+
     override fun onMtuChanged(g: BluetoothGatt, mtu: Int, status: Int) {
-        g.discoverServices()
+        timer.removeCallbacks(discover)
+        timer.postDelayed(discover, 300)
     }
 
     override fun onServicesDiscovered(g: BluetoothGatt, status: Int) {
