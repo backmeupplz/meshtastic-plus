@@ -36,6 +36,13 @@ val boards: List<Board> by lazy {
 fun currentBoard(): Board? =
     boards.firstOrNull { it.target == Mesh.pioEnv } ?: boards.firstOrNull { it.hwModel == Mesh.hwModel && Mesh.hwModel != 0 }
 
+/** True when [latest] is a higher x.y.z than [installed] (the commit-hash suffix is ignored). */
+fun isNewer(latest: String, installed: String): Boolean {
+    fun parts(v: String) = v.removePrefix("v").split('.').take(3).map { it.toIntOrNull() ?: 0 } + listOf(0, 0, 0)
+    val (a, b) = parts(latest) to parts(installed)
+    return (0..2).firstOrNull { a[it] != b[it] }?.let { a[it] > b[it] } ?: false
+}
+
 /** Firmware update over USB for nRF52 nodes: download the release's DFU package, reboot into the bootloader, flash. */
 object Updater {
     var step by mutableStateOf("")

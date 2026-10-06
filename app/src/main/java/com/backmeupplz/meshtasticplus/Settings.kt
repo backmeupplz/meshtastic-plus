@@ -15,6 +15,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Memory
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.ErrorOutline
+import androidx.compose.material.icons.rounded.RestartAlt
 import androidx.compose.material.icons.rounded.SystemUpdate
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -163,6 +164,20 @@ val SETTINGS = listOf(
     )),
 )
 
+class Reset(val kind: Int, val title: String, val summary: String, val details: String, val confirm: String)
+
+private val RESETS = listOf(
+    Reset(100, "Clear node list", "Forget every node it has heard; favorites stay",
+        "Your node forgets every other node it has heard, except favorites. They reappear as they're heard again. Handy when the list is full of nodes from far away.",
+        "Clear"),
+    Reset(99, "Reset settings", "Back to factory settings; keeps its identity and pairing",
+        "Every setting goes back to factory defaults: role, radio, region, name and private rooms (you'll need new invites). The node keeps its identity and Bluetooth pairing, and messages on this phone stay. It restarts, and you'll pick its region again.",
+        "Reset"),
+    Reset(94, "Factory reset", "Erase everything, as if it were new",
+        "Erases everything on the node: settings, rooms, node list, its encryption keys and Bluetooth pairings. Others will see it as a new node. It restarts, and you'll pair it again with the PIN on its screen, then pick its region and name. Messages on this phone stay.",
+        "Erase everything"),
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
@@ -170,6 +185,7 @@ fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
     val edits = remember { mutableStateMapOf<String, Any>() }
     var info by remember { mutableStateOf<Setting?>(null) }
     var editing by remember { mutableStateOf<Setting?>(null) }
+    var resetting by remember { mutableStateOf<Reset?>(null) }
     val sections = Mesh.configs.mapValues { Msg(it.value) }
     fun value(s: Setting): Any = edits[s.key] ?: sections[s.section]?.let { if (s.text) it.str(s.field) else it.long(s.field) } ?: if (s.text) "" else 0L
     val get = { section: Int, field: Int -> (edits["$section/$field"] ?: sections[section]?.long(field) ?: 0L) as Long }
@@ -247,12 +263,32 @@ fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
                     )
                 }
             }
+            if (Mesh.configs.isNotEmpty()) {
+                header("Reset")
+                items(RESETS, key = { "reset${it.kind}" }) { r ->
+                    ListItem(
+                        headlineContent = { Text(r.title, color = if (r.kind == 100) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.error) },
+                        supportingContent = { Text(r.summary) },
+                        modifier = Modifier.clickable(enabled = Mesh.connected) { resetting = r },
+                    )
+                }
+            }
         }
     }
     info?.let { s ->
         AlertDialog({ info = null }, { TextButton({ info = null }) { Text("Got it") } },
             icon = { Icon(Icons.Outlined.Info, null) }, title = { Text(s.title) },
             text = { Text(s.info, Modifier.verticalScroll(rememberScrollState())) })
+    }
+    resetting?.let { r ->
+        AlertDialog(
+            { resetting = null },
+            confirmButton = { TextButton({ Mesh.reset(r.kind); resetting = null; onBack() }) { Text(r.confirm, color = MaterialTheme.colorScheme.error) } },
+            dismissButton = { TextButton({ resetting = null }) { Text("Cancel") } },
+            icon = { Icon(Icons.Rounded.RestartAlt, null) },
+            title = { Text("${r.title}?") },
+            text = { Text(r.details) },
+        )
     }
     editing?.let { s -> EditDialog(s, value(s), { editing = null }) { set(s, it); editing = null } }
 }
@@ -311,10 +347,19 @@ fun BoardCard(onUpdate: () -> Unit) {
             if (board != null) {
                 Spacer(Modifier.height(12.dp))
                 if (board.canUpdateOverUsb) {
-                    OutlinedButton(onUpdate, Modifier.fillMaxWidth()) {
-                        Icon(Icons.Rounded.SystemUpdate, null)
-                        Spacer(Modifier.width(8.dp))
-                        Text("Update firmware")
+                    LaunchedEffect(Unit) { if (Updater.latest.isEmpty()) Updater.checkLatest() }
+                    when {
+                        Updater.latest.isEmpty() || Mesh.firmware.isEmpty() -> {}
+                        isNewer(Updater.latest, Mesh.firmware) -> OutlinedButton(onUpdate, Modifier.fillMaxWidth()) {
+                            Icon(Icons.Rounded.SystemUpdate, null)
+                            Spacer(Modifier.width(8.dp))
+                            Text("Update to ${Updater.latest.substringBeforeLast('.')}")
+                        }
+                        else -> Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Rounded.Check, null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                            Spacer(Modifier.width(8.dp))
+                            Text("Up to date", style = MaterialTheme.typography.bodyMedium)
+                        }
                     }
                 } else {
                     Text(
@@ -404,7 +449,7 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                     ) {
                         Icon(Icons.Rounded.SystemUpdate, null)
                         Spacer(Modifier.width(10.dp))
-                        Text(if (Updater.error.isNotEmpty()) "Try again" else if (Updater.latest == Mesh.firmware) "Reinstall ${Updater.latest}" else "Install ${Updater.latest}")
+                        Text(if (Updater.error.isNotEmpty()) "Try again" else "Install ${Updater.latest}")
                     }
                 }
             }

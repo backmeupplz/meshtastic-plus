@@ -471,6 +471,26 @@ object Mesh {
         main.postDelayed({ if (link == null) connectUsb(ask = false) }, 4000)
     }
 
+    /** 100 = clear node list (favorites stay), 99 = settings back to defaults, 94 = everything incl. keys and Bluetooth pairings. */
+    fun reset(kind: Int) {
+        admin(Pb().uint(kind, 1)) // nodedb_reset / factory_reset_config / factory_reset_device
+        status = "Resetting, the node restarts…"
+        if (kind == 100) nodes.values.filter { !it.favorite && it.num != myNum }.forEach { nodes.remove(it.num) }
+        else prefs().edit { remove("named") } // its name is back to the default: offer to pick one again
+        val address = current
+        if (kind == 94 && address != null && address != USB) {
+            // The node forgot our pairing, so the old keys can't work: forget them too and pair again once it's back.
+            main.postDelayed({
+                closeLink()
+                ctx.getSystemService(BluetoothManager::class.java).adapter?.getRemoteDevice(address)?.let { d ->
+                    runCatching { d.javaClass.getMethod("removeBond").invoke(d) } // hidden API, no public way to unpair
+                }
+                status = "Restarting the node…"
+            }, 1000)
+            main.postDelayed({ connectBle(address) }, 12_000)
+        }
+    }
+
     fun setFavorite(num: Long, favorite: Boolean) {
         admin(Pb().uint(if (favorite) 39 else 40, num)) // set_favorite_node / remove_favorite_node, stored on the node
         nodes[num]?.let { nodes[num] = it.copy(favorite = favorite) }
