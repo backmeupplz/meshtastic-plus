@@ -246,7 +246,7 @@ fun NearbyNodes(onPick: (BluetoothDevice) -> Unit) {
 
 /** Meshtastic RegionCode values (config.proto), minus the amateur-radio bands that need a license. */
 private val REGIONS = listOf(
-    1 to "United States", 3 to "Europe 868 MHz", 2 to "Europe 433 MHz", 6 to "Australia / New Zealand",
+    1 to "United States, Canada, Mexico", 3 to "Europe & UK 868 MHz", 2 to "Europe & UK 433 MHz", 6 to "Australia / New Zealand",
     11 to "New Zealand 865 MHz", 22 to "Australia / New Zealand 433 MHz", 26 to "Brazil", 4 to "China",
     10 to "India", 5 to "Japan", 24 to "Kazakhstan 863 MHz", 23 to "Kazakhstan 433 MHz", 7 to "Korea",
     17 to "Malaysia 919 MHz", 16 to "Malaysia 433 MHz", 25 to "Nepal", 21 to "Philippines 915 MHz",
