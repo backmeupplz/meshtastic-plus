@@ -241,6 +241,8 @@ object Mesh {
         connected = false
         status = ""
         rooms.clear()
+        nodes.clear() // each node has its own node list and favorites
+        myNum = 0
     }
 
     /** User pressed Disconnect: also forget the node so we don't auto-reconnect next launch. */

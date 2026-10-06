@@ -1019,7 +1019,7 @@ fun Bubble(m: Message, showName: Boolean) {
                         Spacer(Modifier.width(4.dp))
                         val (icon, label) = when (m.status) {
                             "✓" -> Icons.Rounded.Done to if (m.peer != 0L) "Delivered" else "Relayed by the mesh"
-                            "✗" -> Icons.Rounded.ErrorOutline to "Not delivered"
+                            "✗" -> Icons.Rounded.ErrorOutline to if (m.peer != 0L) "Not delivered" else "Not confirmed"
                             else -> Icons.Rounded.Schedule to "Sending"
                         }
                         Icon(icon, label, Modifier.size(14.dp), tint = faded)
@@ -1029,7 +1029,8 @@ fun Bubble(m: Message, showName: Boolean) {
         }
         if (failed) {
             Text(
-                (if (m.peer != 0L) "Not delivered" else "Nobody heard it") + " · Tap to retry",
+                // Room messages have no delivery receipts, only "someone relayed it"; missing that isn't proof of failure.
+                if (m.peer != 0L) "Not delivered · Tap to retry" else "Not confirmed · Tap to resend",
                 Modifier.padding(top = 2.dp, end = 4.dp),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.error,
