@@ -504,7 +504,7 @@ private val CCCD = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
 
 /**
  * Meshtastic BLE API: write ToRadio, read FromRadio until empty, FromNum notifies when there's more.
- * autoConnect=true makes Android reconnect by itself whenever the node comes back in range.
+ * After a drop, gatt.connect() makes Android reconnect by itself whenever the node comes back in range.
  */
 @SuppressLint("MissingPermission")
 @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION") // pre-Android 13 GATT APIs, used only below SDK 33
@@ -517,7 +517,8 @@ class BleLink(ctx: Context, private val device: BluetoothDevice) : BluetoothGatt
     private val timer = Handler(Looper.getMainLooper())
     private var toRadio: BluetoothGattCharacteristic? = null
     private var fromRadio: BluetoothGattCharacteristic? = null
-    private val gatt = device.connectGatt(ctx, true, this, BluetoothDevice.TRANSPORT_LE)
+    // Direct connect is fast; after a drop, gatt.connect() waits in the background until the node is back in range.
+    private val gatt = device.connectGatt(ctx, false, this, BluetoothDevice.TRANSPORT_LE)
 
     override fun send(toRadio: ByteArray) = enqueue { g -> this.toRadio?.let { write(g, it, toRadio) } ?: false }
 
@@ -571,6 +572,7 @@ class BleLink(ctx: Context, private val device: BluetoothDevice) : BluetoothGatt
             g.requestMtu(512)
         } else {
             synchronized(this) { ops.clear(); busy = false; readQueued = false }
+            g.connect()
             Mesh.linkDown(this, "Node out of reach, will reconnect automatically…")
         }
     }
@@ -588,6 +590,7 @@ class BleLink(ctx: Context, private val device: BluetoothDevice) : BluetoothGatt
     override fun onServicesDiscovered(g: BluetoothGatt, status: Int) {
         val s = g.getService(SERVICE)
         if (s == null) { Mesh.linkDown(this, "Not a Meshtastic device"); return }
+        g.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH) // ~4x faster config download
         toRadio = s.getCharacteristic(TO_RADIO)
         fromRadio = s.getCharacteristic(FROM_RADIO)
         val num = s.getCharacteristic(FROM_NUM)

@@ -186,22 +186,45 @@ fun rememberBluetooth(onReady: () -> Unit): () -> Unit {
 /** Devices used before, with the current one checked. Tapping another one switches to it. */
 @Composable
 fun DeviceRows(onPick: (String) -> Unit) {
-    Mesh.saved.toList().forEach { (key, name) ->
-        if (key != USB && !Mesh.canUseBluetooth()) return@forEach
-        val current = key == Mesh.current
-        ElevatedCard({ if (!current) onPick(key) }, Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-            ListItem(
-                leadingContent = { Icon(if (key == USB) Icons.Rounded.Usb else Icons.Rounded.Bluetooth, null) },
-                headlineContent = { Text(name.ifEmpty { key }, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                supportingContent = {
-                    Text(if (current) Mesh.status else if (key == USB) "USB cable · tap to connect" else "Bluetooth · tap to switch")
-                },
-                trailingContent = {
-                    if (current) Icon(Icons.Rounded.Check, "Connected", tint = MaterialTheme.colorScheme.primary)
-                    else IconButton({ Mesh.forgetSaved(key) }) { Icon(Icons.Rounded.Close, "Forget this device") }
-                },
-                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-            )
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Mesh.saved.toList().forEach { (key, name) ->
+            if (key != USB && !Mesh.canUseBluetooth()) return@forEach
+            val current = key == Mesh.current
+            DeviceRow(
+                if (key == USB) Icons.Rounded.Usb else Icons.Rounded.Bluetooth,
+                name.ifEmpty { key },
+                if (current) Mesh.status else if (key == USB) "USB cable" else "Bluetooth",
+                highlighted = current,
+                onClick = { if (!current) onPick(key) },
+            ) {
+                if (current) Icon(Icons.Rounded.Check, "Connected", Modifier.padding(end = 12.dp), tint = MaterialTheme.colorScheme.primary)
+                else IconButton({ Mesh.forgetSaved(key) }) {
+                    Icon(Icons.Rounded.Close, "Forget this device", Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun DeviceRow(
+    icon: ImageVector, title: String, subtitle: String, highlighted: Boolean = false,
+    onClick: () -> Unit, trailing: @Composable () -> Unit = {},
+) {
+    Surface(
+        onClick = onClick,
+        shape = RoundedCornerShape(16.dp),
+        color = if (highlighted) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerHighest,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Row(Modifier.heightIn(min = 64.dp).padding(start = 16.dp, end = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            Icon(icon, null)
+            Spacer(Modifier.width(16.dp))
+            Column(Modifier.weight(1f).padding(vertical = 10.dp)) {
+                Text(title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+            }
+            trailing()
         }
     }
 }
@@ -316,15 +339,11 @@ fun NearbyNodes(onPick: (BluetoothDevice) -> Unit) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        fresh.forEach { (device, name) ->
-            ElevatedCard({ onPick(device) }, Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-                ListItem(
-                    leadingContent = { Icon(Icons.Outlined.Router, null) },
-                    headlineContent = { Text(name) },
-                    supportingContent = { Text("Tap to connect") },
-                    trailingContent = { Icon(Icons.Rounded.ChevronRight, null) },
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                )
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            fresh.forEach { (device, name) ->
+                DeviceRow(Icons.Outlined.Router, name, "Tap to connect", onClick = { onPick(device) }) {
+                    Icon(Icons.Rounded.ChevronRight, null, Modifier.padding(end = 12.dp))
+                }
             }
         }
     }
