@@ -459,6 +459,7 @@ object Mesh {
     /** nRF52: the node reboots into its bootloader, which takes new firmware over the same USB cable. */
     fun enterUpdateMode() {
         admin(Pb().uint(21, 1)) // enter_dfu_mode_request
+        updating = true // the bootloader can enumerate within 0.5s: don't let usbAttached() grab it
         main.postDelayed({ pauseForUpdate() }, 300) // let the request reach the node before we let go of the port
     }
 

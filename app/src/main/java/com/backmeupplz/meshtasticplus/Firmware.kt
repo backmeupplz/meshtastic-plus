@@ -68,7 +68,9 @@ object Updater {
         running = true; done = false; error = ""; progress = -1f
         val enterBootloader = !rescue && !inBootloader
         val usb = Mesh.appContext.getSystemService(UsbManager::class.java)
-        val before = if (enterBootloader) usb.deviceList.keys.toSet() else emptySet()
+        // The bootloader is a different USB device (e.g. 239a:0071 vs the firmware's 239a:4405). Without that check a
+        // node that merely restarts (e.g. after a settings change) looks like it's ready to be flashed.
+        val before = if (enterBootloader) usb.deviceList.values.map { it.vendorId to it.productId }.toSet() else emptySet()
         Thread {
             try {
                 ui { step = "Downloading firmware $version…" }
@@ -91,6 +93,9 @@ object Updater {
                     val dfu = Dfu(port)
                     try {
                         dfu.flash(dat, bin) { s, p -> ui { step = s; progress = p } }
+                        // The bootloader checks the image and starts it, which re-enumerates USB (<1s on a T114).
+                        val until = System.currentTimeMillis() + 40_000
+                        while (device.deviceName in usb.deviceList && System.currentTimeMillis() < until) Thread.sleep(500)
                     } catch (e: Exception) {
                         if (!dfu.started) inBootloader = false // never answered: it's still running its normal firmware
                         throw e
@@ -123,12 +128,12 @@ object Updater {
     }
 
     /** After the reboot the node comes back as a new USB device (the bootloader). */
-    private fun waitForBootloader(usb: UsbManager, before: Set<String>): UsbDevice {
+    private fun waitForBootloader(usb: UsbManager, before: Set<Pair<Int, Int>>): UsbDevice {
         ui { step = "Waiting for the node to restart…" }
         Thread.sleep(1500)
         repeat(40) {
-            val fresh = usb.deviceList.values.filter { it.deviceName !in before && UsbSerialProber.getDefaultProber().probeDevice(it) != null }
-            fresh.firstOrNull()?.let { return it }
+            val fresh = usb.deviceList.values.filter { (it.vendorId to it.productId) !in before && UsbSerialProber.getDefaultProber().probeDevice(it) != null }
+            fresh.firstOrNull()?.let { android.util.Log.i("Dfu", "bootloader candidate ${it.deviceName} ${it.productName} ${it.vendorId}:${it.productId}"); return it }
             Thread.sleep(500)
         }
         error("The node didn't come back in update mode. Unplug it, double-press its reset button, plug it in and try again.")
@@ -167,9 +172,8 @@ class Dfu(private val port: UsbSerialPort) {
             progress("Installing… ${100 * (i + 1) / chunks.size}%", (i + 1f) / chunks.size)
         }
         Thread.sleep(PAGE_WRITE_MS)
-        send(int32(5)) // stop: bootloader validates and activates
         progress("Finishing…", 1f)
-        Thread.sleep(eraseTime(bin.size) + ((bin.size / 4096) + 1) * PAGE_WRITE_MS)
+        send(int32(5)) // stop: bootloader validates and activates
     }
 
     private fun eraseTime(size: Int) = maxOf(500L, ((size / 4096) + 1) * 90L) // 89.7ms per 4K page
@@ -181,6 +185,7 @@ class Dfu(private val port: UsbSerialPort) {
         repeat(tries) {
             port.write(p, 5000)
             if (acked()) return
+            android.util.Log.w("Dfu", "no ack for packet $seq (try ${it + 1}/$tries)")
         }
         error(if (started) "The node stopped responding during the update. Try again." else "The node didn't switch to update mode.")
     }
@@ -193,6 +198,7 @@ class Dfu(private val port: UsbSerialPort) {
         while (frameMarks < 2) {
             if (System.currentTimeMillis() > deadline) return false
             val n = port.read(buf, 200)
+            if (n > 0 && !started) android.util.Log.i("Dfu", "rx " + buf.copyOf(n).joinToString("") { "%02x".format(it) })
             for (k in 0 until n) if (buf[k] == 0xC0.toByte()) frameMarks++
         }
         return true
