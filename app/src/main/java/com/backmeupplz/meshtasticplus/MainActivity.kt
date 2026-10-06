@@ -624,7 +624,7 @@ fun NodesTab(padding: PaddingValues, now: Long, onProfile: (Long) -> Unit) {
         if (favorites.isNotEmpty()) {
             header("Favorites")
             items(favorites, key = { "f${it.num}" }) { NodeRow(it, now, onProfile) }
-            header("Everyone")
+            if (others.isNotEmpty()) header("Everyone")
         }
         items(others, key = { it.num }) { NodeRow(it, now, onProfile) }
     }
@@ -694,7 +694,7 @@ fun ProfileSheet(num: Long, onDismiss: () -> Unit, onMessage: () -> Unit) {
                 OutlinedButton({ Mesh.setFavorite(num, !n.favorite) }, Modifier.weight(1f).height(52.dp), enabled = Mesh.connected) {
                     Icon(if (n.favorite) Icons.Rounded.Star else Icons.Outlined.StarBorder, null)
                     Spacer(Modifier.width(8.dp))
-                    Text(if (n.favorite) "Favorite" else "Add to favorites", maxLines = 1)
+                    Text(if (n.favorite) "Favorited" else "Favorite", maxLines = 1)
                 }
             }
         }

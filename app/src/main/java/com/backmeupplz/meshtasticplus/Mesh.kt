@@ -299,6 +299,8 @@ object Mesh {
         if (fr.has(7)) {
             connected = true
             status = "Connected"
+            // Nodes without GPS have no clock; without this their timestamps (last heard, message times) are garbage.
+            admin(Pb().fixed32(43, System.currentTimeMillis() / 1000)) // set_time_only
             if (!ready) askName = DEFAULT_NAME.matches(myLong) && !prefs().getBoolean("named", false)
             ready = true
             bleAddress?.let { address ->
@@ -346,6 +348,7 @@ object Mesh {
                 nodes[from]?.let { nodes[from] = it.copy(battery = m.long(1).toInt()) }
             }
             ROUTING_APP -> {
+                Log.i("Mesh", "routing reply for ${d.long(6)}: error ${Msg(payload).long(3)} from ${"%08x".format(from)}")
                 val i = messages.indexOfFirst { it.mine && it.id == d.long(6) }
                 if (i >= 0) {
                     // Broadcast: implicit ack = someone rebroadcast it. DM: real ack from the recipient. error_reason != 0 = gave up.
