@@ -304,6 +304,11 @@ object Mesh {
         add(Message(id, myLong, text, System.currentTimeMillis(), mine = true, status = "…", from = myNum))
     }
 
+    fun retry(m: Message) {
+        messages.remove(m)
+        send(m.text)
+    }
+
     fun setOwner(long: String, short: String) {
         val admin = Pb().msg(32, Pb().str(2, long).str(3, short)) // AdminMessage.set_owner
         val packet = Pb().fixed32(2, myNum).msg(4, Pb().uint(1, ADMIN_APP).msg(2, admin)).fixed32(6, Random.nextLong(1, 0xFFFFFFFF))

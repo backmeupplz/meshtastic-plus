@@ -542,9 +542,11 @@ fun Bubble(m: Message, showSender: Boolean) {
                     color = nodeColor(m.from),
                 )
             }
+            val failed = m.mine && m.status == "✗"
             Surface(
                 shape = RoundedCornerShape(20.dp),
                 color = if (m.mine) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHigh,
+                modifier = Modifier.clickable(enabled = failed && Mesh.connected) { Mesh.retry(m) },
             ) {
                 Column(Modifier.padding(start = 14.dp, end = 14.dp, top = 8.dp, bottom = 6.dp)) {
                     SelectionContainer { Text(m.text, style = MaterialTheme.typography.bodyLarge) }
@@ -562,6 +564,14 @@ fun Bubble(m: Message, showSender: Boolean) {
                         }
                     }
                 }
+            }
+            if (failed) {
+                Text(
+                    "Nobody heard it · Tap to retry",
+                    Modifier.padding(top = 2.dp, end = 4.dp),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
             }
         }
     }
