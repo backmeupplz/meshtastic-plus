@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mesh: three linked nodes inside the adaptive-icon safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:strokeColor="#67EA94" android:strokeWidth="4" android:strokeLineCap="round"
+        android:pathData="M54,38 L38,66 L70,66 Z" />
+    <path android:fillColor="#67EA94"
+        android:pathData="M54,30a8,8 0 1,0 0.01,0 M38,58a8,8 0 1,0 0.01,0 M70,58a8,8 0 1,0 0.01,0" />
+</vector>
