@@ -174,7 +174,7 @@ private val RESETS = listOf(
         "Every setting goes back to factory defaults: role, radio, region, name and private rooms (you'll need new invites). The node keeps its identity and Bluetooth pairing, and messages on this phone stay. It restarts, and you'll pick its region again.",
         "Reset"),
     Reset(94, "Factory reset", "Erase everything, as if it were new",
-        "Erases everything on the node: settings, rooms, node list, its encryption keys and Bluetooth pairings. Others will see it as a new node. It restarts, and you'll pair it again with the PIN on its screen, then pick its region and name. Messages on this phone stay.",
+        "Erases everything on the node: settings, rooms, node list, its encryption keys and Bluetooth pairings. Others will see it as a new node. It restarts and leaves Your devices: pair it again like a new node, with the PIN on its screen, then pick its region and name. Messages on this phone stay.",
         "Erase everything"),
 )
 

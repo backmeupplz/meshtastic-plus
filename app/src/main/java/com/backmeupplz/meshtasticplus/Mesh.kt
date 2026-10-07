@@ -503,17 +503,24 @@ object Mesh {
         else prefs().edit { remove("named") } // its name is back to the default: offer to pick one again
         val address = current
         if (kind == 94 && address != null && address != USB) {
-            // The node forgot our pairing, so the old keys can't work: forget them too and pair again once it's back.
+            // The node erased its half of our pairing, so this device entry is dead: drop it and let the user pair the
+            // node again as a new one (it shows up in the scan once it's no longer in Your devices).
             main.postDelayed({
-                closeLink()
-                ctx.getSystemService(BluetoothManager::class.java).adapter?.getRemoteDevice(address)?.let { d ->
-                    runCatching { d.javaClass.getMethod("removeBond").invoke(d) } // hidden API, no public way to unpair
-                }
-                status = "Restarting the node…"
-            }, 1000)
-            main.postDelayed({ connectBle(address) }, 12_000)
+                prefs().edit { remove("ble") } // first, so the bond receiver doesn't report the unpairing as a failure
+                val unpaired = unpair(address)
+                forgetSaved(address)
+                disconnect()
+                status = if (unpaired) "Factory reset done. Find the node below and pair it again with the new PIN on its screen."
+                else "Factory reset done. Remove it in the phone's Bluetooth settings, then find it below and pair it again."
+            }, 1500) // let the reset request reach the node before we drop the link
         }
     }
+
+    /** Forgets the phone's pairing with [address]. Android has no public API for this; removeBond is the hidden one. */
+    private fun unpair(address: String): Boolean = runCatching {
+        val d = ctx.getSystemService(BluetoothManager::class.java).adapter.getRemoteDevice(address)
+        d.bondState == BluetoothDevice.BOND_NONE || d.javaClass.getMethod("removeBond").invoke(d) as Boolean
+    }.getOrDefault(false)
 
     fun setFavorite(num: Long, favorite: Boolean) {
         admin(Pb().uint(if (favorite) 39 else 40, num)) // set_favorite_node / remove_favorite_node, stored on the node
