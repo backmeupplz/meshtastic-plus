@@ -6,7 +6,7 @@ Package: `com.borodutch.meshplus` · Bundle: `app/build/outputs/bundle/release/a
 
 **App name** (≤30): `Mesh+ for Meshtastic`
 
-**Short description** (≤80): `Chat over Meshtastic radios with no internet or cell service. Simple and private.`
+**Short description** (≤80): `Chat over Meshtastic radios with no internet or cell service. Simple, private.`
 
 **Full description** (≤4000):
 

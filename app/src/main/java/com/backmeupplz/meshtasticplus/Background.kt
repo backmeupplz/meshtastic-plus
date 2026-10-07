@@ -1,5 +1,7 @@
 package com.backmeupplz.meshtasticplus
 
+import android.telephony.PhoneNumberUtils
+import java.util.Locale
 import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
@@ -91,12 +93,13 @@ object Notify {
         if (ctx.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return
         channels(ctx)
         val dm = m.peer != 0L
+        val text = relayLine(m.text)?.summary() ?: if (dm) m.text else "${m.name}: ${m.text}"
         val open = Intent(ctx, MainActivity::class.java).putExtra("convo", m.convo).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         val n = NotificationCompat.Builder(ctx, MESSAGES)
             .setSmallIcon(android.R.drawable.stat_notify_chat)
             .setContentTitle(if (dm) m.name else Mesh.rooms[m.channel]?.title ?: "Room")
-            .setContentText(if (dm) m.text else "${m.name}: ${m.text}")
-            .setStyle(NotificationCompat.BigTextStyle().bigText(if (dm) m.text else "${m.name}: ${m.text}"))
+            .setContentText(text)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setAutoCancel(true)
             .setContentIntent(PendingIntent.getActivity(ctx, m.convo.hashCode(), open, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
             .build()
@@ -125,6 +128,74 @@ private val SMS_COMMAND_RE = Regex("""^/sms\s+(\+?[0-9()-]{3,20})\s+(.+)$""", Re
 
 /** What the relay posts; clients use these to spot a relay room. */
 val RELAY_PREFIXES = listOf("SMS from ", "Incoming call from ", "Missed call from ", "Relay on")
+
+/**
+ * A relay room line, parsed so Mesh+ shows a texting thread instead of the wire text. The wire text stays plain
+ * English on purpose: other Meshtastic apps (and older Mesh+) still read and send it as-is.
+ */
+sealed interface RelayLine {
+    data class Sms(val number: String, val body: String, val incoming: Boolean) : RelayLine
+    data class Status(val number: String, val sent: Boolean) : RelayLine
+    data class Call(val number: String, val what: String) : RelayLine
+    data class Info(val text: String) : RelayLine
+}
+
+private val SMS_FROM_RE = Regex("""^SMS from (.+?): (.*)$""", RegexOption.DOT_MATCHES_ALL)
+private val SMS_TO_RE = Regex("""^SMS to (\S+) (sent|failed)""")
+private val CALL_RE = Regex("""^(Incoming call|Missed call) from (\S+)$""")
+private val CALL_ENDED_RE = Regex("""^Call from (\S+) ended$""")
+
+fun relayLine(text: String): RelayLine? {
+    SMS_FROM_RE.find(text)?.let { return RelayLine.Sms(it.groupValues[1], it.groupValues[2], incoming = true) }
+    SMS_COMMAND_RE.find(text.trim())?.let { return RelayLine.Sms(it.groupValues[1], it.groupValues[2], incoming = false) }
+    SMS_TO_RE.find(text)?.let { return RelayLine.Status(it.groupValues[1], it.groupValues[2] == "sent") }
+    CALL_RE.find(text)?.let { return RelayLine.Call(it.groupValues[2], it.groupValues[1]) }
+    CALL_ENDED_RE.find(text)?.let { return RelayLine.Call(it.groupValues[1], "Call ended") }
+    if (text.startsWith("Relay on")) return RelayLine.Info("SMS relay turned on")
+    if (text.startsWith("Relay off")) return RelayLine.Info("SMS relay turned off")
+    return null
+}
+
+/** One line for notifications and the chat list. */
+fun RelayLine.summary() = when (this) {
+    is RelayLine.Sms -> if (incoming) "${prettyNumber(number)}: $body" else "To ${prettyNumber(number)}: $body"
+    is RelayLine.Status -> if (sent) "SMS to ${prettyNumber(number)} sent" else "SMS to ${prettyNumber(number)} failed"
+    is RelayLine.Call -> "$what from ${prettyNumber(number)}"
+    is RelayLine.Info -> text
+}
+
+fun prettyNumber(n: String): String = PhoneNumberUtils.formatNumber(n, Locale.getDefault().country) ?: n
+
+/** Digits and a leading plus: what the relay dials, and what SMS replies are matched on. */
+fun dialable(number: String) = number.filter { it.isDigit() || it == '+' }
+
+private val PART_RE = Regex("""^\((\d+)/(\d+)\) """)
+
+/**
+ * Joins the "(1/3) …" parts [splitForMesh] made back into one message.
+ * ponytail: only joins parts that arrive back to back from one sender; interleaved parts stay separate.
+ */
+fun joinParts(messages: List<Message>): List<Message> {
+    val out = mutableListOf<Message>()
+    var i = 0
+    while (i < messages.size) {
+        val m = messages[i]
+        val total = PART_RE.find(m.text)?.takeIf { it.groupValues[1] == "1" }?.groupValues?.get(2)?.toInt() ?: 0
+        val run = messages.subList(i, minOf(i + total, messages.size))
+        val whole = total > 1 && run.size == total && run.withIndex().all { (k, p) ->
+            p.from == m.from && p.mine == m.mine && p.status != "✗" &&
+                PART_RE.find(p.text)?.groupValues?.let { it[1] == "${k + 1}" && it[2] == "$total" } == true
+        }
+        if (whole) {
+            out += m.copy(text = run.joinToString("") { it.text.replaceFirst(PART_RE, "") }, status = run.last().status)
+            i += total
+        } else {
+            out += m
+            i++
+        }
+    }
+    return out
+}
 
 /**
  * SMS & call relay: this phone posts its incoming SMS and calls to a private room, and sends SMS that room's members
@@ -171,12 +242,23 @@ object Relay {
     /** A room message arrived: if it's "/sms <number> <text>" in the relay room, send that SMS. */
     fun command(m: Message) {
         if (!enabled || m.mine || m.peer != 0L || m.channel != channel()) return
-        val match = SMS_COMMAND_RE.find(m.text.trim()) ?: return
-        val number = match.groupValues[1].filter { it.isDigit() || it == '+' }
+        deliver(m.text, m.name)
+    }
+
+    /** Texting from the relay room on the relay phone itself: post the request so the room sees it, then send it. */
+    fun sendOwn(command: String) {
+        val ch = channel() ?: return
+        Mesh.send(command, ch, 0)
+        deliver(command, "this phone")
+    }
+
+    private fun deliver(command: String, askedBy: String) {
+        val match = SMS_COMMAND_RE.find(command.trim()) ?: return
+        val number = dialable(match.groupValues[1])
         runCatching {
             val sms = Mesh.appContext.getSystemService(SmsManager::class.java)
             sms.sendMultipartTextMessage(number, null, sms.divideMessage(match.groupValues[2]), null, null)
-        }.onSuccess { post("SMS to $number sent (asked by ${m.name})") }
+        }.onSuccess { post("SMS to $number sent (asked by $askedBy)") }
             .onFailure { post("SMS to $number failed: ${it.message}") }
     }
 

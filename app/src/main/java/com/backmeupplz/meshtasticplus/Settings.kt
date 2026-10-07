@@ -1,6 +1,10 @@
 package com.backmeupplz.meshtasticplus
 
+import android.content.Intent
+import android.provider.ContactsContract
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,6 +15,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.outlined.Contacts
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Memory
 import androidx.compose.material.icons.rounded.Check
@@ -21,6 +26,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -617,10 +623,18 @@ fun RelayScreen(onBack: () -> Unit) {
 
 /** Write an SMS that the room's relay phone sends: becomes "/sms <number> <text>". */
 @Composable
-fun SmsDialog(prefill: String, onDismiss: () -> Unit, onSend: (String) -> Unit) {
-    var number by remember { mutableStateOf(prefill) }
+fun SmsDialog(onDismiss: () -> Unit, onSend: (String) -> Unit) {
+    var number by remember { mutableStateOf("") }
     var text by remember { mutableStateOf("") }
-    val digits = number.filter { it.isDigit() || it == '+' }
+    val digits = dialable(number)
+    val ctx = LocalContext.current
+    // The system picker hands back just the chosen number, so no contacts permission is needed.
+    val pick = rememberLauncherForActivityResult(StartActivityForResult()) { r ->
+        val uri = r.data?.data ?: return@rememberLauncherForActivityResult
+        ctx.contentResolver.query(uri, arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER), null, null, null)?.use {
+            if (it.moveToFirst()) number = it.getString(0).orEmpty()
+        }
+    }
     val command = "$SMS_COMMAND $digits ${text.trim()}"
     val tooLong = command.toByteArray().size > 200 // one mesh message
     AlertDialog(
@@ -633,7 +647,12 @@ fun SmsDialog(prefill: String, onDismiss: () -> Unit, onSend: (String) -> Unit) 
                 Text("The relay phone texts this from its own number.", color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(12.dp))
                 OutlinedTextField(number, { number = it }, label = { Text("Phone number") }, singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone))
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    trailingIcon = {
+                        IconButton({ pick.launch(Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI)) }) {
+                            Icon(Icons.Outlined.Contacts, "Pick a contact")
+                        }
+                    })
                 Spacer(Modifier.height(8.dp))
                 OutlinedTextField(text, { text = it }, label = { Text("Message") }, maxLines = 5, isError = tooLong,
                     supportingText = if (tooLong) ({ Text("Too long for one mesh message") }) else null)

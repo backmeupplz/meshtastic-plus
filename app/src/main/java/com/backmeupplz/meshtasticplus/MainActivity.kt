@@ -110,6 +110,24 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.Date
+import android.telephony.PhoneNumberUtils
+import java.util.Locale
+import androidx.compose.animation.core.Animatable
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.IntOffset
+import kotlin.math.roundToInt
+import kotlinx.coroutines.launch
+import androidx.compose.material.icons.automirrored.rounded.Reply
+import androidx.compose.material.icons.automirrored.outlined.CallMissed
+import androidx.compose.material.icons.outlined.Call
 
 private val Green = Color(0xFF2E9E50)
 private val Amber = Color(0xFFE8A400)
@@ -682,7 +700,7 @@ fun ConversationRow(icon: ImageVector, title: String, convo: String, onOpen: (St
         },
         supportingContent = {
             Text(
-                last?.let { (if (it.mine) "You" else it.name) + ": " + it.text } ?: "No messages yet",
+                last?.let { relayLine(it.text)?.summary() ?: ((if (it.mine) "You" else it.name) + ": " + it.text) } ?: "No messages yet",
                 maxLines = 1, overflow = TextOverflow.Ellipsis,
             )
         },
@@ -1071,9 +1089,12 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
         Notify.clear(convo)
         onDispose { Mesh.openConvo = null }
     }
-    // A room someone's phone relays SMS into: offer to text through it.
-    val relayed = room != null && messages.any { m -> !m.mine && RELAY_PREFIXES.any { m.text.startsWith(it) } }
+    // A room someone's phone relays SMS into (or this phone's own relay room): offer to text through it.
+    val ownRelay = room != null && Relay.enabled && channel == Relay.channel()
+    val relayed = ownRelay || room != null && messages.any { m -> !m.mine && RELAY_PREFIXES.any { m.text.startsWith(it) } }
     var sms by remember { mutableStateOf(false) }
+    var replyTo by rememberSaveable(convo) { mutableStateOf<String?>(null) }
+    val send = { text: String -> if (ownRelay && text.startsWith("$SMS_COMMAND ")) Relay.sendOwn(text) else Mesh.send(text, channel, peer) }
 
     Scaffold(
         topBar = {
@@ -1104,7 +1125,6 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
                             Icon(if (node.favorite) Icons.Rounded.Star else Icons.Outlined.StarBorder, "Favorite")
                         }
                     }
-                    if (relayed) IconButton({ sms = true }) { Icon(Icons.Outlined.Sms, "Send SMS through the relay") }
                     if (room != null) IconButton({ invite = true }) { Icon(Icons.Rounded.QrCode2, "Invite") }
                     if (room != null && !room.primary) {
                         IconButton({ leave = true }) { Icon(Icons.AutoMirrored.Outlined.Logout, "Leave room") }
@@ -1112,7 +1132,13 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
                 },
             )
         },
-        bottomBar = { Composer(if (peer != 0L) "Message ${node?.name ?: ""}" else "Message ${room?.title ?: ""}") { Mesh.send(it, channel, peer) } },
+        bottomBar = {
+            Composer(
+                if (peer != 0L) "Message ${node?.name ?: ""}" else "Message ${room?.title ?: ""}",
+                replyTo = replyTo, onCancelReply = { replyTo = null },
+                onNewSms = if (relayed) ({ sms = true }) else null,
+            ) { send(it); replyTo = null }
+        },
     ) { padding ->
         if (messages.isEmpty()) {
             EmptyState(
@@ -1120,14 +1146,13 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
                 if (peer != 0L) "Messages here are end-to-end encrypted." else "Say hi! Everyone in this room will see it.",
             )
         } else {
-            MessageList(padding, messages, showNames = peer == 0L)
+            MessageList(padding, messages, showNames = peer == 0L, relay = relayed, onReply = { replyTo = it })
         }
     }
     if (invite && room != null) InviteSheet(room) { invite = false }
     if (sms) {
-        // Prefill whoever texted last, so replying is one tap.
-        val last = messages.lastOrNull { it.text.startsWith("SMS from ") }?.text?.removePrefix("SMS from ")?.substringBefore(':').orEmpty()
-        SmsDialog(last, onDismiss = { sms = false }) { command -> Mesh.send(command, channel, 0); sms = false }
+        // A new text to any number; answering a text is a swipe on its bubble.
+        SmsDialog(onDismiss = { sms = false }) { command -> send(command); sms = false }
     }
     if (leave && room != null) {
         AlertDialog(
@@ -1141,7 +1166,23 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
 }
 
 @Composable
-fun MessageList(padding: PaddingValues, messages: List<Message>, showNames: Boolean) {
+fun MessageList(padding: PaddingValues, all: List<Message>, showNames: Boolean, relay: Boolean = false, onReply: (String) -> Unit = {}) {
+    // In a relay room, "SMS to … sent" lines become the status of the text they answer instead of their own bubble.
+    val (messages, lines, sent) = remember(all, relay) {
+        val joined = joinParts(all)
+        val lines = if (relay) joined.associate { it.id to relayLine(it.text) } else emptyMap()
+        val sent = mutableMapOf<Long, Boolean>()
+        val waiting = mutableListOf<Pair<Long, String>>()
+        val hidden = mutableSetOf<Long>()
+        for (m in joined) when (val l = lines[m.id]) {
+            is RelayLine.Sms -> if (!l.incoming) waiting += m.id to dialable(l.number)
+            is RelayLine.Status -> waiting.firstOrNull { it.second == dialable(l.number) }?.let {
+                sent[it.first] = l.sent; waiting.remove(it); hidden += m.id
+            }
+            else -> {}
+        }
+        Triple(joined.filter { it.id !in hidden }, lines, sent)
+    }
     val list = rememberLazyListState()
     LaunchedEffect(messages.size) { list.animateScrollToItem(messages.lastIndex) }
     LazyColumn(
@@ -1154,7 +1195,104 @@ fun MessageList(padding: PaddingValues, messages: List<Message>, showNames: Bool
             val prev = messages.getOrNull(i - 1)
             val newDay = prev == null || day(prev.time) != day(m.time)
             if (newDay) DayChip(m.time)
-            Bubble(m, showName = showNames && (newDay || prev.from != m.from || prev.mine != m.mine))
+            when (val l = lines[m.id]) {
+                is RelayLine.Sms -> SmsBubble(m, l, sent[m.id], onReply)
+                is RelayLine.Call -> RelayChip(if (l.what == "Missed call") Icons.AutoMirrored.Outlined.CallMissed else Icons.Outlined.Call, "${l.what} · ${prettyNumber(l.number)}", m.time)
+                is RelayLine.Status -> RelayChip(Icons.Outlined.Sms, "${if (l.sent) "Sent" else "Couldn't send"} SMS to ${prettyNumber(l.number)}", m.time)
+                is RelayLine.Info -> RelayChip(Icons.Outlined.Sms, l.text, m.time)
+                null -> Bubble(m, showName = showNames && (newDay || prev.from != m.from || prev.mine != m.mine))
+            }
+        }
+    }
+}
+
+/** A call or relay notice: small and centered, it's about the phone, not a message from someone. */
+@Composable
+fun RelayChip(icon: ImageVector, text: String, t: Long) {
+    val time = remember(t) { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(t)) }
+    Box(Modifier.fillMaxWidth().padding(vertical = 4.dp), contentAlignment = Alignment.Center) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(icon, null, Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(Modifier.width(6.dp))
+            Text("$text · $time", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+    }
+}
+
+/**
+ * A relayed text: texts from outside numbers on the left, texts the room sends out on the right. Swipe an incoming
+ * text left to answer it by SMS.
+ */
+@Composable
+fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) -> Unit) {
+    val time = remember(m.time) { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(m.time)) }
+    val number = dialable(sms.number)
+    val canReply = sms.incoming && number.count { it.isDigit() } >= 3 // not "Google" and other named senders
+    val reach = with(LocalDensity.current) { 72.dp.toPx() }
+    val drag = remember { Animatable(0f) }
+    val scope = rememberCoroutineScope()
+    val haptics = LocalHapticFeedback.current
+    Column(Modifier.fillMaxWidth(), horizontalAlignment = if (sms.incoming) Alignment.Start else Alignment.End) {
+        Text(
+            if (sms.incoming) prettyNumber(sms.number) else "To ${prettyNumber(sms.number)}" + if (m.mine) "" else " · ${Mesh.nodes[m.from]?.name ?: m.name}",
+            Modifier.padding(start = 4.dp, end = 4.dp, top = 6.dp, bottom = 2.dp),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.primary,
+        )
+        Box(contentAlignment = Alignment.CenterEnd) {
+            if (canReply && drag.value < 0f) {
+                Icon(
+                    Icons.AutoMirrored.Rounded.Reply, null,
+                    Modifier.padding(end = 8.dp).size(24.dp).graphicsLayer { alpha = (-drag.value / reach).coerceIn(0f, 1f) },
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            }
+            Surface(
+                shape = RoundedCornerShape(20.dp),
+                color = if (sms.incoming) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.primary,
+                modifier = Modifier.widthIn(max = 300.dp)
+                    .offset { IntOffset(drag.value.roundToInt(), 0) }
+                    .then(if (!canReply) Modifier else Modifier
+                        .pointerInput(number) {
+                            detectHorizontalDragGestures(
+                                onDragEnd = {
+                                    if (drag.value <= -reach) onReply(number)
+                                    scope.launch { drag.animateTo(0f) }
+                                },
+                                onDragCancel = { scope.launch { drag.animateTo(0f) } },
+                            ) { _, dx ->
+                                val next = (drag.value + dx).coerceIn(-reach * 1.3f, 0f)
+                                if (drag.value > -reach && next <= -reach) haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                                scope.launch { drag.snapTo(next) }
+                            }
+                        }
+                        .semantics { customActions = listOf(CustomAccessibilityAction("Reply by SMS") { onReply(number); true }) }),
+            ) {
+                Column(Modifier.padding(start = 14.dp, end = 14.dp, top = 8.dp, bottom = 6.dp)) {
+                    SelectionContainer { Text(sms.body, style = MaterialTheme.typography.bodyLarge) }
+                    Row(Modifier.align(Alignment.End), verticalAlignment = Alignment.CenterVertically) {
+                        val faded = LocalContentColor.current.copy(alpha = 0.7f)
+                        Text(time, style = MaterialTheme.typography.labelSmall, color = faded)
+                        if (!sms.incoming) {
+                            Spacer(Modifier.width(4.dp))
+                            val (icon, label) = when (sent) {
+                                true -> Icons.Rounded.Done to "Sent by the relay phone"
+                                false -> Icons.Rounded.ErrorOutline to "The relay phone couldn't send it"
+                                null -> Icons.Rounded.Schedule to "Waiting for the relay phone"
+                            }
+                            Icon(icon, label, Modifier.size(14.dp), tint = faded)
+                        }
+                    }
+                }
+            }
+        }
+        if (sent == false) {
+            Text(
+                "The relay phone couldn't send this SMS",
+                Modifier.padding(top = 2.dp, end = 4.dp),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.error,
+            )
         }
     }
 }
@@ -1223,19 +1361,42 @@ fun Bubble(m: Message, showName: Boolean) {
     }
 }
 
+/** [replyTo]: a phone number; what's typed then goes out as an SMS through the room's relay phone. */
 @Composable
-fun Composer(placeholder: String, onSend: (String) -> Unit) {
+fun Composer(
+    placeholder: String, replyTo: String? = null, onCancelReply: () -> Unit = {}, onNewSms: (() -> Unit)? = null,
+    onSend: (String) -> Unit,
+) {
     var text by rememberSaveable { mutableStateOf("") }
-    val tooLong = text.toByteArray().size > 200 // firmware text payload limit
+    val payload = if (replyTo != null) "$SMS_COMMAND $replyTo ${text.trim()}" else text.trim()
+    val tooLong = payload.toByteArray().size > 200 // firmware text payload limit
     val canSend = Mesh.connected && text.isNotBlank() && !tooLong
     Surface(tonalElevation = 3.dp) {
+      Column(Modifier.navigationBarsPadding().imePadding()) {
+        if (replyTo != null) {
+            Row(Modifier.padding(start = 20.dp, end = 8.dp, top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.AutoMirrored.Rounded.Reply, null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.width(8.dp))
+                Text("SMS to ${prettyNumber(replyTo)}", Modifier.weight(1f), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                IconButton(onCancelReply) { Icon(Icons.Rounded.Close, "Cancel SMS reply") }
+            }
+        }
         Row(
-            Modifier.navigationBarsPadding().imePadding().padding(horizontal = 12.dp, vertical = 8.dp),
+            Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            if (onNewSms != null && replyTo == null) {
+                IconButton(onNewSms, enabled = Mesh.connected) { Icon(Icons.Outlined.Sms, "Text a phone number") }
+                Spacer(Modifier.width(4.dp))
+            }
             OutlinedTextField(
                 text, { text = it }, Modifier.weight(1f),
-                placeholder = { Text(if (Mesh.connected) placeholder else "Waiting for the node…", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                placeholder = {
+                    Text(
+                        when { !Mesh.connected -> "Waiting for the node…"; replyTo != null -> "Text ${prettyNumber(replyTo)}"; else -> placeholder },
+                        maxLines = 1, overflow = TextOverflow.Ellipsis,
+                    )
+                },
                 shape = RoundedCornerShape(28.dp),
                 maxLines = 5,
                 isError = tooLong,
@@ -1243,9 +1404,10 @@ fun Composer(placeholder: String, onSend: (String) -> Unit) {
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
             )
             Spacer(Modifier.width(8.dp))
-            FilledIconButton({ onSend(text.trim()); text = "" }, Modifier.size(52.dp), enabled = canSend) {
-                Icon(Icons.AutoMirrored.Rounded.Send, "Send")
+            FilledIconButton({ onSend(payload); text = "" }, Modifier.size(52.dp), enabled = canSend) {
+                Icon(Icons.AutoMirrored.Rounded.Send, if (replyTo != null) "Send SMS" else "Send")
             }
         }
+      }
     }
 }
