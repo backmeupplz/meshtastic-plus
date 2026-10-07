@@ -56,6 +56,8 @@ import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.ContentPaste
 import androidx.compose.material.icons.outlined.Hub
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.NotificationsOff
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.outlined.QrCodeScanner
@@ -669,7 +671,14 @@ fun ConversationRow(icon: ImageVector, title: String, convo: String, onOpen: (St
     val unread = Mesh.unread(convo)
     ListItem(
         leadingContent = { Icon(icon, null) },
-        headlineContent = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = if (unread > 0) FontWeight.SemiBold else null) },
+        headlineContent = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(title, Modifier.weight(1f, fill = false), maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = if (unread > 0) FontWeight.SemiBold else null)
+                if (Mesh.isMuted(convo)) {
+                    Icon(Icons.Outlined.NotificationsOff, "Muted", Modifier.padding(start = 6.dp).size(16.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        },
         supportingContent = {
             Text(
                 last?.let { (if (it.mine) "You" else it.name) + ": " + it.text } ?: "No messages yet",
@@ -1085,6 +1094,10 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
                     }
                 },
                 actions = {
+                    val muted = Mesh.isMuted(convo)
+                    IconButton({ Mesh.toggleMute(convo) }) {
+                        Icon(if (muted) Icons.Outlined.NotificationsOff else Icons.Outlined.Notifications, if (muted) "Unmute" else "Mute")
+                    }
                     if (peer != 0L && node != null) {
                         IconButton({ Mesh.setFavorite(peer, !node.favorite) }, enabled = Mesh.connected) {
                             Icon(if (node.favorite) Icons.Rounded.Star else Icons.Outlined.StarBorder, "Favorite")

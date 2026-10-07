@@ -87,6 +87,7 @@ object Notify {
     fun message(m: Message) {
         val ctx = Mesh.appContext
         if (Mesh.visible && Mesh.openConvo == m.convo) return
+        if (Mesh.isMuted(m.convo, m.me)) return
         if (ctx.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return
         channels(ctx)
         val dm = m.peer != 0L

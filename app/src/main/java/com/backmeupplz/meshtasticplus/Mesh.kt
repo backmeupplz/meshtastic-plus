@@ -96,6 +96,7 @@ object Mesh {
     val nodes = mutableStateMapOf<Long, Node>()
     val rooms = mutableStateMapOf<Int, Room>() // by channel index, 0 = primary
     val lastRead = mutableStateMapOf<String, Long>() // conversation -> time it was last open
+    private val muted = mutableStateListOf<String>() // "node/conversation" that don't notify
     val saved = mutableStateListOf<Pair<String, String>>() // devices used before: Bluetooth address (or USB) to name
     var current by mutableStateOf<String?>(null) // key of the device we're on, as in [saved]
     private val statusState = mutableStateOf("")
@@ -146,6 +147,7 @@ object Mesh {
             }
         }
         runCatching { JSONObject(prefs().getString("read", "{}")!!).run { keys().forEach { lastRead[it] = getLong(it) } } }
+        muted += prefs().getStringSet("muted", emptySet())!!
         runCatching {
             val a = JSONArray(prefs().getString("saved", "[]"))
             for (i in 0 until a.length()) a.getJSONArray(i).run { saved += getString(0) to getString(1) }
@@ -445,6 +447,15 @@ object Mesh {
     fun unread(convo: String): Int {
         val since = lastRead["$myNum/$convo"] ?: 0
         return messages.count { !it.mine && it.convo == convo && it.time > since }
+    }
+
+    /** Muted conversations still collect messages and unread counts, they just don't notify. Per node, like rooms. */
+    fun isMuted(convo: String, me: Long = myNum) = "$me/$convo" in muted
+
+    fun toggleMute(convo: String) {
+        val key = "$myNum/$convo"
+        if (!muted.remove(key)) muted += key
+        prefs().edit { putStringSet("muted", muted.toSet()) }
     }
 
     fun markRead(convo: String) {
