@@ -106,27 +106,22 @@ object Updater {
                 } else {
                     ui { Mesh.pauseForUpdate() }
                 }
-                val device = waitForBootloader(usb, before)
-                ui { step = "Waiting for USB permission…" }
-                askPermission(usb, device)
-                val driver = UsbSerialProber.getDefaultProber().probeDevice(device) ?: error("The node isn't in update mode")
-                val port = driver.ports[0]
-                port.open(usb.openDevice(device) ?: error("Couldn't open the node"))
-                try {
-                    port.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE)
-                    port.dtr = true
-                    val dfu = Dfu(port)
+                var device = waitForBootloader(usb, before)
+                // A transfer can hiccup (a USB prompt popping up mid-update, a sagging supply). Once the bootloader has
+                // answered, starting over is safe, so retry a couple of times before bothering the user.
+                var attempt = 1
+                while (true) {
                     try {
-                        dfu.flash(dat, bin) { s, p -> ui { step = s; progress = p } }
-                        // The bootloader checks the image and starts it, which re-enumerates USB (<1s on a T114).
-                        val until = System.currentTimeMillis() + 40_000
-                        while (device.deviceName in usb.deviceList && System.currentTimeMillis() < until) Thread.sleep(500)
+                        flashOverUsb(usb, device, dat, bin)
+                        break
                     } catch (e: Exception) {
-                        if (!dfu.started) inBootloader = false // never answered: it's still running its normal firmware
-                        throw e
+                        android.util.Log.w("Dfu", "attempt $attempt failed", e)
+                        if (!inBootloader || attempt == 3) throw e
+                        attempt++
+                        ui { step = "Connection hiccup, retrying ($attempt of 3)…"; progress = -1f }
+                        Thread.sleep(2000)
+                        device = waitForBootloader(usb, emptySet())
                     }
-                } finally {
-                    runCatching { port.close() }
                 }
                 inBootloader = false
                 ui { step = "Done! The node is restarting with $version."; progress = 1f; done = true; running = false; Mesh.resumeAfterUpdate() }
@@ -135,6 +130,30 @@ object Updater {
                 ui { error = e.message ?: e.toString(); running = false; if (!inBootloader && Mesh.updating) Mesh.resumeAfterUpdate() }
             }
         }.start()
+    }
+
+    private fun flashOverUsb(usb: UsbManager, device: UsbDevice, dat: ByteArray, bin: ByteArray) {
+        ui { step = "Waiting for USB permission…" }
+        askPermission(usb, device)
+        val driver = UsbSerialProber.getDefaultProber().probeDevice(device) ?: error("The node isn't in update mode")
+        val port = driver.ports[0]
+        port.open(usb.openDevice(device) ?: error("Couldn't open the node"))
+        try {
+            port.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE)
+            port.dtr = true
+            val dfu = Dfu(port)
+            try {
+                dfu.flash(dat, bin) { s, p -> ui { step = s; progress = p } }
+                // The bootloader checks the image and starts it, which re-enumerates USB (<1s on a T114).
+                val until = System.currentTimeMillis() + 40_000
+                while (device.deviceName in usb.deviceList && System.currentTimeMillis() < until) Thread.sleep(500)
+            } catch (e: Exception) {
+                inBootloader = dfu.started // answered = definitely in update mode; never answered = still running its firmware
+                throw e
+            }
+        } finally {
+            runCatching { port.close() }
+        }
     }
 
     /** The release's legacy-DFU package for [target] (manifest + .dat + .bin), as published for the nRF52 bootloaders. */

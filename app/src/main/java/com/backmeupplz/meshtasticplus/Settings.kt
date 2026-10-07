@@ -440,8 +440,8 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                     }
                     if (onBle || (Updater.inBootloader && Mesh.transport == "Bluetooth")) {
                         Text(
-                            "Bluetooth updates are experimental: if one fails, the node waits in update mode until you plug it in and tap Try again. " +
-                                "It takes a few minutes; keep the phone close. A USB cable is faster and proven.",
+                            "Over Bluetooth this takes about 10 minutes; keep the app open and the phone close. " +
+                                "If it's interrupted, the node waits in update mode: plug it in and tap Try again. A USB cable takes about a minute.",
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Spacer(Modifier.height(16.dp))
