@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mesh+ Privacy Policy</title>
+<style>
+  :root { --bg: #f7f8fc; --fg: #1a1c22; --muted: #5b6070; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #11141b; --fg: #e3e5ec; --muted: #a2a8b8; } }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 32px; margin: 0 0 4px; }
+  h2 { font-size: 20px; margin: 32px 0 8px; }
+  .muted { color: var(--muted); }
+  a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <p><a href="/">← Mesh+</a></p>
+  <h1>Privacy Policy</h1>
+  <p class="muted">Last updated October 7, 2026</p>
+
+  <p>
+    Mesh+ is an Android app for Meshtastic radios. It has no accounts, no servers of its own, no ads and no analytics,
+    and it doesn't collect, sell or share your personal data with us or anyone else. This page explains what the app
+    does handle and where that data goes.
+  </p>
+
+  <h2>Messages and your radio</h2>
+  <p>
+    Messages you send and receive travel between your phone and your own Meshtastic radio over Bluetooth or a USB
+    cable, and from there over the radio mesh to other people's radios. Room messages are encrypted with the room's
+    key and direct messages are end-to-end encrypted by the Meshtastic firmware. Your message history, the list of
+    radios you've used and your settings are stored only on your phone, inside the app's private storage, and are
+    deleted when you uninstall the app.
+  </p>
+
+  <h2>Bluetooth and USB</h2>
+  <p>
+    The app uses Bluetooth only to find and connect to Meshtastic radios, and USB only to talk to a radio plugged into
+    your phone. It doesn't use your location.
+  </p>
+
+  <h2>Internet</h2>
+  <p>
+    The app connects to the internet only when you open the firmware screen or update a radio: it asks
+    api.meshtastic.org which firmware versions exist and downloads the firmware package from GitHub
+    (raw.githubusercontent.com). Those requests don't include any personal data; like any web request they reveal your
+    IP address to those servers.
+  </p>
+
+  <h2>SMS and call relay (optional)</h2>
+  <p>
+    The relay is off unless you turn it on. When you turn it on, Android asks you for permission to receive and send
+    SMS and to read your phone state and call log. While it's on, the app forwards the text, sender number and time of
+    SMS messages your phone receives, and the number of incoming calls, to the private Meshtastic room you chose, and it
+    sends SMS that members of that room request. This data goes only over the radio mesh to people in that room; it is
+    never sent to us or to any server. A notification shows while the relay is on, and you can turn it off at any time
+    in the app. Anyone who has that room's invite can read the relayed texts and send SMS from your number, so share
+    the invite only with people you trust.
+  </p>
+
+  <h2>Notifications</h2>
+  <p>The app shows notifications for new messages and while it stays connected to your radio in the background.</p>
+
+  <h2>Children</h2>
+  <p>Mesh+ isn't directed at children under 13 and doesn't knowingly collect their data.</p>
+
+  <h2>Changes and contact</h2>
+  <p>
+    If this policy changes, the new version will be posted on this page with a new date. Questions? Open an issue at
+    <a href="https://github.com/backmeupplz/meshtastic-plus/issues">github.com/backmeupplz/meshtastic-plus</a>.
+  </p>
+</main>
+</body>
+</html>

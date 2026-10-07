@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.plugin.compose")
@@ -7,18 +9,31 @@ android {
     namespace = "com.backmeupplz.meshtasticplus"
     compileSdk = 37
     defaultConfig {
-        applicationId = "com.backmeupplz.meshtasticplus"
+        applicationId = "com.borodutch.meshplus"
         minSdk = 31
         targetSdk = 36
-        versionCode = 2
-        versionName = "0.2"
+        versionCode = 3
+        versionName = "0.3"
     }
     buildFeatures { compose = true }
+    // Upload key for Play (and the APKs on meshplus.app); kept outside the repo. Without it, release builds use the debug key.
+    val upload = Properties().apply {
+        val f = file("${System.getProperty("user.home")}/.android/meshplus-upload.properties")
+        if (f.exists()) f.inputStream().use(::load)
+    }
+    signingConfigs {
+        if (upload.isNotEmpty()) create("upload") {
+            storeFile = file(upload.getProperty("storeFile"))
+            storePassword = upload.getProperty("storePassword")
+            keyAlias = upload.getProperty("keyAlias")
+            keyPassword = upload.getProperty("keyPassword")
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName("debug") // personal sideload build; use a real key for Play
+            signingConfig = signingConfigs.findByName("upload") ?: signingConfigs.getByName("debug")
         }
     }
 }
