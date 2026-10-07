@@ -520,3 +520,121 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
         }
     }
 }
+
+private val RELAY_PERMISSIONS = listOf(
+    android.Manifest.permission.RECEIVE_SMS, android.Manifest.permission.SEND_SMS,
+    android.Manifest.permission.READ_PHONE_STATE, android.Manifest.permission.READ_CALL_LOG, // caller numbers
+)
+
+/** Turns this phone into an SMS & call relay for one private room. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RelayScreen(onBack: () -> Unit) {
+    BackHandler(onBack = onBack)
+    val ctx = androidx.compose.ui.platform.LocalContext.current
+    val hasPhone = ctx.packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_TELEPHONY)
+    val rooms = Mesh.rooms.values.filter { !it.public }.sortedBy { it.index }
+    var error by remember { mutableStateOf("") }
+    val ask = androidx.activity.compose.rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions(),
+    ) {
+        val granted = RELAY_PERMISSIONS.all { p -> ctx.checkSelfPermission(p) == android.content.pm.PackageManager.PERMISSION_GRANTED }
+        if (granted) { error = ""; Relay.turn(true) } else error = "The relay needs the SMS and phone permissions. You can allow them in Android's app settings."
+    }
+    Scaffold(topBar = {
+        TopAppBar(
+            navigationIcon = { IconButton(onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") } },
+            title = { Text("SMS relay") },
+        )
+    }) { padding ->
+        Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(24.dp)) {
+            Text(
+                "Turn this phone into a relay: the texts and calls it receives show up in a private room, and people in that room " +
+                    "can send texts through it. Handy when one phone has signal and everyone else only has the mesh.",
+            )
+            if (!hasPhone) {
+                Spacer(Modifier.height(16.dp))
+                Text("This phone can't send or receive SMS, so it can't be a relay.", color = MaterialTheme.colorScheme.error)
+                return@Column
+            }
+            Spacer(Modifier.height(24.dp))
+            Text("Room", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+            if (rooms.isEmpty()) Text("Create a private room for the relay first.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            rooms.forEach { r ->
+                Row(
+                    Modifier.fillMaxWidth().clickable(enabled = !Relay.enabled) { Relay.useRoom(r.name) },
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    RadioButton(Relay.room == r.name, { Relay.useRoom(r.name) }, enabled = !Relay.enabled)
+                    Text(r.title)
+                }
+            }
+            if (rooms.none { it.name == "Relay" } && !Relay.enabled) {
+                OutlinedButton({ Mesh.createRoom("Relay")?.let { Relay.useRoom("Relay") } }, enabled = Mesh.connected) {
+                    Text("Create a room called Relay")
+                }
+            }
+            Spacer(Modifier.height(24.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text("Relay SMS and calls", style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        if (Relay.enabled) "On: relaying to ${Relay.room}" else "Off",
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Switch(
+                    Relay.enabled,
+                    { on ->
+                        if (on) ask.launch((RELAY_PERMISSIONS + android.Manifest.permission.POST_NOTIFICATIONS).toTypedArray())
+                        else Relay.turn(false)
+                    },
+                    enabled = Relay.enabled || (rooms.any { it.name == Relay.room } && Mesh.connected),
+                )
+            }
+            if (error.isNotEmpty()) Text(error, color = MaterialTheme.colorScheme.error)
+            Spacer(Modifier.height(16.dp))
+            Surface(color = MaterialTheme.colorScheme.errorContainer, shape = RoundedCornerShape(16.dp)) {
+                Text(
+                    "Anyone in ${Relay.room.ifEmpty { "the relay room" }} can read the texts and calls this phone receives and send SMS " +
+                        "from its number. Only invite people you trust. Texts are sent at your carrier's usual rates.",
+                    Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onErrorContainer,
+                )
+            }
+            Spacer(Modifier.height(16.dp))
+            Text(
+                "Keep Mesh+ connected to a node on this phone; a notification shows while the relay is on. Invite others with the " +
+                    "room's QR code. In Mesh+ they get an SMS button in the room; from other Meshtastic apps they can send " +
+                    "\"$SMS_COMMAND +15551234567 your message\". Long texts arrive as several numbered messages.",
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+/** Write an SMS that the room's relay phone sends: becomes "/sms <number> <text>". */
+@Composable
+fun SmsDialog(prefill: String, onDismiss: () -> Unit, onSend: (String) -> Unit) {
+    var number by remember { mutableStateOf(prefill) }
+    var text by remember { mutableStateOf("") }
+    val digits = number.filter { it.isDigit() || it == '+' }
+    val command = "$SMS_COMMAND $digits ${text.trim()}"
+    val tooLong = command.toByteArray().size > 200 // one mesh message
+    AlertDialog(
+        onDismiss,
+        confirmButton = { TextButton({ onSend(command) }, enabled = digits.count { it.isDigit() } >= 3 && text.isNotBlank() && !tooLong) { Text("Send") } },
+        dismissButton = { TextButton(onDismiss) { Text("Cancel") } },
+        title = { Text("Send SMS") },
+        text = {
+            Column {
+                Text("The relay phone texts this from its own number.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Spacer(Modifier.height(12.dp))
+                OutlinedTextField(number, { number = it }, label = { Text("Phone number") }, singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone))
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(text, { text = it }, label = { Text("Message") }, maxLines = 5, isError = tooLong,
+                    supportingText = if (tooLong) ({ Text("Too long for one mesh message") }) else null)
+            }
+        },
+    )
+}

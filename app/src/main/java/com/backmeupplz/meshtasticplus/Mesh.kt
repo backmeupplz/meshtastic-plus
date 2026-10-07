@@ -98,7 +98,12 @@ object Mesh {
     val lastRead = mutableStateMapOf<String, Long>() // conversation -> time it was last open
     val saved = mutableStateListOf<Pair<String, String>>() // devices used before: Bluetooth address (or USB) to name
     var current by mutableStateOf<String?>(null) // key of the device we're on, as in [saved]
-    var status by mutableStateOf("")
+    private val statusState = mutableStateOf("")
+    var status: String
+        get() = statusState.value
+        set(v) { statusState.value = v; if (::ctx.isInitialized) MeshService.refresh(ctx) }
+    var visible = false // an activity is on screen
+    var openConvo: String? = null // conversation on screen, so its messages don't notify
     var transport by mutableStateOf("") // "Bluetooth" / "USB cable"
     var active by mutableStateOf(false) // a link exists: pairing, connecting or connected
     var ready by mutableStateOf(false) // synced with the node at least once on this link
@@ -193,6 +198,7 @@ object Mesh {
 
     fun connectBle(device: BluetoothDevice) {
         disconnect()
+        MeshService.start(ctx)
         active = true
         transport = "Bluetooth"
         current = device.address
@@ -230,6 +236,7 @@ object Mesh {
             port.dtr = true
             port.rts = true
             link = UsbLink(port)
+            MeshService.start(ctx)
             viaUsb = true
             transport = "USB cable"
             current = USB
@@ -271,6 +278,7 @@ object Mesh {
     fun forget() {
         prefs().edit { remove("ble") }
         disconnect()
+        MeshService.stop(ctx)
     }
 
     private fun savedName(key: String) = saved.firstOrNull { it.first == key }?.second?.ifEmpty { null }
@@ -360,6 +368,8 @@ object Mesh {
                 saved.add(0, key to myLong)
                 saveSaved()
             }
+            MeshService.refresh(ctx)
+            Relay.flush() // SMS/calls that came in while the node was still connecting
         }
         fr.msg(2)?.let(::packet)
     }
@@ -395,8 +405,10 @@ object Mesh {
                 val rx = p.long(7) * 1000
                 val time = if (rx > 1_600_000_000_000) rx else System.currentTimeMillis()
                 val dm = p.long(2) == myNum && from != myNum
-                add(Message(id, nodes[from]?.name ?: "!%08x".format(from), payload.decodeToString(), time,
-                    mine = from == myNum, from = from, channel = if (dm) 0 else p.long(3).toInt(), peer = if (dm) from else 0, me = myNum))
+                val m = Message(id, nodes[from]?.name ?: "!%08x".format(from), payload.decodeToString(), time,
+                    mine = from == myNum, from = from, channel = if (dm) 0 else p.long(3).toInt(), peer = if (dm) from else 0, me = myNum)
+                add(m)
+                if (!m.mine) { Notify.message(m); Relay.command(m) }
             }
             NODEINFO_APP -> user(from, Msg(payload))
             TELEMETRY_APP -> Msg(payload).msg(2)?.let { m -> // DeviceMetrics

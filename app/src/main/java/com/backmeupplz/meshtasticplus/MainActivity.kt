@@ -25,6 +25,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import android.content.pm.PackageManager
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -62,6 +64,7 @@ import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.SignalCellularAlt
+import androidx.compose.material.icons.outlined.Sms
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material.icons.rounded.Add
@@ -112,6 +115,12 @@ private val Amber = Color(0xFFE8A400)
 /** A meshtastic.org/e/ invite the app was opened with, waiting for the user to confirm. */
 val pendingInvite = mutableStateOf<String?>(null)
 
+/** Conversation a notification was tapped for. */
+val pendingConvo = mutableStateOf<String?>(null)
+
+/** The SMS relay screen is open (reached from Settings). */
+val relayScreen = mutableStateOf(false)
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,12 +135,23 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        Mesh.visible = true
+    }
+
+    override fun onStop() {
+        Mesh.visible = false
+        super.onStop()
+    }
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         handle(intent)
     }
 
     private fun handle(intent: Intent?) {
+        intent?.getStringExtra("convo")?.let { pendingConvo.value = it }
         when (intent?.action) {
             // Opened by plugging a node in: Android already granted USB access, so just connect.
             UsbManager.ACTION_USB_DEVICE_ATTACHED -> Mesh.usbAttached()
@@ -155,6 +175,7 @@ fun App() {
         Mesh.region == 0 || editingRegion -> RegionScreen(editing = editingRegion) { editingRegion = false }
         Mesh.askName -> NameScreen(editing = false) {}
         nodeSettings -> NodeSettingsScreen({ nodeSettings = false }) { firmware = false }
+        relayScreen.value -> RelayScreen { relayScreen.value = false }
         open != null -> ConversationScreen(open!!, onBack = { open = null }, onProfile = { profile = it })
         else -> HomeScreen(
             onOpen = { open = it },
@@ -163,6 +184,17 @@ fun App() {
             onEditRegion = { editingRegion = true },
             onNodeSettings = { nodeSettings = true },
         )
+    }
+    // Messages arrive in the background now; ask once we're connected (Android 13+ needs the user's OK).
+    // The connection notification was posted before permission existed and stays hidden until posted again.
+    val notifications = rememberLauncherForActivityResult(RequestPermission()) { MeshService.refresh(Mesh.appContext) }
+    LaunchedEffect(Mesh.ready) {
+        if (Mesh.ready && Mesh.appContext.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            notifications.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+    LaunchedEffect(pendingConvo.value, Mesh.ready) {
+        if (Mesh.ready) pendingConvo.value?.let { open = it; pendingConvo.value = null }
     }
     if (Mesh.ready) {
         profile?.let { num ->
@@ -807,6 +839,12 @@ fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: (
                 modifier = Modifier.clickable { onDismiss(); onNodeSettings() },
             )
             ListItem(
+                leadingContent = { Icon(Icons.Outlined.Sms, null) },
+                headlineContent = { Text("SMS relay") },
+                supportingContent = { Text(if (Relay.enabled) "On · relaying to ${Relay.room}" else "Share this phone's texts and calls with a room") },
+                modifier = Modifier.clickable { onDismiss(); relayScreen.value = true },
+            )
+            ListItem(
                 leadingContent = { Icon(if (Mesh.transport == "Bluetooth") Icons.Rounded.Bluetooth else Icons.Rounded.Usb, null) },
                 headlineContent = { Text("Your devices") },
                 supportingContent = { Text("Connected over ${Mesh.transport} · tap to switch") },
@@ -1018,6 +1056,14 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
     var leave by remember { mutableStateOf(false) }
     val messages = Mesh.messages.filter { it.convo == convo }
     LaunchedEffect(messages.size) { Mesh.markRead(convo) }
+    DisposableEffect(convo) {
+        Mesh.openConvo = convo
+        Notify.clear(convo)
+        onDispose { Mesh.openConvo = null }
+    }
+    // A room someone's phone relays SMS into: offer to text through it.
+    val relayed = room != null && messages.any { m -> !m.mine && RELAY_PREFIXES.any { m.text.startsWith(it) } }
+    var sms by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -1044,6 +1090,7 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
                             Icon(if (node.favorite) Icons.Rounded.Star else Icons.Outlined.StarBorder, "Favorite")
                         }
                     }
+                    if (relayed) IconButton({ sms = true }) { Icon(Icons.Outlined.Sms, "Send SMS through the relay") }
                     if (room != null) IconButton({ invite = true }) { Icon(Icons.Rounded.QrCode2, "Invite") }
                     if (room != null && !room.primary) {
                         IconButton({ leave = true }) { Icon(Icons.AutoMirrored.Outlined.Logout, "Leave room") }
@@ -1063,6 +1110,11 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
         }
     }
     if (invite && room != null) InviteSheet(room) { invite = false }
+    if (sms) {
+        // Prefill whoever texted last, so replying is one tap.
+        val last = messages.lastOrNull { it.text.startsWith("SMS from ") }?.text?.removePrefix("SMS from ")?.substringBefore(':').orEmpty()
+        SmsDialog(last, onDismiss = { sms = false }) { command -> Mesh.send(command, channel, 0); sms = false }
+    }
     if (leave && room != null) {
         AlertDialog(
             { leave = false },
