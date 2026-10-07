@@ -12,8 +12,8 @@ android {
         applicationId = "com.borodutch.meshplus"
         minSdk = 31
         targetSdk = 36
-        versionCode = 3
-        versionName = "0.3"
+        versionCode = 4
+        versionName = "0.4"
     }
     buildFeatures { compose = true }
     // Upload key for Play (and the APKs on meshplus.app); kept outside the repo. Without it, release builds use the debug key.
