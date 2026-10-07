@@ -499,7 +499,8 @@ object Mesh {
     fun reset(kind: Int) {
         admin(Pb().uint(kind, 1)) // nodedb_reset / factory_reset_config / factory_reset_device
         // T114s (2.6/2.7) often hang right after wiping, with Bluetooth already off: they only come back on a reset press.
-        status = if (kind == 100) "Clearing the node list…" else "Resetting… if the node's screen doesn't restart, press its reset button"
+        // The confirmation dialog says so; the status line only fits ~40 characters.
+        status = if (kind == 100) "Clearing the node list…" else "Resetting the node…"
         if (kind == 100) nodes.values.filter { !it.favorite && it.num != myNum }.forEach { nodes.remove(it.num) }
         else prefs().edit { remove("named") } // its name is back to the default: offer to pick one again
         val address = current
