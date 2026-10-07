@@ -1146,7 +1146,7 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
                 if (peer != 0L) "Messages here are end-to-end encrypted." else "Say hi! Everyone in this room will see it.",
             )
         } else {
-            MessageList(padding, messages, showNames = peer == 0L, relay = relayed, onReply = { replyTo = it }, onResend = { send(it) })
+            MessageList(padding, messages, showNames = peer == 0L, relay = relayed, onReply = { replyTo = it }, onResend = { m, command -> Mesh.remove(m); send(command) })
         }
     }
     if (invite && room != null) InviteSheet(room) { invite = false }
@@ -1168,7 +1168,7 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
 @Composable
 fun MessageList(
     padding: PaddingValues, all: List<Message>, showNames: Boolean,
-    relay: Boolean = false, onReply: (String) -> Unit = {}, onResend: (String) -> Unit = {},
+    relay: Boolean = false, onReply: (String) -> Unit = {}, onResend: (Message, String) -> Unit = { _, _ -> },
 ) {
     // In a relay room, "SMS to … sent" lines become the status of the text they answer instead of their own bubble.
     val (messages, lines, sent) = remember(all, relay) {
@@ -1232,7 +1232,7 @@ fun RelayChip(icon: ImageVector, text: String, t: Long) {
  * text left to answer it by SMS.
  */
 @Composable
-fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) -> Unit, onResend: (String) -> Unit) {
+fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) -> Unit, onResend: (Message, String) -> Unit) {
     val time = remember(m.time) { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(m.time)) }
     val number = dialable(sms.number)
     // Room messages carry no delivery receipt, so silence from the relay phone is the only sign a request got lost.
@@ -1267,7 +1267,7 @@ fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) 
                 shape = RoundedCornerShape(20.dp),
                 color = if (sms.incoming) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.widthIn(max = 300.dp)
-                    .clickable(enabled = canResend) { onResend("$SMS_COMMAND $number ${sms.body}") }
+                    .clickable(enabled = canResend) { onResend(m, "$SMS_COMMAND $number ${sms.body}") }
                     .offset { IntOffset(drag.value.roundToInt(), 0) }
                     .then(if (!canReply) Modifier else Modifier
                         .pointerInput(number) {

@@ -456,6 +456,9 @@ object Mesh {
         send(m.text, m.channel, m.peer)
     }
 
+    /** Drops [m] from this phone's history only (e.g. a failed SMS request that was just sent again). */
+    fun remove(m: Message) = all.removeAll { it.id == m.id && it.me == m.me }
+
     fun unread(convo: String): Int {
         val since = lastRead["$myNum/$convo"] ?: 0
         return messages.count { !it.mine && it.convo == convo && it.time > since }
