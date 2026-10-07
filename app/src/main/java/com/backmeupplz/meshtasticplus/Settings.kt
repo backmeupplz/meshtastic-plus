@@ -339,7 +339,7 @@ fun BoardCard(onUpdate: () -> Unit) {
                     Text(board?.name ?: "Unknown board", style = MaterialTheme.typography.titleMedium)
                     Text(
                         listOfNotNull(board?.chip, Mesh.firmware.ifEmpty { null }?.let { "Firmware $it" }).joinToString(" · ") +
-                            "\nNode ID !%08x".format(Mesh.myNum),
+                            "\nNode ID !%08x".format(Mesh.myNum) + (Mesh.nodes[Mesh.myNum]?.power?.let { "\n$it" } ?: ""),
                         style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }

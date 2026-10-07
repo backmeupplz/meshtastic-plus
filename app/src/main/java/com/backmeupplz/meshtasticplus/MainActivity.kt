@@ -741,7 +741,7 @@ fun ProfileSheet(num: Long, onDismiss: () -> Unit, onMessage: () -> Unit) {
             Detail(Icons.Outlined.Schedule, heard(n, now))
             hops(n)?.let { Detail(Icons.Outlined.Hub, it) }
             n.snr?.let { Detail(Icons.Outlined.SignalCellularAlt, "Signal %.1f dB SNR".format(it)) }
-            n.battery?.let { Detail(Icons.Outlined.BatteryFull, if (it > 100) "Plugged in" else "Battery $it%") }
+            n.power?.let { Detail(Icons.Outlined.BatteryFull, it) }
             Spacer(Modifier.height(24.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Button(onMessage, Modifier.weight(1f).height(52.dp)) {

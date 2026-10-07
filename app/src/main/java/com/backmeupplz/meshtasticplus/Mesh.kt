@@ -52,8 +52,14 @@ fun convoKey(channel: Int, peer: Long) = if (peer != 0L) "dm:$peer" else "ch:$ch
 data class Node(
     val num: Long, val long: String = "", val short: String = "",
     val lastHeard: Long = 0, val snr: Float? = null, val hops: Int? = null,
-    val favorite: Boolean = false, val battery: Int? = null,
+    val favorite: Boolean = false, val battery: Int? = null, val voltage: Float? = null,
 ) {
+    /** "Battery 62% · 3.71 V" / "Plugged in · 4.18 V": the voltage shows whether a battery is there and charging. */
+    val power get() = listOfNotNull(
+        battery?.let { if (it > 100) "Plugged in" else "Battery $it%" },
+        voltage?.takeIf { it > 0f }?.let { "%.2f V".format(it) },
+    ).joinToString(" · ").ifEmpty { null }
+
     val name get() = long.ifEmpty { id }
     val id get() = "!%08x".format(num)
     fun online(now: Long) = now - lastHeard < 2 * 3600_000 // same 2h rule as the official apps
@@ -319,6 +325,7 @@ object Mesh {
                 hops = if (ni.has(9)) ni.long(9).toInt() else old.hops,
                 favorite = ni.long(10) == 1L,
                 battery = ni.msg(6)?.takeIf { it.has(1) }?.long(1)?.toInt() ?: old.battery,
+                voltage = ni.msg(6)?.let(::voltage) ?: old.voltage,
             )
             ni.msg(2)?.let { user(num, it) }
         }
@@ -346,6 +353,9 @@ object Mesh {
         }
         fr.msg(2)?.let(::packet)
     }
+
+    /** DeviceMetrics.voltage (a float, so it arrives as fixed32 bits). */
+    private fun voltage(m: Msg) = if (m.has(2)) Float.fromBits(m.long(2).toInt()) else null
 
     private fun room(index: Int, settings: ByteArray, primary: Boolean) =
         Msg(settings).let { Room(index, it.str(3), it.bytes(2) ?: ByteArray(0), primary, settings) }
@@ -379,8 +389,8 @@ object Mesh {
                     mine = from == myNum, from = from, channel = if (dm) 0 else p.long(3).toInt(), peer = if (dm) from else 0, me = myNum))
             }
             NODEINFO_APP -> user(from, Msg(payload))
-            TELEMETRY_APP -> Msg(payload).msg(2)?.takeIf { it.has(1) }?.let { m ->
-                nodes[from]?.let { nodes[from] = it.copy(battery = m.long(1).toInt()) }
+            TELEMETRY_APP -> Msg(payload).msg(2)?.let { m -> // DeviceMetrics
+                nodes[from]?.let { nodes[from] = it.copy(battery = if (m.has(1)) m.long(1).toInt() else it.battery, voltage = voltage(m) ?: it.voltage) }
             }
             ROUTING_APP -> {
                 Log.i("Mesh", "routing reply for ${d.long(6)}: error ${Msg(payload).long(3)} from ${"%08x".format(from)}")
