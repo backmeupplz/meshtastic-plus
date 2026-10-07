@@ -171,10 +171,10 @@ private val RESETS = listOf(
         "Your node forgets every other node it has heard, except favorites. They reappear as they're heard again. Handy when the list is full of nodes from far away.",
         "Clear"),
     Reset(99, "Reset settings", "Back to factory settings; keeps its identity and pairing",
-        "Every setting goes back to factory defaults: role, radio, region, name and private rooms (you'll need new invites). The node keeps its identity and Bluetooth pairing, and messages on this phone stay. It restarts, and you'll pick its region again.",
+        "Every setting goes back to factory defaults: role, radio, region, name and private rooms (you'll need new invites). The node keeps its identity and Bluetooth pairing, and messages on this phone stay. It restarts (if its screen doesn't, press its reset button), and you'll pick its region again.",
         "Reset"),
     Reset(94, "Factory reset", "Erase everything, as if it were new",
-        "Erases everything on the node: settings, rooms, node list, its encryption keys and Bluetooth pairings. Others will see it as a new node. It restarts and leaves Your devices: pair it again like a new node, with the PIN on its screen, then pick its region and name. Messages on this phone stay.",
+        "Erases everything on the node: settings, rooms, node list, its encryption keys and Bluetooth pairings. Others will see it as a new node. It restarts (if its screen doesn't within 15 seconds, press its reset button) and leaves Your devices: pair it again like a new node, with the PIN on its screen, then pick its region and name. Messages on this phone stay.",
         "Erase everything"),
 )
 

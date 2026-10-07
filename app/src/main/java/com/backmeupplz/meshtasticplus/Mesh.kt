@@ -498,7 +498,8 @@ object Mesh {
     /** 100 = clear node list (favorites stay), 99 = settings back to defaults, 94 = everything incl. keys and Bluetooth pairings. */
     fun reset(kind: Int) {
         admin(Pb().uint(kind, 1)) // nodedb_reset / factory_reset_config / factory_reset_device
-        status = "Resetting the node…"
+        // T114s (2.6/2.7) often hang right after wiping, with Bluetooth already off: they only come back on a reset press.
+        status = if (kind == 100) "Clearing the node list…" else "Resetting… if the node's screen doesn't restart, press its reset button"
         if (kind == 100) nodes.values.filter { !it.favorite && it.num != myNum }.forEach { nodes.remove(it.num) }
         else prefs().edit { remove("named") } // its name is back to the default: offer to pick one again
         val address = current
@@ -510,8 +511,8 @@ object Mesh {
                 val unpaired = unpair(address)
                 forgetSaved(address)
                 disconnect()
-                status = if (unpaired) "Factory reset done. Find the node below and pair it again with the new PIN on its screen."
-                else "Factory reset done. Remove it in the phone's Bluetooth settings, then find it below and pair it again."
+                status = (if (unpaired) "Factory reset sent." else "Factory reset sent. Remove the node in the phone's Bluetooth settings too.") +
+                    " If its screen doesn't restart within 15 seconds, press its reset button once. Then find it below and pair it with the new PIN."
             }, 1500) // let the reset request reach the node before we drop the link
         }
     }

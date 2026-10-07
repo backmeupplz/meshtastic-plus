@@ -344,7 +344,7 @@ fun NearbyNodes(onPick: (BluetoothDevice) -> Unit) {
         }
         Spacer(Modifier.height(8.dp))
         // nRF52 and ESP32 nodes derive their node number from the Bluetooth address's last 4 bytes.
-        val usbNum = Mesh.usbNum
+        val usbNum = if (Mesh.saved.any { it.first == USB }) Mesh.usbNum else 0L // only while it's still one of your devices
         fun isUsbNode(d: BluetoothDevice) = usbNum != 0L && d.address.replace(":", "").takeLast(8).toLongOrNull(16) == usbNum
         val fresh = found.values.filter { it.first.address !in known }.sortedByDescending { isUsbNode(it.first) }
         if (fresh.isEmpty()) {
