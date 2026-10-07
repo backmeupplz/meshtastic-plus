@@ -60,6 +60,8 @@ object Updater {
     var running by mutableStateOf(false)
     var done by mutableStateOf(false)
     var latest by mutableStateOf("") // newest stable version, e.g. 2.7.26.54e0d8d
+    /** Also offer Meshtastic's pre-releases ("alpha"): newer fixes, less testing. */
+    var prerelease by mutableStateOf(prefs().getBoolean("fwAlpha", false))
     var inBootloader = false // we already rebooted the node into update mode (a retry must not ask the firmware again)
 
     private fun prefs() = Mesh.appContext.getSharedPreferences("mesh", 0)
@@ -69,8 +71,11 @@ object Updater {
     fun checkLatest() = Thread {
         runCatching {
             val list = JSONObject(URL("https://api.meshtastic.org/github/firmware/list").readText())
-            val id = list.getJSONObject("releases").getJSONArray("stable").getJSONObject(0).getString("id")
-            ui { latest = id.removePrefix("v") }
+            val releases = list.getJSONObject("releases")
+            val newest = (if (prerelease) listOf("stable", "alpha") else listOf("stable"))
+                .map { releases.getJSONArray(it).getJSONObject(0).getString("id").removePrefix("v") }
+                .reduce { a, b -> if (isNewer(b, a)) b else a }
+            ui { latest = newest }
         }.onFailure { ui { error = "Couldn't check for updates. Is the phone online?" } }
     }.start()
 

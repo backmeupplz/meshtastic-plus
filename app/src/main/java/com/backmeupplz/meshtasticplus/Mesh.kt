@@ -505,6 +505,7 @@ object Mesh {
         if (kind == 100) nodes.values.filter { !it.favorite && it.num != myNum }.forEach { nodes.remove(it.num) }
         else prefs().edit { remove("named") } // its name is back to the default: offer to pick one again
         val address = current
+        val freezes = resetFreezes() // before disconnect() forgets the firmware version
         if (kind == 94 && address != null && address != USB) {
             // The node erased its half of our pairing, so this device entry is dead: drop it and let the user pair the
             // node again as a new one (it shows up in the scan once it's no longer in Your devices).
@@ -514,7 +515,8 @@ object Mesh {
                 forgetSaved(address)
                 disconnect()
                 status = (if (unpaired) "Factory reset sent." else "Factory reset sent. Remove the node in the phone's Bluetooth settings too.") +
-                    " If its screen doesn't restart within 15 seconds, press its reset button once. Then find it below and pair it with the new PIN."
+                    (if (freezes) " When its screen stops changing, press its reset button once (a firmware bug fixed in 2.8.1)." else "") +
+                    " Then find it below and pair it with the new PIN."
             }, 1500) // let the reset request reach the node before we drop the link
         }
     }

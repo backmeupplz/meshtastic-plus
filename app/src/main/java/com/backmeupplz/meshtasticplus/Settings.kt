@@ -169,6 +169,12 @@ val SETTINGS = listOf(
     )),
 )
 
+/** Firmware before 2.8.1 deadlocks halfway through a reset on boards with a screen (nested spiLock in MessageStore). */
+fun resetFreezes() = Mesh.firmware.isNotEmpty() && isNewer("2.8.1", Mesh.firmware)
+
+const val RESET_FREEZE_NOTE = "\n\nThis node's firmware freezes partway through a reset (fixed in 2.8.1). When its screen stops changing, " +
+    "press its reset button once and it finishes. Updating the firmware first avoids this."
+
 class Reset(val kind: Int, val title: String, val summary: String, val details: String, val confirm: String)
 
 private val RESETS = listOf(
@@ -176,10 +182,10 @@ private val RESETS = listOf(
         "Your node forgets every other node it has heard, except favorites. They reappear as they're heard again. Handy when the list is full of nodes from far away.",
         "Clear"),
     Reset(99, "Reset settings", "Back to factory settings; keeps its identity and pairing",
-        "Every setting goes back to factory defaults: role, radio, region, name and private rooms (you'll need new invites). The node keeps its identity and Bluetooth pairing, and messages on this phone stay. It restarts (if its screen doesn't, press its reset button), and you'll pick its region again.",
+        "Every setting goes back to factory defaults: role, radio, region, name and private rooms (you'll need new invites). The node keeps its identity and Bluetooth pairing, and messages on this phone stay. It restarts, and you'll pick its region again.",
         "Reset"),
     Reset(94, "Factory reset", "Erase everything, as if it were new",
-        "Erases everything on the node: settings, rooms, node list, its encryption keys and Bluetooth pairings. Others will see it as a new node. It restarts (if its screen doesn't within 15 seconds, press its reset button) and leaves Your devices: pair it again like a new node, with the PIN on its screen, then pick its region and name. Messages on this phone stay.",
+        "Erases everything on the node: settings, rooms, node list, its encryption keys and Bluetooth pairings. Others will see it as a new node. It restarts and leaves Your devices: pair it again like a new node, with the PIN on its screen, then pick its region and name. Messages on this phone stay.",
         "Erase everything"),
 )
 
@@ -292,7 +298,7 @@ fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
             dismissButton = { TextButton({ resetting = null }) { Text("Cancel") } },
             icon = { Icon(Icons.Rounded.RestartAlt, null) },
             title = { Text("${r.title}?") },
-            text = { Text(r.details) },
+            text = { Text(r.details + if (r.kind != 100 && resetFreezes()) RESET_FREEZE_NOTE else "") },
         )
     }
     editing?.let { s -> EditDialog(s, value(s), { editing = null }) { set(s, it); editing = null } }
@@ -360,10 +366,10 @@ fun BoardCard(onUpdate: () -> Unit) {
                             Spacer(Modifier.width(8.dp))
                             Text("Update to ${Updater.latest.substringBeforeLast('.')}")
                         }
-                        else -> Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Rounded.Check, null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                        else -> TextButton(onUpdate) { // still reachable: pre-releases, reinstall
+                            Icon(Icons.Rounded.Check, null, Modifier.size(18.dp))
                             Spacer(Modifier.width(8.dp))
-                            Text("Up to date", style = MaterialTheme.typography.bodyMedium)
+                            Text("Up to date · firmware options")
                         }
                     }
                 } else {
@@ -451,6 +457,22 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                         )
                         Spacer(Modifier.height(16.dp))
                     }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) {
+                            Text("Include pre-releases")
+                            Text(
+                                "Meshtastic's newest test builds: earlier fixes, less testing.",
+                                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Switch(Updater.prerelease, { on ->
+                            Updater.prerelease = on
+                            Mesh.appContext.getSharedPreferences("mesh", 0).edit().putBoolean("fwAlpha", on).apply()
+                            Updater.latest = ""
+                            Updater.checkLatest()
+                        })
+                    }
+                    Spacer(Modifier.height(16.dp))
                     Text(
                         "Your settings, rooms and messages stay on the node. If an update is interrupted the node waits in update mode; just try again.",
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -466,7 +488,10 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                     ) {
                         Icon(Icons.Rounded.SystemUpdate, null)
                         Spacer(Modifier.width(10.dp))
-                        Text(if (Updater.error.isNotEmpty()) "Try again" else "Install ${Updater.latest}")
+                        Text(
+                            if (Updater.error.isNotEmpty()) "Try again"
+                            else if (Updater.latest == Mesh.firmware) "Reinstall ${Updater.latest}" else "Install ${Updater.latest}",
+                        )
                     }
                 }
             }
