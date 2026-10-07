@@ -1,6 +1,6 @@
-# Meshtastic+
+# Mesh+
 
-A tiny Android app for Meshtastic: connect to your node, send and receive messages. That's it.
+A tiny Android app for [Meshtastic](https://meshtastic.org) radios: connect to your node, send and receive messages, keep it set up and updated. Download it at **[meshplus.app](https://meshplus.app)**.
 
 1. **Connect**: plug the node into your phone with a USB-C cable (the app opens by itself and the phone powers the node), or tap *Connect with Bluetooth*, pick your node and type the PIN from its screen.
 2. **Region**: a brand-new node stays silent until it knows its radio band, so the app asks once (pre-selected from your phone's country).
@@ -23,3 +23,7 @@ adb install app/build/outputs/apk/release/app-release.apk
 ```
 
 The protocol code is a hand-rolled minimal protobuf codec (`Proto.kt`), so there's no protobuf toolchain. `./gradlew test` checks it.
+
+The landing page lives in `docs/` and is served by GitHub Pages at meshplus.app.
+
+Mesh+ is an independent project, not affiliated with Meshtastic LLC. Meshtastic® is a registered trademark of Meshtastic LLC.

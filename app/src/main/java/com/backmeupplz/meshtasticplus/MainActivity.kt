@@ -251,7 +251,7 @@ fun SetupScreen(onRescue: () -> Unit) {
             Spacer(Modifier.height(56.dp))
             HeroIcon(Icons.Rounded.CellTower)
             Spacer(Modifier.height(24.dp))
-            Text("Meshtastic+", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.SemiBold)
+            Text("Mesh+", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(8.dp))
             Text(
                 "Connect your Meshtastic node to start chatting, no internet or cell service needed.",
