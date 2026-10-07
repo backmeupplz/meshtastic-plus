@@ -34,7 +34,8 @@ class ProtoTest {
 
     @Test fun deframeSkipsLogNoise() {
         val got = mutableListOf<ByteArray>()
-        val d = Deframer { got += it }
+        val text = mutableListOf<String>()
+        val d = Deframer({ got += it }) { text += it }
         val a = byteArrayOf(1, 2, 3)
         val stream = "INFO | boot\r\n".toByteArray() + frame(a) + byteArrayOf(0x94.toByte()) + frame(byteArrayOf(9))
         d.feed(stream.copyOfRange(0, 15)) // split mid-frame
@@ -42,5 +43,6 @@ class ProtoTest {
         assertEquals(2, got.size)
         assertArrayEquals(a, got[0])
         assertArrayEquals(byteArrayOf(9), got[1])
+        assertEquals(listOf("INFO | boot"), text) // console log between frames is kept for diagnostics
     }
 }

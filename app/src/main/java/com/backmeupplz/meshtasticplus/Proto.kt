@@ -72,17 +72,22 @@ class Msg(b: ByteArray) {
 /** Serial stream framing: 0x94 0xC3 len_hi len_lo payload. Anything else on the wire (debug logs) is skipped. */
 fun frame(b: ByteArray) = byteArrayOf(0x94.toByte(), 0xC3.toByte(), (b.size shr 8).toByte(), b.size.toByte()) + b
 
-class Deframer(private val onFrame: (ByteArray) -> Unit) {
+class Deframer(private val onFrame: (ByteArray) -> Unit, private val onText: (String) -> Unit = {}) {
     private var state = 0
     private var len = 0
     private var buf = ByteArray(0)
     private var n = 0
+    private val text = StringBuilder() // console output the node prints outside frames (boot log)
 
     fun feed(bytes: ByteArray) {
         for (b in bytes) {
             val x = b.toInt() and 0xFF
             when (state) {
-                0 -> if (x == 0x94) state = 1
+                0 -> when {
+                    x == 0x94 -> state = 1
+                    x == '\n'.code -> { if (text.isNotBlank()) onText(text.toString().trim()); text.clear() }
+                    x in 0x20..0x7E && text.length < 300 -> text.append(x.toChar())
+                }
                 1 -> state = if (x == 0xC3) 2 else if (x == 0x94) 1 else 0
                 2 -> { len = x shl 8; state = 3 }
                 3 -> {

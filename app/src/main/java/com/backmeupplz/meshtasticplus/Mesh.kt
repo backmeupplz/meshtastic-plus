@@ -340,6 +340,7 @@ object Mesh {
         }
         fr.msg(5)?.let { c -> c.fields.keys.forEach { configs[it] = c.bytes(it) ?: ByteArray(0) } } // Config: one section per frame
         fr.msg(5)?.bytes(6)?.let { region = Msg(it).long(7).toInt() } // Config.lora.region
+        fr.msg(6)?.let { Log.i("NodeLog", "${it.str(3)}: ${it.str(1)}") } // LogRecord, when the node's debug log is on
         fr.msg(13)?.let { firmware = it.str(1); hwModel = it.long(9).toInt(); hasWifi = it.long(4) == 1L } // DeviceMetadata
         fr.msg(10)?.let { c ->
             val index = c.long(1).toInt()
@@ -729,7 +730,7 @@ class BleLink(ctx: Context, private val device: BluetoothDevice) : BluetoothGatt
 
 /** Meshtastic serial API over USB (CP210x on Heltec V3, native USB CDC on newer boards). */
 class UsbLink(private val port: UsbSerialPort) : Link, SerialInputOutputManager.Listener {
-    private val deframer = Deframer { Mesh.fromRadio(this, it) }
+    private val deframer = Deframer({ Mesh.fromRadio(this, it) }) { Log.i("NodeLog", it) } // boot/console text between frames
     private val io = SerialInputOutputManager(port, this)
 
     init {

@@ -155,6 +155,11 @@ val SETTINGS = listOf(
             options = listOf(0L to "PIN on screen", 1L to "Fixed PIN", 2L to "No PIN")),
         Setting(7, 3, "Fixed PIN", "The 6-digit PIN phones type when pairing.", pin = true, visible = { get -> get(7, 2) == 1L }),
     )),
+    Group("Troubleshooting", listOf(
+        Setting(8, 6, "Debug log",
+            "Streams the node's internal log to this app, for diagnosing problems with a computer attached to the phone (adb logcat, tag NodeLog). Leave it off otherwise: it adds traffic between the node and the phone.",
+            toggle = true),
+    )),
     Group("Wi-Fi", listOf(
         Setting(4, 1, "Wi-Fi",
             "Connects the node to a Wi-Fi network, for internet gateways. On ESP32 boards Wi-Fi turns Bluetooth off.",
