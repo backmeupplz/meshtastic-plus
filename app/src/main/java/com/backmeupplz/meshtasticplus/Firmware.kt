@@ -59,7 +59,8 @@ object Updater {
     var error by mutableStateOf("")
     var running by mutableStateOf(false)
     var done by mutableStateOf(false)
-    var latest by mutableStateOf("") // newest stable version, e.g. 2.7.26.54e0d8d
+    var latest by mutableStateOf("") // newest offered version, e.g. 2.7.26.54e0d8d
+    var versions by mutableStateOf<List<Pair<String, Boolean>>>(emptyList()) // offered versions, newest first; true = pre-release
     /** Also offer Meshtastic's pre-releases ("alpha"): newer fixes, less testing. */
     var prerelease by mutableStateOf(prefs().getBoolean("fwAlpha", false))
     var inBootloader = false // we already rebooted the node into update mode (a retry must not ask the firmware again)
@@ -72,10 +73,10 @@ object Updater {
         runCatching {
             val list = JSONObject(URL("https://api.meshtastic.org/github/firmware/list").readText())
             val releases = list.getJSONObject("releases")
-            val newest = (if (prerelease) listOf("stable", "alpha") else listOf("stable"))
-                .map { releases.getJSONArray(it).getJSONObject(0).getString("id").removePrefix("v") }
-                .reduce { a, b -> if (isNewer(b, a)) b else a }
-            ui { latest = newest }
+            fun ids(kind: String) = releases.getJSONArray(kind).let { a -> List(a.length()) { a.getJSONObject(it).getString("id").removePrefix("v") } }
+            val all = (ids("stable").map { it to false } + if (prerelease) ids("alpha").map { it to true } else emptyList())
+                .sortedWith { a, b -> if (isNewer(a.first, b.first)) -1 else if (isNewer(b.first, a.first)) 1 else 0 }
+            ui { versions = all; latest = all.first().first }
         }.onFailure { ui { error = "Couldn't check for updates. Is the phone online?" } }
     }.start()
 

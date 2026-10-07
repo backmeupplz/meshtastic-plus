@@ -395,10 +395,12 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
     LaunchedEffect(Unit) { Updater.error = ""; Updater.done = false; Updater.step = ""; if (Updater.latest.isEmpty()) Updater.checkLatest() }
     val onUsb = Mesh.transport == "USB cable" && Mesh.connected
     val onBle = Mesh.transport == "Bluetooth" && Mesh.connected
+    var chosen by remember { mutableStateOf<String?>(null) }
+    val version = chosen ?: Updater.latest
     Scaffold(topBar = {
         TopAppBar(
             navigationIcon = { IconButton(onBack, enabled = !Updater.running) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") } },
-            title = { Text("Update firmware") },
+            title = { Text("Firmware") },
         )
     }) { padding ->
         Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(24.dp)) {
@@ -416,10 +418,7 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                 if (rescue) "In update mode. Plug it in, or keep it close if it was updating over Bluetooth." else "Installed: ${Mesh.firmware.ifEmpty { "unknown" }}",
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            Text(
-                if (Updater.latest.isEmpty()) "Checking for the latest version…" else "Latest: ${Updater.latest}",
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            if (Updater.versions.isEmpty() && Updater.error.isEmpty()) Text("Checking available versions…", color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(24.dp))
             when {
                 Updater.running || Updater.done -> {
@@ -469,8 +468,31 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                             Updater.prerelease = on
                             Mesh.appContext.getSharedPreferences("mesh", 0).edit().putBoolean("fwAlpha", on).apply()
                             Updater.latest = ""
+                            chosen = null
                             Updater.checkLatest()
                         })
+                    }
+                    Spacer(Modifier.height(16.dp))
+                    Text("Version", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                    Updater.versions.forEach { (v, pre) ->
+                        Row(Modifier.fillMaxWidth().clickable { chosen = v }.padding(vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
+                            RadioButton(v == version, { chosen = v })
+                            Column {
+                                Text(v)
+                                val tags = listOfNotNull(
+                                    "newest".takeIf { v == Updater.latest }, "pre-release".takeIf { pre },
+                                    "installed".takeIf { v == Mesh.firmware },
+                                )
+                                if (tags.isNotEmpty()) Text(tags.joinToString(" · "), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        }
+                    }
+                    if (Mesh.firmware.isNotEmpty() && version.isNotEmpty() && isNewer(Mesh.firmware, version)) {
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            "$version is older than the installed ${Mesh.firmware}. Older firmware may not understand newer settings; if the node acts up afterwards, use Reset settings.",
+                            color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall,
+                        )
                     }
                     Spacer(Modifier.height(16.dp))
                     Text(
@@ -481,16 +503,16 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                     Button(
                         {
                             Mesh.appContext.getSharedPreferences("mesh", 0).edit().putString("fwTarget", b.target).apply()
-                            Updater.start(b, Updater.latest, rescue)
+                            Updater.start(b, version, rescue)
                         },
                         Modifier.fillMaxWidth().height(56.dp),
-                        enabled = Updater.latest.isNotEmpty() && (rescue || onUsb || onBle || Updater.inBootloader),
+                        enabled = version.isNotEmpty() && (rescue || onUsb || onBle || Updater.inBootloader),
                     ) {
                         Icon(Icons.Rounded.SystemUpdate, null)
                         Spacer(Modifier.width(10.dp))
                         Text(
                             if (Updater.error.isNotEmpty()) "Try again"
-                            else if (Updater.latest == Mesh.firmware) "Reinstall ${Updater.latest}" else "Install ${Updater.latest}",
+                            else if (version == Mesh.firmware) "Reinstall $version" else "Install $version",
                         )
                     }
                 }
