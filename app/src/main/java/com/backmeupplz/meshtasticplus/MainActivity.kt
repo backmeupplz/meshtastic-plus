@@ -1146,7 +1146,7 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
                 if (peer != 0L) "Messages here are end-to-end encrypted." else "Say hi! Everyone in this room will see it.",
             )
         } else {
-            MessageList(padding, messages, showNames = peer == 0L, relay = relayed, onReply = { replyTo = it })
+            MessageList(padding, messages, showNames = peer == 0L, relay = relayed, onReply = { replyTo = it }, onResend = { send(it) })
         }
     }
     if (invite && room != null) InviteSheet(room) { invite = false }
@@ -1166,7 +1166,10 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
 }
 
 @Composable
-fun MessageList(padding: PaddingValues, all: List<Message>, showNames: Boolean, relay: Boolean = false, onReply: (String) -> Unit = {}) {
+fun MessageList(
+    padding: PaddingValues, all: List<Message>, showNames: Boolean,
+    relay: Boolean = false, onReply: (String) -> Unit = {}, onResend: (String) -> Unit = {},
+) {
     // In a relay room, "SMS to … sent" lines become the status of the text they answer instead of their own bubble.
     val (messages, lines, sent) = remember(all, relay) {
         val joined = joinParts(all)
@@ -1198,7 +1201,7 @@ fun MessageList(padding: PaddingValues, all: List<Message>, showNames: Boolean, 
             val newDay = prev == null || day(prev.time) != day(m.time)
             if (newDay) DayChip(m.time)
             when (val l = lines[m.id]) {
-                is RelayLine.Sms -> SmsBubble(m, l, sent[m.id], onReply)
+                is RelayLine.Sms -> SmsBubble(m, l, sent[m.id], onReply, onResend)
                 is RelayLine.Call -> RelayChip(if (l.what == "Missed call") Icons.AutoMirrored.Outlined.CallMissed else Icons.Outlined.Call, "${l.what} · ${prettyNumber(l.number)}", m.time)
                 is RelayLine.Status -> RelayChip(Icons.Outlined.Sms, "${if (l.sent) "Sent" else "Couldn't send"} SMS to ${prettyNumber(l.number)}", m.time)
                 is RelayLine.Info -> RelayChip(Icons.Outlined.Sms, l.text, m.time)
@@ -1207,6 +1210,9 @@ fun MessageList(padding: PaddingValues, all: List<Message>, showNames: Boolean, 
         }
     }
 }
+
+/** How long a text request waits for the relay phone's receipt before it's offered for resending. */
+const val RELAY_ANSWER_MS = 2 * 60_000L
 
 /** A call or relay notice: small and centered, it's about the phone, not a message from someone. */
 @Composable
@@ -1226,9 +1232,17 @@ fun RelayChip(icon: ImageVector, text: String, t: Long) {
  * text left to answer it by SMS.
  */
 @Composable
-fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) -> Unit) {
+fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) -> Unit, onResend: (String) -> Unit) {
     val time = remember(m.time) { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(m.time)) }
     val number = dialable(sms.number)
+    // Room messages carry no delivery receipt, so silence from the relay phone is the only sign a request got lost.
+    val unanswered = !sms.incoming && sent == null && rememberNow() - m.time > RELAY_ANSWER_MS
+    val problem = when {
+        sent == false -> "The relay phone couldn't send this SMS"
+        unanswered -> "No answer from the relay phone"
+        else -> null
+    }
+    val canResend = problem != null && m.mine && Mesh.connected
     val canReply = sms.incoming && number.count { it.isDigit() } >= 3 // not "Google" and other named senders
     val reach = with(LocalDensity.current) { 72.dp.toPx() }
     val drag = remember { Animatable(0f) }
@@ -1253,6 +1267,7 @@ fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) 
                 shape = RoundedCornerShape(20.dp),
                 color = if (sms.incoming) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.widthIn(max = 300.dp)
+                    .clickable(enabled = canResend) { onResend("$SMS_COMMAND $number ${sms.body}") }
                     .offset { IntOffset(drag.value.roundToInt(), 0) }
                     .then(if (!canReply) Modifier else Modifier
                         .pointerInput(number) {
@@ -1277,10 +1292,10 @@ fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) 
                         Text(time, style = MaterialTheme.typography.labelSmall, color = faded)
                         if (!sms.incoming) {
                             Spacer(Modifier.width(4.dp))
-                            val (icon, label) = when (sent) {
-                                true -> Icons.Rounded.Done to "Sent by the relay phone"
-                                false -> Icons.Rounded.ErrorOutline to "The relay phone couldn't send it"
-                                null -> Icons.Rounded.Schedule to "Waiting for the relay phone"
+                            val (icon, label) = when {
+                                sent == true -> Icons.Rounded.Done to "Sent by the relay phone"
+                                problem != null -> Icons.Rounded.ErrorOutline to problem
+                                else -> Icons.Rounded.Schedule to "Waiting for the relay phone"
                             }
                             Icon(icon, label, Modifier.size(14.dp), tint = faded)
                         }
@@ -1288,9 +1303,9 @@ fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) 
                 }
             }
         }
-        if (sent == false) {
+        if (problem != null) {
             Text(
-                "The relay phone couldn't send this SMS",
+                if (m.mine) "$problem · Tap to resend" else problem,
                 Modifier.padding(top = 2.dp, end = 4.dp),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.error,
