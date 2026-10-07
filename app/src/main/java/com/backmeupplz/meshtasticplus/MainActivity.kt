@@ -686,7 +686,7 @@ fun LazyListScope.header(text: String) = item(text) {
 
 @Composable
 fun ConversationRow(icon: ImageVector, title: String, convo: String, onOpen: (String) -> Unit) {
-    val last = Mesh.messages.lastOrNull { it.convo == convo }
+    val last = Mesh.messages.lastOrNull { it.convo == convo && relayLine(it.text) !is RelayLine.Status } // a send receipt marks its text, it isn't news
     val unread = Mesh.unread(convo)
     ListItem(
         leadingContent = { Icon(icon, null) },
@@ -1176,7 +1176,9 @@ fun MessageList(padding: PaddingValues, all: List<Message>, showNames: Boolean, 
         val hidden = mutableSetOf<Long>()
         for (m in joined) when (val l = lines[m.id]) {
             is RelayLine.Sms -> if (!l.incoming) waiting += m.id to dialable(l.number)
-            is RelayLine.Status -> waiting.firstOrNull { it.second == dialable(l.number) }?.let {
+            // The newest open request to that number: an older one the relay never saw (sent while it was off,
+            // or from an app that didn't relay) mustn't take the confirmation.
+            is RelayLine.Status -> waiting.lastOrNull { it.second == dialable(l.number) }?.let {
                 sent[it.first] = l.sent; waiting.remove(it); hidden += m.id
             }
             else -> {}
