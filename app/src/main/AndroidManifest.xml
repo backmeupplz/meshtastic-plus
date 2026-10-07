@@ -36,5 +36,7 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/usb_nodes" />
         </activity>
+        <!-- Nordic DFU library: firmware updates over Bluetooth -->
+        <service android:name=".BleDfuService" android:exported="false" />
     </application>
 </manifest>

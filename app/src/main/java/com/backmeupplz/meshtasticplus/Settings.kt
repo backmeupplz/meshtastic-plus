@@ -383,6 +383,7 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
     var board by remember { mutableStateOf(if (rescue) boards.firstOrNull { it.target == saved } else currentBoard()) }
     LaunchedEffect(Unit) { Updater.error = ""; Updater.done = false; Updater.step = ""; if (Updater.latest.isEmpty()) Updater.checkLatest() }
     val onUsb = Mesh.transport == "USB cable" && Mesh.connected
+    val onBle = Mesh.transport == "Bluetooth" && Mesh.connected
     Scaffold(topBar = {
         TopAppBar(
             navigationIcon = { IconButton(onBack, enabled = !Updater.running) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") } },
@@ -401,7 +402,7 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
             val b = board!!
             Text(b.name, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
             Text(
-                if (rescue) "In update mode" else "Installed: ${Mesh.firmware.ifEmpty { "unknown" }}",
+                if (rescue) "In update mode. Plug it in, or keep it close if it was updating over Bluetooth." else "Installed: ${Mesh.firmware.ifEmpty { "unknown" }}",
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
@@ -417,7 +418,10 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                     else LinearProgressIndicator({ Updater.progress }, Modifier.fillMaxWidth())
                     Spacer(Modifier.height(12.dp))
                     if (Updater.done) Button(onBack, Modifier.fillMaxWidth().height(52.dp)) { Text("Done") }
-                    else Text("Keep the cable plugged in and the app open. This takes about a minute.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    else Text(
+                        if (Mesh.transport == "Bluetooth") "Keep the app open and the phone near the node." else "Keep the cable plugged in and the app open. This takes about a minute.",
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                 }
                 else -> {
                     if (Updater.error.isNotEmpty()) {
@@ -430,8 +434,16 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                         }
                         Spacer(Modifier.height(16.dp))
                     }
-                    if (!rescue && !onUsb) {
-                        Text("Plug the node into this phone with a USB cable and connect to it over USB first.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    if (!rescue && !onUsb && !onBle && !Updater.inBootloader) {
+                        Text("Connect to the node first, over Bluetooth or a USB cable.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Spacer(Modifier.height(16.dp))
+                    }
+                    if (onBle || (Updater.inBootloader && Mesh.transport == "Bluetooth")) {
+                        Text(
+                            "Bluetooth updates are experimental: if one fails, the node waits in update mode until you plug it in and tap Try again. " +
+                                "It takes a few minutes; keep the phone close. A USB cable is faster and proven.",
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
                         Spacer(Modifier.height(16.dp))
                     }
                     Text(
@@ -445,7 +457,7 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                             Updater.start(b, Updater.latest, rescue)
                         },
                         Modifier.fillMaxWidth().height(56.dp),
-                        enabled = Updater.latest.isNotEmpty() && (rescue || onUsb || Updater.inBootloader),
+                        enabled = Updater.latest.isNotEmpty() && (rescue || onUsb || onBle || Updater.inBootloader),
                     ) {
                         Icon(Icons.Rounded.SystemUpdate, null)
                         Spacer(Modifier.width(10.dp))

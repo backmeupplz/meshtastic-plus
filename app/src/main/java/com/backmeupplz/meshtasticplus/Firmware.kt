@@ -15,6 +15,15 @@ import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.util.zip.ZipInputStream
+import no.nordicsemi.android.dfu.DfuBaseService
+import no.nordicsemi.android.dfu.DfuProgressListenerAdapter
+import no.nordicsemi.android.dfu.DfuServiceInitiator
+import no.nordicsemi.android.dfu.DfuServiceListenerHelper
+
+/** Nordic's DFU library runs as a service; it only needs to know which screen its (disabled) notification opens. */
+class BleDfuService : DfuBaseService() {
+    override fun getNotificationTarget() = MainActivity::class.java
+}
 
 /** A board from Meshtastic's hardware list (res/raw/hardware.json, from api.meshtastic.org/resource/deviceHardware). */
 data class Board(val hwModel: Int, val target: String, val arch: String, val name: String) {
@@ -53,6 +62,8 @@ object Updater {
     var latest by mutableStateOf("") // newest stable version, e.g. 2.7.26.54e0d8d
     var inBootloader = false // we already rebooted the node into update mode (a retry must not ask the firmware again)
 
+    private fun prefs() = Mesh.appContext.getSharedPreferences("mesh", 0)
+
     private fun ui(f: () -> Unit) = android.os.Handler(android.os.Looper.getMainLooper()).post(f)
 
     fun checkLatest() = Thread {
@@ -74,7 +85,21 @@ object Updater {
         Thread {
             try {
                 ui { step = "Downloading firmware $version…" }
-                val (dat, bin) = download(board.target, version)
+                val zip = download(board.target, version)
+                // Bluetooth when that's how we're connected; when rescuing, the node a Bluetooth update was interrupted on
+                // (unless a node is plugged in, which then is the one to rescue).
+                val cabled = usb.deviceList.values.any { UsbSerialProber.getDefaultProber().probeDevice(it) != null }
+                val bleAddress = when {
+                    !rescue -> Mesh.current.takeIf { Mesh.transport == "Bluetooth" }
+                    cabled -> null
+                    else -> prefs().getString("fwBle", null)
+                }
+                if (bleAddress != null) {
+                    val file = java.io.File(Mesh.appContext.cacheDir, "firmware.zip").apply { writeBytes(zip) }
+                    ui { startBle(file, version, bleAddress) }
+                    return@Thread
+                }
+                val (dat, bin) = unzip(zip)
                 if (enterBootloader) {
                     ui { step = "Restarting the node into update mode…"; Mesh.enterUpdateMode() }
                     inBootloader = true
@@ -112,19 +137,69 @@ object Updater {
         }.start()
     }
 
-    /** The release's legacy-DFU package for [target]: init packet (.dat) and application image (.bin). */
-    private fun download(target: String, version: String): Pair<ByteArray, ByteArray> {
+    /** The release's legacy-DFU package for [target] (manifest + .dat + .bin), as published for the nRF52 bootloaders. */
+    private fun download(target: String, version: String): ByteArray {
         val url = "https://raw.githubusercontent.com/meshtastic/meshtastic.github.io/master/firmware-$version/firmware-$target-$version-ota.zip"
-        val files = HashMap<String, ByteArray>()
-        try {
-            ZipInputStream(URL(url).openStream()).use { zip ->
-                while (true) { val e = zip.nextEntry ?: break; files[e.name] = zip.readBytes() }
-            }
+        return try {
+            URL(url).readBytes()
         } catch (e: java.io.FileNotFoundException) {
-            error("Meshtastic has no USB update package for this board in $version")
+            error("Meshtastic has no update package for this board in $version")
+        }
+    }
+
+    /** The package's init packet (.dat) and application image (.bin), for the USB bootloader. */
+    private fun unzip(zipBytes: ByteArray): Pair<ByteArray, ByteArray> {
+        val files = HashMap<String, ByteArray>()
+        ZipInputStream(zipBytes.inputStream()).use { zip ->
+            while (true) { val e = zip.nextEntry ?: break; files[e.name] = zip.readBytes() }
         }
         val app = JSONObject(files["manifest.json"]!!.decodeToString()).getJSONObject("manifest").getJSONObject("application")
         return files[app.getString("dat_file")]!! to files[app.getString("bin_file")]!!
+    }
+
+    /**
+     * Over Bluetooth: the firmware's DFU helper service (Adafruit BLEDfu, paired phones only) reboots the node into its
+     * bootloader's Bluetooth update mode, keeping our pairing; Nordic's DFU library does the rest.
+     */
+    private fun startBle(zip: java.io.File, version: String, address: String) {
+        val ctx = Mesh.appContext
+        prefs().edit().putString("fwBle", address).apply()
+        var entered = false
+        val listener = object : DfuProgressListenerAdapter() {
+            override fun onEnablingDfuMode(a: String) { entered = true; step = "Restarting the node into update mode…" }
+            override fun onDfuProcessStarting(a: String) { entered = true; step = "Erasing the old firmware…"; progress = -1f }
+            override fun onProgressChanged(a: String, percent: Int, speed: Float, avg: Float, part: Int, parts: Int) {
+                step = "Installing… $percent%"; progress = percent / 100f
+            }
+            override fun onFirmwareValidating(a: String) { step = "Finishing…" }
+            override fun onDfuCompleted(a: String) {
+                DfuServiceListenerHelper.unregisterProgressListener(ctx, this)
+                inBootloader = false
+                prefs().edit().remove("fwBle").apply()
+                step = "Done! The node is restarting with $version."; progress = 1f; done = true; running = false
+                if (Mesh.current == null) Mesh.connectBle(address) else Mesh.resumeAfterUpdate()
+            }
+            override fun onDfuAborted(a: String) = onError(a, 0, 0, "Update cancelled")
+            override fun onError(a: String, code: Int, type: Int, message: String?) {
+                DfuServiceListenerHelper.unregisterProgressListener(ctx, this)
+                inBootloader = entered // the node may be waiting in its bootloader; "Try again" reconnects to it
+                error = "Bluetooth update failed: ${message ?: "error $code"}. Keep the phone close to the node and try again."
+                running = false
+                if (!inBootloader) Mesh.resumeAfterUpdate()
+            }
+        }
+        DfuServiceListenerHelper.registerProgressListener(ctx, listener, address)
+        step = "Restarting the node into update mode…"
+        Mesh.pauseForUpdate() // the DFU library needs the node to itself
+        DfuServiceInitiator(address)
+            .setKeepBond(true) // the bootloader shares the app's pairing; don't make the user type a PIN again
+            .setForeground(false).setDisableNotification(true) // the update screen stays open, no notification needed
+            // The stock Adafruit bootloader answers a high-MTU request with 23 and then fails ("OPERATION FAILED"),
+            // a known incompatibility (see oltaco/Adafruit_nRF52_Bootloader_OTAFIX): stick to 20-byte packets.
+            .setMtu(23)
+            .setPacketsReceiptNotificationsEnabled(true).setPacketsReceiptNotificationsValue(8)
+            .setZip(zip.path)
+            .start(ctx, BleDfuService::class.java)
     }
 
     /** After the reboot the node comes back as a new USB device (the bootloader). */

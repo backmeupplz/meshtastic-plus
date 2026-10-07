@@ -305,6 +305,15 @@ object Mesh {
         status = reason
     }
 
+    /** The device isn't speaking Meshtastic (e.g. a node waiting in its bootloader): stop retrying, show why. */
+    fun failed(from: Link, reason: String) = main.post {
+        if (from !== link) return@post
+        closeLink()
+        active = false
+        connected = false
+        status = reason
+    }
+
     fun fromRadio(from: Link, bytes: ByteArray) = main.post {
         if (from !== link) return@post
         try {
@@ -483,7 +492,7 @@ object Mesh {
     fun resumeAfterUpdate() {
         updating = false
         status = "Restarting with new firmware…"
-        main.postDelayed({ if (link == null) connectUsb(ask = false) }, 4000)
+        main.postDelayed({ if (link == null) current?.let { if (it == USB) connectUsb(ask = false) else connectBle(it) } }, 4000)
     }
 
     /** 100 = clear node list (favorites stay), 99 = settings back to defaults, 94 = everything incl. keys and Bluetooth pairings. */
@@ -667,7 +676,7 @@ class BleLink(ctx: Context, private val device: BluetoothDevice) : BluetoothGatt
 
     override fun onServicesDiscovered(g: BluetoothGatt, status: Int) {
         val s = g.getService(SERVICE)
-        if (s == null) { Mesh.linkDown(this, "Not a Meshtastic device"); return }
+        if (s == null) { Mesh.failed(this, "No Meshtastic service: the node may be waiting in update mode."); return }
         g.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH) // ~4x faster config download
         toRadio = s.getCharacteristic(TO_RADIO)
         fromRadio = s.getCharacteristic(FROM_RADIO)
