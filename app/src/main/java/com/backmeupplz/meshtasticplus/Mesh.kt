@@ -214,6 +214,18 @@ object Mesh {
         link = BleLink(ctx, device)
     }
 
+    /** The simulated node: try the app without a radio (also what app store reviewers use). */
+    fun connectDemo() {
+        disconnect()
+        active = true
+        transport = "Demo"
+        current = DEMO
+        status = "Connecting to the demo node…"
+        link = DemoLink().also { linkUp(it) }
+    }
+
+    val demo get() = current == DEMO
+
     /** [ask] = show the system permission prompt if needed; false for silent auto-connect. */
     fun connectUsb(ask: Boolean = true) {
         val usb = ctx.getSystemService(UsbManager::class.java)
@@ -365,7 +377,7 @@ object Mesh {
             if (!ready) askName = DEFAULT_NAME.matches(myLong) && !prefs().getBoolean("named", false)
             ready = true
             if (current == USB) prefs().edit { putLong("usbNum", myNum) }
-            current?.let { key ->
+            current?.takeIf { it != DEMO }?.let { key ->
                 saved.removeAll { it.first == key }
                 saved.add(0, key to myLong)
                 saveSaved()

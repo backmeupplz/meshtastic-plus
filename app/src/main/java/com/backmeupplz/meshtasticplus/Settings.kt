@@ -444,7 +444,10 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                         }
                         Spacer(Modifier.height(16.dp))
                     }
-                    if (!rescue && !onUsb && !onBle && !Updater.inBootloader) {
+                    if (Mesh.demo) {
+                        Text("Installing firmware needs a real node; the demo can only show the versions.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Spacer(Modifier.height(16.dp))
+                    } else if (!rescue && !onUsb && !onBle && !Updater.inBootloader) {
                         Text("Connect to the node first, over Bluetooth or a USB cable.", color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Spacer(Modifier.height(16.dp))
                     }
@@ -506,7 +509,7 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                             Updater.start(b, version, rescue)
                         },
                         Modifier.fillMaxWidth().height(56.dp),
-                        enabled = version.isNotEmpty() && (rescue || onUsb || onBle || Updater.inBootloader),
+                        enabled = !Mesh.demo && version.isNotEmpty() && (rescue || onUsb || onBle || Updater.inBootloader),
                     ) {
                         Icon(Icons.Rounded.SystemUpdate, null)
                         Spacer(Modifier.width(10.dp))

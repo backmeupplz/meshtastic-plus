@@ -17,6 +17,8 @@ The node restarts when its region or name changes; the app reconnects by itself.
 
 Speaks the Meshtastic BLE and serial APIs from firmware 2.x (tested on a Heltec Mesh Node T114 over USB; ESP32 boards with CP210x/CH340 USB chips like the Heltec V3 use the same path but are untested). Requires Android 12+.
 
+**Demo mode**: *No radio yet? Try the demo* on the connect screen runs the app against a simulated node (rooms, DMs with replies, nodes, settings), for trying it without hardware and for app store review.
+
 ## Build
 
 ```sh

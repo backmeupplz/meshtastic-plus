@@ -353,6 +353,7 @@ fun SetupScreen(onRescue: () -> Unit) {
             )
             if (scanning) NearbyNodes { scanning = false; Mesh.connectBle(it) }
             Spacer(Modifier.height(24.dp))
+            TextButton({ scanning = false; Mesh.connectDemo() }) { Text("No radio yet? Try the demo") }
             TextButton(onRescue) { Text("Node stuck in update mode?") }
         }
     }
