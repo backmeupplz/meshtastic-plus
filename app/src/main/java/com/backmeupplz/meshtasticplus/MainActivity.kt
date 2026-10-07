@@ -192,6 +192,21 @@ fun rememberBluetooth(onReady: () -> Unit): () -> Unit {
 /** Devices used before, with the current one checked. Tapping another one switches to it. */
 @Composable
 fun DeviceRows(onPick: (String) -> Unit) {
+    var removing by remember { mutableStateOf<Pair<String, String>?>(null) }
+    removing?.let { (key, name) ->
+        AlertDialog(
+            { removing = null },
+            confirmButton = { TextButton({ Mesh.forgetSaved(key); removing = null }) { Text("Remove") } },
+            dismissButton = { TextButton({ removing = null }) { Text("Cancel") } },
+            title = { Text("Remove ${name.ifEmpty { "this device" }}?") },
+            text = {
+                Text(
+                    if (key == USB) "It disappears from Your devices. The node itself isn't changed; plug it in again to use it."
+                    else "It disappears from Your devices. The node itself isn't changed, it stays paired with this phone, and your messages stay. To use it again, find it with Add device.",
+                )
+            },
+        )
+    }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Mesh.saved.toList().forEach { (key, name) ->
             if (key != USB && !Mesh.canUseBluetooth()) return@forEach
@@ -204,7 +219,7 @@ fun DeviceRows(onPick: (String) -> Unit) {
                 onClick = { if (!current) onPick(key) },
             ) {
                 if (current) Icon(Icons.Rounded.Check, "Connected", Modifier.padding(end = 12.dp), tint = MaterialTheme.colorScheme.primary)
-                else IconButton({ Mesh.forgetSaved(key) }) {
+                else IconButton({ removing = key to name }) {
                     Icon(Icons.Rounded.Close, "Forget this device", Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
