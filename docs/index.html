@@ -71,21 +71,19 @@
   .hero .mesh { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: linear-gradient(100deg, transparent 22%, rgba(0, 0, 0, 0.35) 45%, #000 70%); mask-image: linear-gradient(100deg, transparent 22%, rgba(0, 0, 0, 0.35) 45%, #000 70%); }
   .hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(900px 600px at 72% 40%, rgba(103, 234, 148, 0.10), transparent 70%); pointer-events: none; }
   .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 40px; align-items: center; padding-top: 80px; padding-bottom: 96px; }
-  .pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 8px; border-radius: 999px; border: 1px solid var(--line); background: rgba(103, 234, 148, 0.06); color: var(--fg); font-size: 14px; font-weight: 500; margin-bottom: 26px; }
-  .pill span { background: var(--green); color: var(--ink); border-radius: 999px; padding: 2px 10px; font-weight: 650; font-size: 13px; }
   h1 { font-size: clamp(44px, 6.6vw, 82px); line-height: 1.0; letter-spacing: -0.035em; margin-bottom: 26px; }
   h1 em { font-style: normal; color: var(--green); }
   .lead { font-size: 20px; line-height: 1.6; color: var(--muted); max-width: 590px; margin-bottom: 34px; }
   .ctas { display: flex; flex-wrap: wrap; gap: 14px; }
   .fine { font-size: 14.5px; color: var(--dim); margin-top: 20px; max-width: 560px; }
-  .duo { position: relative; height: 640px; }
-  .duo .phone { position: absolute; }
-  .duo .back { left: 2%; top: 60px; transform: rotate(-7deg); opacity: 0.92; }
-  .duo .front { right: 4%; top: 0; transform: rotate(4deg); }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; width: 100%; max-width: 540px; margin-left: auto; }
+  .duo .phone { --w: 100%; }
+  .duo .back { margin-top: 80px; transform: rotate(-2deg); }
+  .duo .front { transform: rotate(2deg); }
 
   /* phones */
-  .phone { --w: 290px; width: var(--w); padding: calc(var(--w) * 0.03); border-radius: calc(var(--w) * 0.155); background: linear-gradient(150deg, #3b3f46 0%, #16181c 32%, #0b0c0f 70%, #2c2f35 100%); box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.07) inset, 0 0 70px rgba(103, 234, 148, 0.07); flex: none; }
-  .phone img { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 2400; border-radius: calc(var(--w) * 0.125); background: #11131a; }
+  .phone { --w: 290px; width: var(--w); padding: calc(var(--w) * 0.03); border-radius: 12.5% / 5.8%; background: linear-gradient(150deg, #3b3f46 0%, #16181c 32%, #0b0c0f 70%, #2c2f35 100%); box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.07) inset, 0 0 70px rgba(103, 234, 148, 0.07); flex: none; }
+  .phone img { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 2400; border-radius: 10% / 4.5%; background: #101510; }
   .phone.sm { --w: 250px; }
 
   /* sections */
@@ -172,7 +170,7 @@
 
   @media (max-width: 980px) {
     .hero .wrap { grid-template-columns: 1fr; padding-top: 56px; padding-bottom: 70px; }
-    .duo { height: 560px; max-width: 520px; width: 100%; margin: 0 auto; }
+    .duo { margin: 0 auto; }
     .feature, .sms-grid { grid-template-columns: 1fr; gap: 50px; }
     .feature.flip .copy { order: 0; }
     .steps, .grid, .needs { grid-template-columns: 1fr 1fr; }
@@ -186,10 +184,8 @@
     .nav .btn { margin-left: auto; }
     section { padding: 80px 0; }
     .lead { font-size: 18px; }
-    .duo { height: 470px; }
-    .duo .phone { --w: 210px; }
-    .duo .back { left: 3%; top: 50px; }
-    .duo .front { right: 3%; }
+    .duo { gap: 16px; }
+    .duo .back { margin-top: 50px; }
     .steps, .grid, .needs { grid-template-columns: 1fr; }
     .shots { gap: 14px; }
     .shots .phone { --w: 46vw; }
@@ -244,7 +240,6 @@
     </svg>
     <div class="wrap">
       <div>
-        <div class="pill"><span>New</span> SMS relay: one phone with signal texts for the whole group</div>
         <h1>Message your friends when there's <em>no signal.</em></h1>
         <p class="lead">Mesh+ is a friendly Android app for Meshtastic radios. Connect a pocket-sized LoRa radio to your phone, and your messages hop from radio to radio across hills and valleys with no cell towers, Wi-Fi or internet anywhere along the way.</p>
         <div class="ctas">
