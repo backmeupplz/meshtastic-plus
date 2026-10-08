@@ -156,6 +156,12 @@
   details p { padding: 0 26px 24px; color: var(--muted); font-size: 16.5px; }
 
   /* final cta */
+  .player { position: relative; max-width: 1040px; margin: 0 auto; border-radius: 26px; overflow: hidden; border: 1px solid var(--line); background: #030504; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55), 0 0 90px rgba(103, 234, 148, 0.08); }
+  .player video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #030504; }
+  .play { position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; border: 0; border-radius: 50%; cursor: pointer; display: grid; place-items: center; background: var(--green); color: var(--ink); box-shadow: 0 0 0 14px rgba(103, 234, 148, 0.18), 0 20px 50px rgba(0, 0, 0, 0.5); transition: transform .15s ease, box-shadow .15s ease; }
+  .play:hover { transform: scale(1.06); box-shadow: 0 0 0 18px rgba(103, 234, 148, 0.22), 0 20px 50px rgba(0, 0, 0, 0.5); }
+  .play svg { width: 40px; height: 40px; margin-left: 5px; }
+  .player.started .play { display: none; }
   .final { text-align: center; padding: 120px 0 130px; position: relative; overflow: hidden; border-top: 1px solid var(--line2); }
   .final::before { content: ""; position: absolute; inset: 0; background: radial-gradient(700px 400px at 50% 100%, rgba(103, 234, 148, 0.14), transparent 70%); }
   .final .wrap { position: relative; }
@@ -179,6 +185,9 @@
   }
   @media (max-width: 680px) {
     body { font-size: 16px; }
+    .player { border-radius: 18px; }
+    .play { width: 72px; height: 72px; margin: -36px 0 0 -36px; box-shadow: 0 0 0 10px rgba(103, 234, 148, 0.18), 0 14px 36px rgba(0, 0, 0, 0.5); }
+    .play svg { width: 30px; height: 30px; margin-left: 4px; }
     .wrap { padding: 0 16px; }
     .nav nav { display: none; }
     .nav .btn { margin-left: auto; }
@@ -207,6 +216,7 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="logo" viewBox="24 22 60 60"><path d="M54,38 L38,66 L70,66 Z" fill="none" stroke="#67ea94" stroke-width="4" stroke-linejoin="round"/><circle cx="54" cy="38" r="8" fill="#67ea94"/><circle cx="38" cy="66" r="8" fill="#67ea94"/><circle cx="70" cy="66" r="8" fill="#67ea94"/></symbol>
   <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></symbol>
   <symbol id="download" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
@@ -244,13 +254,28 @@
         <p class="lead">Mesh+ is a friendly Android app for Meshtastic radios. Connect a pocket-sized LoRa radio to your phone, and your messages hop from radio to radio across hills and valleys with no cell towers, Wi-Fi or internet anywhere along the way.</p>
         <div class="ctas">
           <a class="btn primary" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>Download for Android</a>
-          <a class="btn" href="#how">See how it works</a>
+          <a class="btn" href="#video"><svg aria-hidden="true"><use href="#play"/></svg>Watch the 30-second video</a>
         </div>
         <p class="fine">Mesh+ is free and open source, weighs about 3 MB and needs Android 12 or newer. No radio yet? The built-in demo lets you look around first.</p>
       </div>
       <div class="duo">
         <div class="phone back"><img src="img/chats.webp" width="1080" height="2400" alt="The Mesh+ chat list with the Public channel, the private rooms Hiking and Camp SMS, and a direct message from Maya, each with unread badges"></div>
         <div class="phone front"><img src="img/room.webp" width="1080" height="2400" alt="A private room called Hiking where friends share trail updates over the mesh, with check marks under the messages the mesh relayed"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="video" style="padding-bottom:40px">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">Launch video</div>
+        <h2>See what Mesh+ can do in thirty seconds.</h2>
+        <p>Turn the sound on for a quick tour of private rooms, messages hopping across the mesh, firmware updates and the SMS relay.</p>
+      </div>
+      <div class="player">
+        <video src="launch.mp4" poster="img/launch-poster.webp" width="1920" height="1080" preload="none" playsinline controls
+          aria-label="Mesh+ launch video, 30 seconds with music: chatting with no cell signal, private rooms, messages hopping from radio to radio, QR code invites, nearby radios, firmware updates and the SMS relay."></video>
+        <button class="play" type="button" aria-label="Play the launch video"><svg aria-hidden="true"><use href="#play"/></svg></button>
       </div>
     </div>
   </section>
@@ -553,5 +578,12 @@
     <span><a href="https://github.com/backmeupplz/meshtastic-plus">Source code</a> · <a href="https://github.com/backmeupplz/meshtastic-plus/releases">Releases</a> · <a href="privacy.html">Privacy policy</a></span>
   </div>
 </footer>
+<script>
+  const player = document.querySelector('.player');
+  const video = player.querySelector('video');
+  video.controls = false;
+  player.querySelector('.play').addEventListener('click', () => video.play());
+  video.addEventListener('play', () => { player.classList.add('started'); video.controls = true; });
+</script>
 </body>
 </html>
