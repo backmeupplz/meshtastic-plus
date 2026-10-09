@@ -22,8 +22,8 @@ Speaks the Meshtastic BLE and serial APIs from firmware 2.x (tested on a Heltec 
 ## Build
 
 ```sh
-./gradlew assembleRelease   # app/build/outputs/apk/release/app-release.apk (~2 MB)
-adb install app/build/outputs/apk/release/app-release.apk
+./gradlew assemblePlayRelease   # app/build/outputs/apk/play/release/app-play-release.apk (fdroid flavor: no Google code)
+adb install app/build/outputs/apk/play/release/app-play-release.apk
 ```
 
 The protocol code is a hand-rolled minimal protobuf codec (`Proto.kt`), so there's no protobuf toolchain. `./gradlew test` checks it.
@@ -31,3 +31,5 @@ The protocol code is a hand-rolled minimal protobuf codec (`Proto.kt`), so there
 The landing page lives in `docs/` and is served by GitHub Pages at meshplus.app.
 
 Mesh+ is an independent project, not affiliated with Meshtastic LLC. Meshtastic® is a registered trademark of Meshtastic LLC.
+
+MIT licensed, see `LICENSE`.

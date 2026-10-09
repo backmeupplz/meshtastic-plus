@@ -1,6 +1,6 @@
 # Mesh+ — Google Play submission kit
 
-Package: `com.borodutch.meshplus` · Bundle: `app/build/outputs/bundle/release/app-release.aab` (signed with the upload key in `~/.android/meshplus-upload.jks`; use **Play App Signing**).
+Package: `com.borodutch.meshplus` · Bundle: `app/build/outputs/bundle/playRelease/app-play-release.aab` (signed with the upload key in `~/.android/meshplus-upload.jks`; use **Play App Signing**).
 
 ## Store listing
 
@@ -32,7 +32,7 @@ Mesh+ has no accounts, ads or analytics, and your messages stay on your phone. I
 
 **Category**: Communication · **Contact email**: (yours) · **Website**: https://meshplus.app · **Privacy policy**: https://meshplus.app/privacy.html
 
-**Graphics**: `store/icon-512.png`, `store/feature-1024x500.png`, phone screenshots `store/screen-*.png`.
+**Graphics**: `fastlane/metadata/android/en-US/images/` (icon.png, featureGraphic.png, phoneScreenshots/*.png; shared with F-Droid).
 
 ## App access (for reviewers)
 

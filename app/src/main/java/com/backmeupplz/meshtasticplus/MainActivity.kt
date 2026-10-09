@@ -99,9 +99,6 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
-import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.delay
@@ -926,13 +923,6 @@ fun DevicesSheet(onDismiss: () -> Unit) {
     }
 }
 
-fun scanQr(ctx: android.content.Context, onLink: (String) -> Unit) {
-    val options = GmsBarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build()
-    GmsBarcodeScanning.getClient(ctx, options).startScan()
-        .addOnSuccessListener { it.rawValue?.let(onLink) }
-        .addOnFailureListener { Toast.makeText(ctx, "Couldn't open the QR scanner", Toast.LENGTH_SHORT).show() }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewRoomSheet(onDismiss: () -> Unit, onOpen: (String) -> Unit) {
@@ -943,6 +933,7 @@ fun NewRoomSheet(onDismiss: () -> Unit, onOpen: (String) -> Unit) {
         val (message, index) = Mesh.join(link)
         if (index != null) { onDismiss(); onOpen(convoKey(index, 0)) } else error = message
     }
+    val scan = rememberQrScanner { join(it) } // per flavor: src/play or src/fdroid
     val create = {
         val index = Mesh.createRoom(name.trim())
         if (index != null) { onDismiss(); onOpen(convoKey(index, 0)) } else error = "Your node already has 8 rooms. Leave one first."
@@ -978,7 +969,7 @@ fun NewRoomSheet(onDismiss: () -> Unit, onOpen: (String) -> Unit) {
             )
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                OutlinedButton({ scanQr(ctx) { join(it) } }, Modifier.weight(1f).height(52.dp)) {
+                OutlinedButton(scan, Modifier.weight(1f).height(52.dp)) {
                     Icon(Icons.Outlined.QrCodeScanner, null)
                     Spacer(Modifier.width(8.dp))
                     Text("Scan QR")

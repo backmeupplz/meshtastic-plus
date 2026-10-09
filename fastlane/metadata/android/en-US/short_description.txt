@@ -1,0 +1,1 @@
+Chat over Meshtastic radios with no internet or cell service. Simple, private.

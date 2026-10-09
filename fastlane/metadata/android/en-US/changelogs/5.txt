@@ -1,0 +1,1 @@
+First F-Droid release. The F-Droid build scans room QR codes with the open-source ZXing scanner.
