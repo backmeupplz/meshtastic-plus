@@ -24,8 +24,6 @@ Firmware updates from your phone. nRF52 radios such as the Heltec T114 and RAK46
 
 All your radios in one place. Switch between your radios from the top bar and see which board each one is, the firmware it runs and its battery voltage.
 
-SMS relay (optional). Turn one phone with cell signal into a relay: the texts and calls it receives show up in a private room, and people in that room can send texts through it. Off unless you turn it on.
-
 No radio yet? Try the built-in demo.
 
 Mesh+ has no accounts, ads or analytics, and your messages stay on your phone. It's an independent open-source project and isn't affiliated with or endorsed by Meshtastic LLC. Meshtastic® is a registered trademark of Meshtastic LLC.
@@ -36,7 +34,7 @@ Mesh+ has no accounts, ads or analytics, and your messages stay on your phone. I
 
 ## App access (for reviewers)
 
-"All functionality is available without login. The app talks to a Meshtastic LoRa radio; reviewers without one can tap **No radio yet? Try the demo** on the first screen, which simulates a connected radio (rooms, direct messages with replies, nodes, all settings). Firmware installs and the SMS relay need real hardware / a SIM."
+"All functionality is available without login. The app talks to a Meshtastic LoRa radio; reviewers without one can tap **No radio yet? Try the demo** on the first screen, which simulates a connected radio (rooms, direct messages with replies, nodes, all settings). Firmware installs need real hardware."
 
 ## Ads: No ads.
 
@@ -47,12 +45,12 @@ Category: Communication / messaging. User-to-user communication: **Yes** (users 
 
 ## Data safety
 - Data collected: **None** (nothing is sent to the developer or any server).
-- Data shared: **None** with third parties. Note for the SMS relay: SMS and call data are sent *at the user's direction* to people in a private mesh room the user chose — Google's definition treats user-initiated transfers as not "sharing".
+- Data shared: **None** with third parties.
 - Encrypted in transit: Yes (mesh room/DM encryption). Users can delete data: Yes (uninstall / clear app data; history is on-device only).
 - Internet use: only to fetch the firmware version list (api.meshtastic.org) and firmware files (GitHub), without personal data.
 
-## Permissions declaration (SMS & Call Log)
-Core functionality: **Connected device companion / SMS relay** — "Mesh+ is a companion app for Meshtastic LoRa radios. Its optional SMS relay lets a user whose phone has cell service forward the SMS and incoming calls their phone receives to their own private, encrypted radio-mesh group, and send SMS that members of that group request — e.g. for a group off-grid where only one phone has signal. The feature is off by default, enabled explicitly by the user in Settings → SMS relay with an on-screen explanation, shows a persistent notification while active, and can be turned off at any time. RECEIVE_SMS: forward incoming texts to the radio group. SEND_SMS: send texts group members ask for. READ_CALL_LOG + READ_PHONE_STATE: get the caller number of incoming calls to post 'Incoming/Missed call from …'. No SMS or call data is sent to the developer or any server." Video demo may be requested: record the relay screen being enabled and an SMS arriving in the room.
+## SMS relay is not on Play
+v0.4 (code 4) was rejected 2026-10-09 under the SMS/Call Log policy ("Cross-device synchronization or transfer of SMS or calls" didn't match). From v0.4.2 the `play` flavor drops RECEIVE_SMS/SEND_SMS/READ_PHONE_STATE/READ_CALL_LOG and the relay screen (`BuildConfig.SMS_RELAY`, `app/src/play/AndroidManifest.xml`); the relay ships only in the F-Droid/meshplus.app builds. Play phones still show relay rooms that another phone relays into. Keep the SMS paragraph out of the Play listing (it stays in fastlane/ for F-Droid).
 
 Foreground service declaration (connectedDevice): "Keeps the Bluetooth/USB connection to the user's Meshtastic radio alive so messages arrive while the app is in the background; started when the user connects a radio, stopped when they disconnect; a notification shows while running."
 

@@ -863,7 +863,7 @@ fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: (
                 supportingContent = { Text(listOfNotNull(currentBoard()?.name, "role, radio, Bluetooth, firmware").joinToString(" · ")) },
                 modifier = Modifier.clickable { onDismiss(); onNodeSettings() },
             )
-            ListItem(
+            if (BuildConfig.SMS_RELAY) ListItem(
                 leadingContent = { Icon(Icons.Outlined.Sms, null) },
                 headlineContent = { Text("SMS relay") },
                 supportingContent = { Text(if (Relay.enabled) "On · relaying to ${Relay.room}" else "Share this phone's texts and calls with a room") },

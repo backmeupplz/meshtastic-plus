@@ -203,7 +203,7 @@ fun joinParts(messages: List<Message>): List<Message> {
  */
 object Relay {
     private val prefs get() = Mesh.appContext.getSharedPreferences("mesh", 0)
-    var enabled by mutableStateOf(prefs.getBoolean("relay", false))
+    var enabled by mutableStateOf(BuildConfig.SMS_RELAY && prefs.getBoolean("relay", false))
         private set
     var room by mutableStateOf(prefs.getString("relayRoom", "").orEmpty()) // room name on this phone's node
         private set

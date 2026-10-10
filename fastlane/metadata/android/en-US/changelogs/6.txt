@@ -1,0 +1,1 @@
+SMS relay stays in this build and on meshplus.app; the Google Play build leaves it out because Play doesn't allow its permissions.

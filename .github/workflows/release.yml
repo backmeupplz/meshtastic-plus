@@ -1,4 +1,4 @@
-# On a published GitHub release: build the Play flavor with the upload key, attach meshplus.apk
+# On a published GitHub release: build with the upload key, attach meshplus.apk (fdroid flavor: it keeps the SMS relay)
 # (meshplus.app downloads releases/latest/download/meshplus.apk), and send the bundle to Play.
 # F-Droid needs nothing here: it builds the fdroid flavor from each new v* tag itself.
 name: Release
@@ -26,12 +26,12 @@ jobs:
           mkdir -p ~/.android
           echo "$KEYSTORE" | base64 -d > ~/.android/meshplus-upload.jks
           { echo "storeFile=$HOME/.android/meshplus-upload.jks"; echo "$PROPERTIES"; } > ~/.android/meshplus-upload.properties
-      - run: ./gradlew assemblePlayRelease bundlePlayRelease
+      - run: ./gradlew assembleFdroidRelease bundlePlayRelease
       - name: Attach APK
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp app/build/outputs/apk/play/release/app-play-release.apk meshplus.apk
+          cp app/build/outputs/apk/fdroid/release/app-fdroid-release.apk meshplus.apk
           gh release upload "${{ github.event.release.tag_name }}" meshplus.apk --clobber
       - name: Upload to Play
         if: ${{ env.PLAY_JSON != '' }} # skipped until the service-account secret exists
