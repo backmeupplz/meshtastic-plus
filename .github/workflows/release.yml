@@ -33,6 +33,11 @@ jobs:
         run: |
           cp app/build/outputs/apk/fdroid/release/app-fdroid-release.apk meshplus.apk
           gh release upload "${{ github.event.release.tag_name }}" meshplus.apk --clobber
+      - name: Play release notes # same changelog file F-Droid shows
+        if: ${{ env.PLAY_JSON != '' }}
+        run: |
+          mkdir whatsnew
+          cp fastlane/metadata/android/en-US/changelogs/$(grep -oP 'versionCode = \K\d+' app/build.gradle.kts).txt whatsnew/whatsnew-en-US
       - name: Upload to Play
         if: ${{ env.PLAY_JSON != '' }} # skipped until the service-account secret exists
         uses: r0adkll/upload-google-play@v1
@@ -41,3 +46,4 @@ jobs:
           packageName: com.borodutch.meshplus
           releaseFiles: app/build/outputs/bundle/playRelease/app-play-release.aab
           track: production
+          whatsNewDirectory: whatsnew
