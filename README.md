@@ -32,4 +32,6 @@ The landing page lives in `docs/` and is served by GitHub Pages at meshplus.app.
 
 Mesh+ is an independent project, not affiliated with Meshtastic LLC. Meshtastic® is a registered trademark of Meshtastic LLC.
 
+Releasing: see `AGENTS.md`.
+
 MIT licensed, see `LICENSE`.
