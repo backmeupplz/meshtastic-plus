@@ -217,6 +217,7 @@
   <symbol id="logo" viewBox="24 22 60 60"><path d="M54,38 L38,66 L70,66 Z" fill="none" stroke="#67ea94" stroke-width="4" stroke-linejoin="round"/><circle cx="54" cy="38" r="8" fill="#67ea94"/><circle cx="38" cy="66" r="8" fill="#67ea94"/><circle cx="70" cy="66" r="8" fill="#67ea94"/></symbol>
   <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></symbol>
+  <symbol id="gplay" viewBox="0 0 24 24"><path d="M5 3.5v17L19.5 12zM5 3.5l9 11.5M5 20.5l9-11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
   <symbol id="download" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
@@ -230,7 +231,7 @@
       <a href="#faq">FAQ</a>
       <a href="https://github.com/backmeupplz/meshtastic-plus">GitHub</a>
     </nav>
-    <a class="btn primary" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">Download</a>
+    <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Get the app</a>
   </div>
 </header>
 
@@ -253,10 +254,11 @@
         <h1>Message your friends when there's <em>no signal.</em></h1>
         <p class="lead">Mesh+ is a friendly Android app for Meshtastic radios. Connect a pocket-sized LoRa radio to your phone, and your messages hop from radio to radio across hills and valleys with no cell towers, Wi-Fi or internet anywhere along the way.</p>
         <div class="ctas">
-          <a class="btn primary" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>Download for Android</a>
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>Get it on Google Play</a>
+          <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>Download the APK</a>
           <a class="btn" href="#video"><svg aria-hidden="true"><use href="#play"/></svg>Watch the 30-second video</a>
         </div>
-        <p class="fine">Mesh+ is free and open source, weighs about 3 MB and needs Android 12 or newer. No radio yet? The built-in demo lets you look around first.</p>
+        <p class="fine">Mesh+ is free and open source, weighs about 3 MB and needs Android 12 or newer. No radio yet? The built-in demo lets you look around first. The SMS relay is only in the APK version, because Google Play doesn't allow apps to forward texts.</p>
       </div>
       <div class="duo">
         <div class="phone back"><img src="img/chats.webp" width="1080" height="2400" alt="The Mesh+ chat list with the Public channel, the private rooms Hiking and Camp SMS, and a direct message from Maya, each with unread badges"></div>
@@ -384,7 +386,7 @@
             <h3>Friends on other Meshtastic apps can join in.</h3>
             <p>Relay messages are plain text, so people using another Meshtastic app can read them and send a text by typing <code>/sms +15551234567 your message</code>.</p>
           </div>
-          <div class="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9.5 17h-19zM12 10v4.5M12 17.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Everyone in the relay room can read the texts that phone receives and send SMS from its number, so keep the room to people you trust. Texts go out at your carrier's usual rates.</span></div>
+          <div class="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9.5 17h-19zM12 10v4.5M12 17.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>The SMS relay is only in the APK version of Mesh+, because Google Play doesn't allow apps to forward texts. Everyone in the relay room can read the texts that phone receives and send SMS from its number, so keep the room to people you trust. Texts go out at your carrier's usual rates.</span></div>
         </div>
         <div class="shots">
           <div class="phone sm"><img src="img/relay.webp" width="1080" height="2400" loading="lazy" alt="The Camp SMS room showing texts from outside phone numbers, replies sent through the relay with check marks, and a missed call"></div>
@@ -543,8 +545,8 @@
           <p>Everyone in the relay room can read the texts and calls the relay phone receives and can send texts from its number. The room is encrypted, so people outside it can't, but choose its members carefully. Nothing is ever sent to us or to any server.</p>
         </details>
         <details>
-          <summary>Is Mesh+ on Google Play?</summary>
-          <p>Not yet, so for now you install it from the APK on this page. Open the file on your phone and, when Android asks, allow your browser to install apps. Updates install the same way, right over the previous version.</p>
+          <summary>Is Mesh+ on Google Play or F-Droid?</summary>
+          <p>Mesh+ is <a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">on Google Play</a>, and it's on its way to F-Droid. Google doesn't allow apps to forward texts, so the Play version comes without the SMS relay. If you want the relay, install <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">the APK</a> from this page instead: open the file on your phone and, when Android asks, allow your browser to install apps.</p>
         </details>
         <details>
           <summary>Is there an iPhone version?</summary>
@@ -564,10 +566,11 @@
       <h2>Take your group chat off the grid.</h2>
       <p>Download Mesh+, connect your radio and send your first message across the mesh in about a minute.</p>
       <div class="ctas">
-        <a class="btn primary" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>Download for Android</a>
+        <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>Get it on Google Play</a>
+          <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>Download the APK</a>
         <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus">View the source on GitHub</a>
       </div>
-      <p class="fine">Open the APK on your phone and, when Android asks, allow your browser to install apps.</p>
+      <p class="fine">The SMS relay is only in the APK. To install it, open the file on your phone and, when Android asks, allow your browser to install apps.</p>
     </div>
   </section>
 </main>
