@@ -544,6 +544,7 @@ fun RelayScreen(onBack: () -> Unit) {
     val hasPhone = ctx.packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_TELEPHONY)
     val rooms = Mesh.rooms.values.filter { !it.public }.sortedBy { it.index }
     var error by remember { mutableStateOf("") }
+    var consent by remember { mutableStateOf(false) }
     val ask = androidx.activity.compose.rememberLauncherForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions(),
     ) {
@@ -594,13 +595,32 @@ fun RelayScreen(onBack: () -> Unit) {
                 }
                 Switch(
                     Relay.enabled,
-                    { on ->
-                        if (on) ask.launch((RELAY_PERMISSIONS + android.Manifest.permission.POST_NOTIFICATIONS).toTypedArray())
-                        else Relay.turn(false)
-                    },
+                    { on -> if (on) consent = true else Relay.turn(false) },
                     enabled = Relay.enabled || (rooms.any { it.name == Relay.room } && Mesh.connected),
                 )
             }
+            // Play's prominent disclosure: say what the SMS and call log permissions are for right before Android asks.
+            if (consent) AlertDialog(
+                { consent = false },
+                confirmButton = {
+                    TextButton({
+                        consent = false
+                        ask.launch((RELAY_PERMISSIONS + android.Manifest.permission.POST_NOTIFICATIONS).toTypedArray())
+                    }) { Text("Turn on") }
+                },
+                dismissButton = { TextButton({ consent = false }) { Text("Not now") } },
+                title = { Text("Share this phone's texts and calls?") },
+                text = {
+                    Text(
+                        "While the relay is on, Mesh+:\n\n" +
+                            "• reads the SMS this phone receives and posts them to ${Relay.room};\n" +
+                            "• posts the number of each incoming call to ${Relay.room} (Android calls this call log access);\n" +
+                            "• sends SMS from this phone's number when someone in ${Relay.room} asks.\n\n" +
+                            "Everyone in ${Relay.room} can read them. They travel only over your radio's mesh, encrypted with " +
+                            "the room's key, never to us or any server. Turn the relay off here at any time.",
+                    )
+                },
+            )
             if (error.isNotEmpty()) Text(error, color = MaterialTheme.colorScheme.error)
             Spacer(Modifier.height(16.dp))
             Surface(color = MaterialTheme.colorScheme.errorContainer, shape = RoundedCornerShape(16.dp)) {

@@ -1,6 +1,6 @@
 # One published GitHub release vX.Y.Z ships everything: the play-flavor bundle to Google Play, the iPhone app to the
 # App Store, the fdroid-flavor APK as meshplus.apk on the release (meshplus.app downloads releases/latest/download/
-# meshplus.apk; it keeps the SMS relay), and the new version to the F-Droid merge request while it's open (once merged,
+# meshplus.apk), and the new version to the F-Droid merge request while it's open (once merged,
 # F-Droid follows new tags itself and ships meshplus.apk only if its own build matches it).
 # A previous version still waiting for review or in review is replaced on both stores.
 # Before releasing: bump versionName/versionCode in app/build.gradle.kts and add

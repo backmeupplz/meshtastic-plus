@@ -1,1 +1,1 @@
-Chat over Meshtastic radios with no internet or cell service. Simple, private.
+Chat over Meshtastic radios off-grid, and get your phone's texts over the mesh.
