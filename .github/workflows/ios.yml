@@ -1,0 +1,45 @@
+# Builds the iPhone app and runs its unit tests and demo-mode UI tests. Android builds are unaffected (release.yml).
+name: iOS
+on:
+  pull_request:
+    paths: ['ios/**', '.github/workflows/ios.yml']
+  push:
+    branches: [main]
+    paths: ['ios/**', '.github/workflows/ios.yml']
+permissions:
+  contents: read
+jobs:
+  ios:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+      - name: Resolve iOS Simulator
+        timeout-minutes: 25
+        run: |
+          python3 -m unittest ios/ci_simulator_test.py
+          udid=$(python3 ios/ci_simulator.py)
+          echo "SIMULATOR_ID=$udid" >> "$GITHUB_ENV"
+      - name: Build for testing
+        run: >-
+          xcodebuild -project ios/MeshPlus.xcodeproj -scheme MeshPlus
+          -destination 'generic/platform=iOS Simulator' ARCHS=arm64
+          -resultBundlePath ios-build.xcresult
+          build-for-testing
+      - name: Unit and UI tests
+        run: >-
+          xcodebuild -project ios/MeshPlus.xcodeproj -scheme MeshPlus
+          -destination "platform=iOS Simulator,id=$SIMULATOR_ID"
+          -destination-timeout 300
+          -parallel-testing-enabled NO
+          -resultBundlePath ios-tests.xcresult
+          -only-testing:Tests -only-testing:UITests/DemoTests
+          test-without-building
+      - name: Keep failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-test-results
+          path: |
+            ios-build.xcresult
+            ios-tests.xcresult

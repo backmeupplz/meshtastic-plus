@@ -19,6 +19,8 @@ Speaks the Meshtastic BLE and serial APIs from firmware 2.x (tested on a Heltec 
 
 **Demo mode**: *No radio yet? Try the demo* on the connect screen runs the app against a simulated node (rooms, DMs with replies, nodes, settings), for trying it without hardware and for app store review.
 
+**iPhone**: `ios/` is a native SwiftUI version with the same features over Bluetooth, minus the SMS relay, USB and firmware updates. It adds Block and Report on messages and nodes, as App Review requires for chat apps. See `AGENTS.md` for releasing it.
+
 ## Build
 
 ```sh
