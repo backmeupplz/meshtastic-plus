@@ -1,0 +1,1 @@
+SMS relay: leave one phone where there's signal and read and answer its texts over the mesh, from any radio in your private room. Turn it on in Settings, then SMS relay.
