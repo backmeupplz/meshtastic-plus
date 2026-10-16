@@ -12,10 +12,12 @@ android {
         applicationId = "com.borodutch.meshplus"
         minSdk = 31
         targetSdk = 36
-        versionCode = 6
-        versionName = "0.4.2"
+        versionCode = 7
+        versionName = "0.4.3"
     }
     buildFeatures { compose = true; buildConfig = true }
+    // F-Droid rejects APKs carrying Google's encrypted dependency block, which blocks reproducible builds there. Play still gets it from the bundle.
+    dependenciesInfo { includeInApk = false }
     // play: Google's QR scanner (no camera permission). fdroid: open-source ZXing scanner, no Google code.
     flavorDimensions += "store"
     productFlavors {
