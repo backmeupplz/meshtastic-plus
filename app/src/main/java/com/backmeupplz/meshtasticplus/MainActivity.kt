@@ -14,6 +14,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.hardware.usb.UsbManager
 import android.os.Bundle
 import android.os.ParcelUuid
@@ -31,6 +32,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -52,6 +54,9 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.BatteryFull
+import androidx.compose.material.icons.outlined.Block
+import androidx.compose.material.icons.outlined.Flag
+import androidx.compose.material.icons.outlined.VerifiedUser
 import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.ContentPaste
 import androidx.compose.material.icons.outlined.Hub
@@ -186,6 +191,7 @@ fun App() {
     var nodeSettings by rememberSaveable { mutableStateOf(false) }
     var firmware by rememberSaveable { mutableStateOf<Boolean?>(null) } // true = rescue a node stuck in update mode
     when {
+        !Mesh.agreed -> TermsScreen()
         firmware != null -> FirmwareScreen(firmware!!) { firmware = null }
         editingName -> NameScreen(editing = true) { editingName = false }
         !Mesh.ready -> SetupScreen { firmware = true }
@@ -218,6 +224,44 @@ fun App() {
             ProfileSheet(num, onDismiss = { profile = null }, onMessage = { profile = null; open = convoKey(0, num) })
         }
         pendingInvite.value?.let { link -> JoinDialog(link) { joined -> pendingInvite.value = null; joined?.let { open = it } } }
+    }
+}
+
+// ---------- Terms: once, before anything else (chat apps need rules, blocking and reporting) ----------
+
+const val SUPPORT = "support@borodutch.com"
+
+@Composable
+fun TermsScreen() {
+    val ctx = LocalContext.current
+    Surface(Modifier.fillMaxSize()) {
+        Column(
+            Modifier.fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState()).padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(Modifier.height(56.dp))
+            HeroIcon(Icons.Outlined.VerifiedUser)
+            Spacer(Modifier.height(24.dp))
+            Text("Be kind on the mesh", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
+            Spacer(Modifier.height(8.dp))
+            Text(
+                "Mesh+ has zero tolerance for objectionable content and abusive users. Anyone with a radio nearby can " +
+                    "write in the public room, so you can block anyone and report any message by long-pressing it. " +
+                    "Reports go to the developer, who reads every one and acts on it.",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+            Spacer(Modifier.height(16.dp))
+            TextButton({ runCatching { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://meshplus.app/terms.html"))) } }) {
+                Text("Read the terms of use")
+            }
+            Spacer(Modifier.height(24.dp))
+            Button(Mesh::agree, Modifier.fillMaxWidth().height(56.dp)) {
+                Icon(Icons.Rounded.Check, null)
+                Spacer(Modifier.width(10.dp))
+                Text("Agree")
+            }
+        }
     }
 }
 
@@ -719,7 +763,7 @@ fun ChatsTab(padding: PaddingValues, onOpen: (String) -> Unit) {
     val rooms = Mesh.rooms.values.sortedBy { it.index }
     // DMs: everyone we've talked to, plus favorites so they're one tap away.
     val peers = (Mesh.messages.filter { it.peer != 0L }.sortedByDescending { it.time }.map { it.peer } +
-        Mesh.nodes.values.filter { it.favorite && it.num != Mesh.myNum }.map { it.num }).distinct()
+        Mesh.nodes.values.filter { it.favorite && it.num != Mesh.myNum }.map { it.num }).distinct().filter { it !in Mesh.blocked }
     LazyColumn(Modifier.fillMaxSize().padding(padding), contentPadding = PaddingValues(bottom = 96.dp)) {
         header("Rooms")
         items(rooms, key = { "room${it.index}" }) { r ->
@@ -797,6 +841,9 @@ fun StatusPill(online: Boolean) {
 fun ProfileSheet(num: Long, onDismiss: () -> Unit, onMessage: () -> Unit) {
     val n = Mesh.nodes[num] ?: Node(num)
     val now = rememberNow()
+    val blocked = num in Mesh.blocked
+    var block by remember { mutableStateOf(false) }
+    if (block) BlockDialog(num) { block = false }
     ModalBottomSheet(onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         Column(Modifier.padding(horizontal = 24.dp).padding(bottom = 24.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -816,7 +863,7 @@ fun ProfileSheet(num: Long, onDismiss: () -> Unit, onMessage: () -> Unit) {
             n.power?.let { Detail(Icons.Outlined.BatteryFull, it) }
             Spacer(Modifier.height(24.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Button(onMessage, Modifier.weight(1f).height(52.dp)) {
+                Button(onMessage, Modifier.weight(1f).height(52.dp), enabled = !blocked) {
                     Icon(Icons.AutoMirrored.Outlined.Chat, null)
                     Spacer(Modifier.width(8.dp))
                     Text("Message")
@@ -827,8 +874,66 @@ fun ProfileSheet(num: Long, onDismiss: () -> Unit, onMessage: () -> Unit) {
                     Text(if (n.favorite) "Favorited" else "Favorite", maxLines = 1)
                 }
             }
+            Spacer(Modifier.height(8.dp))
+            TextButton({ if (blocked) Mesh.setBlocked(num, false) else block = true }, Modifier.fillMaxWidth()) {
+                val color = if (blocked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                Icon(Icons.Outlined.Block, null, tint = color)
+                Spacer(Modifier.width(8.dp))
+                Text(if (blocked) "Unblock" else "Block", color = color)
+            }
         }
     }
+}
+
+@Composable
+fun BlockDialog(num: Long, onDone: () -> Unit) {
+    val name = (Mesh.nodes[num] ?: Node(num)).name
+    AlertDialog(
+        onDone,
+        confirmButton = { TextButton({ Mesh.setBlocked(num, true); onDone() }) { Text("Block") } },
+        dismissButton = { TextButton(onDone) { Text("Cancel") } },
+        icon = { Icon(Icons.Outlined.Block, null) },
+        title = { Text("Block $name?") },
+        text = { Text("You won't see their messages or get notifications from them. You can unblock them in Settings.") },
+    )
+}
+
+/** The user's email app, addressed to us, with the message, who sent it and when. */
+fun reportEmail(m: Message): Intent {
+    val sender = "${(Mesh.nodes[m.from] ?: Node(m.from)).name} (${Node(m.from).id})"
+    val where = if (m.peer != 0L) "Direct message" else Mesh.rooms[m.channel]?.title ?: "Room ${m.channel}"
+    val body = "Reported message:\n${m.text}\n\nFrom: $sender\nSent: ${Instant.ofEpochMilli(m.time)}\nIn: $where\n"
+    return Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$SUPPORT?subject=${Uri.encode("Mesh+ report: $sender")}&body=${Uri.encode(body)}"))
+}
+
+@Composable
+fun ReportDialog(m: Message, onDone: () -> Unit) {
+    val ctx = LocalContext.current
+    val sender = (Mesh.nodes[m.from] ?: Node(m.from)).name
+    var alsoBlock by remember { mutableStateOf(true) }
+    AlertDialog(
+        onDone,
+        confirmButton = {
+            TextButton({
+                runCatching { ctx.startActivity(reportEmail(m)) }
+                    .onFailure { Toast.makeText(ctx, "No email app found. Email $SUPPORT instead.", Toast.LENGTH_LONG).show() }
+                if (alsoBlock) Mesh.setBlocked(m.from, true)
+                onDone()
+            }) { Text("Report") }
+        },
+        dismissButton = { TextButton(onDone) { Text("Cancel") } },
+        icon = { Icon(Icons.Outlined.Flag, null) },
+        title = { Text("Report this message?") },
+        text = {
+            Column {
+                Text("Your email app opens with this message, who sent it and when, addressed to $SUPPORT. The developer reads every report.")
+                Row(Modifier.padding(top = 12.dp).clickable { alsoBlock = !alsoBlock }, verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(alsoBlock, { alsoBlock = it })
+                    Text("Also block $sender")
+                }
+            }
+        },
+    )
 }
 
 @Composable
@@ -843,6 +948,23 @@ fun Detail(icon: ImageVector, text: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: () -> Unit, onNodeSettings: () -> Unit, onDevices: () -> Unit) {
+    var blockedList by remember { mutableStateOf(false) }
+    if (blockedList) AlertDialog(
+        { blockedList = false },
+        confirmButton = { TextButton({ blockedList = false }) { Text("Done") } },
+        title = { Text("Blocked") },
+        text = {
+            Column {
+                if (Mesh.blocked.isEmpty()) Text("No one is blocked.")
+                Mesh.blocked.toList().forEach { num ->
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text((Mesh.nodes[num] ?: Node(num)).name, Modifier.weight(1f), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        TextButton({ Mesh.setBlocked(num, false) }) { Text("Unblock") }
+                    }
+                }
+            }
+        },
+    )
     ModalBottomSheet(onDismiss) {
         Column(Modifier.padding(bottom = 24.dp)) {
             ListItem(
@@ -874,6 +996,14 @@ fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: (
                 headlineContent = { Text("Your devices") },
                 supportingContent = { Text("Connected over ${Mesh.transport} · tap to switch") },
                 modifier = Modifier.clickable { onDismiss(); onDevices() },
+            )
+            if (Mesh.blocked.isNotEmpty()) ListItem(
+                leadingContent = { Icon(Icons.Outlined.Block, null) },
+                headlineContent = { Text("Blocked") },
+                supportingContent = {
+                    Text(Mesh.blocked.joinToString { (Mesh.nodes[it] ?: Node(it)).name } + " · tap to unblock", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                },
+                modifier = Modifier.clickable { blockedList = true },
             )
             ListItem(
                 leadingContent = { Icon(Icons.AutoMirrored.Outlined.Logout, null, tint = MaterialTheme.colorScheme.error) },
@@ -1321,8 +1451,14 @@ fun DayChip(t: Long) {
 
 @Composable
 fun Bubble(m: Message, showName: Boolean) {
+    val ctx = LocalContext.current
     val time = remember(m.time) { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(m.time)) }
     val failed = m.mine && m.status == "✗"
+    var menu by remember { mutableStateOf(false) }
+    var report by remember { mutableStateOf(false) }
+    var block by remember { mutableStateOf(false) }
+    if (report) ReportDialog(m) { report = false }
+    if (block) BlockDialog(m.from) { block = false }
     Column(
         Modifier.fillMaxWidth().padding(top = if (showName) 6.dp else 0.dp),
         horizontalAlignment = if (m.mine) Alignment.End else Alignment.Start,
@@ -1335,13 +1471,15 @@ fun Bubble(m: Message, showName: Boolean) {
                 color = nodeColor(m.from),
             )
         }
+      Box {
         Surface(
             shape = RoundedCornerShape(20.dp),
             color = if (m.mine) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHigh,
-            modifier = Modifier.widthIn(max = 300.dp).clickable(enabled = failed && Mesh.connected) { Mesh.retry(m) },
+            modifier = Modifier.widthIn(max = 300.dp)
+                .combinedClickable(onLongClickLabel = "Message options", onLongClick = { menu = true }) { if (failed && Mesh.connected) Mesh.retry(m) },
         ) {
             Column(Modifier.padding(start = 14.dp, end = 14.dp, top = 8.dp, bottom = 6.dp)) {
-                SelectionContainer { Text(m.text, style = MaterialTheme.typography.bodyLarge) }
+                Text(m.text, style = MaterialTheme.typography.bodyLarge)
                 Row(Modifier.align(Alignment.End), verticalAlignment = Alignment.CenterVertically) {
                     val faded = LocalContentColor.current.copy(alpha = 0.7f)
                     Text(time, style = MaterialTheme.typography.labelSmall, color = faded)
@@ -1357,6 +1495,17 @@ fun Bubble(m: Message, showName: Boolean) {
                 }
             }
         }
+        DropdownMenu(menu, { menu = false }) {
+            DropdownMenuItem({ Text("Copy") }, {
+                ctx.getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("Message", m.text)); menu = false
+            }, leadingIcon = { Icon(Icons.Outlined.ContentCopy, null) })
+            if (!m.mine) {
+                DropdownMenuItem({ Text("Report") }, { report = true; menu = false }, leadingIcon = { Icon(Icons.Outlined.Flag, null) })
+                DropdownMenuItem({ Text("Block ${(Mesh.nodes[m.from] ?: Node(m.from)).name}") }, { block = true; menu = false },
+                    leadingIcon = { Icon(Icons.Outlined.Block, null) })
+            }
+        }
+      }
         if (failed) {
             Text(
                 // Room messages have no delivery receipts, only "someone relayed it"; missing that isn't proof of failure.
