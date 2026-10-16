@@ -49,6 +49,9 @@ data class Message(
 
 fun convoKey(channel: Int, peer: Long) = if (peer != 0L) "dm:$peer" else "ch:$channel"
 
+/** Blocking a node hides its room messages and the whole DM conversation with it. */
+fun visible(m: Message, blocked: Collection<Long>) = m.from !in blocked && m.peer !in blocked
+
 data class Node(
     val num: Long, val long: String = "", val short: String = "",
     val lastHeard: Long = 0, val snr: Float? = null, val hops: Int? = null,
@@ -91,12 +94,14 @@ private val DEFAULT_NAME = Regex("Meshtastic [0-9a-f]{4}")
 @SuppressLint("MissingPermission", "StaticFieldLeak") // permissions are requested in MainActivity; ctx is the app context
 object Mesh {
     private val all = mutableStateListOf<Message>()
-    /** History of the connected node only. */
-    val messages: List<Message> get() = all.filter { it.me == myNum }
+    /** History of the connected node only, minus blocked nodes. */
+    val messages: List<Message> get() = all.filter { it.me == myNum && visible(it, blocked) }
     val nodes = mutableStateMapOf<Long, Node>()
     val rooms = mutableStateMapOf<Int, Room>() // by channel index, 0 = primary
     val lastRead = mutableStateMapOf<String, Long>() // conversation -> time it was last open
     private val muted = mutableStateListOf<String>() // "node/conversation" that don't notify
+    val blocked = mutableStateListOf<Long>() // node numbers whose messages are hidden, on all your nodes
+    var agreed by mutableStateOf(false) // accepted the terms of use (no objectionable content or abuse)
     val saved = mutableStateListOf<Pair<String, String>>() // devices used before: Bluetooth address (or USB) to name
     var current by mutableStateOf<String?>(null) // key of the device we're on, as in [saved]
     private val statusState = mutableStateOf("")
@@ -148,6 +153,8 @@ object Mesh {
         }
         runCatching { JSONObject(prefs().getString("read", "{}")!!).run { keys().forEach { lastRead[it] = getLong(it) } } }
         muted += prefs().getStringSet("muted", emptySet())!!
+        blocked += prefs().getStringSet("blocked", emptySet())!!.map { it.toLong() }
+        agreed = prefs().getBoolean("terms", false)
         runCatching {
             val a = JSONArray(prefs().getString("saved", "[]"))
             for (i in 0 until a.length()) a.getJSONArray(i).run { saved += getString(0) to getString(1) }
@@ -414,6 +421,7 @@ object Mesh {
         val payload = d.bytes(2) ?: ByteArray(0)
         when (d.long(1)) {
             TEXT_APP -> {
+                if (from in blocked) return // no history, notification or relay command from a blocked node
                 val id = p.long(6)
                 if (id != 0L && messages.any { it.id == id && !it.mine }) return // node replays its queue on reconnect
                 val rx = p.long(7) * 1000
@@ -471,6 +479,18 @@ object Mesh {
         val key = "$myNum/$convo"
         if (!muted.remove(key)) muted += key
         prefs().edit { putStringSet("muted", muted.toSet()) }
+    }
+
+    /** Kept on this phone only: the node itself still hears them. */
+    fun setBlocked(num: Long, block: Boolean) {
+        if (!block) blocked.remove(num) else if (num !in blocked) blocked += num
+        prefs().edit { putStringSet("blocked", blocked.map { it.toString() }.toSet()) }
+        if (block) Notify.clear(convoKey(0, num))
+    }
+
+    fun agree() {
+        agreed = true
+        prefs().edit { putBoolean("terms", true) }
     }
 
     fun markRead(convo: String) {

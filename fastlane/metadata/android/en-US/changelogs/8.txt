@@ -1,0 +1,1 @@
+You can now block a node so its messages and notifications no longer reach you, and report a message to the developer by long-pressing it. The app asks you once to agree to the terms of use, which have zero tolerance for abuse.
