@@ -2,6 +2,7 @@
 # Builds the iPhone app, has App Store Connect sign it for distribution and uploads it (it then shows up in TestFlight).
 #   ios/release.sh <version> <build> [key-id issuer-id key.p8]
 #   ios/release.sh 0.4.4 8 "$ASC_KEY_ID" "$ASC_ISSUER_ID" "$RUNNER_TEMP/AuthKey.p8"
+# NO_UPLOAD=1 stops after the export (build/export/MeshPlus.ipa).
 # The key defaults to ~/.appstoreconnect/private_keys/AuthKey_3FT23S9NSM.p8. No signing identity is needed: the archive
 # is built unsigned, signed ad hoc with the app's identity (adhoc.entitlements), and the export is cloud-signed.
 set -eo pipefail
@@ -18,4 +19,5 @@ xcodebuild -project MeshPlus.xcodeproj -scheme MeshPlus -destination 'generic/pl
 codesign -f -s - --entitlements adhoc.entitlements build/MeshPlus.xcarchive/Products/Applications/MeshPlus.app
 xcodebuild -exportArchive -archivePath build/MeshPlus.xcarchive -exportPath build/export -exportOptionsPlist ExportOptions.plist \
   -allowProvisioningUpdates -authenticationKeyPath "$P8" -authenticationKeyID "$KEY" -authenticationKeyIssuerID "$ISSUER" | grep -E 'error:|EXPORT'
+[ -z "$NO_UPLOAD" ] || exit 0
 xcrun altool --upload-app -f build/export/MeshPlus.ipa -t ios --apiKey "$KEY" --apiIssuer "$ISSUER" --p8-file-path "$P8"
