@@ -20,23 +20,27 @@ jobs:
       - uses: actions/checkout@v5
         with:
           sparse-checkout: ios
-      # Each runner instance (runner/rN) gets its own simulator: they share one user, and jobs on one simulator kill
-      # each other's tests.
-      - name: Resolve iOS Simulator
+      # The runner instances (runner/rN) share one user. Each gets its own simulator, since jobs on one simulator kill
+      # each other's tests, and its own copy of the sources: the checkout path changes with every run, and Xcode only
+      # rebuilds what changed while the path stays the same and unchanged files keep their inode and time.
+      - name: Stage sources and resolve iOS Simulator
         timeout-minutes: 25
         run: |
+          runner="${PWD%%/work/*}"
+          mkdir -p "$runner/ci/meshtastic-plus"
+          rsync -rlc --delete ios/ "$runner/ci/meshtastic-plus/ios/"
+          echo "STAGE=$runner/ci/meshtastic-plus" >> "$GITHUB_ENV"
           python3 -m unittest ios/ci_simulator_test.py
-          export CI_SIMULATOR_NAME="CI iPhone $(pwd | sed -nE 's#.*/runner/([^/]+)/work/.*#\1#p')"
-          udid=$(python3 ios/ci_simulator.py)
+          udid=$(CI_SIMULATOR_NAME="CI iPhone ${runner##*/}" python3 ios/ci_simulator.py)
           echo "SIMULATOR_ID=$udid" >> "$GITHUB_ENV"
       - name: Build for testing
         run: >-
-          xcodebuild -project ios/MeshPlus.xcodeproj -scheme MeshPlus
+          xcodebuild -project "$STAGE/ios/MeshPlus.xcodeproj" -scheme MeshPlus -derivedDataPath "$STAGE/DerivedData"
           -destination 'generic/platform=iOS Simulator' ARCHS=arm64
           build-for-testing
       - name: Unit and UI tests
         run: >-
-          xcodebuild -project ios/MeshPlus.xcodeproj -scheme MeshPlus
+          xcodebuild -project "$STAGE/ios/MeshPlus.xcodeproj" -scheme MeshPlus -derivedDataPath "$STAGE/DerivedData"
           -destination "platform=iOS Simulator,id=$SIMULATOR_ID"
           -destination-timeout 300
           -parallel-testing-enabled NO
