@@ -38,12 +38,13 @@ jobs:
           xcodebuild -project "$STAGE/ios/MeshPlus.xcodeproj" -scheme MeshPlus -derivedDataPath "$STAGE/DerivedData"
           -destination 'generic/platform=iOS Simulator' ARCHS=arm64
           build-for-testing
+      # No sysdiagnose on failure: the sandboxed runner can't collect one, and xcodebuild waits 10 minutes for it.
       - name: Unit and UI tests
         run: >-
           xcodebuild -project "$STAGE/ios/MeshPlus.xcodeproj" -scheme MeshPlus -derivedDataPath "$STAGE/DerivedData"
           -destination "platform=iOS Simulator,id=$SIMULATOR_ID"
           -destination-timeout 300
-          -parallel-testing-enabled NO
+          -parallel-testing-enabled NO -collect-test-diagnostics never
           -resultBundlePath ios-tests.xcresult
           -only-testing:Tests -only-testing:UITests/DemoTests
           test-without-building
