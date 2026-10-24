@@ -165,6 +165,9 @@ def prepare(picked):
     runtime, device_type, device, _ = picked
     if device:
         udid, origin = device["udid"], f"existing \"{device['name']}\""
+        if NAME and device.get("state") != "Shutdown":
+            # A job cancelled mid-test leaves its simulator booted, sometimes wedged: start from a clean boot.
+            run("xcrun", "simctl", "shutdown", udid, check=False)
     else:
         name = NAME or CREATED_PREFIX + device_type["name"]
         udid = run("xcrun", "simctl", "create", name, device_type["identifier"], runtime["identifier"]).stdout.strip()
