@@ -2,12 +2,15 @@
 name: iOS
 on:
   pull_request:
-    paths: ['ios/**', '.github/workflows/ios.yml']
+    paths: ['ios/**', '.forgejo/workflows/ios.yml']
   push:
     branches: [main]
-    paths: ['ios/**', '.github/workflows/ios.yml']
+    paths: ['ios/**', '.forgejo/workflows/ios.yml']
 permissions:
   contents: read
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   ios:
     runs-on: macos-26
@@ -15,17 +18,21 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
+        with:
+          sparse-checkout: ios
+      # Each runner instance (runner/rN) gets its own simulator: they share one user, and jobs on one simulator kill
+      # each other's tests.
       - name: Resolve iOS Simulator
         timeout-minutes: 25
         run: |
           python3 -m unittest ios/ci_simulator_test.py
+          export CI_SIMULATOR_NAME="CI iPhone $(pwd | sed -nE 's#.*/runner/([^/]+)/work/.*#\1#p')"
           udid=$(python3 ios/ci_simulator.py)
           echo "SIMULATOR_ID=$udid" >> "$GITHUB_ENV"
       - name: Build for testing
         run: >-
           xcodebuild -project ios/MeshPlus.xcodeproj -scheme MeshPlus
           -destination 'generic/platform=iOS Simulator' ARCHS=arm64
-          -resultBundlePath ios-build.xcresult
           build-for-testing
       - name: Unit and UI tests
         run: >-
@@ -36,11 +43,7 @@ jobs:
           -resultBundlePath ios-tests.xcresult
           -only-testing:Tests -only-testing:UITests/DemoTests
           test-without-building
-      - name: Keep failure diagnostics
+      # The xcresult bundle is too big for the Mac's uplink, so the failures go to the log.
+      - name: Failure summary
         if: failure()
-        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
-        with:
-          name: ios-test-results
-          path: |
-            ios-build.xcresult
-            ios-tests.xcresult
+        run: test -d ios-tests.xcresult && xcrun xcresulttool get test-results summary --path ios-tests.xcresult
