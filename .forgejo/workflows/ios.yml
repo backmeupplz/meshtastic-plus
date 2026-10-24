@@ -52,3 +52,7 @@ jobs:
       - name: Failure summary
         if: failure()
         run: test -d ios-tests.xcresult && xcrun xcresulttool get test-results summary --path ios-tests.xcresult
+      # An idle booted simulator keeps burning CPU on this shared Mac; booting it again next time takes seconds.
+      - name: Shut down the simulator
+        if: always() && env.SIMULATOR_ID
+        run: xcrun simctl shutdown "$SIMULATOR_ID" || true
