@@ -1,4 +1,6 @@
-Mesh+ is a small, friendly app for Meshtastic radios. Pair your radio over Bluetooth or plug it in with a USB-C cable, and you can chat with people nearby across the mesh without internet or cell service anywhere along the way.
+Mesh+ is a small, friendly companion app for Meshtastic radios. Pair your radio over Bluetooth or plug it in with a USB-C cable, and you can chat with people nearby across the mesh and keep up with your phone's texts and calls, without internet or cell service anywhere along the way.
+
+SMS relay: your texts, over the mesh. Leave one phone where there's signal, at base camp, in the car or at home, and turn on its relay. Mesh+ forwards the SMS that phone receives and the number of each incoming call to a private, encrypted room on your radio, so you can read them wherever the mesh reaches. Answer from that room and the relay phone sends your reply as a regular SMS from its own number. Everyone in the room can read and answer, so keep it to people you trust. The relay is off until you turn it on in Settings, Android asks for SMS and call log access only then, and nothing is ever sent to us or any server.
 
 Set up in a minute. Pick your radio, type the PIN from its screen, choose your region and a name, and you're ready to chat.
 
@@ -11,8 +13,6 @@ Settings that explain themselves. Every radio setting has a short note on what i
 Firmware updates from your phone. nRF52 radios such as the Heltec T114 and RAK4631 update over a USB cable in about a minute, or over Bluetooth. Pick the newest release, a pre-release, or any earlier version.
 
 All your radios in one place. Switch between your radios from the top bar and see which board each one is, the firmware it runs and its battery voltage.
-
-SMS relay (optional). Turn one phone with cell signal into a relay: the texts and calls it receives show up in a private room, and people in that room can send texts through it. Off unless you turn it on.
 
 No radio yet? Try the built-in demo.
 
