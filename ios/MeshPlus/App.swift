@@ -17,6 +17,8 @@ struct MeshPlusApp: App {
 final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(_ app: UIApplication, didFinishLaunchingWithOptions options: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         UNUserNotificationCenter.current().delegate = self
+        // UI tests: no transitions to wait out (XCUITest waits for the app to go idle after every step).
+        if CommandLine.arguments.contains("-uitest") { UIView.setAnimationsEnabled(false) }
         _ = Mesh.shared // restores history and reconnects to the last node
         return true
     }
