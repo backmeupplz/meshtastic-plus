@@ -1,5 +1,7 @@
-# Builds the iPhone app and runs its unit tests and demo-mode UI tests. Android builds are unaffected (release.yml).
 name: iOS
+# Compile check of the iPhone app on PRs and main. No simulator tests: they cost minutes per run and kept an iOS
+# Simulator busy on the shared Mac (the user dropped them; the test targets stay for local runs). Android keeps its
+# Robolectric tests (android.yml); store builds happen in release.yml.
 on:
   pull_request:
     paths: ['ios/**', '.forgejo/workflows/ios.yml']
@@ -13,49 +15,25 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   ios:
+    name: iOS
     runs-on: macos-26
     # Mac only, and only for our own PRs: outsiders' PRs (bridged from GitHub by the `github` user) never run on it.
     if: github.event_name != 'pull_request' || contains(fromJSON('["backmeupplz","renovate","claude"]'), github.event.pull_request.user.login)
-    timeout-minutes: 45
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
         with:
           sparse-checkout: ios
-      # The runner instances (runner/rN) share one user. Each gets its own simulator, since jobs on one simulator kill
-      # each other's tests, and its own copy of the sources: the checkout path changes with every run, and Xcode only
-      # rebuilds what changed while the path stays the same and unchanged files keep their inode and time.
-      - name: Build for testing while the iOS Simulator boots
-        timeout-minutes: 25
+      # Each runner instance (runner/rN) builds its own copy of the sources: the checkout path changes with every run,
+      # and Xcode only rebuilds what changed while the path stays the same and unchanged files keep their inode and time.
+      # xcodebuild runs with a clean environment because it reads every variable as a build setting, and the runner's
+      # per-run ones made it redo the build setup each time. The generic simulator destination needs no booted device.
+      - name: Build
         run: |
           runner="${PWD%%/work/*}"
-          mkdir -p "$runner/ci/meshtastic-plus"
-          rsync -rlc --delete ios/ "$runner/ci/meshtastic-plus/ios/"
-          echo "STAGE=$runner/ci/meshtastic-plus" >> "$GITHUB_ENV"
-          python3 -m unittest ios/ci_simulator_test.py
-          CI_SIMULATOR_NAME="CI iPhone ${runner##*/}" python3 ios/ci_simulator.py > simulator.txt & sim=$!
-          built=0
-          xcodebuild -project "$runner/ci/meshtastic-plus/ios/MeshPlus.xcodeproj" -scheme MeshPlus \
-            -derivedDataPath "$runner/ci/meshtastic-plus/DerivedData" \
-            -destination 'generic/platform=iOS Simulator' ARCHS=arm64 build-for-testing || built=$?
-          wait $sim
-          echo "SIMULATOR_ID=$(cat simulator.txt)" >> "$GITHUB_ENV"
-          exit $built
-      # No sysdiagnose on failure: the sandboxed runner can't collect one, and xcodebuild waits 10 minutes for it.
-      - name: Unit and UI tests
-        timeout-minutes: 15
-        run: >-
-          xcodebuild -project "$STAGE/ios/MeshPlus.xcodeproj" -scheme MeshPlus -derivedDataPath "$STAGE/DerivedData"
-          -destination "platform=iOS Simulator,id=$SIMULATOR_ID"
-          -destination-timeout 300
-          -parallel-testing-enabled NO -collect-test-diagnostics never
-          -resultBundlePath ios-tests.xcresult
-          -only-testing:Tests -only-testing:UITests/DemoTests
-          test-without-building
-      # The xcresult bundle is too big for the Mac's uplink, so the failures go to the log.
-      - name: Failure summary
-        if: failure()
-        run: test -d ios-tests.xcresult && xcrun xcresulttool get test-results summary --path ios-tests.xcresult
-      # An idle booted simulator keeps burning CPU on this shared Mac; booting it again next time takes seconds.
-      - name: Shut down the simulator
-        if: always() && env.SIMULATOR_ID
-        run: xcrun simctl shutdown "$SIMULATOR_ID" || true
+          stage="$runner/ci/meshtastic-plus"
+          mkdir -p "$stage"
+          rsync -rlc --delete ios/ "$stage/ios/"
+          env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" \
+            xcodebuild -quiet -project "$stage/ios/MeshPlus.xcodeproj" -scheme MeshPlus -derivedDataPath "$stage/DerivedData" \
+            -destination 'generic/platform=iOS Simulator' ARCHS=arm64 build-for-testing
