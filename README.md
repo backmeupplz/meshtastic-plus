@@ -1,6 +1,6 @@
 # Mesh+
 
-A tiny Android app for [Meshtastic](https://meshtastic.org) radios: connect to your node, send and receive messages, keep it set up and updated. Download it at **[meshplus.app](https://meshplus.app)**.
+A tiny Android app for [Meshtastic](https://meshtastic.org) radios: connect to your node, send and receive messages, keep it set up and updated. Download it at **[meshplus.app](https://meshplus.app)**. How it differs from the official Meshtastic app: [meshplus.app/compare.html](https://meshplus.app/compare.html).
 
 1. **Connect**: plug the node into your phone with a USB-C cable (the app opens by itself and the phone powers the node), or tap *Connect with Bluetooth*, pick your node and type the PIN from its screen.
 2. **Region**: a brand-new node stays silent until it knows its radio band, so the app asks once (pre-selected from your phone's country).
