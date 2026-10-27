@@ -18,5 +18,6 @@ Connect a Meshtastic radio to your phone and messages hop from radio to radio ov
 ## Links
 
 - [Home page](https://meshplus.app/)
+- [How Mesh+ differs from the official Meshtastic app](https://meshplus.app/compare.html)
 - [Privacy policy](https://meshplus.app/privacy.html)
 - [Source code](https://github.com/backmeupplz/meshtastic-plus)
