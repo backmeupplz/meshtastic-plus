@@ -129,6 +129,7 @@ struct ConversationView: View {
                         .padding(.horizontal, 14).padding(.vertical, 9)
                         .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 20))
                     Button {
+                        RatingPrompt.sent()
                         mesh.send(text.trimmingCharacters(in: .whitespacesAndNewlines), channel: channel, peer: peer)
                         text = ""
                     } label: { Image(systemName: "arrow.up.circle.fill").font(.system(size: 34)) }

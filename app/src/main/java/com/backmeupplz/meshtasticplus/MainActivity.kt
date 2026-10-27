@@ -16,6 +16,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.hardware.usb.UsbManager
+import android.os.Build
 import android.os.Bundle
 import android.os.ParcelUuid
 import android.text.format.DateUtils
@@ -55,6 +56,7 @@ import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.BatteryFull
 import androidx.compose.material.icons.outlined.Block
+import androidx.compose.material.icons.outlined.Feedback
 import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material.icons.outlined.VerifiedUser
 import androidx.compose.material.icons.outlined.ContentCopy
@@ -160,6 +162,7 @@ class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         Mesh.visible = true
+        Rating.used()
     }
 
     override fun onStop() {
@@ -184,6 +187,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App() {
+    val activity = LocalContext.current as Activity
     var editingName by remember { mutableStateOf(false) }
     var editingRegion by remember { mutableStateOf(false) }
     var open by rememberSaveable { mutableStateOf<String?>(null) }
@@ -199,7 +203,7 @@ fun App() {
         Mesh.askName -> NameScreen(editing = false) {}
         nodeSettings -> NodeSettingsScreen({ nodeSettings = false }) { firmware = false }
         relayScreen.value -> RelayScreen { relayScreen.value = false }
-        open != null -> ConversationScreen(open!!, onBack = { open = null }, onProfile = { profile = it })
+        open != null -> ConversationScreen(open!!, onBack = { open = null; Rating.maybeAsk(activity) }, onProfile = { profile = it })
         else -> HomeScreen(
             onOpen = { open = it },
             onProfile = { profile = it },
@@ -948,6 +952,7 @@ fun Detail(icon: ImageVector, text: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: () -> Unit, onNodeSettings: () -> Unit, onDevices: () -> Unit) {
+    val ctx = LocalContext.current
     var blockedList by remember { mutableStateOf(false) }
     if (blockedList) AlertDialog(
         { blockedList = false },
@@ -1004,6 +1009,16 @@ fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: (
                     Text(Mesh.blocked.joinToString { (Mesh.nodes[it] ?: Node(it)).name } + " · tap to unblock", maxLines = 1, overflow = TextOverflow.Ellipsis)
                 },
                 modifier = Modifier.clickable { blockedList = true },
+            )
+            ListItem(
+                leadingContent = { Icon(Icons.Outlined.Feedback, null) },
+                headlineContent = { Text("Send feedback") },
+                supportingContent = { Text(SUPPORT) },
+                modifier = Modifier.clickable {
+                    val version = ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName
+                    val body = "\n\nMesh+ $version on Android ${Build.VERSION.RELEASE}"
+                    runCatching { ctx.startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$SUPPORT?subject=${Uri.encode("Mesh+ feedback")}&body=${Uri.encode(body)}"))) }
+                },
             )
             ListItem(
                 leadingContent = { Icon(Icons.AutoMirrored.Outlined.Logout, null, tint = MaterialTheme.colorScheme.error) },
@@ -1215,7 +1230,7 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
     val relayed = ownRelay || room != null && messages.any { m -> !m.mine && RELAY_PREFIXES.any { m.text.startsWith(it) } }
     var sms by remember { mutableStateOf(false) }
     var replyTo by rememberSaveable(convo) { mutableStateOf<String?>(null) }
-    val send = { text: String -> if (ownRelay && text.startsWith("$SMS_COMMAND ")) Relay.sendOwn(text) else Mesh.send(text, channel, peer) }
+    val send = { text: String -> Rating.sent(); if (ownRelay && text.startsWith("$SMS_COMMAND ")) Relay.sendOwn(text) else Mesh.send(text, channel, peer) }
 
     Scaffold(
         topBar = {

@@ -9,7 +9,7 @@ struct MeshPlusApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
-                .onChange(of: phase) { _, p in Mesh.shared.visible = p == .active }
+                .onChange(of: phase) { _, p in Mesh.shared.visible = p == .active; if p == .active { RatingPrompt.used() } }
         }
     }
 }

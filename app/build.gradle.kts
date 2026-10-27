@@ -55,6 +55,7 @@ dependencies {
     implementation("no.nordicsemi.android:dfu:2.11.0") // firmware updates over Bluetooth (legacy nRF52 DFU)
     implementation("com.google.zxing:core:3.5.4") // QR codes for room invites
     "playImplementation"("com.google.android.gms:play-services-code-scanner:16.1.0") // QR scanning, no camera permission
+    "playImplementation"("com.google.android.play:review:2.0.2") // Play's own rating card
     "fdroidImplementation"("com.journeyapps:zxing-android-embedded:4.3.0")
     testImplementation("junit:junit:4.13.2")
 }

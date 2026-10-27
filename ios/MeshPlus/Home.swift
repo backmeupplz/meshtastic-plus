@@ -1,5 +1,6 @@
 import AVFoundation
 import CoreImage.CIFilterBuiltins
+import StoreKit
 import SwiftUI
 
 func nodeColor(_ num: Int64) -> Color { Color(hue: Double(UInt32(truncatingIfNeeded: num) % 360) / 360, saturation: 0.71, brightness: 0.74) }
@@ -65,6 +66,7 @@ struct HomeView: View {
     @State private var tab = 0
     @State private var path: [String] = []
     @State private var sheet: HomeSheet?
+    @Environment(\.requestReview) private var requestReview
 
     var body: some View {
         let mesh = Mesh.shared
@@ -99,6 +101,7 @@ struct HomeView: View {
             case .profile(let num): ProfileSheet(num: num) { path.append(convoKey(0, num)) }
             }
         }
+        .onChange(of: path) { old, new in if new.isEmpty && !old.isEmpty && RatingPrompt.ask() { requestReview() } }
         .onChange(of: mesh.pendingConvo, initial: true) { _, convo in
             guard let convo else { return }
             sheet = nil
@@ -288,7 +291,10 @@ struct SettingsSheet: View {
                     }
                     Link("Terms of use", destination: URL(string: "https://meshplus.app/terms.html")!)
                     Link("Privacy policy", destination: URL(string: "https://meshplus.app/privacy.html")!)
-                    Button("Contact support") { openURL(mailURL(subject: "Mesh+ for iPhone", body: "")) }
+                    Button("Send feedback") {
+                        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+                        openURL(mailURL(subject: "Mesh+ feedback", body: "\n\nMesh+ \(version) on iOS \(UIDevice.current.systemVersion)"))
+                    }
                 }
                 Section {
                     Button("Disconnect", role: .destructive) { dismiss(); mesh.forget() }
