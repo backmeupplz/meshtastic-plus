@@ -1,0 +1,37 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- The share card template for meshplus.app pages; make.sh fills ?t= (title) and ?s= (subtitle). -->
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Inter:wght@400;500&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body { background: #060b08; color: #eef5f0; font-family: Inter, sans-serif; position: relative; }
+  .glow { position: absolute; inset: 0; background: radial-gradient(640px 420px at 88% 12%, rgba(103,234,148,.22), transparent 62%),
+    radial-gradient(520px 360px at 0% 110%, rgba(103,234,148,.10), transparent 60%); }
+  svg.mesh { position: absolute; right: 24px; top: 128px; }
+  .in { position: absolute; inset: 64px 76px; display: flex; flex-direction: column; }
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 14px; font: 800 36px "Bricolage Grotesque", sans-serif; letter-spacing: -.01em; }
+  .brand img { width: 46px; height: 46px; }
+  .url { font: 500 24px Inter, sans-serif; color: #67ea94; }
+  h1 { font: 800 72px/1.04 "Bricolage Grotesque", sans-serif; letter-spacing: -.03em; margin: auto 0 24px; max-width: 1000px; }
+  h1 em { font-style: normal; color: #67ea94; }
+  p { font-size: 29px; line-height: 1.4; color: #a6b8ad; margin: 0; max-width: 940px; }
+</style></head>
+<body>
+<div class="glow"></div>
+<svg class="mesh" width="470" height="319" viewBox="0 0 560 380" fill="none" stroke="#67ea94" stroke-opacity=".2" stroke-width="2">
+  <path d="M120 80 260 40 400 110 520 60M260 40 300 190 400 110 500 230M120 80 180 210 300 190 420 300 500 230M180 210 260 330 420 300"/>
+  <g fill="#67ea94" fill-opacity=".5" stroke="none"><circle cx="120" cy="80" r="7"/><circle cx="260" cy="40" r="6"/><circle cx="400" cy="110" r="9"/>
+  <circle cx="520" cy="60" r="5"/><circle cx="300" cy="190" r="8"/><circle cx="500" cy="230" r="6"/><circle cx="180" cy="210" r="5"/>
+  <circle cx="420" cy="300" r="7"/><circle cx="260" cy="330" r="5"/></g>
+</svg>
+<div class="in">
+  <div class="top"><div class="brand"><img src="../../docs/favicon.svg" alt="">Mesh+</div><div class="url">meshplus.app</div></div>
+  <h1 id="t"></h1><p id="s"></p>
+</div>
+<script>
+  const q = new URLSearchParams(location.search), esc = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+  document.getElementById("t").innerHTML = esc(q.get("t") || "").replace(/Mesh\+/g, "<em>Mesh+</em>");
+  document.getElementById("s").textContent = q.get("s") || "";
+</script>
+</body></html>
