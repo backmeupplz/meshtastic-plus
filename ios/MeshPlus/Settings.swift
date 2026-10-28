@@ -19,29 +19,30 @@ struct SettingGroup: Identifiable {
 
 enum SettingValue: Equatable { case int(Int64), text(String) }
 
+/// "3 hours", "1 day": the largest whole unit, in the phone's language.
 func duration(_ s: Int64) -> String {
-    switch s {
-    case 0xFFFF_FFFF: return "Always"
-    case _ where s % 86400 == 0: return s == 86400 ? "1 day" : "\(s / 86400) days"
-    case _ where s % 3600 == 0: return s == 3600 ? "1 hour" : "\(s / 3600) hours"
-    case _ where s % 60 == 0: return s == 60 ? "1 minute" : "\(s / 60) minutes"
-    default: return "\(s) seconds"
-    }
+    if s == 0xFFFF_FFFF { return String(localized: "Always") }
+    let f = DateComponentsFormatter()
+    f.unitsStyle = .full
+    f.allowedUnits = s % 86400 == 0 ? .day : s % 3600 == 0 ? .hour : s % 60 == 0 ? .minute : .second
+    return f.string(from: TimeInterval(s)) ?? "\(s)"
 }
 
 /// Interval choices; 0 means "firmware default" and is labeled with what that default is.
-private func every(_ def: String, _ secs: Int64...) -> [(Int64, String)] { [(0, "Default (\(def))")] + secs.map { ($0, duration($0)) } }
+private func every(_ def: Int64, _ secs: Int64...) -> [(Int64, String)] {
+    [(0, String(localized: "Default (\(duration(def)))"))] + secs.map { ($0, duration($0)) }
+}
 
-private let BT_WARNING = "\n\nChanging this can drop the Bluetooth connection while the node restarts."
+private let BT_WARNING = "\n\n" + String(localized: "Changing this can drop the Bluetooth connection while the node restarts.")
 
 /// Meshtastic RegionCode values (config.proto), minus the amateur-radio bands that need a license.
 let REGIONS: [(Int, String)] = [
-    (1, "United States, Canada, Mexico"), (3, "Europe & UK 868 MHz"), (2, "Europe & UK 433 MHz"),
-    (6, "Australia / New Zealand"), (11, "New Zealand 865 MHz"), (22, "Australia / New Zealand 433 MHz"),
-    (26, "Brazil"), (4, "China"), (10, "India"), (5, "Japan"), (24, "Kazakhstan 863 MHz"), (23, "Kazakhstan 433 MHz"),
-    (7, "Korea"), (17, "Malaysia 919 MHz"), (16, "Malaysia 433 MHz"), (25, "Nepal"), (21, "Philippines 915 MHz"),
-    (20, "Philippines 868 MHz"), (19, "Philippines 433 MHz"), (9, "Russia"), (18, "Singapore"), (8, "Taiwan"),
-    (12, "Thailand"), (15, "Ukraine 868 MHz"), (14, "Ukraine 433 MHz"), (13, "2.4 GHz (worldwide)"),
+    (1, String(localized: "United States, Canada, Mexico")), (3, String(localized: "Europe & UK 868 MHz")), (2, String(localized: "Europe & UK 433 MHz")),
+    (6, String(localized: "Australia / New Zealand")), (11, String(localized: "New Zealand 865 MHz")), (22, String(localized: "Australia / New Zealand 433 MHz")),
+    (26, String(localized: "Brazil")), (4, String(localized: "China")), (10, String(localized: "India")), (5, String(localized: "Japan")), (24, String(localized: "Kazakhstan 863 MHz")), (23, String(localized: "Kazakhstan 433 MHz")),
+    (7, String(localized: "Korea")), (17, String(localized: "Malaysia 919 MHz")), (16, String(localized: "Malaysia 433 MHz")), (25, String(localized: "Nepal")), (21, String(localized: "Philippines 915 MHz")),
+    (20, String(localized: "Philippines 868 MHz")), (19, String(localized: "Philippines 433 MHz")), (9, String(localized: "Russia")), (18, String(localized: "Singapore")), (8, String(localized: "Taiwan")),
+    (12, String(localized: "Thailand")), (15, String(localized: "Ukraine 868 MHz")), (14, String(localized: "Ukraine 433 MHz")), (13, String(localized: "2.4 GHz (worldwide)")),
 ]
 
 private let EU: Set<String> = [
@@ -60,106 +61,92 @@ func suggestedRegion(_ country: String) -> Int {
     return map[country] ?? 0
 }
 
-func regionName(_ code: Int) -> String { REGIONS.first { $0.0 == code }?.1 ?? "Not set" }
+func regionName(_ code: Int) -> String { REGIONS.first { $0.0 == code }?.1 ?? String(localized: "Not set") }
 
 let SETTINGS: [SettingGroup] = [
-    SettingGroup(title: "Role", settings: [
-        Setting(section: 1, field: 1, title: "Role", info:
-            "What job this node does on the mesh.\n\n" +
-            "• Client: the normal choice for a node you carry and chat from. It relays other people's messages too.\n" +
-            "• Client (mute): doesn't relay. Use it when another node of yours nearby already does.\n" +
-            "• Client (hidden): stays quiet and only talks when needed, for privacy or battery.\n" +
-            "• Client base: a home node that relays eagerly for your favorites.\n" +
-            "• Router / Router (late): for nodes in high, well-placed spots that exist to extend the mesh. Late waits for others to relay first.\n" +
-            "• Tracker / Sensor: sends its position or sensor readings first.\n" +
-            "• Lost and found: keeps announcing its location so you can find it.\n\n" +
-            "Router roles may turn on power saving, which switches Bluetooth off most of the time.",
-            options: [(0, "Client"), (1, "Client (mute)"), (8, "Client (hidden)"), (12, "Client base"), (2, "Router"),
-                      (11, "Router (late)"), (5, "Tracker"), (6, "Sensor"), (9, "Lost and found"), (7, "TAK"), (10, "TAK tracker")]),
-        Setting(section: 1, field: 6, title: "Relaying", info:
-            "Which messages this node passes along for others.\n\n" +
-            "• Everything: relays all it hears. Best for the mesh, and the default.\n" +
-            "• Everything, without reading: same, without trying to decrypt. For dedicated repeaters.\n" +
-            "• Local rooms only: ignores traffic from other meshes it can't read.\n" +
-            "• Known nodes only: ignores nodes that aren't in its node list.\n" +
-            "• Standard messages only: skips unusual app traffic.\n" +
-            "• Nothing: never relays. Only allowed for Tracker and Sensor roles.",
-            options: [(0, "Everything"), (1, "Everything, without reading"), (2, "Local rooms only"),
-                      (3, "Known nodes only"), (5, "Standard messages only"), (4, "Nothing")]),
-        Setting(section: 1, field: 7, title: "Announce name every", info:
-            "How often the node tells everyone its name and encryption key. Others need this to show your name and to send you direct messages. More often adds radio traffic for everyone; the default suits most people.",
-            options: every("3 hours", 3600, 21600, 43200, 86400)),
-        Setting(section: 1, field: 12, title: "Heartbeat LED", info:
-            "Blinks the node's LED every few seconds to show it's running. Turn off to keep it dark or save a little battery.",
+    SettingGroup(title: String(localized: "Role"), settings: [
+        Setting(section: 1, field: 1, title: String(localized: "Role"), info:
+            String(localized: "What job this node does on the mesh.\n\n• Client: the normal choice for a node you carry and chat from. It relays other people's messages too.\n• Client (mute): doesn't relay. Use it when another node of yours nearby already does.\n• Client (hidden): stays quiet and only talks when needed, for privacy or battery.\n• Client base: a home node that relays eagerly for your favorites.\n• Router / Router (late): for nodes in high, well-placed spots that exist to extend the mesh. Late waits for others to relay first.\n• Tracker / Sensor: sends its position or sensor readings first.\n• Lost and found: keeps announcing its location so you can find it.\n\nRouter roles may turn on power saving, which switches Bluetooth off most of the time."),
+            options: [(0, String(localized: "Client")), (1, String(localized: "Client (mute)")), (8, String(localized: "Client (hidden)")), (12, String(localized: "Client base")), (2, String(localized: "Router")),
+                      (11, String(localized: "Router (late)")), (5, String(localized: "Tracker")), (6, String(localized: "Sensor")), (9, String(localized: "Lost and found")), (7, String(localized: "TAK")), (10, String(localized: "TAK tracker"))]),
+        Setting(section: 1, field: 6, title: String(localized: "Relaying"), info:
+            String(localized: "Which messages this node passes along for others.\n\n• Everything: relays all it hears. Best for the mesh, and the default.\n• Everything, without reading: same, without trying to decrypt. For dedicated repeaters.\n• Local rooms only: ignores traffic from other meshes it can't read.\n• Known nodes only: ignores nodes that aren't in its node list.\n• Standard messages only: skips unusual app traffic.\n• Nothing: never relays. Only allowed for Tracker and Sensor roles."),
+            options: [(0, String(localized: "Everything")), (1, String(localized: "Everything, without reading")), (2, String(localized: "Local rooms only")),
+                      (3, String(localized: "Known nodes only")), (5, String(localized: "Standard messages only")), (4, String(localized: "Nothing"))]),
+        Setting(section: 1, field: 7, title: String(localized: "Announce name every"), info:
+            String(localized: "How often the node tells everyone its name and encryption key. Others need this to show your name and to send you direct messages. More often adds radio traffic for everyone; the default suits most people."),
+            options: every(10800, 3600, 21600, 43200, 86400)),
+        Setting(section: 1, field: 12, title: String(localized: "Heartbeat LED"), info:
+            String(localized: "Blinks the node's LED every few seconds to show it's running. Turn off to keep it dark or save a little battery."),
             toggle: true, invert: true),
     ]),
-    SettingGroup(title: "Radio", settings: [
-        Setting(section: 6, field: 7, title: "Region", info:
-            "The radio band. It has to match your country's rules, and nodes on different regions can't hear each other.",
+    SettingGroup(title: String(localized: "Radio"), settings: [
+        Setting(section: 6, field: 7, title: String(localized: "Region"), info:
+            String(localized: "The radio band. It has to match your country's rules, and nodes on different regions can't hear each other."),
             options: REGIONS.map { (Int64($0.0), $0.1) }),
-        Setting(section: 6, field: 2, title: "Speed vs. range", info:
-            "The radio preset: slower presets reach farther, faster ones carry more messages. Every node has to use the same preset to hear each other, so only change this if your local mesh uses a different one. Almost everyone uses Long range, fast.",
-            options: [(0, "Long range, fast"), (7, "Long range, moderate"), (9, "Long range, turbo"), (3, "Medium range, slow"),
-                      (4, "Medium range, fast"), (5, "Short range, slow"), (6, "Short range, fast"), (8, "Short range, turbo")],
+        Setting(section: 6, field: 2, title: String(localized: "Speed vs. range"), info:
+            String(localized: "The radio preset: slower presets reach farther, faster ones carry more messages. Every node has to use the same preset to hear each other, so only change this if your local mesh uses a different one. Almost everyone uses Long range, fast."),
+            options: [(0, String(localized: "Long range, fast")), (7, String(localized: "Long range, moderate")), (9, String(localized: "Long range, turbo")), (3, String(localized: "Medium range, slow")),
+                      (4, String(localized: "Medium range, fast")), (5, String(localized: "Short range, slow")), (6, String(localized: "Short range, fast")), (8, String(localized: "Short range, turbo"))],
             also: (1, 1)), // use_preset
-        Setting(section: 6, field: 8, title: "Max hops", info:
-            "How many times a message may be passed along on its way. 3 is the default and plenty for most meshes; higher values add traffic for everyone.",
-            options: [(0, "Default (3)")] + (1...7).map { (Int64($0), "\($0)") }),
-        Setting(section: 6, field: 10, title: "Transmit power", info:
-            "How strongly the node transmits. Maximum uses the strongest power that's legal in your region and that the board supports. Lower saves battery but shortens range.",
-            options: [(0, "Maximum allowed"), (10, "10 dBm"), (14, "14 dBm"), (17, "17 dBm"), (20, "20 dBm"), (22, "22 dBm"),
+        Setting(section: 6, field: 8, title: String(localized: "Max hops"), info:
+            String(localized: "How many times a message may be passed along on its way. 3 is the default and plenty for most meshes; higher values add traffic for everyone."),
+            options: [(0, String(localized: "Default (3)"))] + (1...7).map { (Int64($0), "\($0)") }),
+        Setting(section: 6, field: 10, title: String(localized: "Transmit power"), info:
+            String(localized: "How strongly the node transmits. Maximum uses the strongest power that's legal in your region and that the board supports. Lower saves battery but shortens range."),
+            options: [(0, String(localized: "Maximum allowed")), (10, "10 dBm"), (14, "14 dBm"), (17, "17 dBm"), (20, "20 dBm"), (22, "22 dBm"),
                       (27, "27 dBm"), (30, "30 dBm")]),
-        Setting(section: 6, field: 9, title: "Transmit", info:
-            "Lets the radio send. Off makes the node listen only: nothing you send will go out.", toggle: true),
-        Setting(section: 6, field: 13, title: "Boosted receive", info:
-            "Makes the receiver a bit more sensitive on SX126x radios (most modern boards), for slightly more power use.", toggle: true),
-        Setting(section: 6, field: 105, title: "OK to share via internet", info:
-            "Lets gateways that bridge the mesh to the internet (MQTT) forward your messages there. Off asks them not to.", toggle: true),
-        Setting(section: 6, field: 104, title: "Ignore internet messages", info:
-            "Ignores messages that reached the mesh from the internet through MQTT gateways.", toggle: true),
+        Setting(section: 6, field: 9, title: String(localized: "Transmit"), info:
+            String(localized: "Lets the radio send. Off makes the node listen only: nothing you send will go out."), toggle: true),
+        Setting(section: 6, field: 13, title: String(localized: "Boosted receive"), info:
+            String(localized: "Makes the receiver a bit more sensitive on SX126x radios (most modern boards), for slightly more power use."), toggle: true),
+        Setting(section: 6, field: 105, title: String(localized: "OK to share via internet"), info:
+            String(localized: "Lets gateways that bridge the mesh to the internet (MQTT) forward your messages there. Off asks them not to."), toggle: true),
+        Setting(section: 6, field: 104, title: String(localized: "Ignore internet messages"), info:
+            String(localized: "Ignores messages that reached the mesh from the internet through MQTT gateways."), toggle: true),
     ]),
-    SettingGroup(title: "Location", settings: [
-        Setting(section: 2, field: 13, title: "GPS", info:
-            "Whether the node uses its GPS chip. Off saves a lot of battery. Choose Not present when the board has no GPS.",
-            options: [(1, "On"), (0, "Off"), (2, "Not present")]),
-        Setting(section: 2, field: 1, title: "Share location every", info: "How often the node broadcasts its position to the mesh.",
-            options: every("1 hour", 300, 900, 1800, 3600, 10800, 21600, 43200)),
-        Setting(section: 2, field: 2, title: "Smart sharing", info:
-            "Also shares your location early after you've moved a good distance, and skips updates while you stay put.", toggle: true),
-        Setting(section: 2, field: 5, title: "Check GPS every", info: "How often the node wakes the GPS for a fix. Less often saves battery.",
-            options: every("2 minutes", 30, 120, 300, 900, 3600)),
+    SettingGroup(title: String(localized: "Location"), settings: [
+        Setting(section: 2, field: 13, title: String(localized: "GPS"), info:
+            String(localized: "Whether the node uses its GPS chip. Off saves a lot of battery. Choose Not present when the board has no GPS."),
+            options: [(1, String(localized: "On")), (0, String(localized: "Off")), (2, String(localized: "Not present"))]),
+        Setting(section: 2, field: 1, title: String(localized: "Share location every"), info: String(localized: "How often the node broadcasts its position to the mesh."),
+            options: every(3600, 300, 900, 1800, 3600, 10800, 21600, 43200)),
+        Setting(section: 2, field: 2, title: String(localized: "Smart sharing"), info:
+            String(localized: "Also shares your location early after you've moved a good distance, and skips updates while you stay put."), toggle: true),
+        Setting(section: 2, field: 5, title: String(localized: "Check GPS every"), info: String(localized: "How often the node wakes the GPS for a fix. Less often saves battery."),
+            options: every(120, 30, 120, 300, 900, 3600)),
     ]),
-    SettingGroup(title: "Power", settings: [
-        Setting(section: 3, field: 1, title: "Power saving", info:
-            "Sleeps deeply between radio activity, for nodes on small batteries or solar. Saves a lot on ESP32 boards, but turns Bluetooth and the screen off most of the time. nRF52 boards are already efficient." + BT_WARNING,
+    SettingGroup(title: String(localized: "Power"), settings: [
+        Setting(section: 3, field: 1, title: String(localized: "Power saving"), info:
+            String(localized: "Sleeps deeply between radio activity, for nodes on small batteries or solar. Saves a lot on ESP32 boards, but turns Bluetooth and the screen off most of the time. nRF52 boards are already efficient.") + BT_WARNING,
             toggle: true),
-        Setting(section: 3, field: 2, title: "Turn off on battery after", info:
-            "Powers the node off this long after it's unplugged from USB or solar. Never keeps it running on battery.",
-            options: [(0, "Never")] + ([300, 3600, 21600, 86400] as [Int64]).map { ($0, duration($0)) }),
+        Setting(section: 3, field: 2, title: String(localized: "Turn off on battery after"), info:
+            String(localized: "Powers the node off this long after it's unplugged from USB or solar. Never keeps it running on battery."),
+            options: [(0, String(localized: "Never"))] + ([300, 3600, 21600, 86400] as [Int64]).map { ($0, duration($0)) }),
     ]),
-    SettingGroup(title: "Screen", settings: [
-        Setting(section: 5, field: 1, title: "Screen timeout", info:
-            "How long the node's screen stays on after a button press or new message. Only matters for boards with a screen.",
-            options: every("10 minutes", 15, 30, 60, 300, 600, 3600) + [(0xFFFF_FFFF, "Always on")]),
-        Setting(section: 5, field: 5, title: "Flip screen", info: "Turns the screen upside down, for cases that mount the board the other way.", toggle: true),
-        Setting(section: 5, field: 6, title: "Units", info: "Distances and altitudes on the node's screen.", options: [(0, "Metric"), (1, "Imperial")]),
-        Setting(section: 5, field: 12, title: "12-hour clock", info: "Shows the time as 1:00 PM instead of 13:00 on the node's screen.", toggle: true),
+    SettingGroup(title: String(localized: "Screen"), settings: [
+        Setting(section: 5, field: 1, title: String(localized: "Screen timeout"), info:
+            String(localized: "How long the node's screen stays on after a button press or new message. Only matters for boards with a screen."),
+            options: every(600, 15, 30, 60, 300, 600, 3600) + [(0xFFFF_FFFF, String(localized: "Always on"))]),
+        Setting(section: 5, field: 5, title: String(localized: "Flip screen"), info: String(localized: "Turns the screen upside down, for cases that mount the board the other way."), toggle: true),
+        Setting(section: 5, field: 6, title: String(localized: "Units"), info: String(localized: "Distances and altitudes on the node's screen."), options: [(0, String(localized: "Metric")), (1, String(localized: "Imperial"))]),
+        Setting(section: 5, field: 12, title: String(localized: "12-hour clock"), info: String(localized: "Shows the time as 1:00 PM instead of 13:00 on the node's screen."), toggle: true),
     ]),
-    SettingGroup(title: "Bluetooth", settings: [
-        Setting(section: 7, field: 1, title: "Bluetooth", info:
-            "Lets phones connect to the node over Bluetooth. If you turn it off, this phone can't reach the node anymore; only a USB cable from a computer can change its settings again.",
+    SettingGroup(title: String(localized: "Bluetooth"), settings: [
+        Setting(section: 7, field: 1, title: String(localized: "Bluetooth"), info:
+            String(localized: "Lets phones connect to the node over Bluetooth. If you turn it off, this phone can't reach the node anymore; only a USB cable from a computer can change its settings again."),
             toggle: true),
-        Setting(section: 7, field: 2, title: "Pairing", info:
-            "How a phone proves it's allowed to connect.\n\n• PIN on screen: shows a new random PIN each time (needs a screen).\n• Fixed PIN: always the same PIN, set below. Nodes without a screen use 123456.\n• No PIN: anyone nearby can connect and read your messages." + BT_WARNING,
-            options: [(0, "PIN on screen"), (1, "Fixed PIN"), (2, "No PIN")]),
-        Setting(section: 7, field: 3, title: "Fixed PIN", info: "The 6-digit PIN phones type when pairing.", pin: true, visible: { get in get(7, 2) == 1 }),
+        Setting(section: 7, field: 2, title: String(localized: "Pairing"), info:
+            String(localized: "How a phone proves it's allowed to connect.\n\n• PIN on screen: shows a new random PIN each time (needs a screen).\n• Fixed PIN: always the same PIN, set below. Nodes without a screen use 123456.\n• No PIN: anyone nearby can connect and read your messages.") + BT_WARNING,
+            options: [(0, String(localized: "PIN on screen")), (1, String(localized: "Fixed PIN")), (2, String(localized: "No PIN"))]),
+        Setting(section: 7, field: 3, title: String(localized: "Fixed PIN"), info: String(localized: "The 6-digit PIN phones type when pairing."), pin: true, visible: { get in get(7, 2) == 1 }),
     ]),
-    SettingGroup(title: "Wi-Fi", settings: [
-        Setting(section: 4, field: 1, title: "Wi-Fi", info:
-            "Connects the node to a Wi-Fi network, for internet gateways. On ESP32 boards Wi-Fi turns Bluetooth off.",
+    SettingGroup(title: String(localized: "Wi-Fi"), settings: [
+        Setting(section: 4, field: 1, title: String(localized: "Wi-Fi"), info:
+            String(localized: "Connects the node to a Wi-Fi network, for internet gateways. On ESP32 boards Wi-Fi turns Bluetooth off."),
             toggle: true, visible: { _ in Mesh.shared.hasWifi }),
-        Setting(section: 4, field: 3, title: "Network name", info: "The Wi-Fi network (SSID) to join.", text: true, visible: { _ in Mesh.shared.hasWifi }),
-        Setting(section: 4, field: 4, title: "Password", info: "The Wi-Fi password.", text: true, secret: true, visible: { _ in Mesh.shared.hasWifi }),
+        Setting(section: 4, field: 3, title: String(localized: "Network name"), info: String(localized: "The Wi-Fi network (SSID) to join."), text: true, visible: { _ in Mesh.shared.hasWifi }),
+        Setting(section: 4, field: 4, title: String(localized: "Password"), info: String(localized: "The Wi-Fi password."), text: true, secret: true, visible: { _ in Mesh.shared.hasWifi }),
     ]),
 ]
 
@@ -199,24 +186,23 @@ func isNewer(_ latest: String, _ installed: String) -> Bool {
 /// Firmware before 2.8.1 deadlocks halfway through a reset on boards with a screen (nested spiLock in MessageStore).
 func resetFreezes() -> Bool { !Mesh.shared.firmware.isEmpty && isNewer("2.8.1", Mesh.shared.firmware) }
 
-private let RESET_FREEZE_NOTE = "\n\nThis node's firmware freezes partway through a reset (fixed in 2.8.1). When its screen stops changing, " +
-    "press its reset button once and it finishes. Updating the firmware first avoids this."
+private let RESET_FREEZE_NOTE = "\n\n" + String(localized: "This node's firmware freezes partway through a reset (fixed in 2.8.1). When its screen stops changing, press its reset button once and it finishes. Updating the firmware first avoids this.")
 
 struct Reset: Identifiable {
-    let kind: Int, title: String, summary: String, details: String, confirm: String
+    let kind: Int, title: String, question: String, summary: String, details: String, confirm: String
     var id: Int { kind }
 }
 
 private let RESETS = [
-    Reset(kind: 100, title: "Clear node list", summary: "Forget every node it has heard; favorites stay", details:
-        "Your node forgets every other node it has heard, except favorites. They reappear as they're heard again. Handy when the list is full of nodes from far away.",
-        confirm: "Clear"),
-    Reset(kind: 99, title: "Reset settings", summary: "Back to factory settings; keeps its identity and pairing", details:
-        "Every setting goes back to factory defaults: role, radio, region, name and private rooms (you'll need new invites). The node keeps its identity and Bluetooth pairing, and messages on this phone stay. It restarts, and you'll pick its region again.",
-        confirm: "Reset"),
-    Reset(kind: 94, title: "Factory reset", summary: "Erase everything, as if it were new", details:
-        "Erases everything on the node: settings, rooms, node list, its encryption keys and Bluetooth pairings. Others will see it as a new node. It restarts and leaves Your devices: pair it again like a new node, with the PIN on its screen, then pick its region and name. Messages on this phone stay.",
-        confirm: "Erase everything"),
+    Reset(kind: 100, title: String(localized: "Clear node list"), question: String(localized: "Clear the node list?"), summary: String(localized: "Forget every node it has heard; favorites stay"), details:
+        String(localized: "Your node forgets every other node it has heard, except favorites. They reappear as they're heard again. Handy when the list is full of nodes from far away."),
+        confirm: String(localized: "Clear")),
+    Reset(kind: 99, title: String(localized: "Reset settings"), question: String(localized: "Reset settings?"), summary: String(localized: "Back to factory settings; keeps its identity and pairing"), details:
+        String(localized: "Every setting goes back to factory defaults: role, radio, region, name and private rooms (you'll need new invites). The node keeps its identity and Bluetooth pairing, and messages on this phone stay. It restarts, and you'll pick its region again."),
+        confirm: String(localized: "Reset")),
+    Reset(kind: 94, title: String(localized: "Factory reset"), question: String(localized: "Factory reset?"), summary: String(localized: "Erase everything, as if it were new"), details:
+        String(localized: "Erases everything on the node: settings, rooms, node list, its encryption keys and Bluetooth pairings. Others will see it as a new node. It restarts and leaves Your devices: pair it again like a new node, with the PIN on its screen, then pick its region and name. Messages on this phone stay."),
+        confirm: String(localized: "Erase everything")),
 ]
 
 struct NodeSettingsView: View {
@@ -254,8 +240,8 @@ struct NodeSettingsView: View {
 
     private func display(_ s: Setting, _ v: SettingValue) -> String {
         switch v {
-        case .int(let n): return s.options?.first { $0.0 == n }?.1 ?? (s.pin ? (n == 0 ? "Not set" : "\(n)") : duration(n))
-        case .text(let t): return t.isEmpty ? "Not set" : s.secret ? "••••••••" : t
+        case .int(let n): return s.options?.first { $0.0 == n }?.1 ?? (s.pin ? (n == 0 ? String(localized: "Not set") : "\(n)") : duration(n))
+        case .text(let t): return t.isEmpty ? String(localized: "Not set") : s.secret ? "••••••••" : t
         }
     }
 
@@ -290,7 +276,7 @@ struct NodeSettingsView: View {
                 HStack {
                     Button("Undo") { edits = [:] }
                     Button { save() } label: {
-                        Label(edits.count == 1 ? "Save 1 change" : "Save \(edits.count) changes", systemImage: "checkmark").frame(maxWidth: .infinity)
+                        Label(String(localized: "Save \(edits.count) changes"), systemImage: "checkmark").frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent).controlSize(.large).disabled(!mesh.connected)
                 }
@@ -312,9 +298,9 @@ struct NodeSettingsView: View {
             }
             Button("Cancel", role: .cancel) { editing = nil }
         } message: {
-            Text(editing?.pin == true ? "6 digits, not starting with 0." : editing?.info ?? "")
+            Text(editing?.pin == true ? String(localized: "6 digits, not starting with 0.") : editing?.info ?? "")
         }
-        .alert(resetting.map { "\($0.title)?" } ?? "", isPresented: Binding(get: { resetting != nil }, set: { if !$0 { resetting = nil } })) {
+        .alert(resetting?.question ?? "", isPresented: Binding(get: { resetting != nil }, set: { if !$0 { resetting = nil } })) {
             Button(resetting?.confirm ?? "", role: .destructive) {
                 if let r = resetting { mesh.reset(r.kind); dismiss() }
                 resetting = nil
@@ -378,12 +364,12 @@ struct BoardCard: View {
     var body: some View {
         let mesh = Mesh.shared
         let board = currentBoard()
-        let chip = [board?.chip, mesh.firmware.isEmpty ? nil : "Firmware " + mesh.firmware].compactMap { $0 }.joined(separator: " · ")
-        let details = [chip, "Node ID " + hexId(mesh.myNum), mesh.nodes[mesh.myNum]?.power].compactMap { $0 }.joined(separator: "\n")
+        let chip = [board?.chip, mesh.firmware.isEmpty ? nil : String(localized: "Firmware \(mesh.firmware)")].compactMap { $0 }.joined(separator: " · ")
+        let details = [chip, String(localized: "Node ID \(hexId(mesh.myNum))"), mesh.nodes[mesh.myNum]?.power].compactMap { $0 }.joined(separator: "\n")
         HStack(alignment: .top, spacing: 14) {
             Image(systemName: "cpu").font(.title2).foregroundStyle(.secondary)
             VStack(alignment: .leading, spacing: 4) {
-                Text(board?.name ?? "Unknown board").font(.headline)
+                Text(board?.name ?? String(localized: "Unknown board")).font(.headline)
                 Text(details).font(.subheadline).foregroundStyle(.secondary)
                 Text("To update its firmware, use the web flasher at flasher.meshtastic.org on a computer.")
                     .font(.footnote).foregroundStyle(.secondary).padding(.top, 4)

@@ -1,5 +1,7 @@
 package com.backmeupplz.meshtasticplus
 
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import android.content.Intent
 import android.provider.ContactsContract
 import androidx.activity.compose.BackHandler
@@ -50,149 +52,135 @@ class Setting(
 class Group(val title: String, val settings: List<Setting>)
 
 private fun duration(s: Long): String = when {
-    s == 0xFFFFFFFFL -> "Always"
-    s % 86400 == 0L -> if (s == 86400L) "1 day" else "${s / 86400} days"
-    s % 3600 == 0L -> if (s == 3600L) "1 hour" else "${s / 3600} hours"
-    s % 60 == 0L -> if (s == 60L) "1 minute" else "${s / 60} minutes"
-    else -> "$s seconds"
+    s == 0xFFFFFFFFL -> string(R.string.always)
+    s % 86400 == 0L -> plural(R.plurals.days, (s / 86400).toInt(), s / 86400)
+    s % 3600 == 0L -> plural(R.plurals.hours, (s / 3600).toInt(), s / 3600)
+    s % 60 == 0L -> plural(R.plurals.minutes, (s / 60).toInt(), s / 60)
+    else -> plural(R.plurals.seconds, s.toInt(), s)
 }
 
 /** Interval choices; 0 means "firmware default" and is labeled with what that default is. */
-private fun every(default: String, vararg secs: Long) = listOf(0L to "Default ($default)") + secs.map { it to duration(it) }
+private fun every(default: Long, vararg secs: Long) = listOf(0L to string(R.string.default_value, duration(default))) + secs.map { it to duration(it) }
 
-private const val BT_WARNING = "\n\nIf you're connected over Bluetooth, changing this can drop the connection; a USB cable always works."
+private val BT_WARNING get() = "\n\n" + string(R.string.bt_warning)
 
-val SETTINGS = listOf(
-    Group("Role", listOf(
-        Setting(1, 1, "Role",
-            "What job this node does on the mesh.\n\n" +
-                "• Client: the normal choice for a node you carry and chat from. It relays other people's messages too.\n" +
-                "• Client (mute): doesn't relay. Use it when another node of yours nearby already does.\n" +
-                "• Client (hidden): stays quiet and only talks when needed, for privacy or battery.\n" +
-                "• Client base: a home node that relays eagerly for your favorites.\n" +
-                "• Router / Router (late): for nodes in high, well-placed spots that exist to extend the mesh. Late waits for others to relay first.\n" +
-                "• Tracker / Sensor: sends its position or sensor readings first.\n" +
-                "• Lost and found: keeps announcing its location so you can find it.\n\n" +
-                "Router roles may turn on power saving, which switches Bluetooth off most of the time.",
-            options = listOf(0L to "Client", 1L to "Client (mute)", 8L to "Client (hidden)", 12L to "Client base",
-                2L to "Router", 11L to "Router (late)", 5L to "Tracker", 6L to "Sensor", 9L to "Lost and found",
-                7L to "TAK", 10L to "TAK tracker")),
-        Setting(1, 6, "Relaying",
-            "Which messages this node passes along for others.\n\n" +
-                "• Everything: relays all it hears. Best for the mesh, and the default.\n" +
-                "• Everything, without reading: same, without trying to decrypt. For dedicated repeaters.\n" +
-                "• Local rooms only: ignores traffic from other meshes it can't read.\n" +
-                "• Known nodes only: ignores nodes that aren't in its node list.\n" +
-                "• Standard messages only: skips unusual app traffic.\n" +
-                "• Nothing: never relays. Only allowed for Tracker and Sensor roles.",
-            options = listOf(0L to "Everything", 1L to "Everything, without reading", 2L to "Local rooms only",
-                3L to "Known nodes only", 5L to "Standard messages only", 4L to "Nothing")),
-        Setting(1, 7, "Announce name every",
-            "How often the node tells everyone its name and encryption key. Others need this to show your name and to send you direct messages. More often adds radio traffic for everyone; the default suits most people.",
-            options = every("3 hours", 3600, 21600, 43200, 86400)),
-        Setting(1, 12, "Heartbeat LED",
-            "Blinks the node's LED every few seconds to show it's running. Turn off to keep it dark or save a little battery.",
+/** A getter, so labels follow the phone's current language. */
+val SETTINGS get() = listOf(
+    Group(string(R.string.s_role), listOf(
+        Setting(1, 1, string(R.string.s_role),
+            string(R.string.s_what_job_this_node_does),
+            options = listOf(0L to string(R.string.s_client), 1L to string(R.string.s_client_mute), 8L to string(R.string.s_client_hidden), 12L to string(R.string.s_client_base),
+                2L to string(R.string.s_router), 11L to string(R.string.s_router_late), 5L to string(R.string.s_tracker), 6L to string(R.string.s_sensor), 9L to string(R.string.s_lost_and_found),
+                7L to "TAK", 10L to string(R.string.s_tak_tracker))),
+        Setting(1, 6, string(R.string.s_relaying),
+            string(R.string.s_which_messages_this_node_passes),
+            options = listOf(0L to string(R.string.s_everything), 1L to string(R.string.s_everything_without_reading), 2L to string(R.string.s_local_rooms_only),
+                3L to string(R.string.s_known_nodes_only), 5L to string(R.string.s_standard_messages_only), 4L to string(R.string.s_nothing))),
+        Setting(1, 7, string(R.string.s_announce_name_every),
+            string(R.string.s_how_often_the_node_tells),
+            options = every(10800, 3600, 21600, 43200, 86400)),
+        Setting(1, 12, string(R.string.s_heartbeat_led),
+            string(R.string.s_blinks_the_node_s_led),
             toggle = true, invert = true),
     )),
-    Group("Radio", listOf(
-        Setting(6, 7, "Region",
-            "The radio band. It has to match your country's rules, and nodes on different regions can't hear each other.",
+    Group(string(R.string.s_radio), listOf(
+        Setting(6, 7, string(R.string.s_region),
+            string(R.string.s_the_radio_band_it_has),
             options = REGIONS.map { it.first.toLong() to it.second }),
-        Setting(6, 2, "Speed vs. range",
-            "The radio preset: slower presets reach farther, faster ones carry more messages. Every node has to use the same preset to hear each other, so only change this if your local mesh uses a different one. Almost everyone uses Long range, fast.",
-            options = listOf(0L to "Long range, fast", 7L to "Long range, moderate", 9L to "Long range, turbo",
-                3L to "Medium range, slow", 4L to "Medium range, fast", 5L to "Short range, slow",
-                6L to "Short range, fast", 8L to "Short range, turbo"),
+        Setting(6, 2, string(R.string.s_speed_vs_range),
+            string(R.string.s_the_radio_preset_slower_presets),
+            options = listOf(0L to string(R.string.s_long_range_fast), 7L to string(R.string.s_long_range_moderate), 9L to string(R.string.s_long_range_turbo),
+                3L to string(R.string.s_medium_range_slow), 4L to string(R.string.s_medium_range_fast), 5L to string(R.string.s_short_range_slow),
+                6L to string(R.string.s_short_range_fast), 8L to string(R.string.s_short_range_turbo)),
             also = 1 to 1L), // use_preset
-        Setting(6, 8, "Max hops",
-            "How many times a message may be passed along on its way. 3 is the default and plenty for most meshes; higher values add traffic for everyone.",
-            options = listOf(0L to "Default (3)") + (1L..7L).map { it to "$it" }),
-        Setting(6, 10, "Transmit power",
-            "How strongly the node transmits. Maximum uses the strongest power that's legal in your region and that the board supports. Lower saves battery but shortens range.",
-            options = listOf(0L to "Maximum allowed", 10L to "10 dBm", 14L to "14 dBm", 17L to "17 dBm", 20L to "20 dBm",
+        Setting(6, 8, string(R.string.s_max_hops),
+            string(R.string.s_how_many_times_a_message),
+            options = listOf(0L to string(R.string.default_hops, 3)) + (1L..7L).map { it to "$it" }),
+        Setting(6, 10, string(R.string.s_transmit_power),
+            string(R.string.s_how_strongly_the_node_transmits),
+            options = listOf(0L to string(R.string.s_maximum_allowed), 10L to "10 dBm", 14L to "14 dBm", 17L to "17 dBm", 20L to "20 dBm",
                 22L to "22 dBm", 27L to "27 dBm", 30L to "30 dBm")),
-        Setting(6, 9, "Transmit",
-            "Lets the radio send. Off makes the node listen only: nothing you send will go out.", toggle = true),
-        Setting(6, 13, "Boosted receive",
-            "Makes the receiver a bit more sensitive on SX126x radios (most modern boards), for slightly more power use.",
+        Setting(6, 9, string(R.string.s_transmit),
+            string(R.string.s_lets_the_radio_send_off), toggle = true),
+        Setting(6, 13, string(R.string.s_boosted_receive),
+            string(R.string.s_makes_the_receiver_a_bit),
             toggle = true),
-        Setting(6, 105, "OK to share via internet",
-            "Lets gateways that bridge the mesh to the internet (MQTT) forward your messages there. Off asks them not to.",
+        Setting(6, 105, string(R.string.s_ok_to_share_via_internet),
+            string(R.string.s_lets_gateways_that_bridge_the),
             toggle = true),
-        Setting(6, 104, "Ignore internet messages",
-            "Ignores messages that reached the mesh from the internet through MQTT gateways.", toggle = true),
+        Setting(6, 104, string(R.string.s_ignore_internet_messages),
+            string(R.string.s_ignores_messages_that_reached_the), toggle = true),
     )),
-    Group("Location", listOf(
-        Setting(2, 13, "GPS",
-            "Whether the node uses its GPS chip. Off saves a lot of battery. Choose Not present when the board has no GPS.",
-            options = listOf(1L to "On", 0L to "Off", 2L to "Not present")),
-        Setting(2, 1, "Share location every",
-            "How often the node broadcasts its position to the mesh.",
-            options = every("1 hour", 300, 900, 1800, 3600, 10800, 21600, 43200)),
-        Setting(2, 2, "Smart sharing",
-            "Also shares your location early after you've moved a good distance, and skips updates while you stay put.",
+    Group(string(R.string.s_location), listOf(
+        Setting(2, 13, string(R.string.gps),
+            string(R.string.s_whether_the_node_uses_its),
+            options = listOf(1L to string(R.string.s_on), 0L to string(R.string.s_off), 2L to string(R.string.s_not_present))),
+        Setting(2, 1, string(R.string.s_share_location_every),
+            string(R.string.s_how_often_the_node_broadcasts),
+            options = every(3600, 300, 900, 1800, 3600, 10800, 21600, 43200)),
+        Setting(2, 2, string(R.string.s_smart_sharing),
+            string(R.string.s_also_shares_your_location_early),
             toggle = true),
-        Setting(2, 5, "Check GPS every",
-            "How often the node wakes the GPS for a fix. Less often saves battery.",
-            options = every("2 minutes", 30, 120, 300, 900, 3600)),
+        Setting(2, 5, string(R.string.s_check_gps_every),
+            string(R.string.s_how_often_the_node_wakes),
+            options = every(120, 30, 120, 300, 900, 3600)),
     )),
-    Group("Power", listOf(
-        Setting(3, 1, "Power saving",
-            "Sleeps deeply between radio activity, for nodes on small batteries or solar. Saves a lot on ESP32 boards, but turns Bluetooth and the screen off most of the time. nRF52 boards are already efficient." + BT_WARNING,
+    Group(string(R.string.s_power), listOf(
+        Setting(3, 1, string(R.string.s_power_saving),
+            string(R.string.s_sleeps_deeply_between_radio_activity) + BT_WARNING,
             toggle = true),
-        Setting(3, 2, "Turn off on battery after",
-            "Powers the node off this long after it's unplugged from USB or solar. Never keeps it running on battery.",
-            options = listOf(0L to "Never", 300L to duration(300), 3600L to duration(3600), 21600L to duration(21600), 86400L to duration(86400))),
+        Setting(3, 2, string(R.string.s_turn_off_on_battery_after),
+            string(R.string.s_powers_the_node_off_this),
+            options = listOf(0L to string(R.string.s_never), 300L to duration(300), 3600L to duration(3600), 21600L to duration(21600), 86400L to duration(86400))),
     )),
-    Group("Screen", listOf(
-        Setting(5, 1, "Screen timeout",
-            "How long the node's screen stays on after a button press or new message. Only matters for boards with a screen.",
-            options = every("10 minutes", 15, 30, 60, 300, 600, 3600) + (0xFFFFFFFFL to "Always on")),
-        Setting(5, 5, "Flip screen", "Turns the screen upside down, for cases that mount the board the other way.", toggle = true),
-        Setting(5, 6, "Units", "Distances and altitudes on the node's screen.", options = listOf(0L to "Metric", 1L to "Imperial")),
-        Setting(5, 12, "12-hour clock", "Shows the time as 1:00 PM instead of 13:00 on the node's screen.", toggle = true),
+    Group(string(R.string.s_screen), listOf(
+        Setting(5, 1, string(R.string.s_screen_timeout),
+            string(R.string.s_how_long_the_node_s),
+            options = every(600, 15, 30, 60, 300, 600, 3600) + (0xFFFFFFFFL to string(R.string.s_always_on))),
+        Setting(5, 5, string(R.string.s_flip_screen), string(R.string.s_turns_the_screen_upside_down), toggle = true),
+        Setting(5, 6, string(R.string.s_units), string(R.string.s_distances_and_altitudes_on_the), options = listOf(0L to string(R.string.s_metric), 1L to string(R.string.s_imperial))),
+        Setting(5, 12, string(R.string.s_12_hour_clock), string(R.string.s_shows_the_time_as_1), toggle = true),
     )),
-    Group("Bluetooth", listOf(
-        Setting(7, 1, "Bluetooth",
-            "Lets phones connect to the node over Bluetooth. If you turn it off, only a USB cable can reach the node's settings again.",
+    Group(string(R.string.bluetooth), listOf(
+        Setting(7, 1, string(R.string.bluetooth),
+            string(R.string.s_lets_phones_connect_to_the),
             toggle = true),
-        Setting(7, 2, "Pairing",
-            "How a phone proves it's allowed to connect.\n\n• PIN on screen: shows a new random PIN each time (needs a screen).\n• Fixed PIN: always the same PIN, set below. Nodes without a screen use 123456.\n• No PIN: anyone nearby can connect and read your messages." + BT_WARNING,
-            options = listOf(0L to "PIN on screen", 1L to "Fixed PIN", 2L to "No PIN")),
-        Setting(7, 3, "Fixed PIN", "The 6-digit PIN phones type when pairing.", pin = true, visible = { get -> get(7, 2) == 1L }),
+        Setting(7, 2, string(R.string.s_pairing),
+            string(R.string.s_how_a_phone_proves_it) + BT_WARNING,
+            options = listOf(0L to string(R.string.s_pin_on_screen), 1L to string(R.string.s_fixed_pin), 2L to string(R.string.s_no_pin))),
+        Setting(7, 3, string(R.string.s_fixed_pin), string(R.string.s_the_6_digit_pin_phones), pin = true, visible = { get -> get(7, 2) == 1L }),
     )),
-    Group("Troubleshooting", listOf(
-        Setting(8, 6, "Debug log",
-            "Streams the node's internal log to this app, for diagnosing problems with a computer attached to the phone (adb logcat, tag NodeLog). Leave it off otherwise: it adds traffic between the node and the phone.",
+    Group(string(R.string.s_troubleshooting), listOf(
+        Setting(8, 6, string(R.string.s_debug_log),
+            string(R.string.s_streams_the_node_s_internal),
             toggle = true),
     )),
-    Group("Wi-Fi", listOf(
-        Setting(4, 1, "Wi-Fi",
-            "Connects the node to a Wi-Fi network, for internet gateways. On ESP32 boards Wi-Fi turns Bluetooth off.",
+    Group(string(R.string.wifi), listOf(
+        Setting(4, 1, string(R.string.wifi),
+            string(R.string.s_connects_the_node_to_a),
             toggle = true, visible = { Mesh.hasWifi }),
-        Setting(4, 3, "Network name", "The Wi-Fi network (SSID) to join.", text = true, visible = { Mesh.hasWifi }),
-        Setting(4, 4, "Password", "The Wi-Fi password.", text = true, secret = true, visible = { Mesh.hasWifi }),
+        Setting(4, 3, string(R.string.s_network_name), string(R.string.s_the_wi_fi_network_ssid), text = true, visible = { Mesh.hasWifi }),
+        Setting(4, 4, string(R.string.s_password), string(R.string.s_the_wi_fi_password), text = true, secret = true, visible = { Mesh.hasWifi }),
     )),
 )
 
 /** Firmware before 2.8.1 deadlocks halfway through a reset on boards with a screen (nested spiLock in MessageStore). */
 fun resetFreezes() = Mesh.firmware.isNotEmpty() && isNewer("2.8.1", Mesh.firmware)
 
-const val RESET_FREEZE_NOTE = "\n\nThis node's firmware freezes partway through a reset (fixed in 2.8.1). When its screen stops changing, " +
-    "press its reset button once and it finishes. Updating the firmware first avoids this."
+val RESET_FREEZE_NOTE get() = "\n\n" + string(R.string.reset_freeze_note)
 
 class Reset(val kind: Int, val title: String, val summary: String, val details: String, val confirm: String)
 
-private val RESETS = listOf(
-    Reset(100, "Clear node list", "Forget every node it has heard; favorites stay",
-        "Your node forgets every other node it has heard, except favorites. They reappear as they're heard again. Handy when the list is full of nodes from far away.",
-        "Clear"),
-    Reset(99, "Reset settings", "Back to factory settings; keeps its identity and pairing",
-        "Every setting goes back to factory defaults: role, radio, region, name and private rooms (you'll need new invites). The node keeps its identity and Bluetooth pairing, and messages on this phone stay. It restarts, and you'll pick its region again.",
-        "Reset"),
-    Reset(94, "Factory reset", "Erase everything, as if it were new",
-        "Erases everything on the node: settings, rooms, node list, its encryption keys and Bluetooth pairings. Others will see it as a new node. It restarts and leaves Your devices: pair it again like a new node, with the PIN on its screen, then pick its region and name. Messages on this phone stay.",
-        "Erase everything"),
+private val RESETS get() = listOf(
+    Reset(100, string(R.string.reset_clear_node_list), string(R.string.reset_forget_every_node_it_has),
+        string(R.string.reset_your_node_forgets_every_other),
+        string(R.string.reset_clear)),
+    Reset(99, string(R.string.reset_reset_settings), string(R.string.reset_back_to_factory_settings_keeps),
+        string(R.string.reset_every_setting_goes_back_to),
+        string(R.string.reset_reset)),
+    Reset(94, string(R.string.reset_factory_reset), string(R.string.reset_erase_everything_as_if_it),
+        string(R.string.reset_erases_everything_on_the_node),
+        string(R.string.reset_erase_everything)),
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -223,18 +211,18 @@ fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                navigationIcon = { IconButton(onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") } },
-                title = { Text("Node settings") },
+                navigationIcon = { IconButton(onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.back)) } },
+                title = { Text(stringResource(R.string.node_settings)) },
             )
         },
         bottomBar = {
             if (edits.isNotEmpty()) Surface(tonalElevation = 3.dp) {
                 Row(Modifier.navigationBarsPadding().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                    TextButton({ edits.clear() }) { Text("Undo") }
+                    TextButton({ edits.clear() }) { Text(stringResource(R.string.undo)) }
                     Button(save, Modifier.weight(1f).height(56.dp), enabled = Mesh.connected) {
                         Icon(Icons.Rounded.Check, null)
                         Spacer(Modifier.width(10.dp))
-                        Text(if (edits.size == 1) "Save 1 change" else "Save ${edits.size} changes")
+                        Text(pluralStringResource(R.plurals.save_changes, edits.size, edits.size))
                     }
                 }
             }
@@ -243,7 +231,7 @@ fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
         LazyColumn(Modifier.fillMaxSize().padding(padding), contentPadding = PaddingValues(bottom = 24.dp)) {
             item { BoardCard(onUpdate) }
             if (Mesh.configs.isEmpty()) {
-                item { Text("Waiting for the node's settings…", Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                item { Text(stringResource(R.string.waiting_for_settings), Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onSurfaceVariant) }
             }
             SETTINGS.forEach { group ->
                 val shown = group.settings.filter { it.section in Mesh.configs && it.visible(get) }
@@ -257,7 +245,7 @@ fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(s.title, fontWeight = if (changed) FontWeight.SemiBold else null)
                                 IconButton({ info = s }, Modifier.size(32.dp)) {
-                                    Icon(Icons.Outlined.Info, "About ${s.title}", Modifier.size(18.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    Icon(Icons.Outlined.Info, stringResource(R.string.about_setting, s.title), Modifier.size(18.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
                             }
                         },
@@ -265,8 +253,8 @@ fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
                             Text(
                                 when {
                                     s.options != null -> s.options.firstOrNull { it.first == v }?.second ?: duration(v as Long)
-                                    s.secret -> if ((v as String).isEmpty()) "Not set" else "••••••••"
-                                    else -> v.toString().ifEmpty { "Not set" }
+                                    s.secret -> if ((v as String).isEmpty()) stringResource(R.string.not_set) else "••••••••"
+                                    else -> v.toString().ifEmpty { stringResource(R.string.not_set) }
                                 },
                                 color = if (changed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -281,7 +269,7 @@ fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
                 }
             }
             if (Mesh.configs.isNotEmpty()) {
-                header("Reset")
+                header(string(R.string.reset_header))
                 items(RESETS, key = { "reset${it.kind}" }) { r ->
                     ListItem(
                         headlineContent = { Text(r.title, color = if (r.kind == 100) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.error) },
@@ -293,7 +281,7 @@ fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
         }
     }
     info?.let { s ->
-        AlertDialog({ info = null }, { TextButton({ info = null }) { Text("Got it") } },
+        AlertDialog({ info = null }, { TextButton({ info = null }) { Text(stringResource(R.string.got_it)) } },
             icon = { Icon(Icons.Outlined.Info, null) }, title = { Text(s.title) },
             text = { Text(s.info, Modifier.verticalScroll(rememberScrollState())) })
     }
@@ -301,9 +289,9 @@ fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
         AlertDialog(
             { resetting = null },
             confirmButton = { TextButton({ Mesh.reset(r.kind); resetting = null; onBack() }) { Text(r.confirm, color = MaterialTheme.colorScheme.error) } },
-            dismissButton = { TextButton({ resetting = null }) { Text("Cancel") } },
+            dismissButton = { TextButton({ resetting = null }) { Text(stringResource(R.string.cancel)) } },
             icon = { Icon(Icons.Rounded.RestartAlt, null) },
-            title = { Text("${r.title}?") },
+            title = { Text(stringResource(R.string.confirm_title, r.title)) },
             text = { Text(r.details + if (r.kind != 100 && resetFreezes()) RESET_FREEZE_NOTE else "") },
         )
     }
@@ -313,7 +301,7 @@ fun NodeSettingsScreen(onBack: () -> Unit, onUpdate: () -> Unit) {
 @Composable
 fun EditDialog(s: Setting, current: Any, onDismiss: () -> Unit, onPick: (Any) -> Unit) {
     if (s.options != null) {
-        AlertDialog(onDismiss, {}, dismissButton = { TextButton(onDismiss) { Text("Cancel") } }, title = { Text(s.title) }, text = {
+        AlertDialog(onDismiss, {}, dismissButton = { TextButton(onDismiss) { Text(stringResource(R.string.cancel)) } }, title = { Text(s.title) }, text = {
             LazyColumn {
                 items(s.options) { (v, label) ->
                     Row(Modifier.fillMaxWidth().clickable { onPick(v) }.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -330,8 +318,8 @@ fun EditDialog(s: Setting, current: Any, onDismiss: () -> Unit, onPick: (Any) ->
     val ok = if (number) text.length == 6 && text.all { it.isDigit() } && text[0] != '0' else text.toByteArray().size <= 64
     AlertDialog(
         onDismiss,
-        { TextButton({ onPick(if (number) text.toLong() else text) }, enabled = ok) { Text("OK") } },
-        dismissButton = { TextButton(onDismiss) { Text("Cancel") } },
+        { TextButton({ onPick(if (number) text.toLong() else text) }, enabled = ok) { Text(stringResource(R.string.ok)) } },
+        dismissButton = { TextButton(onDismiss) { Text(stringResource(R.string.cancel)) } },
         title = { Text(s.title) },
         text = {
             OutlinedTextField(
@@ -353,10 +341,10 @@ fun BoardCard(onUpdate: () -> Unit) {
                 Icon(Icons.Outlined.Memory, null)
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {
-                    Text(board?.name ?: "Unknown board", style = MaterialTheme.typography.titleMedium)
+                    Text(board?.name ?: stringResource(R.string.unknown_board), style = MaterialTheme.typography.titleMedium)
                     Text(
-                        listOfNotNull(board?.chip, Mesh.firmware.ifEmpty { null }?.let { "Firmware $it" }).joinToString(" · ") +
-                            "\nNode ID !%08x".format(Mesh.myNum) + (Mesh.nodes[Mesh.myNum]?.power?.let { "\n$it" } ?: ""),
+                        listOfNotNull(board?.chip, Mesh.firmware.ifEmpty { null }?.let { stringResource(R.string.firmware_version, it) }).joinToString(" · ") +
+                            "\n" + stringResource(R.string.node_id, "!%08x".format(Mesh.myNum)) + (Mesh.nodes[Mesh.myNum]?.power?.let { "\n$it" } ?: ""),
                         style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
@@ -370,17 +358,17 @@ fun BoardCard(onUpdate: () -> Unit) {
                         isNewer(Updater.latest, Mesh.firmware) -> OutlinedButton(onUpdate, Modifier.fillMaxWidth()) {
                             Icon(Icons.Rounded.SystemUpdate, null)
                             Spacer(Modifier.width(8.dp))
-                            Text("Update to ${Updater.latest.substringBeforeLast('.')}")
+                            Text(stringResource(R.string.update_to, Updater.latest.substringBeforeLast('.')))
                         }
                         else -> TextButton(onUpdate) { // still reachable: pre-releases, reinstall
                             Icon(Icons.Rounded.Check, null, Modifier.size(18.dp))
                             Spacer(Modifier.width(8.dp))
-                            Text("Up to date · firmware options")
+                            Text(stringResource(R.string.up_to_date))
                         }
                     }
                 } else {
                     Text(
-                        "Update this board from a computer at flasher.meshtastic.org.",
+                        stringResource(R.string.update_from_computer),
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
@@ -405,13 +393,13 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
     val version = chosen ?: Updater.latest
     Scaffold(topBar = {
         TopAppBar(
-            navigationIcon = { IconButton(onBack, enabled = !Updater.running) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") } },
-            title = { Text("Firmware") },
+            navigationIcon = { IconButton(onBack, enabled = !Updater.running) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.back)) } },
+            title = { Text(stringResource(R.string.firmware)) },
         )
     }) { padding ->
         Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(24.dp)) {
             if (board == null) {
-                Text("Which board is it?", style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(R.string.which_board), style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(8.dp))
                 boards.filter { it.canUpdateOverUsb }.sortedBy { it.name }.forEach { b ->
                     ListItem(headlineContent = { Text(b.name) }, modifier = Modifier.clickable { board = b })
@@ -421,10 +409,10 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
             val b = board!!
             Text(b.name, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
             Text(
-                if (rescue) "In update mode. Plug it in, or keep it close if it was updating over Bluetooth." else "Installed: ${Mesh.firmware.ifEmpty { "unknown" }}",
+                if (rescue) stringResource(R.string.rescue_hint) else stringResource(R.string.installed_version, Mesh.firmware.ifEmpty { stringResource(R.string.unknown) }),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            if (Updater.versions.isEmpty() && Updater.error.isEmpty()) Text("Checking available versions…", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            if (Updater.versions.isEmpty() && Updater.error.isEmpty()) Text(stringResource(R.string.checking_versions), color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(24.dp))
             when {
                 Updater.running || Updater.done -> {
@@ -433,9 +421,9 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                     if (Updater.progress < 0) LinearProgressIndicator(Modifier.fillMaxWidth())
                     else LinearProgressIndicator({ Updater.progress }, Modifier.fillMaxWidth())
                     Spacer(Modifier.height(12.dp))
-                    if (Updater.done) Button(onBack, Modifier.fillMaxWidth().height(52.dp)) { Text("Done") }
+                    if (Updater.done) Button(onBack, Modifier.fillMaxWidth().height(52.dp)) { Text(stringResource(R.string.done)) }
                     else Text(
-                        if (Mesh.transport == "Bluetooth") "Keep the app open and the phone near the node." else "Keep the cable plugged in and the app open. This takes about a minute.",
+                        stringResource(if (Mesh.transport == "Bluetooth") R.string.ble_keep_open else R.string.usb_keep_plugged),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
@@ -451,25 +439,24 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                         Spacer(Modifier.height(16.dp))
                     }
                     if (Mesh.demo) {
-                        Text("Installing firmware needs a real node; the demo can only show the versions.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(R.string.demo_no_firmware), color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Spacer(Modifier.height(16.dp))
                     } else if (!rescue && !onUsb && !onBle && !Updater.inBootloader) {
-                        Text("Connect to the node first, over Bluetooth or a USB cable.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(R.string.connect_first), color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Spacer(Modifier.height(16.dp))
                     }
                     if (onBle || (Updater.inBootloader && Mesh.transport == "Bluetooth")) {
                         Text(
-                            "Over Bluetooth this takes about 10 minutes; keep the app open and the phone close. " +
-                                "If it's interrupted, the node waits in update mode: plug it in and tap Try again. A USB cable takes about a minute.",
+                            stringResource(R.string.ble_update_note),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Spacer(Modifier.height(16.dp))
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text("Include pre-releases")
+                            Text(stringResource(R.string.include_prereleases))
                             Text(
-                                "Meshtastic's newest test builds: earlier fixes, less testing.",
+                                stringResource(R.string.prereleases_hint),
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
@@ -482,15 +469,15 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                         })
                     }
                     Spacer(Modifier.height(16.dp))
-                    Text("Version", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.version), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                     Updater.versions.forEach { (v, pre) ->
                         Row(Modifier.fillMaxWidth().clickable { chosen = v }.padding(vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
                             RadioButton(v == version, { chosen = v })
                             Column {
                                 Text(v)
                                 val tags = listOfNotNull(
-                                    "newest".takeIf { v == Updater.latest }, "pre-release".takeIf { pre },
-                                    "installed".takeIf { v == Mesh.firmware },
+                                    stringResource(R.string.tag_newest).takeIf { v == Updater.latest }, stringResource(R.string.tag_prerelease).takeIf { pre },
+                                    stringResource(R.string.tag_installed).takeIf { v == Mesh.firmware },
                                 )
                                 if (tags.isNotEmpty()) Text(tags.joinToString(" · "), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
@@ -499,13 +486,13 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                     if (Mesh.firmware.isNotEmpty() && version.isNotEmpty() && isNewer(Mesh.firmware, version)) {
                         Spacer(Modifier.height(8.dp))
                         Text(
-                            "$version is older than the installed ${Mesh.firmware}. Older firmware may not understand newer settings; if the node acts up afterwards, use Reset settings.",
+                            stringResource(R.string.older_firmware_warning, version, Mesh.firmware),
                             color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall,
                         )
                     }
                     Spacer(Modifier.height(16.dp))
                     Text(
-                        "Your settings, rooms and messages stay on the node. If an update is interrupted the node waits in update mode; just try again.",
+                        stringResource(R.string.firmware_stays),
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Spacer(Modifier.height(16.dp))
@@ -520,8 +507,8 @@ fun FirmwareScreen(rescue: Boolean, onClose: () -> Unit) {
                         Icon(Icons.Rounded.SystemUpdate, null)
                         Spacer(Modifier.width(10.dp))
                         Text(
-                            if (Updater.error.isNotEmpty()) "Try again"
-                            else if (version == Mesh.firmware) "Reinstall $version" else "Install $version",
+                            if (Updater.error.isNotEmpty()) stringResource(R.string.try_again)
+                            else stringResource(if (version == Mesh.firmware) R.string.reinstall_version else R.string.install_version, version),
                         )
                     }
                 }
@@ -549,27 +536,26 @@ fun RelayScreen(onBack: () -> Unit) {
         androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions(),
     ) {
         val granted = RELAY_PERMISSIONS.all { p -> ctx.checkSelfPermission(p) == android.content.pm.PackageManager.PERMISSION_GRANTED }
-        if (granted) { error = ""; Relay.turn(true) } else error = "The relay needs the SMS and phone permissions. You can allow them in Android's app settings."
+        if (granted) { error = ""; Relay.turn(true) } else error = string(R.string.relay_permissions_needed)
     }
     Scaffold(topBar = {
         TopAppBar(
-            navigationIcon = { IconButton(onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") } },
-            title = { Text("SMS relay") },
+            navigationIcon = { IconButton(onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.back)) } },
+            title = { Text(stringResource(R.string.sms_relay)) },
         )
     }) { padding ->
         Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(24.dp)) {
             Text(
-                "Turn this phone into a relay: the texts and calls it receives show up in a private room, and people in that room " +
-                    "can send texts through it. Handy when one phone has signal and everyone else only has the mesh.",
+                stringResource(R.string.relay_intro),
             )
             if (!hasPhone) {
                 Spacer(Modifier.height(16.dp))
-                Text("This phone can't send or receive SMS, so it can't be a relay.", color = MaterialTheme.colorScheme.error)
+                Text(stringResource(R.string.no_sms), color = MaterialTheme.colorScheme.error)
                 return@Column
             }
             Spacer(Modifier.height(24.dp))
-            Text("Room", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-            if (rooms.isEmpty()) Text("Create a private room for the relay first.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(R.string.room), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+            if (rooms.isEmpty()) Text(stringResource(R.string.create_relay_room_first), color = MaterialTheme.colorScheme.onSurfaceVariant)
             rooms.forEach { r ->
                 Row(
                     Modifier.fillMaxWidth().clickable(enabled = !Relay.enabled) { Relay.useRoom(r.name) },
@@ -581,15 +567,15 @@ fun RelayScreen(onBack: () -> Unit) {
             }
             if (rooms.none { it.name == "Relay" } && !Relay.enabled) {
                 OutlinedButton({ Mesh.createRoom("Relay")?.let { Relay.useRoom("Relay") } }, enabled = Mesh.connected) {
-                    Text("Create a room called Relay")
+                    Text(stringResource(R.string.create_relay_room))
                 }
             }
             Spacer(Modifier.height(24.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text("Relay SMS and calls", style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.relay_sms_calls), style = MaterialTheme.typography.titleMedium)
                     Text(
-                        if (Relay.enabled) "On: relaying to ${Relay.room}" else "Off",
+                        if (Relay.enabled) stringResource(R.string.relay_on_status, Relay.room) else stringResource(R.string.off),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
@@ -606,18 +592,13 @@ fun RelayScreen(onBack: () -> Unit) {
                     TextButton({
                         consent = false
                         ask.launch((RELAY_PERMISSIONS + android.Manifest.permission.POST_NOTIFICATIONS).toTypedArray())
-                    }) { Text("Turn on") }
+                    }) { Text(stringResource(R.string.turn_on)) }
                 },
-                dismissButton = { TextButton({ consent = false }) { Text("Not now") } },
-                title = { Text("Share this phone's texts and calls?") },
+                dismissButton = { TextButton({ consent = false }) { Text(stringResource(R.string.not_now)) } },
+                title = { Text(stringResource(R.string.relay_consent_title)) },
                 text = {
                     Text(
-                        "While the relay is on, Mesh+:\n\n" +
-                            "• reads the SMS this phone receives and posts them to ${Relay.room};\n" +
-                            "• posts the number of each incoming call to ${Relay.room} (Android calls this call log access);\n" +
-                            "• sends SMS from this phone's number when someone in ${Relay.room} asks.\n\n" +
-                            "Everyone in ${Relay.room} can read them. They travel only over your radio's mesh, encrypted with " +
-                            "the room's key, never to us or any server. Turn the relay off here at any time.",
+                        stringResource(R.string.relay_consent_body, Relay.room),
                     )
                 },
             )
@@ -625,16 +606,13 @@ fun RelayScreen(onBack: () -> Unit) {
             Spacer(Modifier.height(16.dp))
             Surface(color = MaterialTheme.colorScheme.errorContainer, shape = RoundedCornerShape(16.dp)) {
                 Text(
-                    "Anyone in ${Relay.room.ifEmpty { "the relay room" }} can read the texts and calls this phone receives and send SMS " +
-                        "from its number. Only invite people you trust. Texts are sent at your carrier's usual rates.",
+                    stringResource(R.string.relay_warning, Relay.room.ifEmpty { stringResource(R.string.the_relay_room) }),
                     Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onErrorContainer,
                 )
             }
             Spacer(Modifier.height(16.dp))
             Text(
-                "Keep Mesh+ connected to a node on this phone; a notification shows while the relay is on. Invite others with the " +
-                    "room's QR code. In Mesh+ they get an SMS button in the room; from other Meshtastic apps they can send " +
-                    "\"$SMS_COMMAND +15551234567 your message\". Long texts arrive as several numbered messages.",
+                stringResource(R.string.relay_how_to, SMS_COMMAND),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
@@ -659,23 +637,23 @@ fun SmsDialog(onDismiss: () -> Unit, onSend: (String) -> Unit) {
     val tooLong = command.toByteArray().size > 200 // one mesh message
     AlertDialog(
         onDismiss,
-        confirmButton = { TextButton({ onSend(command) }, enabled = digits.count { it.isDigit() } >= 3 && text.isNotBlank() && !tooLong) { Text("Send") } },
-        dismissButton = { TextButton(onDismiss) { Text("Cancel") } },
-        title = { Text("Send SMS") },
+        confirmButton = { TextButton({ onSend(command) }, enabled = digits.count { it.isDigit() } >= 3 && text.isNotBlank() && !tooLong) { Text(stringResource(R.string.send)) } },
+        dismissButton = { TextButton(onDismiss) { Text(stringResource(R.string.cancel)) } },
+        title = { Text(stringResource(R.string.send_sms)) },
         text = {
             Column {
-                Text("The relay phone texts this from its own number.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.relay_texts_from_own), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(12.dp))
-                OutlinedTextField(number, { number = it }, label = { Text("Phone number") }, singleLine = true,
+                OutlinedTextField(number, { number = it }, label = { Text(stringResource(R.string.phone_number)) }, singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                     trailingIcon = {
                         IconButton({ pick.launch(Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI)) }) {
-                            Icon(Icons.Outlined.Contacts, "Pick a contact")
+                            Icon(Icons.Outlined.Contacts, stringResource(R.string.pick_contact))
                         }
                     })
                 Spacer(Modifier.height(8.dp))
-                OutlinedTextField(text, { text = it }, label = { Text("Message") }, maxLines = 5, isError = tooLong,
-                    supportingText = if (tooLong) ({ Text("Too long for one mesh message") }) else null)
+                OutlinedTextField(text, { text = it }, label = { Text(stringResource(R.string.message)) }, maxLines = 5, isError = tooLong,
+                    supportingText = if (tooLong) ({ Text(stringResource(R.string.too_long)) }) else null)
             }
         },
     )

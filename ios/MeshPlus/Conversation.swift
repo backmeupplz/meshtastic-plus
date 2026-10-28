@@ -5,7 +5,7 @@ struct DayChip: View {
     var body: some View {
         let d = Date(timeIntervalSince1970: ms / 1000)
         let cal = Calendar.current
-        Text(cal.isDateInToday(d) ? "Today" : cal.isDateInYesterday(d) ? "Yesterday" : d.formatted(date: .abbreviated, time: .omitted))
+        Text(cal.isDateInToday(d) ? String(localized: "Today") : cal.isDateInYesterday(d) ? String(localized: "Yesterday") : d.formatted(date: .abbreviated, time: .omitted))
             .font(.caption.weight(.medium))
             .padding(.horizontal, 12).padding(.vertical, 4)
             .background(Color(.secondarySystemBackground), in: Capsule())
@@ -20,8 +20,9 @@ struct Bubble: View {
     var body: some View {
         let mesh = Mesh.shared
         let failed = m.mine && m.status == "✗"
-        let (icon, label) = m.status == "✓" ? ("checkmark", m.peer != 0 ? "Delivered" : "Relayed by the mesh")
-            : failed ? ("exclamationmark.circle", m.peer != 0 ? "Not delivered" : "Not confirmed") : ("clock", "Sending")
+        let (icon, label) = m.status == "✓" ? ("checkmark", m.peer != 0 ? String(localized: "Delivered") : String(localized: "Relayed by the mesh"))
+            : failed ? ("exclamationmark.circle", m.peer != 0 ? String(localized: "Not delivered") : String(localized: "Not confirmed"))
+            : ("clock", String(localized: "Sending"))
         VStack(alignment: m.mine ? .trailing : .leading, spacing: 2) {
             if !m.mine && showName {
                 Text(mesh.nodes[m.from]?.name ?? m.name).font(.caption.weight(.semibold)).foregroundStyle(nodeColor(m.from)).padding(.leading, 4)
@@ -41,7 +42,7 @@ struct Bubble: View {
             .onTapGesture { if failed && mesh.connected { mesh.retry(m) } }
             if failed {
                 // Room messages have no delivery receipts, only "someone relayed it"; missing that isn't proof of failure.
-                Text(m.peer != 0 ? "Not delivered · Tap to retry" : "Not confirmed · Tap to resend").font(.caption2).foregroundStyle(.red)
+                Text(m.peer != 0 ? String(localized: "Not delivered · Tap to retry") : String(localized: "Not confirmed · Tap to resend")).font(.caption2).foregroundStyle(.red)
             }
         }
         .frame(maxWidth: .infinity, alignment: m.mine ? .trailing : .leading)
@@ -116,13 +117,14 @@ struct ConversationView: View {
         .overlay {
             if messages.isEmpty {
                 ContentUnavailableView("No messages yet", systemImage: "bubble.left.and.bubble.right",
-                                       description: Text(peer != 0 ? "Messages here are end-to-end encrypted." : "Say hi! Everyone in this room will see it."))
+                                       description: Text(peer != 0 ? String(localized: "Messages here are end-to-end encrypted.")
+                                                       : String(localized: "Say hi! Everyone in this room will see it.")))
             }
         }
         .safeAreaInset(edge: .bottom) {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(alignment: .bottom, spacing: 8) {
-                    TextField(mesh.connected ? "Message \(peer != 0 ? node?.name ?? "" : room?.title ?? "")" : "Waiting for the node…",
+                    TextField(mesh.connected ? String(localized: "Message \(peer != 0 ? node?.name ?? "" : room?.title ?? "")") : String(localized: "Waiting for the node…"),
                               text: $text, axis: .vertical)
                         .lineLimit(1...5)
                         .focused($typing)
@@ -150,8 +152,8 @@ struct ConversationView: View {
                     .foregroundStyle(.primary)
                 } else {
                     VStack(spacing: 1) {
-                        Text(room?.title ?? "Room").font(.headline)
-                        Text(room?.isPublic != false ? "Public room, anyone nearby can read it" : "Private room").font(.caption).foregroundStyle(.secondary)
+                        Text(room?.title ?? String(localized: "Room")).font(.headline)
+                        Text(room?.isPublic != false ? String(localized: "Public room, anyone nearby can read it") : String(localized: "Private room")).font(.caption).foregroundStyle(.secondary)
                     }
                 }
             }
@@ -163,7 +165,7 @@ struct ConversationView: View {
                     }
                     if let node {
                         Button { mesh.setFavorite(peer, !node.favorite) } label: {
-                            Label(node.favorite ? "Remove from favorites" : "Favorite", systemImage: node.favorite ? "star.slash" : "star")
+                            Label(node.favorite ? String(localized: "Remove from favorites") : String(localized: "Favorite"), systemImage: node.favorite ? "star.slash" : "star")
                         }
                         .disabled(!mesh.connected)
                     }
@@ -186,7 +188,7 @@ struct ConversationView: View {
         }
         .onDisappear { mesh.openConvo = nil }
         .sheet(isPresented: $invite) { if let room { InviteSheet(room: room) } }
-        .alert("Leave \(room?.title ?? "this room")?", isPresented: $leave) {
+        .alert(room.map { String(localized: "Leave \($0.title)?") } ?? String(localized: "Leave this room?"), isPresented: $leave) {
             Button("Leave", role: .destructive) { if let room { mesh.leaveRoom(room.index) }; dismiss() }
             Button("Cancel", role: .cancel) {}
         } message: { Text("You'll need a new invite to come back.") }

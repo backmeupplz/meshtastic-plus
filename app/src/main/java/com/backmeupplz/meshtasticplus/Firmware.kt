@@ -77,7 +77,7 @@ object Updater {
             val all = (ids("stable").map { it to false } + if (prerelease) ids("alpha").map { it to true } else emptyList())
                 .sortedWith { a, b -> if (isNewer(a.first, b.first)) -1 else if (isNewer(b.first, a.first)) 1 else 0 }
             ui { versions = all; latest = all.first().first }
-        }.onFailure { ui { error = "Couldn't check for updates. Is the phone online?" } }
+        }.onFailure { ui { error = string(R.string.check_updates_failed) } }
     }.start()
 
     /** [rescue] = the node is already in update mode (stuck after an interrupted update, or put there by hand). */
@@ -90,7 +90,7 @@ object Updater {
         val before = if (enterBootloader) usb.deviceList.values.map { it.vendorId to it.productId }.toSet() else emptySet()
         Thread {
             try {
-                ui { step = "Downloading firmware $version…" }
+                ui { step = string(R.string.downloading_firmware, version) }
                 val zip = download(board.target, version)
                 // Bluetooth when that's how we're connected; when rescuing, the node a Bluetooth update was interrupted on
                 // (unless a node is plugged in, which then is the one to rescue).
@@ -107,7 +107,7 @@ object Updater {
                 }
                 val (dat, bin) = unzip(zip)
                 if (enterBootloader) {
-                    ui { step = "Restarting the node into update mode…"; Mesh.enterUpdateMode() }
+                    ui { step = string(R.string.restarting_update_mode); Mesh.enterUpdateMode() }
                     inBootloader = true
                 } else {
                     ui { Mesh.pauseForUpdate() }
@@ -124,13 +124,13 @@ object Updater {
                         android.util.Log.w("Dfu", "attempt $attempt failed", e)
                         if (!inBootloader || attempt == 3) throw e
                         attempt++
-                        ui { step = "Connection hiccup, retrying ($attempt of 3)…"; progress = -1f }
+                        ui { step = string(R.string.retrying, attempt); progress = -1f }
                         Thread.sleep(2000)
                         device = waitForBootloader(usb, emptySet())
                     }
                 }
                 inBootloader = false
-                ui { step = "Done! The node is restarting with $version."; progress = 1f; done = true; running = false; Mesh.resumeAfterUpdate() }
+                ui { step = string(R.string.update_done, version); progress = 1f; done = true; running = false; Mesh.resumeAfterUpdate() }
             } catch (e: Exception) {
                 // Still in the bootloader: keep the port to ourselves so "Try again" can pick it up.
                 ui { error = e.message ?: e.toString(); running = false; if (!inBootloader && Mesh.updating) Mesh.resumeAfterUpdate() }
@@ -139,11 +139,11 @@ object Updater {
     }
 
     private fun flashOverUsb(usb: UsbManager, device: UsbDevice, dat: ByteArray, bin: ByteArray) {
-        ui { step = "Waiting for USB permission…" }
+        ui { step = string(R.string.waiting_usb_permission) }
         askPermission(usb, device)
-        val driver = UsbSerialProber.getDefaultProber().probeDevice(device) ?: error("The node isn't in update mode")
+        val driver = UsbSerialProber.getDefaultProber().probeDevice(device) ?: error(string(R.string.not_in_update_mode))
         val port = driver.ports[0]
-        port.open(usb.openDevice(device) ?: error("Couldn't open the node"))
+        port.open(usb.openDevice(device) ?: error(string(R.string.could_not_open_node)))
         try {
             port.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE)
             port.dtr = true
@@ -168,7 +168,7 @@ object Updater {
         return try {
             URL(url).readBytes()
         } catch (e: java.io.FileNotFoundException) {
-            error("Meshtastic has no update package for this board in $version")
+            error(string(R.string.no_update_package, version))
         }
     }
 
@@ -191,30 +191,30 @@ object Updater {
         prefs().edit().putString("fwBle", address).apply()
         var entered = false
         val listener = object : DfuProgressListenerAdapter() {
-            override fun onEnablingDfuMode(a: String) { entered = true; step = "Restarting the node into update mode…" }
-            override fun onDfuProcessStarting(a: String) { entered = true; step = "Erasing the old firmware…"; progress = -1f }
+            override fun onEnablingDfuMode(a: String) { entered = true; step = string(R.string.restarting_update_mode) }
+            override fun onDfuProcessStarting(a: String) { entered = true; step = string(R.string.erasing_firmware); progress = -1f }
             override fun onProgressChanged(a: String, percent: Int, speed: Float, avg: Float, part: Int, parts: Int) {
-                step = "Installing… $percent%"; progress = percent / 100f
+                step = string(R.string.installing_percent, percent); progress = percent / 100f
             }
-            override fun onFirmwareValidating(a: String) { step = "Finishing…" }
+            override fun onFirmwareValidating(a: String) { step = string(R.string.finishing) }
             override fun onDfuCompleted(a: String) {
                 DfuServiceListenerHelper.unregisterProgressListener(ctx, this)
                 inBootloader = false
                 prefs().edit().remove("fwBle").apply()
-                step = "Done! The node is restarting with $version."; progress = 1f; done = true; running = false
+                step = string(R.string.update_done, version); progress = 1f; done = true; running = false
                 if (Mesh.current == null) Mesh.connectBle(address) else Mesh.resumeAfterUpdate()
             }
-            override fun onDfuAborted(a: String) = onError(a, 0, 0, "Update cancelled")
+            override fun onDfuAborted(a: String) = onError(a, 0, 0, string(R.string.update_cancelled))
             override fun onError(a: String, code: Int, type: Int, message: String?) {
                 DfuServiceListenerHelper.unregisterProgressListener(ctx, this)
                 inBootloader = entered // the node may be waiting in its bootloader; "Try again" reconnects to it
-                error = "Bluetooth update failed: ${message ?: "error $code"}. Keep the phone close to the node and try again."
+                error = string(R.string.ble_update_failed, message ?: string(R.string.error_code, code))
                 running = false
                 if (!inBootloader) Mesh.resumeAfterUpdate()
             }
         }
         DfuServiceListenerHelper.registerProgressListener(ctx, listener, address)
-        step = "Restarting the node into update mode…"
+        step = string(R.string.restarting_update_mode)
         Mesh.pauseForUpdate() // the DFU library needs the node to itself
         DfuServiceInitiator(address)
             .setKeepBond(true) // the bootloader shares the app's pairing; don't make the user type a PIN again
@@ -229,14 +229,14 @@ object Updater {
 
     /** After the reboot the node comes back as a new USB device (the bootloader). */
     private fun waitForBootloader(usb: UsbManager, before: Set<Pair<Int, Int>>): UsbDevice {
-        ui { step = "Waiting for the node to restart…" }
+        ui { step = string(R.string.waiting_for_restart) }
         Thread.sleep(1500)
         repeat(40) {
             val fresh = usb.deviceList.values.filter { (it.vendorId to it.productId) !in before && UsbSerialProber.getDefaultProber().probeDevice(it) != null }
             fresh.firstOrNull()?.let { android.util.Log.i("Dfu", "bootloader candidate ${it.deviceName} ${it.productName} ${it.vendorId}:${it.productId}"); return it }
             Thread.sleep(500)
         }
-        error("The node didn't come back in update mode. Unplug it, double-press its reset button, plug it in and try again.")
+        error(string(R.string.no_update_mode_usb))
     }
 
     private fun askPermission(usb: UsbManager, device: UsbDevice) {
@@ -244,7 +244,7 @@ object Updater {
         val intent = Intent("com.backmeupplz.meshtasticplus.USB_PERMISSION_DFU").setPackage(Mesh.appContext.packageName)
         usb.requestPermission(device, PendingIntent.getBroadcast(Mesh.appContext, 1, intent, PendingIntent.FLAG_MUTABLE))
         repeat(120) { if (usb.hasPermission(device)) return; Thread.sleep(500) }
-        error("USB permission wasn't granted")
+        error(string(R.string.usb_permission_not_granted))
     }
 }
 
@@ -257,7 +257,7 @@ class Dfu(private val port: UsbSerialPort) {
     var started = false // the bootloader acked the start packet: from here on the node stays in update mode until flashed
 
     fun flash(dat: ByteArray, bin: ByteArray, progress: (String, Float) -> Unit) {
-        progress("Erasing the old firmware…", -1f)
+        progress(string(R.string.erasing_firmware), -1f)
         // The bootloader shows up as the same USB device as the firmware and may need a moment after enumerating:
         // resend the start packet (same sequence number, so it's never applied twice) until it answers.
         Thread.sleep(1000)
@@ -269,10 +269,10 @@ class Dfu(private val port: UsbSerialPort) {
         chunks.forEachIndexed { i, c ->
             send(int32(4) + c)
             if (i % 8 == 0) Thread.sleep(PAGE_WRITE_MS)
-            progress("Installing… ${100 * (i + 1) / chunks.size}%", (i + 1f) / chunks.size)
+            progress(string(R.string.installing_percent, 100 * (i + 1) / chunks.size), (i + 1f) / chunks.size)
         }
         Thread.sleep(PAGE_WRITE_MS)
-        progress("Finishing…", 1f)
+        progress(string(R.string.finishing), 1f)
         send(int32(5)) // stop: bootloader validates and activates
     }
 
@@ -287,7 +287,7 @@ class Dfu(private val port: UsbSerialPort) {
             if (acked()) return
             android.util.Log.w("Dfu", "no ack for packet $seq (try ${it + 1}/$tries)")
         }
-        error(if (started) "The node stopped responding during the update. Try again." else "The node didn't switch to update mode.")
+        error(if (started) string(R.string.stopped_responding) else string(R.string.no_switch_update_mode))
     }
 
     /** Waits up to 1s for an ack frame (two SLIP 0xC0 markers). */

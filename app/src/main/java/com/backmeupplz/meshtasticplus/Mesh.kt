@@ -1,5 +1,7 @@
 package com.backmeupplz.meshtasticplus
 
+import androidx.annotation.PluralsRes
+import androidx.annotation.StringRes
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.bluetooth.BluetoothDevice
@@ -49,6 +51,19 @@ data class Message(
 
 fun convoKey(channel: Int, peer: Long) = if (peer != 0L) "dm:$peer" else "ch:$channel"
 
+/** A UI string in the phone's language, for code outside composables. */
+fun string(@StringRes id: Int, vararg args: Any): String = Mesh.appContext.getString(id, *args)
+
+fun plural(@PluralsRes id: Int, count: Int, vararg args: Any): String = Mesh.appContext.resources.getQuantityString(id, count, *args)
+
+/** [Mesh.transport] is a key ("Bluetooth", "USB cable", "Demo"); this is how it reads on screen. */
+fun transportName(): String = when (Mesh.transport) {
+    "Bluetooth" -> string(R.string.bluetooth)
+    "USB cable" -> string(R.string.usb_cable)
+    "Demo" -> string(R.string.demo)
+    else -> Mesh.transport
+}
+
 /** Blocking a node hides its room messages and the whole DM conversation with it. */
 fun visible(m: Message, blocked: Collection<Long>) = m.from !in blocked && m.peer !in blocked
 
@@ -59,7 +74,7 @@ data class Node(
 ) {
     /** "Battery 62% · 3.71 V" / "Plugged in · 4.18 V": the voltage shows whether a battery is there and charging. */
     val power get() = listOfNotNull(
-        battery?.let { if (it > 100) "Plugged in" else "Battery $it%" },
+        battery?.let { if (it > 100) string(R.string.plugged_in) else string(R.string.battery_percent, it) },
         voltage?.takeIf { it > 0f }?.let { "%.2f V".format(it) },
     ).joinToString(" · ").ifEmpty { null }
 
@@ -70,7 +85,7 @@ data class Node(
 
 /** A Meshtastic channel ("room"): anyone with its name and key can read and write it. */
 class Room(val index: Int, val name: String, val psk: ByteArray, val primary: Boolean, val settings: ByteArray) {
-    val title get() = name.ifEmpty { if (psk.contentEquals(byteArrayOf(1))) "Public" else "Primary" }
+    val title get() = name.ifEmpty { string(if (psk.contentEquals(byteArrayOf(1))) R.string.public_ else R.string.room_primary) }
     val public get() = psk.size <= 1 // no key, or one of the well-known default keys
 }
 
@@ -164,13 +179,13 @@ object Mesh {
                 when (i.action) {
                     UsbManager.ACTION_USB_DEVICE_ATTACHED -> usbAttached()
                     USB_PERMISSION -> if (i.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) connectUsb()
-                    else status = "USB permission denied"
+                    else status = string(R.string.usb_permission_denied)
                     BluetoothDevice.ACTION_BOND_STATE_CHANGED -> {
                         val d = IntentCompat.getParcelableExtra(i, BluetoothDevice.EXTRA_DEVICE, BluetoothDevice::class.java)
                         if (d == null || d.address != prefs().getString("ble", null)) return
                         when (i.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, 0)) {
                             BluetoothDevice.BOND_BONDED -> if (link == null) connectBle(d)
-                            BluetoothDevice.BOND_NONE -> if (link == null) { active = false; status = "Pairing failed, try again" }
+                            BluetoothDevice.BOND_NONE -> if (link == null) { active = false; status = string(R.string.pairing_failed) }
                         }
                     }
                 }
@@ -213,11 +228,11 @@ object Mesh {
         current = device.address
         prefs().edit { putString("ble", device.address) }
         if (device.bondState != BluetoothDevice.BOND_BONDED) {
-            status = "Type the PIN shown on the node's screen.\nNo screen? It's usually 123456."
+            status = string(R.string.type_pin)
             device.createBond() // continues in the bond receiver above
             return
         }
-        status = "Connecting to ${savedName(device.address) ?: device.name ?: device.address}…"
+        connecting(R.string.connecting_to, R.string.syncing_with, savedName(device.address) ?: device.name ?: device.address)
         link = BleLink(ctx, device)
     }
 
@@ -227,7 +242,7 @@ object Mesh {
         active = true
         transport = "Demo"
         current = DEMO
-        status = "Connecting to the demo node…"
+        connecting(R.string.connecting_demo, R.string.syncing_demo)
         link = DemoLink().also { linkUp(it) }
     }
 
@@ -238,7 +253,7 @@ object Mesh {
         val usb = ctx.getSystemService(UsbManager::class.java)
         val driver = UsbSerialProber.getDefaultProber().findAllDrivers(usb).firstOrNull()
         if (driver == null) {
-            if (ask) status = "No node found. Check the cable is plugged in on both ends."
+            if (ask) status = string(R.string.no_usb_node)
             return
         }
         if (!usb.hasPermission(driver.device)) {
@@ -262,10 +277,10 @@ object Mesh {
             transport = "USB cable"
             current = USB
             active = true
-            status = "Connecting to ${savedName(USB) ?: "your node"} over USB…"
+            connecting(R.string.connecting_usb, R.string.syncing_usb, savedName(USB) ?: string(R.string.your_node))
             linkUp(link!!)
         } catch (e: Exception) {
-            status = "USB error: ${e.message}"
+            status = string(R.string.usb_error, e.message.orEmpty())
         }
     }
 
@@ -302,6 +317,14 @@ object Mesh {
         MeshService.stop(ctx)
     }
 
+    /** What the status line says while connecting, and what it turns into once the link is up and syncing. */
+    private var syncing: Pair<String, String>? = null
+
+    private fun connecting(now: Int, next: Int, vararg args: Any) {
+        status = string(now, *args)
+        syncing = status to string(next, *args)
+    }
+
     private fun savedName(key: String) = saved.firstOrNull { it.first == key }?.second?.ifEmpty { null }
 
     fun forgetSaved(address: String) {
@@ -313,7 +336,7 @@ object Mesh {
 
     fun linkUp(from: Link) = main.post {
         if (from !== link) return@post
-        status = status.replace("Connecting to", "Syncing with").ifEmpty { "Syncing…" }
+        status = syncing?.takeIf { it.first == status }?.second ?: status.ifEmpty { string(R.string.syncing) }
         from.send(Pb().uint(3, Random.nextLong(1, 0xFFFFFFFF)).build()) // want_config_id: node replays its state + queued messages
         main.removeCallbacks(heartbeat)
         main.postDelayed(heartbeat, 60_000)
@@ -323,7 +346,7 @@ object Mesh {
         if (from !== link) return@postDelayed
         closeLink()
         connected = false
-        status = "Reconnecting…"
+        status = string(R.string.reconnecting)
         link = BleLink(ctx, device)
     }, 1000)
 
@@ -378,7 +401,7 @@ object Mesh {
         }
         if (fr.has(7)) {
             connected = true
-            status = "Connected"
+            status = string(R.string.connected)
             // Nodes without GPS have no clock; without this their timestamps (last heard, message times) are garbage.
             admin(Pb().fixed32(43, System.currentTimeMillis() / 1000)) // set_time_only
             if (!ready) askName = DEFAULT_NAME.matches(myLong) && !prefs().getBoolean("named", false)
@@ -507,7 +530,7 @@ object Mesh {
     fun setOwner(long: String, short: String) {
         admin(Pb().msg(32, Pb().str(2, long).str(3, short))) // set_owner
         myLong = long; myShort = short
-        status = "Restarting to apply changes…"
+        status = string(R.string.restarting_apply)
         nodes[myNum] = (nodes[myNum] ?: Node(myNum)).copy(long = long, short = short)
         nameAsked()
     }
@@ -517,7 +540,7 @@ object Mesh {
         // Appending a field overrides the earlier value (protobuf last-one-wins), keeping the rest of the LoRa config.
         admin(Pb().msg(34, Pb().bytes(6, config + Pb().uint(7, code.toLong()).build()))) // set_config
         region = code
-        status = "Restarting to apply changes…"
+        status = string(R.string.restarting_apply)
     }
 
     /**
@@ -531,7 +554,7 @@ object Mesh {
         admin(Pb().uint(65, 1)) // commit_edit_settings: save + restart
         changes.forEach { (section, fields) -> configs[section] = (configs[section] ?: ByteArray(0)) + fields.build() }
         configs[6]?.let { region = Msg(it).long(7).toInt() }
-        status = "Restarting to apply changes…"
+        status = string(R.string.restarting_apply)
     }
 
     /** nRF52: the node reboots into its bootloader, which takes new firmware over the same USB cable. */
@@ -545,12 +568,12 @@ object Mesh {
         updating = true
         closeLink()
         connected = false
-        status = "Updating firmware…"
+        status = string(R.string.updating_firmware)
     }
 
     fun resumeAfterUpdate() {
         updating = false
-        status = "Restarting with new firmware…"
+        status = string(R.string.restarting_new_firmware)
         main.postDelayed({ if (link == null) current?.let { if (it == USB) connectUsb(ask = false) else connectBle(it) } }, 4000)
     }
 
@@ -559,7 +582,7 @@ object Mesh {
         admin(Pb().uint(kind, 1)) // nodedb_reset / factory_reset_config / factory_reset_device
         // T114s (2.6/2.7) often hang right after wiping, with Bluetooth already off: they only come back on a reset press.
         // The confirmation dialog says so; the status line only fits ~40 characters.
-        status = if (kind == 100) "Clearing the node list…" else "Resetting the node…"
+        status = if (kind == 100) string(R.string.clearing_nodes) else string(R.string.resetting_node)
         if (kind == 100) nodes.values.filter { !it.favorite && it.num != myNum }.forEach { nodes.remove(it.num) }
         else prefs().edit { remove("named") } // its name is back to the default: offer to pick one again
         val address = current
@@ -572,9 +595,11 @@ object Mesh {
                 val unpaired = unpair(address)
                 forgetSaved(address)
                 disconnect()
-                status = (if (unpaired) "Factory reset sent." else "Factory reset sent. Remove the node in the phone's Bluetooth settings too.") +
-                    (if (freezes) " When its screen stops changing, press its reset button once (a firmware bug fixed in 2.8.1)." else "") +
-                    " Then find it below and pair it with the new PIN."
+                status = listOfNotNull(
+                    string(if (unpaired) R.string.factory_reset_sent else R.string.factory_reset_sent_unpair),
+                    if (freezes) string(R.string.factory_reset_freeze) else null,
+                    string(R.string.factory_reset_pair_again),
+                ).joinToString(" ")
             }, 1500) // let the reset request reach the node before we drop the link
         }
     }
@@ -618,17 +643,17 @@ object Mesh {
     /** Adds the rooms from an invite link. Returns a message for the user and the first joined room, if any. */
     fun join(link: String): Pair<String, Int?> {
         val settings = inviteRooms(link)
-        if (settings.isEmpty()) return "That doesn't look like a Meshtastic invite" to null
+        if (settings.isEmpty()) return string(R.string.not_an_invite) to null
         var first: Int? = null
         for (s in settings) {
             val r = room(0, s, false)
             val existing = rooms.values.firstOrNull { it.name == r.name && it.psk.contentEquals(r.psk) }
             if (existing != null) { first = first ?: existing.index; continue }
-            val index = freeSlot() ?: return "Your node already has 8 rooms. Leave one first." to first
+            val index = freeSlot() ?: return string(R.string.rooms_full) to first
             setRoom(index, s, 2)
             first = first ?: index
         }
-        return "Joined" to first
+        return string(R.string.joined) to first
     }
 
     fun nameAsked() {
@@ -730,7 +755,7 @@ class BleLink(ctx: Context, private val device: BluetoothDevice) : BluetoothGatt
         } else {
             synchronized(this) { ops.clear(); busy = false; readQueued = false }
             g.connect()
-            Mesh.linkDown(this, "Out of reach, reconnecting…")
+            Mesh.linkDown(this, string(R.string.out_of_reach))
         }
     }
 
@@ -746,7 +771,7 @@ class BleLink(ctx: Context, private val device: BluetoothDevice) : BluetoothGatt
 
     override fun onServicesDiscovered(g: BluetoothGatt, status: Int) {
         val s = g.getService(SERVICE)
-        if (s == null) { Mesh.failed(this, "No Meshtastic service: the node may be waiting in update mode."); return }
+        if (s == null) { Mesh.failed(this, string(R.string.no_mesh_service)); return }
         g.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH) // ~4x faster config download
         toRadio = s.getCharacteristic(TO_RADIO)
         fromRadio = s.getCharacteristic(FROM_RADIO)
@@ -802,7 +827,7 @@ class UsbLink(private val port: UsbSerialPort) : Link, SerialInputOutputManager.
         try {
             port.write(frame(toRadio), 1000)
         } catch (e: Exception) {
-            Mesh.linkDown(this, "USB error: ${e.message}")
+            Mesh.linkDown(this, string(R.string.usb_error, e.message.orEmpty()))
         }
     }
 
@@ -812,5 +837,5 @@ class UsbLink(private val port: UsbSerialPort) : Link, SerialInputOutputManager.
     }
 
     override fun onNewData(data: ByteArray) = deframer.feed(data)
-    override fun onRunError(e: Exception) { Mesh.linkDown(this, "Node unplugged or restarting…") }
+    override fun onRunError(e: Exception) { Mesh.linkDown(this, string(R.string.node_unplugged)) }
 }

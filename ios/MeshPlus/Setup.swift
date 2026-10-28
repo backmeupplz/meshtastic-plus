@@ -77,7 +77,7 @@ struct DeviceRows: View {
         VStack(spacing: 8) {
             ForEach(mesh.saved, id: \.key) { d in
                 let current = d.key == mesh.current
-                DeviceRow(icon: "dot.radiowaves.left.and.right", title: d.name.isEmpty ? "Node" : d.name,
+                DeviceRow(icon: "dot.radiowaves.left.and.right", title: d.name.isEmpty ? String(localized: "Node") : d.name,
                           subtitle: current ? mesh.status : "Bluetooth", highlighted: current, onTap: { if !current { onPick(d.key) } }) {
                     if current { Image(systemName: "checkmark").foregroundStyle(Color.accentColor).accessibilityLabel("Connected") }
                     else {
@@ -87,7 +87,7 @@ struct DeviceRows: View {
                 }
             }
         }
-        .alert("Remove \(removing?.name.isEmpty == false ? removing!.name : "this device")?",
+        .alert(removing.map { $0.name.isEmpty ? String(localized: "Remove this device?") : String(localized: "Remove \($0.name)?") } ?? "",
                isPresented: Binding(get: { removing != nil }, set: { if !$0 { removing = nil } })) {
             Button("Remove", role: .destructive) { if let r = removing { mesh.forgetSaved(r.key) }; removing = nil }
             Button("Cancel", role: .cancel) { removing = nil }
@@ -114,8 +114,8 @@ struct NearbyNodes: View {
                 Text("Looking… make sure the node is on and not connected to another phone.").foregroundStyle(.secondary)
             }
             ForEach(fresh) { f in
-                DeviceRow(icon: "antenna.radiowaves.left.and.right", title: f.name, subtitle: "Tap to connect", onTap: { onPick(f) }) {
-                    Image(systemName: "chevron.right").foregroundStyle(.secondary)
+                DeviceRow(icon: "antenna.radiowaves.left.and.right", title: f.name, subtitle: String(localized: "Tap to connect"), onTap: { onPick(f) }) {
+                    Image(systemName: "chevron.forward").foregroundStyle(.secondary)
                 }
             }
         }
@@ -134,7 +134,7 @@ struct SetupView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     Hero(icon: "antenna.radiowaves.left.and.right").padding(.top, 56)
-                    Text("Mesh+").font(.largeTitle.weight(.semibold)).padding(.top, 24)
+                    Text(verbatim: "Mesh+").font(.largeTitle.weight(.semibold)).padding(.top, 24)
                     Text("Connect your Meshtastic node to start chatting, no internet or cell service needed.")
                         .multilineTextAlignment(.center).foregroundStyle(.secondary).padding(.top, 8)
                     Spacer().frame(height: 40)
@@ -158,7 +158,7 @@ struct SetupView: View {
                             DeviceRows { mesh.connect($0) }.padding(.bottom, 24)
                         }
                         Button { scanning = true } label: {
-                            Label(mesh.saved.isEmpty ? "Connect with Bluetooth" : "Find another node", systemImage: "antenna.radiowaves.left.and.right")
+                            Label(mesh.saved.isEmpty ? String(localized: "Connect with Bluetooth") : String(localized: "Find another node"), systemImage: "antenna.radiowaves.left.and.right")
                                 .frame(maxWidth: .infinity)
                         }
                         .buttonStyle(.borderedProminent).controlSize(.large)
@@ -213,7 +213,7 @@ struct RegionView: View {
                 }
             }
         }
-        .navigationTitle(editing ? "Region" : "")
+        .navigationTitle(editing ? String(localized: "Region") : "")
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
             Button {
@@ -263,7 +263,7 @@ struct NameView: View {
         ScrollView {
             VStack(spacing: 12) {
                 Hero(icon: "person.text.rectangle").padding(.top, editing ? 24 : 56)
-                Text(editing ? "Your name" : "What should people call you?").font(.title2.weight(.semibold)).multilineTextAlignment(.center)
+                Text(editing ? String(localized: "Your name") : String(localized: "What should people call you?")).font(.title2.weight(.semibold)).multilineTextAlignment(.center)
                 Text("This is how you show up for everyone on the mesh.").foregroundStyle(.secondary).multilineTextAlignment(.center)
                 TextField("Name", text: $long)
                     .textInputAutocapitalization(.words).textFieldStyle(.roundedBorder).padding(.top, 20)
@@ -285,7 +285,7 @@ struct NameView: View {
             }
             .padding(24)
         }
-        .navigationTitle(editing ? "Name" : "")
+        .navigationTitle(editing ? String(localized: "Name") : "")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

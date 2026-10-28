@@ -2,7 +2,8 @@ import Foundation
 
 /// A pretend node for trying the app without a radio (and for App Review). It speaks the same FromRadio/ToRadio
 /// protocol as a real node, so the rest of the app runs unchanged: config download, rooms, nodes, messages with
-/// delivery checks and replies, settings that "restart" the node. Same content as the Android app's Demo.kt.
+/// delivery checks and replies, settings that "restart" the node. Same content as the Android app's Demo.kt, in the
+/// phone's language so the store screenshots match it.
 final class DemoLink: RadioLink {
     private struct Peer {
         let num: Int64, long: String, short: String, hops: Int, snr: Float, battery: Int, volts: Float
@@ -11,12 +12,12 @@ final class DemoLink: RadioLink {
     }
 
     private let me: Int64 = 0x0de3_0001
-    private var myLong = "Demo Node", myShort = "DEMO"
+    private var myLong = String(localized: "Demo Node"), myShort = "DEMO"
     private var peers = [
-        Peer(num: 0x6a3f_21c0, long: "Maya's Handheld", short: "MAYA", hops: 0, snr: 9.5, battery: 78, volts: 3.92, favorite: true, heardAgoMin: 2),
-        Peer(num: 0x2b7e_9d14, long: "Ridge Repeater", short: "RDGE", hops: 1, snr: -4.25, battery: 101, volts: 4.18, favorite: false, heardAgoMin: 5),
+        Peer(num: 0x6a3f_21c0, long: String(localized: "Maya's Handheld").fitBytes(39), short: "MAYA", hops: 0, snr: 9.5, battery: 78, volts: 3.92, favorite: true, heardAgoMin: 2),
+        Peer(num: 0x2b7e_9d14, long: String(localized: "Ridge Repeater").fitBytes(39), short: "RDGE", hops: 1, snr: -4.25, battery: 101, volts: 4.18, favorite: false, heardAgoMin: 5),
         Peer(num: 0x91c4_e5a2, long: "Leo", short: "LEO", hops: 2, snr: -11, battery: 34, volts: 3.61, favorite: false, heardAgoMin: 25),
-        Peer(num: 0x5d02_f7b8, long: "Base Camp", short: "BASE", hops: 1, snr: 2.5, battery: 92, volts: 4.05, favorite: false, heardAgoMin: 180),
+        Peer(num: 0x5d02_f7b8, long: String(localized: "Base Camp").fitBytes(39), short: "BASE", hops: 1, snr: 2.5, battery: 92, volts: 4.05, favorite: false, heardAgoMin: 180),
     ]
     private var sections: [Int: [UInt8]] = [ // Config oneof field -> section bytes, like a node's saved config
         1: Pb().uint(7, 10800).build, // device: announce every 3h
@@ -29,13 +30,13 @@ final class DemoLink: RadioLink {
     ]
     private var channels: [Int: (settings: [UInt8], role: Int)] = [
         0: (Pb().bytes(2, [1]).build, 1), // Public
-        1: (Pb().bytes(2, (0..<32).map { UInt8(truncatingIfNeeded: $0 * 37 + 11) }).str(3, "Hiking").build, 2),
+        1: (Pb().bytes(2, (0..<32).map { UInt8(truncatingIfNeeded: $0 * 37 + 11) }).str(3, String(localized: "Hiking").replacingOccurrences(of: " ", with: "").fitBytes(11)).build, 2),
     ]
     private var inTransaction = false
     private var reply = 0
     private let replies = [
-        "Got it 👍", "Sounds good!", "Copy that, see you there.", "Signal's weak up here but I read you.",
-        "On my way.", "Nice, the mesh works!",
+        String(localized: "Got it 👍"), String(localized: "Sounds good!"), String(localized: "Copy that, see you there."),
+        String(localized: "Signal's weak up here but I read you."), String(localized: "On my way."), String(localized: "Nice, the mesh works!"),
     ]
     private var closed = false
 
@@ -87,11 +88,11 @@ final class DemoLink: RadioLink {
         }
         emit(Pb().uint(7, id)) // config_complete_id
         // A little history so the screens aren't empty (stable ids: the app skips ones it already has).
-        packet(peers[1], BROADCAST, 0, "Repeater on the ridge is back up after the storm.", 0x0de3_0101, 50)
-        packet(peers[2], BROADCAST, 0, "Anyone heading to the trailhead tomorrow?", 0x0de3_0102, 20)
-        packet(peers[0], BROADCAST, 1, "Made it to the second lake. Zero cell signal here, the mesh still works 🙂", 0x0de3_0103, 15)
-        packet(peers[3], BROADCAST, 1, "Copy. Dinner at 7 at camp.", 0x0de3_0104, 12)
-        packet(peers[0], me, 0, "Are you bringing the stove?", 0x0de3_0105, 8)
+        packet(peers[1], BROADCAST, 0, String(localized: "Repeater on the ridge is back up after the storm."), 0x0de3_0101, 50)
+        packet(peers[2], BROADCAST, 0, String(localized: "Anyone heading to the trailhead tomorrow?"), 0x0de3_0102, 20)
+        packet(peers[0], BROADCAST, 1, String(localized: "Made it to the second lake. Zero cell signal here, the mesh still works 🙂"), 0x0de3_0103, 15)
+        packet(peers[3], BROADCAST, 1, String(localized: "Copy. Dinner at 7 at camp."), 0x0de3_0104, 12)
+        packet(peers[0], me, 0, String(localized: "Are you bringing the stove?"), 0x0de3_0105, 8)
     }
 
     private func packet(_ from: Peer, _ to: Int64, _ channel: Int, _ text: String, _ id: Int64, _ agoMin: Int) {

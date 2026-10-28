@@ -36,7 +36,7 @@ struct Node: Equatable {
     func online(_ now: Double) -> Bool { now - lastHeard < 2 * 3600_000 } // same 2h rule as the official apps
     /// "Battery 62% · 3.71 V" / "Plugged in · 4.18 V": the voltage shows whether a battery is there and charging.
     var power: String? {
-        let parts = [battery.map { $0 > 100 ? "Plugged in" : "Battery \($0)%" }, voltage.flatMap { $0 > 0 ? String(format: "%.2f V", $0) : nil }]
+        let parts = [battery.map { $0 > 100 ? String(localized: "Plugged in") : String(localized: "Battery \($0)%") }, voltage.flatMap { $0 > 0 ? String(format: "%.2f V", $0) : nil }]
             .compactMap { $0 }
         return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
@@ -45,7 +45,7 @@ struct Node: Equatable {
 /// A Meshtastic channel ("room"): anyone with its name and key can read and write it.
 struct Room: Equatable {
     let index: Int, name: String, psk: [UInt8], primary: Bool, settings: [UInt8]
-    var title: String { name.isEmpty ? (psk == [1] ? "Public" : "Primary") : name }
+    var title: String { name.isEmpty ? (psk == [1] ? String(localized: "Public") : String(localized: "Primary")) : name }
     var isPublic: Bool { psk.count <= 1 } // no key, or one of the well-known default keys
 }
 
@@ -81,6 +81,7 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
     var current: String? // key of the device we're on, as in `saved`
     var status = ""
     var transport = "" // "Bluetooth" / "Demo"
+    @ObservationIgnored private var target: String? // name of the node being connected to, for "Connecting to …"
     var active = false // a link exists: pairing, connecting or connected
     var ready = false // synced with the node at least once on this link
     var connected = false // link is up right now
@@ -135,11 +136,12 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
         active = true
         transport = "Bluetooth"
         current = key
-        status = "Connecting to \(savedName(key) ?? "your node")…"
+        target = savedName(key)
+        status = linkStatus(syncing: false)
         Bluetooth.shared.whenOn { [self] in
             guard current == key, link == nil else { return }
             if let p = Bluetooth.shared.peripheral(id) { connectBle(p) }
-            else { forgetSaved(key); disconnect(); status = "That node isn't known to this phone anymore. Find it below to pair it again." }
+            else { forgetSaved(key); disconnect(); status = String(localized: "That node isn't known to this phone anymore. Find it below to pair it again.") }
         }
     }
 
@@ -149,7 +151,8 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
         transport = "Bluetooth"
         current = p.identifier.uuidString
         defaults.set(current, forKey: "ble")
-        status = "Connecting to \(savedName(p.identifier.uuidString) ?? p.name ?? "your node")…"
+        target = savedName(p.identifier.uuidString) ?? p.name
+        status = linkStatus(syncing: false)
         link = BleLink(p)
     }
 
@@ -159,13 +162,20 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
         active = true
         transport = "Demo"
         current = DEMO
-        status = "Connecting to the demo node…"
+        status = linkStatus(syncing: false)
         let demo = DemoLink()
         link = demo
         linkUp(demo)
     }
 
     var demo: Bool { current == DEMO }
+
+    /// "Connecting to Maya's node…" while the link comes up, "Syncing with …" once it's up and the node sends its state.
+    private func linkStatus(syncing: Bool) -> String {
+        if demo { return syncing ? String(localized: "Syncing with the demo node…") : String(localized: "Connecting to the demo node…") }
+        if let target { return syncing ? String(localized: "Syncing with \(target)…") : String(localized: "Connecting to \(target)…") }
+        return syncing ? String(localized: "Syncing with your node…") : String(localized: "Connecting to your node…")
+    }
 
     func agree() {
         agreedTerms = true
@@ -209,7 +219,7 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
 
     func linkUp(_ from: RadioLink) {
         guard from === link else { return }
-        status = status.hasPrefix("Connecting to") ? status.replacingOccurrences(of: "Connecting to", with: "Syncing with") : "Syncing…"
+        status = status == linkStatus(syncing: false) ? linkStatus(syncing: true) : String(localized: "Syncing…")
         from.send(Pb().uint(3, randomId()).build) // want_config_id: node replays its state + queued messages
         heartbeat?.invalidate()
         heartbeat = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
@@ -261,7 +271,7 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
         }
         if fr.has(7) {
             connected = true
-            status = "Connected"
+            status = String(localized: "Connected")
             // Nodes without GPS have no clock; without this their timestamps (last heard, message times) are garbage.
             admin(Pb().fixed32(43, Int64(Date().timeIntervalSince1970))) // set_time_only
             if !ready { askName = myLong.range(of: "^Meshtastic [0-9a-f]{4}$", options: .regularExpression) != nil && !defaults.bool(forKey: "named") }
@@ -389,7 +399,7 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
     func setOwner(_ long: String, _ short: String) {
         admin(Pb().msg(32, Pb().str(2, long).str(3, short))) // set_owner
         myLong = long; myShort = short
-        status = "Restarting to apply changes…"
+        status = String(localized: "Restarting to apply changes…")
         var n = nodes[myNum] ?? Node(num: myNum)
         n.long = long; n.short = short
         nodes[myNum] = n
@@ -401,7 +411,7 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
         // Appending a field overrides the earlier value (protobuf last-one-wins), keeping the rest of the LoRa config.
         admin(Pb().msg(34, Pb().bytes(6, config + Pb().uint(7, Int64(code)).build))) // set_config
         region = code
-        status = "Restarting to apply changes…"
+        status = String(localized: "Restarting to apply changes…")
     }
 
     /// Changes several config fields at once: `changes` maps Config section (1 = device … 7 = bluetooth) to the fields
@@ -412,13 +422,13 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
         admin(Pb().uint(65, 1)) // commit_edit_settings: save + restart
         for (section, fields) in changes { configs[section] = (configs[section] ?? []) + fields.build }
         if let l = configs[6] { region = Int(Msg(l)?.long(7) ?? 0) }
-        status = "Restarting to apply changes…"
+        status = String(localized: "Restarting to apply changes…")
     }
 
     /// 100 = clear node list (favorites stay), 99 = settings back to defaults, 94 = everything incl. keys and Bluetooth pairings.
     func reset(_ kind: Int) {
         admin(Pb().uint(kind, 1)) // nodedb_reset / factory_reset_config / factory_reset_device
-        status = kind == 100 ? "Clearing the node list…" : "Resetting the node…"
+        status = kind == 100 ? String(localized: "Clearing the node list…") : String(localized: "Resetting the node…")
         if kind == 100 { for n in nodes.values where !n.favorite && n.num != myNum { nodes[n.num] = nil } }
         else { defaults.removeObject(forKey: "named") } // its name is back to the default: offer to pick one again
         guard kind == 94, let key = current, key != DEMO else { return }
@@ -428,9 +438,9 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
             defaults.removeObject(forKey: "ble")
             forgetSaved(key)
             disconnect()
-            status = "Factory reset sent. In iOS Settings → Bluetooth, tap ⓘ next to the node and choose Forget This Device." +
-                (freezes ? " When its screen stops changing, press its reset button once (a firmware bug fixed in 2.8.1)." : "") +
-                " Then find it below and pair it with the new PIN."
+            status = freezes
+                ? String(localized: "Factory reset sent. In iOS Settings → Bluetooth, tap ⓘ next to the node and choose Forget This Device. When its screen stops changing, press its reset button once (a firmware bug fixed in 2.8.1). Then find it below and pair it with the new PIN.")
+                : String(localized: "Factory reset sent. In iOS Settings → Bluetooth, tap ⓘ next to the node and choose Forget This Device. Then find it below and pair it with the new PIN.")
         }
     }
 
@@ -467,16 +477,16 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
     /// Adds the rooms from an invite link. Returns a message for the user and the first joined room, if any.
     func join(_ link: String) -> (String, Int?) {
         let settings = inviteRooms(link)
-        if settings.isEmpty { return ("That doesn't look like a Meshtastic invite", nil) }
+        if settings.isEmpty { return (String(localized: "That doesn't look like a Meshtastic invite"), nil) }
         var first: Int?
         for s in settings {
             let r = room(0, s, false)
             if let existing = rooms.values.first(where: { $0.name == r.name && $0.psk == r.psk }) { first = first ?? existing.index; continue }
-            guard let index = freeSlot() else { return ("Your node already has 8 rooms. Leave one first.", first) }
+            guard let index = freeSlot() else { return (String(localized: "Your node already has 8 rooms. Leave one first."), first) }
             setRoom(index, s, 2)
             first = first ?? index
         }
-        return ("Joined", first)
+        return (String(localized: "Joined"), first)
     }
 
     func nameAsked() {
@@ -510,7 +520,7 @@ enum Notify {
         if mesh.isMuted(m.convo, me: m.me) || mesh.blocked.contains(m.from) { return }
         let content = UNMutableNotificationContent()
         let dm = m.peer != 0
-        content.title = dm ? m.name : mesh.rooms[m.channel]?.title ?? "Room"
+        content.title = dm ? m.name : mesh.rooms[m.channel]?.title ?? String(localized: "Room")
         content.body = dm ? m.text : "\(m.name): \(m.text)"
         content.sound = .default
         content.threadIdentifier = m.convo

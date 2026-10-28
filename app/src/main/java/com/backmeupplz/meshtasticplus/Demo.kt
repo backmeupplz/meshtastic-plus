@@ -8,7 +8,8 @@ const val DEMO = "demo" // [Mesh.current] while the simulated node is in use
 /**
  * A pretend node for trying the app without a radio (and for app store reviewers). It speaks the same FromRadio/ToRadio
  * protocol as a real node, so the rest of the app runs unchanged: config download, rooms, nodes, messages with
- * delivery checks and replies, settings that "restart" the node.
+ * delivery checks and replies, settings that "restart" the node. Its names and messages are in the phone's language, like
+ * the iPhone app's, so the store screenshots match it.
  */
 class DemoLink : Link {
     private class Peer(val num: Long, val long: String, val short: String, val hops: Int, val snr: Float,
@@ -16,13 +17,13 @@ class DemoLink : Link {
 
     private val main = Handler(Looper.getMainLooper())
     private val me = 0x0de30001L
-    private var myLong = "Demo Node"
+    private var myLong = string(R.string.demo_node)
     private var myShort = "DEMO"
     private val peers = listOf(
-        Peer(0x6a3f21c0, "Maya's Handheld", "MAYA", 0, 9.5f, 78, 3.92f, true, 2),
-        Peer(0x2b7e9d14, "Ridge Repeater", "RDGE", 1, -4.25f, 101, 4.18f, false, 5),
+        Peer(0x6a3f21c0, string(R.string.demo_maya).fitBytes(39), "MAYA", 0, 9.5f, 78, 3.92f, true, 2),
+        Peer(0x2b7e9d14, string(R.string.demo_ridge).fitBytes(39), "RDGE", 1, -4.25f, 101, 4.18f, false, 5),
         Peer(0x91c4e5a2, "Leo", "LEO", 2, -11f, 34, 3.61f, false, 25),
-        Peer(0x5d02f7b8, "Base Camp", "BASE", 1, 2.5f, 92, 4.05f, false, 180),
+        Peer(0x5d02f7b8, string(R.string.demo_base).fitBytes(39), "BASE", 1, 2.5f, 92, 4.05f, false, 180),
     )
     private val sections = mutableMapOf( // Config oneof field -> section bytes, like a node's saved config
         1 to Pb().uint(7, 10800).build(), // device: announce every 3h
@@ -35,14 +36,14 @@ class DemoLink : Link {
     )
     private val channels = mutableMapOf(
         0 to (Pb().bytes(2, byteArrayOf(1)).build() to 1), // Public
-        1 to (Pb().bytes(2, ByteArray(32) { (it * 37 + 11).toByte() }).str(3, "Hiking").build() to 2),
+        1 to (Pb().bytes(2, ByteArray(32) { (it * 37 + 11).toByte() }).str(3, string(R.string.demo_room).replace(" ", "").fitBytes(11)).build() to 2),
     )
     private var inTransaction = false
     private var reply = 0
     private val replies = listOf(
-        "Got it 👍", "Sounds good!", "Copy that, see you there.", "Signal's weak up here but I read you.",
-        "On my way.", "Nice, the mesh works!",
-    )
+        R.string.demo_reply_1, R.string.demo_reply_2, R.string.demo_reply_3, R.string.demo_reply_4,
+        R.string.demo_reply_5, R.string.demo_reply_6,
+    ).map { string(it) }
 
     override fun send(toRadio: ByteArray) {
         val tr = Msg(toRadio)
@@ -79,11 +80,11 @@ class DemoLink : Link {
         channels.forEach { (index, ch) -> emit(Pb().msg(10, Pb().uint(1, index.toLong()).bytes(2, ch.first).uint(3, ch.second.toLong()))) }
         emit(Pb().uint(7, id)) // config_complete_id
         // A little history so the screens aren't empty (stable ids: the app skips ones it already has).
-        packet(peers[1], BROADCAST, 0, "Repeater on the ridge is back up after the storm.", 0x0de30101, 50)
-        packet(peers[2], BROADCAST, 0, "Anyone heading to the trailhead tomorrow?", 0x0de30102, 20)
-        packet(peers[0], BROADCAST, 1, "Made it to the second lake. Zero cell signal here, the mesh still works 🙂", 0x0de30103, 15)
-        packet(peers[3], BROADCAST, 1, "Copy. Dinner at 7 at camp.", 0x0de30104, 12)
-        packet(peers[0], me, 0, "Are you bringing the stove?", 0x0de30105, 8)
+        packet(peers[1], BROADCAST, 0, string(R.string.demo_history_1), 0x0de30101, 50)
+        packet(peers[2], BROADCAST, 0, string(R.string.demo_history_2), 0x0de30102, 20)
+        packet(peers[0], BROADCAST, 1, string(R.string.demo_history_3), 0x0de30103, 15)
+        packet(peers[3], BROADCAST, 1, string(R.string.demo_history_4), 0x0de30104, 12)
+        packet(peers[0], me, 0, string(R.string.demo_history_5), 0x0de30105, 8)
     }
 
     private fun packet(from: Peer, to: Long, channel: Int, text: String, id: Long, agoMin: Int) {

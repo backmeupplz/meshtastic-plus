@@ -11,14 +11,15 @@ func shortTime(_ ms: Double) -> String {
 }
 
 func heard(_ n: Node, _ now: Double) -> String {
-    if n.lastHeard == 0 { return "Never heard" }
-    if now - n.lastHeard < 60_000 { return "Heard just now" }
+    if n.lastHeard == 0 { return String(localized: "Never heard") }
+    if now - n.lastHeard < 60_000 { return String(localized: "Heard just now") }
     let f = RelativeDateTimeFormatter()
     f.unitsStyle = .full
-    return "Heard " + f.localizedString(for: Date(timeIntervalSince1970: n.lastHeard / 1000), relativeTo: Date(timeIntervalSince1970: now / 1000))
+    let ago = f.localizedString(for: Date(timeIntervalSince1970: n.lastHeard / 1000), relativeTo: Date(timeIntervalSince1970: now / 1000))
+    return String(localized: "Heard \(ago)")
 }
 
-func hops(_ n: Node) -> String? { n.hops.map { $0 == 0 ? "Direct" : $0 == 1 ? "1 hop away" : "\($0) hops away" } }
+func hops(_ n: Node) -> String? { n.hops.map { $0 == 0 ? String(localized: "Direct") : String(localized: "\($0) hops away") } }
 
 let supportEmail = "support@borodutch.com"
 
@@ -48,7 +49,7 @@ struct StatusPill: View {
         let color = online ? green : Color.secondary
         HStack(spacing: 6) {
             Circle().fill(color).frame(width: 8, height: 8)
-            Text(online ? "Online" : "Offline").font(.caption.weight(.medium)).foregroundStyle(color)
+            Text(online ? String(localized: "Online") : String(localized: "Offline")).font(.caption.weight(.medium)).foregroundStyle(color)
         }
         .padding(.horizontal, 10).padding(.vertical, 4)
         .background(color.opacity(0.14), in: Capsule())
@@ -125,14 +126,14 @@ struct ConversationRow: View {
                     Text(title).fontWeight(unread > 0 ? .semibold : .regular).lineLimit(1)
                     if mesh.isMuted(convo) { Image(systemName: "bell.slash").font(.caption).foregroundStyle(.secondary).accessibilityLabel("Muted") }
                 }
-                Text(last.map { ($0.mine ? "You" : $0.name) + ": " + $0.text } ?? "No messages yet")
+                Text(last.map { ($0.mine ? String(localized: "You") : $0.name) + ": " + $0.text } ?? String(localized: "No messages yet"))
                     .font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
             }
             Spacer()
             VStack(alignment: .trailing, spacing: 4) {
                 if let last { Text(shortTime(last.time)).font(.caption).foregroundStyle(.secondary) }
                 if unread > 0 {
-                    Text("\(unread)").font(.caption2.bold()).foregroundStyle(.white)
+                    Text(verbatim: "\(unread)").font(.caption2.bold()).foregroundStyle(.white)
                         .padding(.horizontal, 7).padding(.vertical, 2).background(Color.accentColor, in: Capsule())
                 }
             }
@@ -189,7 +190,7 @@ struct NodesTab: View {
                     if !favorites.isEmpty {
                         Section("Favorites") { ForEach(favorites, id: \.num) { row($0, now) } }
                     }
-                    Section(favorites.isEmpty ? "" : "Everyone") { ForEach(others, id: \.num) { row($0, now) } }
+                    Section(favorites.isEmpty ? "" : String(localized: "Everyone")) { ForEach(others, id: \.num) { row($0, now) } }
                 }
             }
         }
@@ -200,7 +201,7 @@ struct NodesTab: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(n.name).lineLimit(1)
-                    Text(([heard(n, now), hops(n)].compactMap { $0 } + (Mesh.shared.blocked.contains(n.num) ? ["Blocked"] : [])).joined(separator: " · "))
+                    Text(([heard(n, now), hops(n)].compactMap { $0 } + (Mesh.shared.blocked.contains(n.num) ? [String(localized: "Blocked")] : [])).joined(separator: " · "))
                         .font(.subheadline).foregroundStyle(.secondary)
                 }
                 Spacer()
@@ -235,22 +236,23 @@ struct ProfileSheet: View {
             .padding(.bottom, 6)
             Label(heard(n, now), systemImage: "clock")
             if let h = hops(n) { Label(h, systemImage: "point.3.connected.trianglepath.dotted") }
-            if let snr = n.snr { Label(String(format: "Signal %.1f dB SNR", snr), systemImage: "cellularbars") }
+            if let snr = n.snr { Label { Text("Signal \(snr, specifier: "%.1f") dB SNR") } icon: { Image(systemName: "cellularbars") } }
             if let p = n.power { Label(p, systemImage: "battery.75percent") }
             HStack(spacing: 12) {
                 Button { dismiss(); onMessage() } label: { Label("Message", systemImage: "bubble.left").frame(maxWidth: .infinity) }
                     .buttonStyle(.borderedProminent).disabled(blocked)
                 Button { mesh.setFavorite(num, !n.favorite) } label: {
-                    Label(n.favorite ? "Favorited" : "Favorite", systemImage: n.favorite ? "star.fill" : "star").frame(maxWidth: .infinity)
+                    Label(n.favorite ? String(localized: "Favorited") : String(localized: "Favorite"), systemImage: n.favorite ? "star.fill" : "star").frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered).disabled(!mesh.connected)
             }
             .controlSize(.large).padding(.top, 14)
             Button(role: blocked ? nil : .destructive) { mesh.setBlocked(num, !blocked) } label: {
-                Label(blocked ? "Unblock" : "Block", systemImage: "hand.raised").frame(maxWidth: .infinity)
+                Label(blocked ? String(localized: "Unblock") : String(localized: "Block"), systemImage: "hand.raised").frame(maxWidth: .infinity)
             }
             .buttonStyle(.bordered).controlSize(.large)
-            Text(blocked ? "Their messages and DMs are hidden on this phone." : "Blocking hides their messages and DMs on this phone and stops their notifications.")
+            Text(blocked ? String(localized: "Their messages and DMs are hidden on this phone.")
+                 : String(localized: "Blocking hides their messages and DMs on this phone and stops their notifications."))
                 .font(.footnote).foregroundStyle(.secondary)
         }
         .padding(24)
@@ -274,20 +276,20 @@ struct SettingsSheet: View {
                     NavigationLink { NodeSettingsView() } label: {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Node settings")
-                            Text([currentBoard()?.name, "role, radio, Bluetooth"].compactMap { $0 }.joined(separator: " · "))
+                            Text([currentBoard()?.name, String(localized: "role, radio, Bluetooth")].compactMap { $0 }.joined(separator: " · "))
                                 .font(.subheadline).foregroundStyle(.secondary)
                         }
                     }
                     NavigationLink { DevicesView() } label: {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Your devices")
-                            Text("Connected over \(mesh.transport) · tap to switch").font(.subheadline).foregroundStyle(.secondary)
+                            Text(mesh.demo ? String(localized: "Connected to the demo node · tap to switch") : String(localized: "Connected over Bluetooth · tap to switch")).font(.subheadline).foregroundStyle(.secondary)
                         }
                     }
                 }
                 Section {
                     NavigationLink { BlockedView() } label: {
-                        LabeledContent("Blocked nodes", value: mesh.blocked.isEmpty ? "None" : "\(mesh.blocked.count)")
+                        LabeledContent("Blocked nodes", value: mesh.blocked.isEmpty ? String(localized: "None") : "\(mesh.blocked.count)")
                     }
                     Link("Terms of use", destination: URL(string: "https://meshplus.app/terms.html")!)
                     Link("Privacy policy", destination: URL(string: "https://meshplus.app/privacy.html")!)
@@ -299,7 +301,7 @@ struct SettingsSheet: View {
                 Section {
                     Button("Disconnect", role: .destructive) { dismiss(); mesh.forget() }
                 } footer: {
-                    Text("Mesh+ \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "") · \(supportEmail)")
+                    Text(verbatim: "Mesh+ \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "") · \(supportEmail)")
                 }
             }
             .navigationTitle("Settings")
@@ -354,7 +356,7 @@ struct DevicesView: View {
             }
             .padding(24)
         }
-        .navigationTitle(adding ? "Add a device" : "Your devices")
+        .navigationTitle(adding ? String(localized: "Add a device") : String(localized: "Your devices"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -373,7 +375,7 @@ struct NewRoomSheet: View {
 
     private func create() {
         if let index = Mesh.shared.createRoom(name.trimmingCharacters(in: .whitespaces)) { dismiss(); onOpen(convoKey(index, 0)) }
-        else { error = "Your node already has 8 rooms. Leave one first." }
+        else { error = String(localized: "Your node already has 8 rooms. Leave one first.") }
     }
 
     var body: some View {
@@ -471,13 +473,13 @@ final class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsD
         super.viewDidLoad()
         view.backgroundColor = .black
         AVCaptureDevice.requestAccess(for: .video) { granted in
-            DispatchQueue.main.async { granted ? self.start() : self.say("Mesh+ needs the camera to scan invites. Allow it in Settings → Apps → Mesh+.") }
+            DispatchQueue.main.async { granted ? self.start() : self.say(String(localized: "Mesh+ needs the camera to scan invites. Allow it in Settings → Apps → Mesh+.")) }
         }
     }
 
     private func start() {
         guard let device = AVCaptureDevice.default(for: .video), let input = try? AVCaptureDeviceInput(device: device),
-              session.canAddInput(input) else { return say("This device has no camera. Paste the invite link instead.") }
+              session.canAddInput(input) else { return say(String(localized: "This device has no camera. Paste the invite link instead.")) }
         session.addInput(input)
         let output = AVCaptureMetadataOutput()
         guard session.canAddOutput(output) else { return }

@@ -40,12 +40,12 @@ struct Found: Identifiable {
         case .unauthorized:
             pending = []
             if mesh.transport == "Bluetooth" { mesh.disconnect() }
-            mesh.status = "Mesh+ isn't allowed to use Bluetooth. Turn it on in Settings → Apps → Mesh+."
+            mesh.status = String(localized: "Mesh+ isn't allowed to use Bluetooth. Turn it on in Settings → Apps → Mesh+.")
         case .poweredOff:
-            if mesh.transport == "Bluetooth" { mesh.status = "Bluetooth is off. Turn it on in Control Center." }
+            if mesh.transport == "Bluetooth" { mesh.status = String(localized: "Bluetooth is off. Turn it on in Control Center.") }
         case .unsupported:
             pending = []
-            mesh.status = "This device has no Bluetooth LE."
+            mesh.status = String(localized: "This device has no Bluetooth LE.")
         default: break
         }
     }
@@ -60,7 +60,7 @@ struct Found: Identifiable {
     func stopScan() { central?.stopScan() }
 
     func centralManager(_ c: CBCentralManager, didDiscover p: CBPeripheral, advertisementData ad: [String: Any], rssi: NSNumber) {
-        found[p.identifier] = Found(peripheral: p, name: ad[CBAdvertisementDataLocalNameKey] as? String ?? p.name ?? "Meshtastic node")
+        found[p.identifier] = Found(peripheral: p, name: ad[CBAdvertisementDataLocalNameKey] as? String ?? p.name ?? String(localized: "Meshtastic node"))
     }
 
     func peripheral(_ id: UUID) -> CBPeripheral? { central?.retrievePeripherals(withIdentifiers: [id]).first }
@@ -111,13 +111,13 @@ final class BleLink: NSObject, RadioLink, CBPeripheralDelegate {
     func disconnected(_ p: CBPeripheral) {
         guard p == peripheral, !closed else { return }
         toRadio = nil; fromRadio = nil; reading = false
-        Mesh.shared.linkDown(self, "Out of reach, reconnecting…")
+        Mesh.shared.linkDown(self, String(localized: "Out of reach, reconnecting…"))
         Bluetooth.shared.connect(p) // never times out: iOS reconnects whenever the node is back in range
     }
 
     func peripheral(_ p: CBPeripheral, didDiscoverServices error: Error?) {
         guard let s = p.services?.first(where: { $0.uuid == SERVICE }) else {
-            return Mesh.shared.failed(self, "No Meshtastic service: the node may be waiting in update mode.")
+            return Mesh.shared.failed(self, String(localized: "No Meshtastic service: the node may be waiting in update mode."))
         }
         p.discoverCharacteristics([TO_RADIO, FROM_RADIO, FROM_NUM], for: s)
     }
@@ -127,14 +127,14 @@ final class BleLink: NSObject, RadioLink, CBPeripheralDelegate {
         toRadio = cs.first { $0.uuid == TO_RADIO }
         fromRadio = cs.first { $0.uuid == FROM_RADIO }
         guard toRadio != nil, fromRadio != nil, let num = cs.first(where: { $0.uuid == FROM_NUM }) else {
-            return Mesh.shared.failed(self, "This node doesn't speak the Meshtastic Bluetooth API.")
+            return Mesh.shared.failed(self, String(localized: "This node doesn't speak the Meshtastic Bluetooth API."))
         }
         p.setNotifyValue(true, for: num) // encrypted: pairing (the PIN prompt) happens here
     }
 
     func peripheral(_ p: CBPeripheral, didUpdateNotificationStateFor c: CBCharacteristic, error: Error?) {
         if error != nil {
-            Mesh.shared.failed(self, "Pairing didn't work. Check the PIN and try again. If it keeps failing, forget the node in iOS Settings → Bluetooth first.")
+            Mesh.shared.failed(self, String(localized: "Pairing didn't work. Check the PIN and try again. If it keeps failing, forget the node in iOS Settings → Bluetooth first."))
         } else {
             Mesh.shared.linkUp(self)
         }

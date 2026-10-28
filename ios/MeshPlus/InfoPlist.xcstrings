@@ -1,0 +1,319 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "comment" : "Info.plist CFBundleDisplayName",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+"
+          }
+        }
+      },
+      "shouldTranslate" : false
+    },
+    "NSBluetoothAlwaysUsageDescription" : {
+      "comment" : "Info.plist NSBluetoothAlwaysUsageDescription",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يستخدم Mesh+ تقنية Bluetooth للاتصال بعقدة Meshtastic، لتتمكن من إرسال الرسائل واستقبالها عبرها، حتى عندما يعمل التطبيق في الخلفية."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ nutzt Bluetooth, um sich mit deinem Meshtastic-Knoten zu verbinden, damit du darüber Nachrichten senden und empfangen kannst – auch wenn die App im Hintergrund läuft."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ uses Bluetooth to connect to your Meshtastic node, so you can send and receive messages through it, also while the app is in the background."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ uses Bluetooth to connect to your Meshtastic node, so you can send and receive messages through it, also while the app is in the background."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ usa el Bluetooth para conectarse a tu nodo Meshtastic y que puedas enviar y recibir mensajes a través de él, también cuando la app está en segundo plano."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ usa el Bluetooth para conectarse a tu nodo Meshtastic y que puedas enviar y recibir mensajes a través de él, también cuando la app está en segundo plano."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ utilise le Bluetooth pour se connecter à votre nœud Meshtastic afin d'envoyer et de recevoir des messages, y compris lorsque l'app est en arrière-plan."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ आपके Meshtastic नोड से कनेक्ट होने के लिए Bluetooth इस्तेमाल करता है, ताकि आप उसके ज़रिए मैसेज भेज और पा सकें, ऐप के बैकग्राउंड में होने पर भी।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ menggunakan Bluetooth untuk terhubung ke node Meshtastic Anda, agar Anda bisa mengirim dan menerima pesan melaluinya, juga saat app berjalan di latar belakang."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ usa il Bluetooth per connettersi al tuo nodo Meshtastic, così puoi inviare e ricevere messaggi tramite il nodo, anche quando l'app è in background."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+はBluetoothを使ってMeshtasticノードに接続し、アプリがバックグラウンドにあるときも、ノード経由でメッセージを送受信できるようにします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+는 Bluetooth를 사용해 Meshtastic 노드에 연결하며, 앱이 백그라운드에 있을 때도 노드를 통해 메시지를 주고받을 수 있습니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ gebruikt Bluetooth om verbinding te maken met je Meshtastic-node, zodat je er berichten mee kunt versturen en ontvangen, ook als de app op de achtergrond draait."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ używa Bluetooth do łączenia się z węzłem Meshtastic, aby wysyłać i odbierać przez niego wiadomości, także gdy aplikacja działa w tle."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Mesh+ usa o Bluetooth para se conectar ao seu nó Meshtastic, para que você possa enviar e receber mensagens por ele, inclusive com o app em segundo plano."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Mesh+ usa o Bluetooth para se ligar ao seu nó Meshtastic, para que possa enviar e receber mensagens através dele, também quando a app está em segundo plano."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ использует Bluetooth для подключения к вашему узлу Meshtastic, чтобы вы могли отправлять и получать через него сообщения, в том числе когда приложение работает в фоне."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ använder Bluetooth för att ansluta till din Meshtastic-nod så att du kan skicka och ta emot meddelanden via den, även när appen körs i bakgrunden."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ ใช้ Bluetooth เพื่อเชื่อมต่อกับโหนด Meshtastic ของคุณ เพื่อให้คุณส่งและรับข้อความผ่านโหนดได้ แม้ในขณะที่แอปทำงานอยู่เบื้องหลัง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+, Meshtastic düğümüne bağlanmak için Bluetooth'u kullanır; böylece uygulama arka plandayken de düğüm üzerinden mesaj gönderip alabilirsin."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ використовує Bluetooth для під’єднання до вашого вузла Meshtastic, щоб ви могли надсилати й отримувати через нього повідомлення, зокрема коли програма працює у фоні."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ dùng Bluetooth để kết nối với node Meshtastic của bạn, giúp bạn gửi và nhận tin nhắn qua node, kể cả khi ứng dụng chạy ở chế độ nền."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ 使用 Bluetooth 连接你的 Meshtastic 节点，让你即使在 App 位于后台时也能通过节点收发消息。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ 使用藍牙連線到你的 Meshtastic 節點，讓你即使在 App 於背景執行時，也能透過節點收發訊息。"
+          }
+        }
+      }
+    },
+    "NSCameraUsageDescription" : {
+      "comment" : "Info.plist NSCameraUsageDescription",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يستخدم Mesh+ الكاميرا لمسح رموز QR لدعوات الغرف."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ nutzt die Kamera, um QR-Codes von Raumeinladungen zu scannen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ uses the camera to scan room invite QR codes."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ uses the camera to scan room invite QR codes."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ usa la cámara para escanear los códigos QR de invitación a salas."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ usa la cámara para escanear los códigos QR de invitación a salas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ utilise l'appareil photo pour scanner les QR codes d'invitation aux salons."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ रूम आमंत्रण के QR कोड स्कैन करने के लिए कैमरा इस्तेमाल करता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ menggunakan kamera untuk memindai kode QR undangan ruang."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ usa la fotocamera per scansionare i codici QR di invito alle stanze."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+はルームの招待用QRコードをスキャンするためにカメラを使用します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+는 채팅방 초대 QR 코드를 스캔하기 위해 카메라를 사용합니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ gebruikt de camera om QR-codes van uitnodigingen voor ruimtes te scannen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ używa aparatu do skanowania kodów QR z zaproszeniami do pokoi."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Mesh+ usa a câmera para escanear QR codes de convite de salas."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Mesh+ usa a câmara para ler códigos QR de convite para salas."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ использует камеру для сканирования QR-кодов приглашений в комнаты."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ använder kameran för att skanna QR-koder för rumsinbjudningar."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ ใช้กล้องเพื่อสแกน QR โค้ดคำเชิญเข้าห้อง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+, oda davet QR kodlarını taramak için kamerayı kullanır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ використовує камеру для сканування QR-кодів запрошень до кімнат."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ dùng camera để quét mã QR mời vào phòng."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ 使用相机扫描房间邀请二维码。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesh+ 使用相機掃描聊天室的邀請 QR Code。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

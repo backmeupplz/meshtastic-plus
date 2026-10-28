@@ -1,6 +1,8 @@
 package com.backmeupplz.meshtasticplus
 
 import android.telephony.PhoneNumberUtils
+import android.text.BidiFormatter
+import android.text.TextDirectionHeuristics
 import java.util.Locale
 import android.Manifest
 import android.app.Notification
@@ -58,11 +60,11 @@ class MeshService : Service() {
 
         private fun notification(ctx: Context): Notification {
             Notify.channels(ctx)
-            val node = Mesh.myLong.ifEmpty { "your node" }
+            val node = Mesh.myLong.ifEmpty { string(R.string.your_node) }
             val text = when {
-                Relay.enabled -> "Relaying SMS and calls to ${Relay.room} via $node"
-                Mesh.connected -> "Connected to $node"
-                else -> Mesh.status.ifEmpty { "Not connected" }
+                Relay.enabled -> string(R.string.notif_relaying, Relay.room, node)
+                Mesh.connected -> string(R.string.notif_connected, node)
+                else -> Mesh.status.ifEmpty { string(R.string.not_connected) }
             }
             return NotificationCompat.Builder(ctx, Notify.STATUS)
                 .setSmallIcon(android.R.drawable.stat_sys_data_bluetooth)
@@ -81,8 +83,8 @@ object Notify {
 
     fun channels(ctx: Context) {
         val nm = ctx.getSystemService(NotificationManager::class.java)
-        nm.createNotificationChannel(NotificationChannel(MESSAGES, "Messages", NotificationManager.IMPORTANCE_HIGH))
-        nm.createNotificationChannel(NotificationChannel(STATUS, "Connection", NotificationManager.IMPORTANCE_LOW))
+        nm.createNotificationChannel(NotificationChannel(MESSAGES, string(R.string.channel_messages), NotificationManager.IMPORTANCE_HIGH))
+        nm.createNotificationChannel(NotificationChannel(STATUS, string(R.string.channel_connection), NotificationManager.IMPORTANCE_LOW))
     }
 
     /** A message arrived: notify unless its conversation is on screen. One notification per conversation, newest wins. */
@@ -97,7 +99,7 @@ object Notify {
         val open = Intent(ctx, MainActivity::class.java).putExtra("convo", m.convo).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         val n = NotificationCompat.Builder(ctx, MESSAGES)
             .setSmallIcon(android.R.drawable.stat_notify_chat)
-            .setContentTitle(if (dm) m.name else Mesh.rooms[m.channel]?.title ?: "Room")
+            .setContentTitle(if (dm) m.name else Mesh.rooms[m.channel]?.title ?: string(R.string.room))
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setAutoCancel(true)
@@ -137,7 +139,7 @@ sealed interface RelayLine {
     data class Sms(val number: String, val body: String, val incoming: Boolean) : RelayLine
     data class Status(val number: String, val sent: Boolean) : RelayLine
     data class Call(val number: String, val what: String) : RelayLine
-    data class Info(val text: String) : RelayLine
+    data class Info(val on: Boolean) : RelayLine
 }
 
 private val SMS_FROM_RE = Regex("""^SMS from (.+?): (.*)$""", RegexOption.DOT_MATCHES_ALL)
@@ -151,20 +153,23 @@ fun relayLine(text: String): RelayLine? {
     SMS_TO_RE.find(text)?.let { return RelayLine.Status(it.groupValues[1], it.groupValues[2] == "sent") }
     CALL_RE.find(text)?.let { return RelayLine.Call(it.groupValues[2], it.groupValues[1]) }
     CALL_ENDED_RE.find(text)?.let { return RelayLine.Call(it.groupValues[1], "Call ended") }
-    if (text.startsWith("Relay on")) return RelayLine.Info("SMS relay turned on")
-    if (text.startsWith("Relay off")) return RelayLine.Info("SMS relay turned off")
+    if (text.startsWith("Relay on")) return RelayLine.Info(on = true)
+    if (text.startsWith("Relay off")) return RelayLine.Info(on = false)
     return null
 }
 
 /** One line for notifications and the chat list. */
 fun RelayLine.summary() = when (this) {
-    is RelayLine.Sms -> if (incoming) "${prettyNumber(number)}: $body" else "To ${prettyNumber(number)}: $body"
-    is RelayLine.Status -> if (sent) "SMS to ${prettyNumber(number)} sent" else "SMS to ${prettyNumber(number)} failed"
-    is RelayLine.Call -> "$what from ${prettyNumber(number)}"
-    is RelayLine.Info -> text
+    is RelayLine.Sms -> if (incoming) "${prettyNumber(number)}: $body" else string(R.string.summary_sms_to, prettyNumber(number), body)
+    is RelayLine.Status -> string(if (sent) R.string.summary_sms_sent else R.string.summary_sms_failed, prettyNumber(number))
+    // [what] is the wire text: "Missed call", "Incoming call" or "Call ended"
+    is RelayLine.Call -> string(when (what) { "Missed call" -> R.string.call_missed; "Incoming call" -> R.string.call_incoming; else -> R.string.call_ended }, prettyNumber(number))
+    is RelayLine.Info -> string(if (on) R.string.relay_turned_on else R.string.relay_turned_off)
 }
 
-fun prettyNumber(n: String): String = PhoneNumberUtils.formatNumber(n, Locale.getDefault().country) ?: n
+/** For display only: kept left to right, so the "+" stays in front in right-to-left text. */
+fun prettyNumber(n: String): String =
+    BidiFormatter.getInstance().unicodeWrap(PhoneNumberUtils.formatNumber(n, Locale.getDefault().country) ?: n, TextDirectionHeuristics.LTR)
 
 /** Digits and a leading plus: what the relay dials, and what SMS replies are matched on. */
 fun dialable(number: String) = number.filter { it.isDigit() || it == '+' }

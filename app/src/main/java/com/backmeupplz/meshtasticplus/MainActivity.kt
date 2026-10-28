@@ -1,5 +1,6 @@
 package com.backmeupplz.meshtasticplus
 
+import androidx.compose.ui.res.stringResource
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -52,6 +53,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Chat
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.NavigateNext
 import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.BatteryFull
@@ -80,7 +82,6 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Bluetooth
 import androidx.compose.material.icons.rounded.CellTower
 import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.icons.rounded.ExpandMore
@@ -125,6 +126,8 @@ import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.IntOffset
 import kotlin.math.roundToInt
@@ -246,24 +249,22 @@ fun TermsScreen() {
             Spacer(Modifier.height(56.dp))
             HeroIcon(Icons.Outlined.VerifiedUser)
             Spacer(Modifier.height(24.dp))
-            Text("Be kind on the mesh", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
+            Text(stringResource(R.string.terms_title), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
             Spacer(Modifier.height(8.dp))
             Text(
-                "Mesh+ has zero tolerance for objectionable content and abusive users. Anyone with a radio nearby can " +
-                    "write in the public room, so you can block anyone and report any message by long-pressing it. " +
-                    "Reports go to the developer, who reads every one and acts on it.",
+                stringResource(R.string.terms_body),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(16.dp))
             TextButton({ runCatching { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://meshplus.app/terms.html"))) } }) {
-                Text("Read the terms of use")
+                Text(stringResource(R.string.terms_link))
             }
             Spacer(Modifier.height(24.dp))
             Button(Mesh::agree, Modifier.fillMaxWidth().height(56.dp)) {
                 Icon(Icons.Rounded.Check, null)
                 Spacer(Modifier.width(10.dp))
-                Text("Agree")
+                Text(stringResource(R.string.agree))
             }
         }
     }
@@ -293,13 +294,13 @@ fun DeviceRows(onPick: (String) -> Unit) {
     removing?.let { (key, name) ->
         AlertDialog(
             { removing = null },
-            confirmButton = { TextButton({ Mesh.forgetSaved(key); removing = null }) { Text("Remove") } },
-            dismissButton = { TextButton({ removing = null }) { Text("Cancel") } },
-            title = { Text("Remove ${name.ifEmpty { "this device" }}?") },
+            confirmButton = { TextButton({ Mesh.forgetSaved(key); removing = null }) { Text(stringResource(R.string.remove)) } },
+            dismissButton = { TextButton({ removing = null }) { Text(stringResource(R.string.cancel)) } },
+            title = { Text(stringResource(R.string.remove_device_title, name.ifEmpty { stringResource(R.string.this_device) })) },
             text = {
                 Text(
-                    if (key == USB) "It disappears from Your devices. The node itself isn't changed; plug it in again to use it."
-                    else "It disappears from Your devices. The node itself isn't changed, it stays paired with this phone, and your messages stay. To use it again, find it with Add device.",
+                    if (key == USB) stringResource(R.string.remove_device_usb_body)
+                    else stringResource(R.string.remove_device_ble_body),
                 )
             },
         )
@@ -311,13 +312,13 @@ fun DeviceRows(onPick: (String) -> Unit) {
             DeviceRow(
                 if (key == USB) Icons.Rounded.Usb else Icons.Rounded.Bluetooth,
                 name.ifEmpty { key },
-                if (current) Mesh.status else if (key == USB) "USB cable" else "Bluetooth",
+                if (current) Mesh.status else stringResource(if (key == USB) R.string.usb_cable else R.string.bluetooth),
                 highlighted = current,
                 onClick = { if (!current) onPick(key) },
             ) {
-                if (current) Icon(Icons.Rounded.Check, "Connected", Modifier.padding(end = 12.dp), tint = MaterialTheme.colorScheme.primary)
+                if (current) Icon(Icons.Rounded.Check, stringResource(R.string.connected), Modifier.padding(end = 12.dp), tint = MaterialTheme.colorScheme.primary)
                 else IconButton({ removing = key to name }) {
-                    Icon(Icons.Rounded.Close, "Forget this device", Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Icon(Icons.Rounded.Close, stringResource(R.string.forget_device), Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
@@ -366,7 +367,7 @@ fun SetupScreen(onRescue: () -> Unit) {
             Text("Mesh+", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(8.dp))
             Text(
-                "Connect your Meshtastic node to start chatting, no internet or cell service needed.",
+                stringResource(R.string.setup_subtitle),
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -377,7 +378,7 @@ fun SetupScreen(onRescue: () -> Unit) {
                 Spacer(Modifier.height(16.dp))
                 Text(Mesh.status, textAlign = TextAlign.Center, style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(16.dp))
-                TextButton({ Mesh.forget() }) { Text("Cancel") }
+                TextButton({ Mesh.forget() }) { Text(stringResource(R.string.cancel)) }
                 return@Column
             }
             if (Mesh.status.isNotEmpty()) {
@@ -391,7 +392,7 @@ fun SetupScreen(onRescue: () -> Unit) {
                 Spacer(Modifier.height(24.dp))
             }
             if (Mesh.saved.isNotEmpty()) {
-                Text("Your devices", style = MaterialTheme.typography.titleMedium, modifier = Modifier.fillMaxWidth())
+                Text(stringResource(R.string.your_devices), style = MaterialTheme.typography.titleMedium, modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(8.dp))
                 DeviceRows { Mesh.connect(it) }
                 Spacer(Modifier.height(24.dp))
@@ -399,25 +400,25 @@ fun SetupScreen(onRescue: () -> Unit) {
             Button(askBluetooth, Modifier.fillMaxWidth().height(56.dp)) {
                 Icon(Icons.Rounded.Bluetooth, null)
                 Spacer(Modifier.width(10.dp))
-                Text(if (Mesh.saved.isEmpty()) "Connect with Bluetooth" else "Find another node")
+                Text(if (Mesh.saved.isEmpty()) stringResource(R.string.connect_bluetooth) else stringResource(R.string.find_another_node))
             }
             Spacer(Modifier.height(12.dp))
             OutlinedButton({ scanning = false; Mesh.connectUsb() }, Modifier.fillMaxWidth().height(56.dp)) {
                 Icon(Icons.Rounded.Usb, null)
                 Spacer(Modifier.width(10.dp))
-                Text("Connect with USB cable")
+                Text(stringResource(R.string.connect_usb))
             }
             Spacer(Modifier.height(12.dp))
             Text(
-                "Over a cable your phone also powers the node, so it doesn't need a battery.",
+                stringResource(R.string.usb_powers_node),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
             if (scanning) NearbyNodes { scanning = false; Mesh.connectBle(it) }
             Spacer(Modifier.height(24.dp))
-            TextButton({ scanning = false; Mesh.connectDemo() }) { Text("No radio yet? Try the demo") }
-            TextButton(onRescue) { Text("Node stuck in update mode?") }
+            TextButton({ scanning = false; Mesh.connectDemo() }) { Text(stringResource(R.string.try_demo)) }
+            TextButton(onRescue) { Text(stringResource(R.string.node_stuck)) }
         }
     }
 }
@@ -452,7 +453,7 @@ fun NearbyNodes(onPick: (BluetoothDevice) -> Unit) {
     }
     Column(Modifier.fillMaxWidth().padding(top = 32.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Nearby nodes", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Text(stringResource(R.string.nearby_nodes), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
         }
         Spacer(Modifier.height(8.dp))
@@ -462,15 +463,15 @@ fun NearbyNodes(onPick: (BluetoothDevice) -> Unit) {
         val fresh = found.values.filter { it.first.address !in known }.sortedByDescending { isUsbNode(it.first) }
         if (fresh.isEmpty()) {
             Text(
-                "Looking… make sure the node is on and not connected to another phone.",
+                stringResource(R.string.scanning_hint),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             fresh.forEach { (device, name) ->
-                val subtitle = if (isUsbNode(device)) "Your USB node · tap to use Bluetooth" else "Tap to connect"
+                val subtitle = if (isUsbNode(device)) stringResource(R.string.your_usb_node) else stringResource(R.string.tap_to_connect)
                 DeviceRow(Icons.Outlined.Router, name, subtitle, highlighted = isUsbNode(device), onClick = { onPick(device) }) {
-                    Icon(Icons.Rounded.ChevronRight, null, Modifier.padding(end = 12.dp))
+                    Icon(Icons.AutoMirrored.Rounded.NavigateNext, null, Modifier.padding(end = 12.dp))
                 }
             }
         }
@@ -480,13 +481,13 @@ fun NearbyNodes(onPick: (BluetoothDevice) -> Unit) {
 // ---------- Region: a fresh node stays silent until it knows which radio band is legal here ----------
 
 /** Meshtastic RegionCode values (config.proto), minus the amateur-radio bands that need a license. */
-val REGIONS = listOf(
-    1 to "United States, Canada, Mexico", 3 to "Europe & UK 868 MHz", 2 to "Europe & UK 433 MHz",
-    6 to "Australia / New Zealand", 11 to "New Zealand 865 MHz", 22 to "Australia / New Zealand 433 MHz",
-    26 to "Brazil", 4 to "China", 10 to "India", 5 to "Japan", 24 to "Kazakhstan 863 MHz", 23 to "Kazakhstan 433 MHz",
-    7 to "Korea", 17 to "Malaysia 919 MHz", 16 to "Malaysia 433 MHz", 25 to "Nepal", 21 to "Philippines 915 MHz",
-    20 to "Philippines 868 MHz", 19 to "Philippines 433 MHz", 9 to "Russia", 18 to "Singapore", 8 to "Taiwan",
-    12 to "Thailand", 15 to "Ukraine 868 MHz", 14 to "Ukraine 433 MHz", 13 to "2.4 GHz (worldwide)",
+val REGIONS get() = listOf(
+    1 to string(R.string.region_us), 3 to string(R.string.region_eu_868), 2 to string(R.string.region_eu_433),
+    6 to string(R.string.region_anz), 11 to string(R.string.region_nz_865), 22 to string(R.string.region_anz_433),
+    26 to string(R.string.region_br), 4 to string(R.string.region_cn), 10 to string(R.string.region_in), 5 to string(R.string.region_jp), 24 to string(R.string.region_kz_863), 23 to string(R.string.region_kz_433),
+    7 to string(R.string.region_kr), 17 to string(R.string.region_my_919), 16 to string(R.string.region_my_433), 25 to string(R.string.region_np), 21 to string(R.string.region_ph_915),
+    20 to string(R.string.region_ph_868), 19 to string(R.string.region_ph_433), 9 to string(R.string.region_ru), 18 to string(R.string.region_sg), 8 to string(R.string.region_tw),
+    12 to string(R.string.region_th), 15 to string(R.string.region_ua_868), 14 to string(R.string.region_ua_433), 13 to string(R.string.region_lora_24),
 )
 
 private val EU = setOf(
@@ -504,7 +505,7 @@ fun suggestedRegion(country: String) = when (country) {
     else -> 0
 }
 
-fun regionName(code: Int) = REGIONS.firstOrNull { it.first == code }?.second ?: "Not set"
+fun regionName(code: Int) = REGIONS.firstOrNull { it.first == code }?.second ?: string(R.string.not_set)
 
 @Composable
 fun RegionScreen(editing: Boolean, onDone: () -> Unit) {
@@ -519,7 +520,7 @@ fun RegionScreen(editing: Boolean, onDone: () -> Unit) {
         bottomBar = {
             Surface(tonalElevation = 3.dp) {
                 Row(Modifier.navigationBarsPadding().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                    if (editing) TextButton(onDone) { Text("Cancel") }
+                    if (editing) TextButton(onDone) { Text(stringResource(R.string.cancel)) }
                     Button(
                         { if (picked != Mesh.region) Mesh.saveRegion(picked); onDone() },
                         Modifier.weight(1f).height(56.dp),
@@ -527,7 +528,7 @@ fun RegionScreen(editing: Boolean, onDone: () -> Unit) {
                     ) {
                         Icon(Icons.Rounded.Check, null)
                         Spacer(Modifier.width(10.dp))
-                        Text("Use this region")
+                        Text(stringResource(R.string.use_region))
                     }
                 }
             }
@@ -539,10 +540,10 @@ fun RegionScreen(editing: Boolean, onDone: () -> Unit) {
                     Spacer(Modifier.height(24.dp))
                     HeroIcon(Icons.Outlined.Public)
                     Spacer(Modifier.height(20.dp))
-                    Text("Where are you?", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                    Text(stringResource(R.string.region_title), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        "Your node stays silent until it knows which radio band is legal where you are. Pick the one for your country.",
+                        stringResource(R.string.region_body),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center,
                     )
@@ -591,14 +592,14 @@ fun NameScreen(editing: Boolean, onClose: () -> Unit) {
             HeroIcon(Icons.Outlined.Badge)
             Spacer(Modifier.height(24.dp))
             Text(
-                if (editing) "Your name" else "What should people call you?",
+                if (editing) stringResource(R.string.your_name) else stringResource(R.string.name_title),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                "This is how you show up for everyone on the mesh.",
+                stringResource(R.string.name_body),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
@@ -607,7 +608,7 @@ fun NameScreen(editing: Boolean, onClose: () -> Unit) {
                 long,
                 { long = it.fitBytes(39); if (!shortEdited) short = initials(long) },
                 Modifier.fillMaxWidth(),
-                label = { Text("Name") },
+                label = { Text(stringResource(R.string.name)) },
                 leadingIcon = { Icon(Icons.Outlined.Person, null) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words, imeAction = ImeAction.Next),
@@ -617,9 +618,9 @@ fun NameScreen(editing: Boolean, onClose: () -> Unit) {
                 short,
                 { short = it.fitBytes(4); shortEdited = true },
                 Modifier.fillMaxWidth(),
-                label = { Text("Short name") },
+                label = { Text(stringResource(R.string.short_name)) },
                 leadingIcon = { Icon(Icons.Outlined.Badge, null) },
-                supportingText = { Text("Up to 4 characters, shown on node screens") },
+                supportingText = { Text(stringResource(R.string.short_name_hint)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = { if (canSave) save() }),
@@ -628,9 +629,9 @@ fun NameScreen(editing: Boolean, onClose: () -> Unit) {
             Button(save, Modifier.fillMaxWidth().height(56.dp), enabled = canSave) {
                 Icon(Icons.Rounded.Check, null)
                 Spacer(Modifier.width(10.dp))
-                Text("Save")
+                Text(stringResource(R.string.save))
             }
-            TextButton({ if (!editing) Mesh.nameAsked(); onClose() }) { Text(if (editing) "Cancel" else "Skip for now") }
+            TextButton({ if (!editing) Mesh.nameAsked(); onClose() }) { Text(if (editing) stringResource(R.string.cancel) else stringResource(R.string.skip_for_now)) }
         }
     }
 }
@@ -679,16 +680,16 @@ fun HomeScreen(onOpen: (String) -> Unit, onProfile: (Long) -> Unit, onEditName: 
                     title = {
                         Row(Modifier.clickable { devices = true }, verticalAlignment = Alignment.CenterVertically) {
                             StatusTitle(Mesh.myLong, Mesh.status, Mesh.connected)
-                            Icon(Icons.Rounded.ExpandMore, "Switch device", Modifier.padding(start = 4.dp))
+                            Icon(Icons.Rounded.ExpandMore, stringResource(R.string.switch_device), Modifier.padding(start = 4.dp))
                         }
                     },
-                    actions = { IconButton({ settings = true }) { Icon(Icons.Outlined.Settings, "Settings") } },
+                    actions = { IconButton({ settings = true }) { Icon(Icons.Outlined.Settings, stringResource(R.string.settings)) } },
                 )
                 PrimaryTabRow(selectedTabIndex = tab) {
-                    Tab(tab == 0, { tab = 0 }, text = { Text("Chats") }, icon = {
+                    Tab(tab == 0, { tab = 0 }, text = { Text(stringResource(R.string.chats)) }, icon = {
                         BadgedBox({ if (unread > 0) Badge { Text("$unread") } }) { Icon(Icons.AutoMirrored.Outlined.Chat, null) }
                     })
-                    Tab(tab == 1, { tab = 1 }, text = { Text("Nodes") }, icon = {
+                    Tab(tab == 1, { tab = 1 }, text = { Text(stringResource(R.string.nodes)) }, icon = {
                         BadgedBox({ if (online > 0) Badge(containerColor = Green, contentColor = Color.White) { Text("$online") } }) {
                             Icon(Icons.Outlined.Hub, null)
                         }
@@ -697,7 +698,7 @@ fun HomeScreen(onOpen: (String) -> Unit, onProfile: (Long) -> Unit, onEditName: 
             }
         },
         floatingActionButton = {
-            if (tab == 0) ExtendedFloatingActionButton(text = { Text("Room") }, icon = { Icon(Icons.Rounded.Add, null) }, onClick = { newRoom = true })
+            if (tab == 0) ExtendedFloatingActionButton(text = { Text(stringResource(R.string.room)) }, icon = { Icon(Icons.Rounded.Add, null) }, onClick = { newRoom = true })
         },
     ) { padding ->
         if (tab == 0) ChatsTab(padding, onOpen) else NodesTab(padding, now, onProfile)
@@ -739,13 +740,13 @@ fun ConversationRow(icon: ImageVector, title: String, convo: String, onOpen: (St
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(title, Modifier.weight(1f, fill = false), maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = if (unread > 0) FontWeight.SemiBold else null)
                 if (Mesh.isMuted(convo)) {
-                    Icon(Icons.Outlined.NotificationsOff, "Muted", Modifier.padding(start = 6.dp).size(16.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Icon(Icons.Outlined.NotificationsOff, stringResource(R.string.muted), Modifier.padding(start = 6.dp).size(16.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         },
         supportingContent = {
             Text(
-                last?.let { relayLine(it.text)?.summary() ?: ((if (it.mine) "You" else it.name) + ": " + it.text) } ?: "No messages yet",
+                last?.let { relayLine(it.text)?.summary() ?: ((if (it.mine) stringResource(R.string.you) else it.name) + ": " + it.text) } ?: stringResource(R.string.no_messages),
                 maxLines = 1, overflow = TextOverflow.Ellipsis,
             )
         },
@@ -769,15 +770,15 @@ fun ChatsTab(padding: PaddingValues, onOpen: (String) -> Unit) {
     val peers = (Mesh.messages.filter { it.peer != 0L }.sortedByDescending { it.time }.map { it.peer } +
         Mesh.nodes.values.filter { it.favorite && it.num != Mesh.myNum }.map { it.num }).distinct().filter { it !in Mesh.blocked }
     LazyColumn(Modifier.fillMaxSize().padding(padding), contentPadding = PaddingValues(bottom = 96.dp)) {
-        header("Rooms")
+        header(string(R.string.rooms))
         items(rooms, key = { "room${it.index}" }) { r ->
             ConversationRow(if (r.public) Icons.Outlined.Public else Icons.Outlined.Lock, r.title, convoKey(r.index, 0), onOpen)
         }
-        header("Direct messages")
+        header(string(R.string.direct_messages))
         if (peers.isEmpty()) {
             item {
                 Text(
-                    "Open someone in Nodes to message them privately.",
+                    stringResource(R.string.no_dms),
                     Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -795,26 +796,26 @@ fun NodesTab(padding: PaddingValues, now: Long, onProfile: (Long) -> Unit) {
     val nodes = Mesh.nodes.values.filter { it.num != Mesh.myNum }
         .sortedWith(compareByDescending<Node> { it.online(now) }.thenByDescending { it.lastHeard })
     if (nodes.isEmpty()) {
-        return EmptyState(padding, Icons.Outlined.Hub, "No nodes yet", "Nodes show up here as your radio hears them.")
+        return EmptyState(padding, Icons.Outlined.Hub, stringResource(R.string.no_nodes), stringResource(R.string.no_nodes_body))
     }
     val (favorites, others) = nodes.partition { it.favorite }
     LazyColumn(Modifier.fillMaxSize().padding(padding), contentPadding = PaddingValues(bottom = 8.dp)) {
         if (favorites.isNotEmpty()) {
-            header("Favorites")
+            header(string(R.string.favorites))
             items(favorites, key = { "f${it.num}" }) { NodeRow(it, now, onProfile) }
-            if (others.isNotEmpty()) header("Everyone")
+            if (others.isNotEmpty()) header(string(R.string.everyone))
         }
         items(others, key = { it.num }) { NodeRow(it, now, onProfile) }
     }
 }
 
 fun heard(n: Node, now: Long) = when {
-    n.lastHeard == 0L -> "Never heard"
-    now - n.lastHeard < 60_000 -> "Heard just now"
-    else -> "Heard " + DateUtils.getRelativeTimeSpanString(n.lastHeard, now, DateUtils.MINUTE_IN_MILLIS)
+    n.lastHeard == 0L -> string(R.string.heard_never)
+    now - n.lastHeard < 60_000 -> string(R.string.heard_now)
+    else -> string(R.string.heard_ago, DateUtils.getRelativeTimeSpanString(n.lastHeard, now, DateUtils.MINUTE_IN_MILLIS))
 }
 
-fun hops(n: Node) = n.hops?.let { if (it == 0) "Direct" else if (it == 1) "1 hop away" else "$it hops away" }
+fun hops(n: Node) = n.hops?.let { if (it == 0) string(R.string.hops_direct) else plural(R.plurals.hops_away, it, it) }
 
 @Composable
 fun NodeRow(n: Node, now: Long, onProfile: (Long) -> Unit) {
@@ -833,7 +834,7 @@ fun StatusPill(online: Boolean) {
         Row(Modifier.padding(horizontal = 10.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(Modifier.size(8.dp).background(color, CircleShape))
             Spacer(Modifier.width(6.dp))
-            Text(if (online) "Online" else "Offline", style = MaterialTheme.typography.labelMedium, color = color)
+            Text(if (online) stringResource(R.string.online) else stringResource(R.string.offline), style = MaterialTheme.typography.labelMedium, color = color)
         }
     }
 }
@@ -863,19 +864,19 @@ fun ProfileSheet(num: Long, onDismiss: () -> Unit, onMessage: () -> Unit) {
             Spacer(Modifier.height(16.dp))
             Detail(Icons.Outlined.Schedule, heard(n, now))
             hops(n)?.let { Detail(Icons.Outlined.Hub, it) }
-            n.snr?.let { Detail(Icons.Outlined.SignalCellularAlt, "Signal %.1f dB SNR".format(it)) }
+            n.snr?.let { Detail(Icons.Outlined.SignalCellularAlt, stringResource(R.string.signal_snr, "%.1f".format(it))) }
             n.power?.let { Detail(Icons.Outlined.BatteryFull, it) }
             Spacer(Modifier.height(24.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Button(onMessage, Modifier.weight(1f).height(52.dp), enabled = !blocked) {
                     Icon(Icons.AutoMirrored.Outlined.Chat, null)
                     Spacer(Modifier.width(8.dp))
-                    Text("Message")
+                    Text(stringResource(R.string.message))
                 }
                 OutlinedButton({ Mesh.setFavorite(num, !n.favorite) }, Modifier.weight(1f).height(52.dp), enabled = Mesh.connected) {
                     Icon(if (n.favorite) Icons.Rounded.Star else Icons.Outlined.StarBorder, null)
                     Spacer(Modifier.width(8.dp))
-                    Text(if (n.favorite) "Favorited" else "Favorite", maxLines = 1)
+                    Text(if (n.favorite) stringResource(R.string.favorited) else stringResource(R.string.favorite), maxLines = 1)
                 }
             }
             Spacer(Modifier.height(8.dp))
@@ -883,7 +884,7 @@ fun ProfileSheet(num: Long, onDismiss: () -> Unit, onMessage: () -> Unit) {
                 val color = if (blocked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
                 Icon(Icons.Outlined.Block, null, tint = color)
                 Spacer(Modifier.width(8.dp))
-                Text(if (blocked) "Unblock" else "Block", color = color)
+                Text(if (blocked) stringResource(R.string.unblock) else stringResource(R.string.block), color = color)
             }
         }
     }
@@ -894,11 +895,11 @@ fun BlockDialog(num: Long, onDone: () -> Unit) {
     val name = (Mesh.nodes[num] ?: Node(num)).name
     AlertDialog(
         onDone,
-        confirmButton = { TextButton({ Mesh.setBlocked(num, true); onDone() }) { Text("Block") } },
-        dismissButton = { TextButton(onDone) { Text("Cancel") } },
+        confirmButton = { TextButton({ Mesh.setBlocked(num, true); onDone() }) { Text(stringResource(R.string.block)) } },
+        dismissButton = { TextButton(onDone) { Text(stringResource(R.string.cancel)) } },
         icon = { Icon(Icons.Outlined.Block, null) },
-        title = { Text("Block $name?") },
-        text = { Text("You won't see their messages or get notifications from them. You can unblock them in Settings.") },
+        title = { Text(stringResource(R.string.block_title, name)) },
+        text = { Text(stringResource(R.string.block_body)) },
     )
 }
 
@@ -915,25 +916,26 @@ fun ReportDialog(m: Message, onDone: () -> Unit) {
     val ctx = LocalContext.current
     val sender = (Mesh.nodes[m.from] ?: Node(m.from)).name
     var alsoBlock by remember { mutableStateOf(true) }
+    val noEmailApp = stringResource(R.string.no_email_app, SUPPORT)
     AlertDialog(
         onDone,
         confirmButton = {
             TextButton({
                 runCatching { ctx.startActivity(reportEmail(m)) }
-                    .onFailure { Toast.makeText(ctx, "No email app found. Email $SUPPORT instead.", Toast.LENGTH_LONG).show() }
+                    .onFailure { Toast.makeText(ctx, noEmailApp, Toast.LENGTH_LONG).show() }
                 if (alsoBlock) Mesh.setBlocked(m.from, true)
                 onDone()
-            }) { Text("Report") }
+            }) { Text(stringResource(R.string.report)) }
         },
-        dismissButton = { TextButton(onDone) { Text("Cancel") } },
+        dismissButton = { TextButton(onDone) { Text(stringResource(R.string.cancel)) } },
         icon = { Icon(Icons.Outlined.Flag, null) },
-        title = { Text("Report this message?") },
+        title = { Text(stringResource(R.string.report_title)) },
         text = {
             Column {
-                Text("Your email app opens with this message, who sent it and when, addressed to $SUPPORT. The developer reads every report.")
+                Text(stringResource(R.string.report_body, SUPPORT))
                 Row(Modifier.padding(top = 12.dp).clickable { alsoBlock = !alsoBlock }, verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(alsoBlock, { alsoBlock = it })
-                    Text("Also block $sender")
+                    Text(stringResource(R.string.also_block, sender))
                 }
             }
         },
@@ -956,15 +958,15 @@ fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: (
     var blockedList by remember { mutableStateOf(false) }
     if (blockedList) AlertDialog(
         { blockedList = false },
-        confirmButton = { TextButton({ blockedList = false }) { Text("Done") } },
-        title = { Text("Blocked") },
+        confirmButton = { TextButton({ blockedList = false }) { Text(stringResource(R.string.done)) } },
+        title = { Text(stringResource(R.string.blocked)) },
         text = {
             Column {
-                if (Mesh.blocked.isEmpty()) Text("No one is blocked.")
+                if (Mesh.blocked.isEmpty()) Text(stringResource(R.string.no_one_blocked))
                 Mesh.blocked.toList().forEach { num ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text((Mesh.nodes[num] ?: Node(num)).name, Modifier.weight(1f), maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        TextButton({ Mesh.setBlocked(num, false) }) { Text("Unblock") }
+                        TextButton({ Mesh.setBlocked(num, false) }) { Text(stringResource(R.string.unblock)) }
                     }
                 }
             }
@@ -974,45 +976,45 @@ fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: (
         Column(Modifier.padding(bottom = 24.dp)) {
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.Person, null) },
-                headlineContent = { Text("Name") },
+                headlineContent = { Text(stringResource(R.string.name)) },
                 supportingContent = { Text("${Mesh.myLong} (${Mesh.myShort})") },
                 modifier = Modifier.clickable { onDismiss(); onEditName() },
             )
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.Public, null) },
-                headlineContent = { Text("Region") },
+                headlineContent = { Text(stringResource(R.string.region)) },
                 supportingContent = { Text(regionName(Mesh.region)) },
                 modifier = Modifier.clickable { onDismiss(); onEditRegion() },
             )
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.Tune, null) },
-                headlineContent = { Text("Node settings") },
-                supportingContent = { Text(listOfNotNull(currentBoard()?.name, "role, radio, Bluetooth, firmware").joinToString(" · ")) },
+                headlineContent = { Text(stringResource(R.string.node_settings)) },
+                supportingContent = { Text(listOfNotNull(currentBoard()?.name, stringResource(R.string.node_settings_summary)).joinToString(" · ")) },
                 modifier = Modifier.clickable { onDismiss(); onNodeSettings() },
             )
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.Sms, null) },
-                headlineContent = { Text("SMS relay") },
-                supportingContent = { Text(if (Relay.enabled) "On · relaying to ${Relay.room}" else "Share this phone's texts and calls with a room") },
+                headlineContent = { Text(stringResource(R.string.sms_relay)) },
+                supportingContent = { Text(if (Relay.enabled) stringResource(R.string.relay_on_summary, Relay.room) else stringResource(R.string.relay_off_summary)) },
                 modifier = Modifier.clickable { onDismiss(); relayScreen.value = true },
             )
             ListItem(
                 leadingContent = { Icon(if (Mesh.transport == "Bluetooth") Icons.Rounded.Bluetooth else Icons.Rounded.Usb, null) },
-                headlineContent = { Text("Your devices") },
-                supportingContent = { Text("Connected over ${Mesh.transport} · tap to switch") },
+                headlineContent = { Text(stringResource(R.string.your_devices)) },
+                supportingContent = { Text(stringResource(R.string.connected_over, transportName())) },
                 modifier = Modifier.clickable { onDismiss(); onDevices() },
             )
             if (Mesh.blocked.isNotEmpty()) ListItem(
                 leadingContent = { Icon(Icons.Outlined.Block, null) },
-                headlineContent = { Text("Blocked") },
+                headlineContent = { Text(stringResource(R.string.blocked)) },
                 supportingContent = {
-                    Text(Mesh.blocked.joinToString { (Mesh.nodes[it] ?: Node(it)).name } + " · tap to unblock", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.blocked_summary, Mesh.blocked.joinToString { (Mesh.nodes[it] ?: Node(it)).name }), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 },
                 modifier = Modifier.clickable { blockedList = true },
             )
             ListItem(
                 leadingContent = { Icon(Icons.Outlined.Feedback, null) },
-                headlineContent = { Text("Send feedback") },
+                headlineContent = { Text(stringResource(R.string.send_feedback)) },
                 supportingContent = { Text(SUPPORT) },
                 modifier = Modifier.clickable {
                     val version = ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName
@@ -1022,7 +1024,7 @@ fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: (
             )
             ListItem(
                 leadingContent = { Icon(Icons.AutoMirrored.Outlined.Logout, null, tint = MaterialTheme.colorScheme.error) },
-                headlineContent = { Text("Disconnect", color = MaterialTheme.colorScheme.error) },
+                headlineContent = { Text(stringResource(R.string.disconnect), color = MaterialTheme.colorScheme.error) },
                 modifier = Modifier.clickable { onDismiss(); Mesh.forget() },
             )
         }
@@ -1037,14 +1039,14 @@ fun DevicesSheet(onDismiss: () -> Unit) {
     val switch = { key: String -> onDismiss(); Mesh.connect(key) }
     ModalBottomSheet(onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         Column(Modifier.padding(horizontal = 24.dp).padding(bottom = 24.dp).verticalScroll(rememberScrollState())) {
-            Text(if (adding) "Add a device" else "Your devices", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+            Text(if (adding) stringResource(R.string.add_a_device) else stringResource(R.string.your_devices), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
             if (adding) {
                 Text(
-                    "Turn the node on and keep it close. Devices you already have aren't listed.",
+                    stringResource(R.string.add_device_hint),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 NearbyNodes { onDismiss(); Mesh.connectBle(it) }
-                TextButton({ adding = false }, Modifier.padding(top = 8.dp)) { Text("Back to your devices") }
+                TextButton({ adding = false }, Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.back_to_devices)) }
             } else {
                 Spacer(Modifier.height(8.dp))
                 DeviceRows(switch)
@@ -1053,13 +1055,13 @@ fun DevicesSheet(onDismiss: () -> Unit) {
                     OutlinedButton(askBluetooth, Modifier.weight(1f).height(52.dp)) {
                         Icon(Icons.Rounded.Add, null)
                         Spacer(Modifier.width(8.dp))
-                        Text("Add device")
+                        Text(stringResource(R.string.add_device))
                     }
                     if (Mesh.saved.none { it.first == USB }) {
                         OutlinedButton({ switch(USB) }, Modifier.weight(1f).height(52.dp)) {
                             Icon(Icons.Rounded.Usb, null)
                             Spacer(Modifier.width(8.dp))
-                            Text("USB cable")
+                            Text(stringResource(R.string.usb_cable))
                         }
                     }
                 }
@@ -1081,35 +1083,35 @@ fun NewRoomSheet(onDismiss: () -> Unit, onOpen: (String) -> Unit) {
     val scan = rememberQrScanner { join(it) } // per flavor: src/play or src/fdroid
     val create = {
         val index = Mesh.createRoom(name.trim())
-        if (index != null) { onDismiss(); onOpen(convoKey(index, 0)) } else error = "Your node already has 8 rooms. Leave one first."
+        if (index != null) { onDismiss(); onOpen(convoKey(index, 0)) } else error = string(R.string.rooms_full)
     }
     ModalBottomSheet(onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         Column(Modifier.padding(horizontal = 24.dp).padding(bottom = 24.dp).imePadding()) {
-            Text("Create a room", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+            Text(stringResource(R.string.create_room), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(4.dp))
             Text(
-                "Private and encrypted. Only people you invite can read it.",
+                stringResource(R.string.create_room_body),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(Modifier.height(12.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 OutlinedTextField(
                     name, { name = it.replace(" ", "").fitBytes(11) }, Modifier.weight(1f),
-                    label = { Text("Room name") },
+                    label = { Text(stringResource(R.string.room_name)) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(onDone = { if (name.isNotBlank()) create() }),
                 )
                 Spacer(Modifier.width(8.dp))
                 FilledIconButton(create, Modifier.size(56.dp), enabled = name.isNotBlank() && Mesh.connected) {
-                    Icon(Icons.Rounded.Add, "Create")
+                    Icon(Icons.Rounded.Add, stringResource(R.string.create))
                 }
             }
             Spacer(Modifier.height(28.dp))
-            Text("Join a room", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+            Text(stringResource(R.string.join_room), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(4.dp))
             Text(
-                "Rooms are encrypted, so you can't browse them. Scan someone's invite QR code or paste their link.",
+                stringResource(R.string.join_room_body),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(Modifier.height(12.dp))
@@ -1117,7 +1119,7 @@ fun NewRoomSheet(onDismiss: () -> Unit, onOpen: (String) -> Unit) {
                 OutlinedButton(scan, Modifier.weight(1f).height(52.dp)) {
                     Icon(Icons.Outlined.QrCodeScanner, null)
                     Spacer(Modifier.width(8.dp))
-                    Text("Scan QR")
+                    Text(stringResource(R.string.scan_qr))
                 }
                 OutlinedButton({
                     val clip = ctx.getSystemService(ClipboardManager::class.java).primaryClip
@@ -1125,7 +1127,7 @@ fun NewRoomSheet(onDismiss: () -> Unit, onOpen: (String) -> Unit) {
                 }, Modifier.weight(1f).height(52.dp)) {
                     Icon(Icons.Outlined.ContentPaste, null)
                     Spacer(Modifier.width(8.dp))
-                    Text("Paste link")
+                    Text(stringResource(R.string.paste_link))
                 }
             }
             if (error.isNotEmpty()) {
@@ -1138,10 +1140,10 @@ fun NewRoomSheet(onDismiss: () -> Unit, onOpen: (String) -> Unit) {
 
 @Composable
 fun JoinDialog(link: String, onDone: (String?) -> Unit) {
-    val names = inviteRooms(link).map { Msg(it).str(3).ifEmpty { "Public" } }
+    val names = inviteRooms(link).map { Msg(it).str(3).ifEmpty { stringResource(R.string.public_) } }
     if (names.isEmpty()) {
-        AlertDialog({ onDone(null) }, { TextButton({ onDone(null) }) { Text("OK") } },
-            title = { Text("Invalid invite") }, text = { Text("This link doesn't contain a Meshtastic room.") })
+        AlertDialog({ onDone(null) }, { TextButton({ onDone(null) }) { Text(stringResource(R.string.ok)) } },
+            title = { Text(stringResource(R.string.invalid_invite)) }, text = { Text(stringResource(R.string.invalid_invite_body)) })
         return
     }
     AlertDialog(
@@ -1151,12 +1153,12 @@ fun JoinDialog(link: String, onDone: (String?) -> Unit) {
                 val (message, index) = Mesh.join(link)
                 if (index == null) Toast.makeText(Mesh.appContext, message, Toast.LENGTH_LONG).show()
                 onDone(index?.let { convoKey(it, 0) })
-            }, enabled = Mesh.connected) { Text("Join") }
+            }, enabled = Mesh.connected) { Text(stringResource(R.string.join)) }
         },
-        dismissButton = { TextButton({ onDone(null) }) { Text("Cancel") } },
+        dismissButton = { TextButton({ onDone(null) }) { Text(stringResource(R.string.cancel)) } },
         icon = { Icon(Icons.Rounded.PersonAdd, null) },
-        title = { Text("Join ${names.joinToString(", ")}?") },
-        text = { Text("You'll be able to read and write in this room.") },
+        title = { Text(stringResource(R.string.join_rooms_title, names.joinToString(", "))) },
+        text = { Text(stringResource(R.string.join_body)) },
     )
 }
 
@@ -1174,14 +1176,14 @@ fun InviteSheet(room: Room, onDismiss: () -> Unit) {
     val qr = remember(link) { qrBitmap(link) }
     ModalBottomSheet(onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp).padding(bottom = 24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Invite to ${room.title}", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+            Text(stringResource(R.string.invite_title, room.title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(4.dp))
             Text(
-                "Anyone who scans this can read and write in the room.",
+                stringResource(R.string.invite_body),
                 color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(16.dp))
-            Image(qr, "Invite QR code", Modifier.size(260.dp).background(Color.White, RoundedCornerShape(16.dp)).padding(8.dp))
+            Image(qr, stringResource(R.string.invite_qr), Modifier.size(260.dp).background(Color.White, RoundedCornerShape(16.dp)).padding(8.dp))
             Spacer(Modifier.height(16.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Button({
@@ -1189,14 +1191,14 @@ fun InviteSheet(room: Room, onDismiss: () -> Unit) {
                 }, Modifier.weight(1f).height(52.dp)) {
                     Icon(Icons.Outlined.Share, null)
                     Spacer(Modifier.width(8.dp))
-                    Text("Share link")
+                    Text(stringResource(R.string.share_link))
                 }
                 OutlinedButton({
                     ctx.getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("Invite", link))
                 }, Modifier.weight(1f).height(52.dp)) {
                     Icon(Icons.Outlined.ContentCopy, null)
                     Spacer(Modifier.width(8.dp))
-                    Text("Copy")
+                    Text(stringResource(R.string.copy))
                 }
             }
         }
@@ -1235,7 +1237,7 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
     Scaffold(
         topBar = {
             TopAppBar(
-                navigationIcon = { IconButton(onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") } },
+                navigationIcon = { IconButton(onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.back)) } },
                 title = {
                     if (peer != 0L) {
                         Box(Modifier.clickable { onProfile(peer) }) {
@@ -1243,9 +1245,9 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
                         }
                     } else {
                         Column {
-                            Text(room?.title ?: "Room", style = MaterialTheme.typography.titleMedium)
+                            Text(room?.title ?: stringResource(R.string.room), style = MaterialTheme.typography.titleMedium)
                             Text(
-                                if (room?.public != false) "Public room, anyone nearby can read it" else "Private room",
+                                if (room?.public != false) stringResource(R.string.public_room) else stringResource(R.string.private_room),
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
@@ -1254,23 +1256,23 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
                 actions = {
                     val muted = Mesh.isMuted(convo)
                     IconButton({ Mesh.toggleMute(convo) }) {
-                        Icon(if (muted) Icons.Outlined.NotificationsOff else Icons.Outlined.Notifications, if (muted) "Unmute" else "Mute")
+                        Icon(if (muted) Icons.Outlined.NotificationsOff else Icons.Outlined.Notifications, if (muted) stringResource(R.string.unmute) else stringResource(R.string.mute))
                     }
                     if (peer != 0L && node != null) {
                         IconButton({ Mesh.setFavorite(peer, !node.favorite) }, enabled = Mesh.connected) {
-                            Icon(if (node.favorite) Icons.Rounded.Star else Icons.Outlined.StarBorder, "Favorite")
+                            Icon(if (node.favorite) Icons.Rounded.Star else Icons.Outlined.StarBorder, stringResource(R.string.favorite))
                         }
                     }
-                    if (room != null) IconButton({ invite = true }) { Icon(Icons.Rounded.QrCode2, "Invite") }
+                    if (room != null) IconButton({ invite = true }) { Icon(Icons.Rounded.QrCode2, stringResource(R.string.invite)) }
                     if (room != null && !room.primary) {
-                        IconButton({ leave = true }) { Icon(Icons.AutoMirrored.Outlined.Logout, "Leave room") }
+                        IconButton({ leave = true }) { Icon(Icons.AutoMirrored.Outlined.Logout, stringResource(R.string.leave_room)) }
                     }
                 },
             )
         },
         bottomBar = {
             Composer(
-                if (peer != 0L) "Message ${node?.name ?: ""}" else "Message ${room?.title ?: ""}",
+                stringResource(R.string.message_to, if (peer != 0L) node?.name.orEmpty() else room?.title.orEmpty()),
                 replyTo = replyTo, onCancelReply = { replyTo = null },
                 onNewSms = if (relayed) ({ sms = true }) else null,
             ) { send(it); replyTo = null }
@@ -1278,8 +1280,8 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
     ) { padding ->
         if (messages.isEmpty()) {
             EmptyState(
-                padding, Icons.AutoMirrored.Outlined.Chat, "No messages yet",
-                if (peer != 0L) "Messages here are end-to-end encrypted." else "Say hi! Everyone in this room will see it.",
+                padding, Icons.AutoMirrored.Outlined.Chat, stringResource(R.string.no_messages),
+                if (peer != 0L) stringResource(R.string.dm_empty) else stringResource(R.string.room_empty),
             )
         } else {
             MessageList(padding, messages, showNames = peer == 0L, relay = relayed, onReply = { replyTo = it }, onResend = { m, command -> Mesh.remove(m); send(command) })
@@ -1293,10 +1295,10 @@ fun ConversationScreen(convo: String, onBack: () -> Unit, onProfile: (Long) -> U
     if (leave && room != null) {
         AlertDialog(
             { leave = false },
-            confirmButton = { TextButton({ Mesh.leaveRoom(room.index); leave = false; onBack() }) { Text("Leave") } },
-            dismissButton = { TextButton({ leave = false }) { Text("Cancel") } },
-            title = { Text("Leave ${room.title}?") },
-            text = { Text("You'll need a new invite to come back.") },
+            confirmButton = { TextButton({ Mesh.leaveRoom(room.index); leave = false; onBack() }) { Text(stringResource(R.string.leave)) } },
+            dismissButton = { TextButton({ leave = false }) { Text(stringResource(R.string.cancel)) } },
+            title = { Text(stringResource(R.string.leave_room_title, room.title)) },
+            text = { Text(stringResource(R.string.leave_room_body)) },
         )
     }
 }
@@ -1338,9 +1340,9 @@ fun MessageList(
             if (newDay) DayChip(m.time)
             when (val l = lines[m.id]) {
                 is RelayLine.Sms -> SmsBubble(m, l, sent[m.id], onReply, onResend)
-                is RelayLine.Call -> RelayChip(if (l.what == "Missed call") Icons.AutoMirrored.Outlined.CallMissed else Icons.Outlined.Call, "${l.what} · ${prettyNumber(l.number)}", m.time)
-                is RelayLine.Status -> RelayChip(Icons.Outlined.Sms, "${if (l.sent) "Sent" else "Couldn't send"} SMS to ${prettyNumber(l.number)}", m.time)
-                is RelayLine.Info -> RelayChip(Icons.Outlined.Sms, l.text, m.time)
+                is RelayLine.Call -> RelayChip(if (l.what == "Missed call") Icons.AutoMirrored.Outlined.CallMissed else Icons.Outlined.Call, l.summary(), m.time)
+                is RelayLine.Status -> RelayChip(Icons.Outlined.Sms, stringResource(if (l.sent) R.string.sms_sent_to else R.string.sms_failed_to, prettyNumber(l.number)), m.time)
+                is RelayLine.Info -> RelayChip(Icons.Outlined.Sms, l.summary(), m.time)
                 null -> Bubble(m, showName = showNames && (newDay || prev.from != m.from || prev.mine != m.mine))
             }
         }
@@ -1364,8 +1366,8 @@ fun RelayChip(icon: ImageVector, text: String, t: Long) {
 }
 
 /**
- * A relayed text: texts from outside numbers on the left, texts the room sends out on the right. Swipe an incoming
- * text left to answer it by SMS.
+ * A relayed text: texts from outside numbers on the start side, texts the room sends out on the end side. Swipe an incoming
+ * text toward the start (left, or right in RTL languages) to answer it by SMS.
  */
 @Composable
 fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) -> Unit, onResend: (Message, String) -> Unit) {
@@ -1374,8 +1376,8 @@ fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) 
     // Room messages carry no delivery receipt, so silence from the relay phone is the only sign a request got lost.
     val unanswered = !sms.incoming && sent == null && rememberNow() - m.time > RELAY_ANSWER_MS
     val problem = when {
-        sent == false -> "The relay phone couldn't send this SMS"
-        unanswered -> "No answer from the relay phone"
+        sent == false -> stringResource(R.string.relay_send_failed)
+        unanswered -> stringResource(R.string.relay_no_answer)
         else -> null
     }
     val canResend = problem != null && m.mine && Mesh.connected
@@ -1384,9 +1386,12 @@ fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) 
     val drag = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
+    val replyLabel = stringResource(R.string.reply_by_sms)
+    // The swipe goes toward the start side: left, or right in Arabic and other right-to-left languages.
+    val toStart = if (LocalLayoutDirection.current == LayoutDirection.Rtl) -1 else 1
     Column(Modifier.fillMaxWidth(), horizontalAlignment = if (sms.incoming) Alignment.Start else Alignment.End) {
         Text(
-            if (sms.incoming) prettyNumber(sms.number) else "To ${prettyNumber(sms.number)}" + if (m.mine) "" else " · ${Mesh.nodes[m.from]?.name ?: m.name}",
+            if (sms.incoming) prettyNumber(sms.number) else stringResource(R.string.sms_to_number, prettyNumber(sms.number)) + if (m.mine) "" else " · ${Mesh.nodes[m.from]?.name ?: m.name}",
             Modifier.padding(start = 4.dp, end = 4.dp, top = 6.dp, bottom = 2.dp),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.primary,
@@ -1404,7 +1409,7 @@ fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) 
                 color = if (sms.incoming) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.widthIn(max = 300.dp)
                     .clickable(enabled = canResend) { onResend(m, "$SMS_COMMAND $number ${sms.body}") }
-                    .offset { IntOffset(drag.value.roundToInt(), 0) }
+                    .offset { IntOffset(drag.value.roundToInt(), 0) } // offset {} already mirrors in right-to-left layouts
                     .then(if (!canReply) Modifier else Modifier
                         .pointerInput(number) {
                             detectHorizontalDragGestures(
@@ -1414,12 +1419,12 @@ fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) 
                                 },
                                 onDragCancel = { scope.launch { drag.animateTo(0f) } },
                             ) { _, dx ->
-                                val next = (drag.value + dx).coerceIn(-reach * 1.3f, 0f)
+                                val next = (drag.value + dx * toStart).coerceIn(-reach * 1.3f, 0f)
                                 if (drag.value > -reach && next <= -reach) haptics.performHapticFeedback(HapticFeedbackType.LongPress)
                                 scope.launch { drag.snapTo(next) }
                             }
                         }
-                        .semantics { customActions = listOf(CustomAccessibilityAction("Reply by SMS") { onReply(number); true }) }),
+                        .semantics { customActions = listOf(CustomAccessibilityAction(replyLabel) { onReply(number); true }) }),
             ) {
                 Column(Modifier.padding(start = 14.dp, end = 14.dp, top = 8.dp, bottom = 6.dp)) {
                     SelectionContainer { Text(sms.body, style = MaterialTheme.typography.bodyLarge) }
@@ -1429,9 +1434,9 @@ fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) 
                         if (!sms.incoming) {
                             Spacer(Modifier.width(4.dp))
                             val (icon, label) = when {
-                                sent == true -> Icons.Rounded.Done to "Sent by the relay phone"
+                                sent == true -> Icons.Rounded.Done to stringResource(R.string.relay_sent)
                                 problem != null -> Icons.Rounded.ErrorOutline to problem
-                                else -> Icons.Rounded.Schedule to "Waiting for the relay phone"
+                                else -> Icons.Rounded.Schedule to stringResource(R.string.relay_waiting)
                             }
                             Icon(icon, label, Modifier.size(14.dp), tint = faded)
                         }
@@ -1441,7 +1446,7 @@ fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) 
         }
         if (problem != null) {
             Text(
-                if (m.mine) "$problem · Tap to resend" else problem,
+                if (m.mine) stringResource(R.string.tap_to_resend, problem) else problem,
                 Modifier.padding(top = 2.dp, end = 4.dp),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.error,
@@ -1453,8 +1458,8 @@ fun SmsBubble(m: Message, sms: RelayLine.Sms, sent: Boolean?, onReply: (String) 
 @Composable
 fun DayChip(t: Long) {
     val label = when (day(t)) {
-        LocalDate.now() -> "Today"
-        LocalDate.now().minusDays(1) -> "Yesterday"
+        LocalDate.now() -> stringResource(R.string.today)
+        LocalDate.now().minusDays(1) -> stringResource(R.string.yesterday)
         else -> DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(t))
     }
     Box(Modifier.fillMaxWidth().padding(vertical = 8.dp), contentAlignment = Alignment.Center) {
@@ -1491,7 +1496,7 @@ fun Bubble(m: Message, showName: Boolean) {
             shape = RoundedCornerShape(20.dp),
             color = if (m.mine) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHigh,
             modifier = Modifier.widthIn(max = 300.dp)
-                .combinedClickable(onLongClickLabel = "Message options", onLongClick = { menu = true }) { if (failed && Mesh.connected) Mesh.retry(m) },
+                .combinedClickable(onLongClickLabel = stringResource(R.string.message_options), onLongClick = { menu = true }) { if (failed && Mesh.connected) Mesh.retry(m) },
         ) {
             Column(Modifier.padding(start = 14.dp, end = 14.dp, top = 8.dp, bottom = 6.dp)) {
                 Text(m.text, style = MaterialTheme.typography.bodyLarge)
@@ -1501,9 +1506,9 @@ fun Bubble(m: Message, showName: Boolean) {
                     if (m.mine) {
                         Spacer(Modifier.width(4.dp))
                         val (icon, label) = when (m.status) {
-                            "✓" -> Icons.Rounded.Done to if (m.peer != 0L) "Delivered" else "Relayed by the mesh"
-                            "✗" -> Icons.Rounded.ErrorOutline to if (m.peer != 0L) "Not delivered" else "Not confirmed"
-                            else -> Icons.Rounded.Schedule to "Sending"
+                            "✓" -> Icons.Rounded.Done to if (m.peer != 0L) stringResource(R.string.delivered) else stringResource(R.string.relayed)
+                            "✗" -> Icons.Rounded.ErrorOutline to if (m.peer != 0L) stringResource(R.string.not_delivered) else stringResource(R.string.not_confirmed)
+                            else -> Icons.Rounded.Schedule to stringResource(R.string.sending)
                         }
                         Icon(icon, label, Modifier.size(14.dp), tint = faded)
                     }
@@ -1511,12 +1516,12 @@ fun Bubble(m: Message, showName: Boolean) {
             }
         }
         DropdownMenu(menu, { menu = false }) {
-            DropdownMenuItem({ Text("Copy") }, {
+            DropdownMenuItem({ Text(stringResource(R.string.copy)) }, {
                 ctx.getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("Message", m.text)); menu = false
             }, leadingIcon = { Icon(Icons.Outlined.ContentCopy, null) })
             if (!m.mine) {
-                DropdownMenuItem({ Text("Report") }, { report = true; menu = false }, leadingIcon = { Icon(Icons.Outlined.Flag, null) })
-                DropdownMenuItem({ Text("Block ${(Mesh.nodes[m.from] ?: Node(m.from)).name}") }, { block = true; menu = false },
+                DropdownMenuItem({ Text(stringResource(R.string.report)) }, { report = true; menu = false }, leadingIcon = { Icon(Icons.Outlined.Flag, null) })
+                DropdownMenuItem({ Text(stringResource(R.string.block_name, (Mesh.nodes[m.from] ?: Node(m.from)).name)) }, { block = true; menu = false },
                     leadingIcon = { Icon(Icons.Outlined.Block, null) })
             }
         }
@@ -1524,7 +1529,7 @@ fun Bubble(m: Message, showName: Boolean) {
         if (failed) {
             Text(
                 // Room messages have no delivery receipts, only "someone relayed it"; missing that isn't proof of failure.
-                if (m.peer != 0L) "Not delivered · Tap to retry" else "Not confirmed · Tap to resend",
+                if (m.peer != 0L) stringResource(R.string.not_delivered_retry) else stringResource(R.string.not_confirmed_resend),
                 Modifier.padding(top = 2.dp, end = 4.dp),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.error,
@@ -1549,8 +1554,8 @@ fun Composer(
             Row(Modifier.padding(start = 20.dp, end = 8.dp, top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.AutoMirrored.Rounded.Reply, null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.width(8.dp))
-                Text("SMS to ${prettyNumber(replyTo)}", Modifier.weight(1f), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                IconButton(onCancelReply) { Icon(Icons.Rounded.Close, "Cancel SMS reply") }
+                Text(stringResource(R.string.sms_to, prettyNumber(replyTo)), Modifier.weight(1f), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                IconButton(onCancelReply) { Icon(Icons.Rounded.Close, stringResource(R.string.cancel_sms_reply)) }
             }
         }
         Row(
@@ -1558,26 +1563,26 @@ fun Composer(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (onNewSms != null && replyTo == null) {
-                IconButton(onNewSms, enabled = Mesh.connected) { Icon(Icons.Outlined.Sms, "Text a phone number") }
+                IconButton(onNewSms, enabled = Mesh.connected) { Icon(Icons.Outlined.Sms, stringResource(R.string.text_phone_number)) }
                 Spacer(Modifier.width(4.dp))
             }
             OutlinedTextField(
                 text, { text = it }, Modifier.weight(1f),
                 placeholder = {
                     Text(
-                        when { !Mesh.connected -> "Waiting for the node…"; replyTo != null -> "Text ${prettyNumber(replyTo)}"; else -> placeholder },
+                        when { !Mesh.connected -> stringResource(R.string.waiting_for_node); replyTo != null -> stringResource(R.string.text_number, prettyNumber(replyTo)); else -> placeholder },
                         maxLines = 1, overflow = TextOverflow.Ellipsis,
                     )
                 },
                 shape = RoundedCornerShape(28.dp),
                 maxLines = 5,
                 isError = tooLong,
-                supportingText = if (tooLong) ({ Text("Too long for one mesh message") }) else null,
+                supportingText = if (tooLong) ({ Text(stringResource(R.string.too_long)) }) else null,
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
             )
             Spacer(Modifier.width(8.dp))
             FilledIconButton({ onSend(payload); text = "" }, Modifier.size(52.dp), enabled = canSend) {
-                Icon(Icons.AutoMirrored.Rounded.Send, if (replyTo != null) "Send SMS" else "Send")
+                Icon(Icons.AutoMirrored.Rounded.Send, if (replyTo != null) stringResource(R.string.send_sms) else stringResource(R.string.send))
             }
         }
       }
