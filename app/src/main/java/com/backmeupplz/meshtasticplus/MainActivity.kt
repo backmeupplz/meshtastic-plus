@@ -47,6 +47,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.TextAutoSize
+import androidx.compose.foundation.text.modifiers.TextAutoSizeLayoutScope
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -104,9 +106,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.takeOrElse
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.delay
@@ -827,6 +835,30 @@ fun NodeRow(n: Node, now: Long, onProfile: (Long) -> Unit) {
     )
 }
 
+private val HalfButtonPadding = PaddingValues(horizontal = 16.dp)
+
+// Wraps to a second line and shrinks before it truncates, so long translations fit half-width buttons on narrow phones
+@Composable
+private fun ButtonLabel(text: String) = Text(
+    text, maxLines = 2, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, lineHeight = 1.2.em,
+    autoSize = WholeWords(LocalTextStyle.current.fontSize.takeOrElse { 14.sp }),
+)
+
+// Largest size (down to 10sp) whose layout neither ellipsizes nor breaks a line inside a word
+private class WholeWords(val max: TextUnit) : TextAutoSize {
+    override fun TextAutoSizeLayoutScope.getFontSize(constraints: Constraints, text: AnnotatedString): TextUnit {
+        var size = max.value
+        while (size > 10f) {
+            val r = performLayout(constraints, text, size.sp)
+            if (!r.isLineEllipsized(r.lineCount - 1) && (0 until r.lineCount - 1).all { r.getWordBoundary(r.getLineEnd(it)).start == r.getLineEnd(it) }) return size.sp
+            size -= 0.5f
+        }
+        return 10.sp
+    }
+    override fun equals(other: Any?) = other is WholeWords && other.max == max
+    override fun hashCode() = max.hashCode()
+}
+
 @Composable
 fun StatusPill(online: Boolean) {
     val color = if (online) Green else MaterialTheme.colorScheme.outline
@@ -868,15 +900,15 @@ fun ProfileSheet(num: Long, onDismiss: () -> Unit, onMessage: () -> Unit) {
             n.power?.let { Detail(Icons.Outlined.BatteryFull, it) }
             Spacer(Modifier.height(24.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Button(onMessage, Modifier.weight(1f).height(52.dp), enabled = !blocked) {
+                Button(onMessage, Modifier.weight(1f).height(52.dp), enabled = !blocked, contentPadding = HalfButtonPadding) {
                     Icon(Icons.AutoMirrored.Outlined.Chat, null)
                     Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.message))
+                    ButtonLabel(stringResource(R.string.message))
                 }
-                OutlinedButton({ Mesh.setFavorite(num, !n.favorite) }, Modifier.weight(1f).height(52.dp), enabled = Mesh.connected) {
+                OutlinedButton({ Mesh.setFavorite(num, !n.favorite) }, Modifier.weight(1f).height(52.dp), enabled = Mesh.connected, contentPadding = HalfButtonPadding) {
                     Icon(if (n.favorite) Icons.Rounded.Star else Icons.Outlined.StarBorder, null)
                     Spacer(Modifier.width(8.dp))
-                    Text(if (n.favorite) stringResource(R.string.favorited) else stringResource(R.string.favorite), maxLines = 1)
+                    ButtonLabel(if (n.favorite) stringResource(R.string.favorited) else stringResource(R.string.favorite))
                 }
             }
             Spacer(Modifier.height(8.dp))
@@ -1052,16 +1084,16 @@ fun DevicesSheet(onDismiss: () -> Unit) {
                 DeviceRows(switch)
                 Spacer(Modifier.height(12.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    OutlinedButton(askBluetooth, Modifier.weight(1f).height(52.dp)) {
+                    OutlinedButton(askBluetooth, Modifier.weight(1f).height(52.dp), contentPadding = HalfButtonPadding) {
                         Icon(Icons.Rounded.Add, null)
                         Spacer(Modifier.width(8.dp))
-                        Text(stringResource(R.string.add_device))
+                        ButtonLabel(stringResource(R.string.add_device))
                     }
                     if (Mesh.saved.none { it.first == USB }) {
-                        OutlinedButton({ switch(USB) }, Modifier.weight(1f).height(52.dp)) {
+                        OutlinedButton({ switch(USB) }, Modifier.weight(1f).height(52.dp), contentPadding = HalfButtonPadding) {
                             Icon(Icons.Rounded.Usb, null)
                             Spacer(Modifier.width(8.dp))
-                            Text(stringResource(R.string.usb_cable))
+                            ButtonLabel(stringResource(R.string.usb_cable))
                         }
                     }
                 }
@@ -1116,18 +1148,18 @@ fun NewRoomSheet(onDismiss: () -> Unit, onOpen: (String) -> Unit) {
             )
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                OutlinedButton(scan, Modifier.weight(1f).height(52.dp)) {
+                OutlinedButton(scan, Modifier.weight(1f).height(52.dp), contentPadding = HalfButtonPadding) {
                     Icon(Icons.Outlined.QrCodeScanner, null)
                     Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.scan_qr))
+                    ButtonLabel(stringResource(R.string.scan_qr))
                 }
                 OutlinedButton({
                     val clip = ctx.getSystemService(ClipboardManager::class.java).primaryClip
                     join(clip?.getItemAt(0)?.coerceToText(ctx)?.toString().orEmpty())
-                }, Modifier.weight(1f).height(52.dp)) {
+                }, Modifier.weight(1f).height(52.dp), contentPadding = HalfButtonPadding) {
                     Icon(Icons.Outlined.ContentPaste, null)
                     Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.paste_link))
+                    ButtonLabel(stringResource(R.string.paste_link))
                 }
             }
             if (error.isNotEmpty()) {
@@ -1188,17 +1220,17 @@ fun InviteSheet(room: Room, onDismiss: () -> Unit) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Button({
                     ctx.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, link), null))
-                }, Modifier.weight(1f).height(52.dp)) {
+                }, Modifier.weight(1f).height(52.dp), contentPadding = HalfButtonPadding) {
                     Icon(Icons.Outlined.Share, null)
                     Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.share_link))
+                    ButtonLabel(stringResource(R.string.share_link))
                 }
                 OutlinedButton({
                     ctx.getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("Invite", link))
-                }, Modifier.weight(1f).height(52.dp)) {
+                }, Modifier.weight(1f).height(52.dp), contentPadding = HalfButtonPadding) {
                     Icon(Icons.Outlined.ContentCopy, null)
                     Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.copy))
+                    ButtonLabel(stringResource(R.string.copy))
                 }
             }
         }

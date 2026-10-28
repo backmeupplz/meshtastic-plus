@@ -81,7 +81,7 @@
     <string name="factory_reset_pair_again">Następnie znajdź go poniżej i sparuj z nowym kodem PIN.</string>
     <string name="factory_reset_sent">Wysłano reset do ustawień fabrycznych.</string>
     <string name="factory_reset_sent_unpair">Wysłano reset do ustawień fabrycznych. Usuń też węzeł w ustawieniach Bluetooth telefonu.</string>
-    <string name="favorite">Ulubiony</string>
+    <string name="favorite">Do ulubionych</string>
     <string name="favorited">W ulubionych</string>
     <string name="favorites">Ulubione</string>
     <string name="find_another_node">Znajdź inny węzeł</string>
@@ -347,7 +347,7 @@
     <string name="s_what_job_this_node_does">Jaką funkcję pełni ten węzeł w sieci.\n\n• Klient: zwykły wybór dla węzła, który nosisz przy sobie i z którego piszesz. Przekazuje też wiadomości innych.\n• Klient (cichy): nie przekazuje. Użyj, gdy robi to już inny Twój węzeł w pobliżu.\n• Klient (ukryty): milczy i nadaje tylko w razie potrzeby – dla prywatności lub oszczędności baterii.\n• Klient bazowy: węzeł domowy, który chętnie przekazuje wiadomości Twoich ulubionych.\n• Router / Router (opóźniony): dla węzłów w wysokich, dobrze położonych miejscach, które mają rozszerzać sieć. Opóźniony czeka, aż najpierw przekażą inne.\n• Lokalizator / Czujnik: najpierw wysyła swoją pozycję lub odczyty czujników.\n• Zguba: stale ogłasza swoją lokalizację, aby można go było znaleźć.\n\nRole routera mogą włączyć oszczędzanie energii, które przez większość czasu wyłącza Bluetooth.</string>
     <string name="s_whether_the_node_uses_its">Czy węzeł używa układu GPS. Wyłączenie mocno oszczędza baterię. Wybierz Brak, jeśli płytka nie ma GPS.</string>
     <string name="s_which_messages_this_node_passes">Które wiadomości ten węzeł przekazuje dalej.\n\n• Wszystko: przekazuje wszystko, co usłyszy. Najlepsze dla sieci i domyślne.\n• Wszystko, bez odczytywania: to samo, ale bez prób odszyfrowania. Dla dedykowanych przekaźników.\n• Tylko lokalne pokoje: ignoruje ruch z innych sieci, którego nie może odczytać.\n• Tylko znane węzły: ignoruje węzły spoza swojej listy węzłów.\n• Tylko standardowe wiadomości: pomija nietypowy ruch aplikacji.\n• Nic: nigdy nie przekazuje. Dozwolone tylko dla ról Lokalizator i Czujnik.</string>
-    <string name="save">Zachowaj</string>
+    <string name="save">Zapisz</string>
     <string name="scan_qr">Skanuj QR</string>
     <string name="scanning_hint">Szukanie… Upewnij się, że węzeł jest włączony i nie jest połączony z innym telefonem.</string>
     <string name="send">Wyślij</string>
@@ -449,10 +449,10 @@
         <item quantity="other">%1$d minuty</item>
     </plurals>
     <plurals name="save_changes">
-        <item quantity="one">Zachowaj %1$d zmianę</item>
-        <item quantity="few">Zachowaj %1$d zmiany</item>
-        <item quantity="many">Zachowaj %1$d zmian</item>
-        <item quantity="other">Zachowaj %1$d zmiany</item>
+        <item quantity="one">Zapisz %1$d zmianę</item>
+        <item quantity="few">Zapisz %1$d zmiany</item>
+        <item quantity="many">Zapisz %1$d zmian</item>
+        <item quantity="other">Zapisz %1$d zmiany</item>
     </plurals>
     <plurals name="seconds">
         <item quantity="one">%1$d sekunda</item>

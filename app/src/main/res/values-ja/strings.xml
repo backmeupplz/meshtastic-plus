@@ -81,7 +81,7 @@
     <string name="factory_reset_pair_again">その後、下でノードを見つけて新しいPINでペアリングしてください。</string>
     <string name="factory_reset_sent">工場出荷時リセットを送信しました。</string>
     <string name="factory_reset_sent_unpair">工場出荷時リセットを送信しました。スマートフォンのBluetooth設定からもノードを削除してください。</string>
-    <string name="favorite">お気に入りに追加</string>
+    <string name="favorite">お気に入り</string>
     <string name="favorited">お気に入り済み</string>
     <string name="favorites">お気に入り</string>
     <string name="find_another_node">別のノードを探す</string>

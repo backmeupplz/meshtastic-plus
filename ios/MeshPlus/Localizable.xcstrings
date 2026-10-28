@@ -12484,7 +12484,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "お気に入りに追加"
+            "value" : "お気に入り"
           }
         },
         "ko" : {
@@ -12502,7 +12502,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ulubiony"
+            "value" : "Do ulubionych"
           }
         },
         "pt-BR" : {
@@ -12514,7 +12514,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adicionar aos favoritos"
+            "value" : "Favorito"
           }
         },
         "ru" : {
@@ -34945,7 +34945,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zachowaj"
+            "value" : "Zapisz"
           }
         },
         "pt-BR" : {
@@ -35282,25 +35282,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Zachowaj %lld zmiany"
+                  "value" : "Zapisz %lld zmiany"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Zachowaj %lld zmian"
+                  "value" : "Zapisz %lld zmian"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Zachowaj %lld zmianę"
+                  "value" : "Zapisz %lld zmianę"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Zachowaj %lld zmiany"
+                  "value" : "Zapisz %lld zmiany"
                 }
               }
             }

@@ -81,7 +81,7 @@
     <string name="factory_reset_pair_again">Depois, encontre-o abaixo e emparelhe-o com o novo PIN.</string>
     <string name="factory_reset_sent">Reposição de fábrica enviada.</string>
     <string name="factory_reset_sent_unpair">Reposição de fábrica enviada. Remova também o nó nas definições de Bluetooth do telemóvel.</string>
-    <string name="favorite">Adicionar aos favoritos</string>
+    <string name="favorite">Favorito</string>
     <string name="favorited">Nos favoritos</string>
     <string name="favorites">Favoritos</string>
     <string name="find_another_node">Encontrar outro nó</string>
