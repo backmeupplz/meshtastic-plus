@@ -43,6 +43,7 @@ env:
   FDROID_APP_ID: com.borodutch.meshplus
   FDROID_FORK: backmeupplz/fdroiddata
   FDROID_BRANCH: com.borodutch.meshplus
+  FDROID_GRADLE: fdroid # the flavor whose APK the release attaches (assembleFdroidRelease)
 jobs:
   version:
     runs-on: ubuntu-latest
