@@ -36,6 +36,7 @@ struct TermsView: View {
                 Text("By tapping Agree you accept the terms of use.").font(.footnote).foregroundStyle(.secondary)
             }
             .padding(24)
+            .readableWidth()
         }
     }
 }
@@ -169,6 +170,7 @@ struct SetupView: View {
                     }
                 }
                 .padding(24)
+                .readableWidth()
             }
             // The scan list sits below the buttons, off screen on smaller phones: bring it into view.
             .onChange(of: scanning) { _, on in if on { withAnimation { proxy.scrollTo("scan", anchor: .top) } } }
@@ -213,6 +215,8 @@ struct RegionView: View {
                 }
             }
         }
+        .readableWidth()
+        .background(Color(.systemGroupedBackground))
         .navigationTitle(editing ? String(localized: "Region") : "")
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
@@ -284,6 +288,7 @@ struct NameView: View {
                 if !editing { Button("Skip for now") { mesh.nameAsked() } }
             }
             .padding(24)
+            .readableWidth()
         }
         .navigationTitle(editing ? String(localized: "Name") : "")
         .navigationBarTitleDisplayMode(.inline)

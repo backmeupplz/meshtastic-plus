@@ -59,82 +59,180 @@ struct StatusPill: View {
 // MARK: - Home: chats + nodes
 
 enum HomeSheet: Identifiable {
-    case settings, devices, newRoom, profile(Int64)
-    var id: String { switch self { case .settings: "settings"; case .devices: "devices"; case .newRoom: "room"; case .profile(let n): "p\(n)" } }
+    case settings, devices, newRoom, profile(Int64), invite(Int)
+    var id: String {
+        switch self { case .settings: "settings"; case .devices: "devices"; case .newRoom: "room"; case .profile(let n): "p\(n)"; case .invite(let i): "i\(i)" }
+    }
+}
+
+/// Everything Home shows, kept above the compact/regular layout switch: folding or unfolding an iPhone Duo changes
+/// the width size class while the app runs, and the layout that comes in must pick up the same open conversation,
+/// sheet, prompt, drafts and keyboard.
+@Observable final class HomeModel {
+    var tab = 0
+    // Portrait regular widths (Duo's inner display) would otherwise hide the list behind a button.
+    var columns = NavigationSplitViewVisibility.all
+    var path: [String] = [] // open conversations, newest last; the wide layout shows the last one next to the list
+    var sheet: HomeSheet?
+    var drafts: [String: String] = [:] // unsent text by conversation
+    var focused: String? // conversation whose composer has the keyboard
+    @ObservationIgnored var composer: UUID? // the composer that came on screen or took the keyboard last
+    var leaving: Int? // room waiting for "Leave"
+    var reporting: Message?
+    var noMail = false
+
+    /// Opens a conversation over the current one, or goes back to it if it's already open further down: the wide
+    /// layout shows only the last one, so a second copy would pile up unseen.
+    func open(_ convo: String) {
+        if let i = path.firstIndex(of: convo) { path.removeSubrange((i + 1)...) } else { path.append(convo) }
+    }
+
+    /// Closes a conversation (and anything opened from it), as its back button would.
+    func close(_ convo: String) { if let i = path.firstIndex(of: convo) { path.removeSubrange(i...) } }
 }
 
 struct HomeView: View {
-    @State private var tab = 0
-    @State private var path: [String] = []
-    @State private var sheet: HomeSheet?
+    @State private var model = HomeModel()
+    @Environment(\.horizontalSizeClass) private var width
     @Environment(\.requestReview) private var requestReview
+
+    private var unread: Int {
+        let mesh = Mesh.shared
+        return Set(mesh.messages.filter { !$0.mine }.map(\.convo)).map(mesh.unread).reduce(0, +)
+    }
 
     var body: some View {
         let mesh = Mesh.shared
-        let unread = Set(mesh.messages.filter { !$0.mine }.map(\.convo)).map(mesh.unread).reduce(0, +)
-        NavigationStack(path: $path) {
-            TabView(selection: $tab) {
-                ChatsTab().tabItem { Label("Chats", systemImage: "bubble.left.and.bubble.right") }.tag(0).badge(unread)
-                NodesTab { sheet = .profile($0) }.tabItem { Label("Nodes", systemImage: "point.3.connected.trianglepath.dotted") }.tag(1)
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: String.self) { ConversationView(convo: $0) { sheet = .profile($0) } }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button { sheet = .settings } label: { Image(systemName: "gearshape") }.accessibilityLabel("Settings")
-                }
-                ToolbarItem(placement: .principal) {
-                    Button { sheet = .devices } label: { StatusTitle(title: mesh.myLong, subtitle: mesh.status, ok: mesh.connected) }
-                        .foregroundStyle(.primary).accessibilityHint("Switch device")
-                }
-                if tab == 0 {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button { sheet = .newRoom } label: { Image(systemName: "plus") }.accessibilityLabel("New room")
-                    }
-                }
-            }
+        Group {
+            if width == .regular { split } else { stack }
         }
-        .sheet(item: $sheet) { s in
+        .environment(model)
+        .modifier(ConversationPrompts(model: model))
+        .sheet(item: $model.sheet) { s in
             switch s {
             case .settings: SettingsSheet()
             case .devices: NavigationStack { DevicesView() }
-            case .newRoom: NewRoomSheet { path.append($0) }
-            case .profile(let num): ProfileSheet(num: num) { path.append(convoKey(0, num)) }
+            case .newRoom: NewRoomSheet { model.open($0) }
+            case .profile(let num): ProfileSheet(num: num) { model.open(convoKey(0, num)) }
+            case .invite(let index): if let room = mesh.rooms[index] { InviteSheet(room: room) }
             }
         }
-        .onChange(of: path) { old, new in if new.isEmpty && !old.isEmpty && RatingPrompt.ask() { requestReview() } }
+        .onChange(of: model.path) { old, new in if new.isEmpty && !old.isEmpty && RatingPrompt.ask() { requestReview() } }
         .onChange(of: mesh.pendingConvo, initial: true) { _, convo in
             guard let convo else { return }
-            sheet = nil
-            path = [convo]
+            model.sheet = nil
+            model.leaving = nil
+            model.reporting = nil
+            model.path = [convo]
             mesh.pendingConvo = nil
+        }
+        // Set here rather than in the conversation's onAppear/onDisappear: while the layouts swap, the outgoing
+        // conversation can disappear after the incoming one appeared.
+        .onChange(of: model.path.last, initial: true) { _, convo in
+            mesh.openConvo = convo
+            if model.focused != convo { model.focused = nil } // left it with the keyboard up: don't bring it back next time
+        }
+        .onDisappear { mesh.openConvo = nil }
+    }
+
+    /// Cover display and every other compact width: tabs, with conversations pushed over them.
+    private var stack: some View {
+        NavigationStack(path: $model.path) {
+            TabView(selection: $model.tab) {
+                ChatsTab().tabItem { Label("Chats", systemImage: "bubble.left.and.bubble.right") }.tag(0).badge(unread)
+                NodesTab { model.sheet = .profile($0) }.tabItem { Label("Nodes", systemImage: "point.3.connected.trianglepath.dotted") }.tag(1)
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: String.self) { ConversationView(convo: $0) }
+            .toolbar { toolbar }
+        }
+    }
+
+    /// Inner display and other regular widths: chats or nodes on the side, the conversation next to them.
+    private var split: some View {
+        let selection = Binding<String?>(get: { model.path.last }, set: { model.path = $0.map { [$0] } ?? [] })
+        return NavigationSplitView(columnVisibility: $model.columns) {
+            VStack(spacing: 0) {
+                Picker("", selection: $model.tab) {
+                    (unread > 0 ? Text("Chats \(unread)") : Text("Chats")).tag(0) // the tab bar's unread badge
+                    Text("Nodes").tag(1)
+                }
+                .pickerStyle(.segmented).labelsHidden().padding(.horizontal).padding(.bottom, 8)
+                if model.tab == 0 { ChatsTab(selection: selection) } else { NodesTab { model.sheet = .profile($0) } }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbar }
+            .navigationSplitViewColumnWidth(min: 280, ideal: 340, max: 420)
+        } detail: {
+            // Nothing opens by itself: a conversation shown here is marked read and stays open through a fold.
+            if let convo = model.path.last {
+                ConversationView(convo: convo).id(convo)
+            } else {
+                Image(systemName: "bubble.left.and.bubble.right").font(.system(size: 56)).foregroundStyle(.tertiary)
+                    .accessibilityHidden(true)
+            }
+        }
+        .navigationSplitViewStyle(.balanced)
+    }
+
+    @ToolbarContentBuilder private var toolbar: some ToolbarContent {
+        let mesh = Mesh.shared
+        ToolbarItem(placement: .topBarLeading) {
+            Button { model.sheet = .settings } label: { Image(systemName: "gearshape") }.accessibilityLabel("Settings")
+        }
+        ToolbarItem(placement: .principal) {
+            Button { model.sheet = .devices } label: { StatusTitle(title: mesh.myLong, subtitle: mesh.status, ok: mesh.connected) }
+                .foregroundStyle(.primary).accessibilityHint("Switch device")
+        }
+        if model.tab == 0 {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button { model.sheet = .newRoom } label: { Image(systemName: "plus") }.accessibilityLabel("New room")
+            }
         }
     }
 }
 
+/// Caps scrolling content at a readable width on wide windows; changes nothing on a phone-width one.
+extension View {
+    func readableWidth(_ max: CGFloat = 640) -> some View { frame(maxWidth: max).frame(maxWidth: .infinity) }
+}
+
 struct ConversationRow: View {
     let icon: String, title: String, convo: String
+    @Environment(\.dynamicTypeSize) private var type
 
     var body: some View {
         let mesh = Mesh.shared
         let last = mesh.messages.last { $0.convo == convo }
         let unread = mesh.unread(convo)
-        HStack(spacing: 14) {
-            Image(systemName: icon).foregroundStyle(.secondary).frame(width: 24)
+        // Accessibility text sizes leave no room for the icon and a trailing column: the name would shrink to a letter.
+        let big = type.isAccessibilitySize
+        let name = HStack(spacing: 6) {
+            Text(title).fontWeight(unread > 0 ? .semibold : .regular).lineLimit(big ? 2 : 1)
+            if mesh.isMuted(convo) { Image(systemName: "bell.slash").font(.caption).foregroundStyle(.secondary).accessibilityLabel("Muted") }
+        }
+        let preview = Text(last.map { ($0.mine ? String(localized: "You") : $0.name) + ": " + $0.text } ?? String(localized: "No messages yet"))
+            .font(.subheadline).foregroundStyle(.secondary).lineLimit(big ? 2 : 1)
+        let time = last.map { Text(shortTime($0.time)).font(.caption).foregroundStyle(.secondary) }
+        let badge = unread > 0 ? Text(verbatim: "\(unread)").font(.caption2.bold()).foregroundStyle(.white)
+            .padding(.horizontal, 7).padding(.vertical, 2).background(Color.accentColor, in: Capsule()) : nil
+        if big {
             VStack(alignment: .leading, spacing: 2) {
-                HStack(spacing: 6) {
-                    Text(title).fontWeight(unread > 0 ? .semibold : .regular).lineLimit(1)
-                    if mesh.isMuted(convo) { Image(systemName: "bell.slash").font(.caption).foregroundStyle(.secondary).accessibilityLabel("Muted") }
-                }
-                Text(last.map { ($0.mine ? String(localized: "You") : $0.name) + ": " + $0.text } ?? String(localized: "No messages yet"))
-                    .font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
+                name
+                preview
+                HStack(spacing: 8) { time; badge }
             }
-            Spacer()
-            VStack(alignment: .trailing, spacing: 4) {
-                if let last { Text(shortTime(last.time)).font(.caption).foregroundStyle(.secondary) }
-                if unread > 0 {
-                    Text(verbatim: "\(unread)").font(.caption2.bold()).foregroundStyle(.white)
-                        .padding(.horizontal, 7).padding(.vertical, 2).background(Color.accentColor, in: Capsule())
+        } else {
+            HStack(spacing: 14) {
+                Image(systemName: icon).foregroundStyle(.secondary).frame(width: 24)
+                VStack(alignment: .leading, spacing: 2) {
+                    name
+                    preview
+                }
+                Spacer()
+                VStack(alignment: .trailing, spacing: 4) {
+                    time
+                    badge
                 }
             }
         }
@@ -142,6 +240,8 @@ struct ConversationRow: View {
 }
 
 struct ChatsTab: View {
+    var selection: Binding<String?>? // the wide layout's open conversation; the compact one pushes instead
+
     var body: some View {
         let mesh = Mesh.shared
         let rooms = mesh.rooms.values.sorted { $0.index < $1.index }
@@ -151,7 +251,7 @@ struct ChatsTab: View {
             mesh.nodes.values.filter({ $0.favorite && $0.num != mesh.myNum && !mesh.blocked.contains($0.num) }).map(\.num) where !peers.contains(p) {
             peers.append(p)
         }
-        return List {
+        return list {
             Section("Rooms") {
                 ForEach(rooms, id: \.index) { r in
                     NavigationLink(value: convoKey(r.index, 0)) {
@@ -169,6 +269,10 @@ struct ChatsTab: View {
                 }
             }
         }
+    }
+
+    @ViewBuilder private func list(@ViewBuilder _ rows: () -> some View) -> some View {
+        if let selection { List(selection: selection, content: rows) } else { List(content: rows) }
     }
 }
 

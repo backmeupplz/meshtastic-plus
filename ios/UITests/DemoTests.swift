@@ -29,7 +29,7 @@ final class DemoTests: XCTestCase {
         XCTAssert(shows(app.staticTexts["Hiking"], 15))
 
         // Blocking and unblocking from a node's page, then messaging them from it.
-        app.tabBars.buttons["Nodes"].tap()
+        app.tab("Nodes")
         app.staticTexts["Leo"].tap()
         app.buttons["Block"].tap()
         XCTAssert(shows(app.buttons["Unblock"]))
@@ -37,8 +37,8 @@ final class DemoTests: XCTestCase {
         XCTAssert(shows(app.buttons["Block"]))
         app.buttons["Message"].tap()
         XCTAssert(shows(app.textFields["Message Leo"])) // their DM
-        app.navigationBars.buttons.element(boundBy: 0).tap() // back to the tabs
-        app.tabBars.buttons["Chats"].tap()
+        app.backToList()
+        app.tab("Chats")
 
         app.staticTexts["Hiking"].tap()
         let maya = app.staticTexts["Made it to the second lake. Zero cell signal here, the mesh still works 🙂"]
@@ -51,6 +51,7 @@ final class DemoTests: XCTestCase {
         XCTAssert(shows(app.staticTexts["On my way"]))
         XCTAssert(shows(app.staticTexts["Got it 👍"], 10)) // the demo node answers
 
+        app.hideKeyboard(above: "Got it 👍") // on short screens (iPhone Duo's cover display) it covers Maya's message
         maya.press(forDuration: 1.2)
         XCTAssert(shows(app.buttons["Report"]))
         app.buttons["Report"].tap()
@@ -66,7 +67,7 @@ final class DemoTests: XCTestCase {
         waitGone(maya)
         XCTAssert(app.staticTexts["Copy. Dinner at 7 at camp."].exists) // others stay
 
-        app.navigationBars.buttons.element(boundBy: 0).tap() // back to Chats
+        app.backToList()
         app.buttons["Settings"].tap()
         app.staticTexts["Blocked nodes"].tap()
         XCTAssert(shows(app.staticTexts["Maya's Handheld"]))

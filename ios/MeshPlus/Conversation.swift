@@ -50,36 +50,23 @@ struct Bubble: View {
     }
 }
 
+/// A room or DM. Its draft, sheets and prompts live in `HomeModel`, so folding the phone, which swaps Home's layout
+/// and rebuilds this view, keeps them.
 struct ConversationView: View {
     let convo: String
-    let onProfile: (Int64) -> Void
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.openURL) private var openURL
-    @State private var text = ""
-    @State private var invite = false
-    @State private var leave = false
-    @State private var reporting: Message?
-    @State private var noMail = false
+    @Environment(HomeModel.self) private var model
     @FocusState private var typing: Bool
+    @State private var instance = UUID()
 
     private var peer: Int64 { convo.hasPrefix("dm:") ? Int64(convo.dropFirst(3)) ?? 0 : 0 }
     private var channel: Int { convo.hasPrefix("ch:") ? Int(convo.dropFirst(3)) ?? 0 : 0 }
-
-    /// Opens an email to the developer with the message, who sent it and when.
-    private func report(_ m: Message) {
-        let mesh = Mesh.shared
-        let place = m.peer != 0 ? "a direct message" : "the room \(mesh.rooms[m.channel]?.title ?? "#\(m.channel)")"
-        let when = Date(timeIntervalSince1970: m.time / 1000).formatted(date: .abbreviated, time: .standard)
-        let body = "I'm reporting this message in Mesh+.\n\nFrom: \(mesh.nameOf(m.from)) (\(hexId(m.from)))\nTime: \(when)\nIn: \(place)\n\n" +
-            "Message:\n\(m.text)\n\nWhat's wrong with it (optional):\n"
-        openURL(mailURL(subject: "Mesh+ report: message from \(hexId(m.from))", body: body)) { accepted in if !accepted { noMail = true } }
-    }
 
     var body: some View {
         let mesh = Mesh.shared
         let room = peer == 0 ? mesh.rooms[channel] : nil
         let node = mesh.nodes[peer]
         let messages = mesh.messages.filter { $0.convo == convo }
+        let text = model.drafts[convo] ?? ""
         let tooLong = text.trimmingCharacters(in: .whitespacesAndNewlines).utf8.count > 200 // firmware text payload limit
         let canSend = mesh.connected && !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !tooLong
         ScrollViewReader { proxy in
@@ -94,10 +81,10 @@ struct ConversationView: View {
                             .contextMenu {
                                 Button { UIPasteboard.general.string = m.text } label: { Label("Copy", systemImage: "doc.on.doc") }
                                 if !m.mine {
-                                    Button { reporting = m } label: { Label("Report", systemImage: "exclamationmark.bubble") }
+                                    Button { model.reporting = m } label: { Label("Report", systemImage: "exclamationmark.bubble") }
                                     Button(role: .destructive) {
                                         mesh.setBlocked(m.from, true)
-                                        if peer != 0 { dismiss() }
+                                        if peer != 0 { model.close(convo) }
                                     } label: { Label("Block \(mesh.nameOf(m.from))", systemImage: "hand.raised") }
                                 }
                             }
@@ -105,6 +92,7 @@ struct ConversationView: View {
                     }
                 }
                 .padding(12)
+                .readableWidth(720)
             }
             .defaultScrollAnchor(.bottom)
             .scrollDismissesKeyboard(.immediately)
@@ -125,7 +113,7 @@ struct ConversationView: View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(alignment: .bottom, spacing: 8) {
                     TextField(mesh.connected ? String(localized: "Message \(peer != 0 ? node?.name ?? "" : room?.title ?? "")") : String(localized: "Waiting for the node…"),
-                              text: $text, axis: .vertical)
+                              text: Binding(get: { model.drafts[convo] ?? "" }, set: { model.drafts[convo] = $0 }), axis: .vertical)
                         .lineLimit(1...5)
                         .focused($typing)
                         .padding(.horizontal, 14).padding(.vertical, 9)
@@ -133,12 +121,13 @@ struct ConversationView: View {
                     Button {
                         RatingPrompt.sent()
                         mesh.send(text.trimmingCharacters(in: .whitespacesAndNewlines), channel: channel, peer: peer)
-                        text = ""
+                        model.drafts[convo] = nil
                     } label: { Image(systemName: "arrow.up.circle.fill").font(.system(size: 34)) }
                         .disabled(!canSend).accessibilityLabel("Send")
                 }
                 if tooLong { Text("Too long for one mesh message").font(.caption).foregroundStyle(.red).padding(.leading, 14) }
             }
+            .readableWidth(720)
             .padding(.horizontal, 12).padding(.vertical, 8)
             .background(.bar)
         }
@@ -146,7 +135,7 @@ struct ConversationView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 if peer != 0 {
-                    Button { onProfile(peer) } label: {
+                    Button { model.sheet = .profile(peer) } label: {
                         StatusTitle(title: node?.name ?? hexId(peer), subtitle: node.map { heard($0, nowMs()) } ?? "", ok: node?.online(nowMs()) == true)
                     }
                     .foregroundStyle(.primary)
@@ -158,7 +147,7 @@ struct ConversationView: View {
                 }
             }
             ToolbarItemGroup(placement: .topBarTrailing) {
-                if room != nil { Button { invite = true } label: { Image(systemName: "qrcode") }.accessibilityLabel("Invite") }
+                if room != nil { Button { model.sheet = .invite(channel) } label: { Image(systemName: "qrcode") }.accessibilityLabel("Invite") }
                 Menu {
                     Button { mesh.toggleMute(convo) } label: {
                         mesh.isMuted(convo) ? Label("Unmute", systemImage: "bell") : Label("Mute", systemImage: "bell.slash")
@@ -170,43 +159,74 @@ struct ConversationView: View {
                         .disabled(!mesh.connected)
                     }
                     if peer != 0 {
-                        Button(role: .destructive) { mesh.setBlocked(peer, true); dismiss() } label: {
+                        Button(role: .destructive) { mesh.setBlocked(peer, true); model.close(convo) } label: {
                             Label("Block \(mesh.nameOf(peer))", systemImage: "hand.raised")
                         }
                     }
                     if let room, !room.primary {
-                        Button(role: .destructive) { leave = true } label: { Label("Leave room", systemImage: "rectangle.portrait.and.arrow.right") }
+                        Button(role: .destructive) { model.leaving = room.index } label: { Label("Leave room", systemImage: "rectangle.portrait.and.arrow.right") }
                     }
                 } label: { Image(systemName: "ellipsis.circle") }
                     .accessibilityLabel("More")
             }
         }
         .onAppear {
-            mesh.openConvo = convo
             mesh.markRead(convo)
             Notify.clear(convo)
+            model.composer = instance
+            // The keyboard was up in the layout this one replaced: bring it back once this one is on screen.
+            if model.focused == convo { DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { typing = true } }
         }
-        .onDisappear { mesh.openConvo = nil }
-        .sheet(isPresented: $invite) { if let room { InviteSheet(room: room) } }
-        .alert(room.map { String(localized: "Leave \($0.title)?") } ?? String(localized: "Leave this room?"), isPresented: $leave) {
-            Button("Leave", role: .destructive) { if let room { mesh.leaveRoom(room.index) }; dismiss() }
-            Button("Cancel", role: .cancel) {}
-        } message: { Text("You'll need a new invite to come back.") }
-        .confirmationDialog("Report this message?", isPresented: Binding(get: { reporting != nil }, set: { if !$0 { reporting = nil } }),
-                            titleVisibility: .visible, presenting: reporting) { m in
-            Button("Report and block \(mesh.nameOf(m.from))", role: .destructive) {
-                report(m)
-                mesh.setBlocked(m.from, true)
-                if peer != 0 { dismiss() }
+        .onChange(of: typing) { _, on in
+            let model = model, me = instance
+            if on { model.focused = convo; model.composer = me; return }
+            // Folding takes the keyboard from the outgoing composer too, and that isn't the user closing it: forget it
+            // only if no other composer came in meanwhile.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { if model.composer == me && model.focused == convo { model.focused = nil } }
+        }
+    }
+}
+
+/// The conversation's prompts, presented from above Home's layout switch so folding the phone doesn't dismiss them.
+struct ConversationPrompts: ViewModifier {
+    @Bindable var model: HomeModel
+    @Environment(\.openURL) private var openURL
+
+    /// Opens an email to the developer with the message, who sent it and when.
+    private func report(_ m: Message) {
+        let mesh = Mesh.shared
+        let place = m.peer != 0 ? "a direct message" : "the room \(mesh.rooms[m.channel]?.title ?? "#\(m.channel)")"
+        let when = Date(timeIntervalSince1970: m.time / 1000).formatted(date: .abbreviated, time: .standard)
+        let body = "I'm reporting this message in Mesh+.\n\nFrom: \(mesh.nameOf(m.from)) (\(hexId(m.from)))\nTime: \(when)\nIn: \(place)\n\n" +
+            "Message:\n\(m.text)\n\nWhat's wrong with it (optional):\n"
+        openURL(mailURL(subject: "Mesh+ report: message from \(hexId(m.from))", body: body)) { accepted in if !accepted { model.noMail = true } }
+    }
+
+    func body(content: Content) -> some View {
+        let mesh = Mesh.shared
+        let room = model.leaving.flatMap { mesh.rooms[$0] }
+        content
+            // `presenting` hands the room to the action: dismissing the alert can clear `leaving` before the action runs.
+            .alert(room.map { String(localized: "Leave \($0.title)?") } ?? String(localized: "Leave this room?"), isPresented: Binding(get: { model.leaving != nil }, set: { if !$0 { model.leaving = nil } }),
+                   presenting: model.leaving) { index in
+                Button("Leave", role: .destructive) { mesh.leaveRoom(index); model.close(convoKey(index, 0)) }
+                Button("Cancel", role: .cancel) {}
+            } message: { _ in Text("You'll need a new invite to come back.") }
+            .confirmationDialog("Report this message?", isPresented: Binding(get: { model.reporting != nil }, set: { if !$0 { model.reporting = nil } }),
+                                titleVisibility: .visible, presenting: model.reporting) { m in
+                Button("Report and block \(mesh.nameOf(m.from))", role: .destructive) {
+                    report(m)
+                    mesh.setBlocked(m.from, true)
+                    if m.peer != 0 { model.close(m.convo) }
+                }
+                Button("Report only") { report(m) }
+                Button("Cancel", role: .cancel) {}
+            } message: { m in
+                Text("Mesh+ opens an email to the developer with this message, who sent it and when. Blocking also hides everything from \(mesh.nameOf(m.from)) on this phone.")
             }
-            Button("Report only") { report(m) }
-            Button("Cancel", role: .cancel) {}
-        } message: { m in
-            Text("Mesh+ opens an email to the developer with this message, who sent it and when. Blocking also hides everything from \(mesh.nameOf(m.from)) on this phone.")
-        }
-        .alert("No email app", isPresented: $noMail) {
-            Button("Copy address") { UIPasteboard.general.string = supportEmail }
-            Button("OK", role: .cancel) {}
-        } message: { Text("Send your report to \(supportEmail).") }
+            .alert("No email app", isPresented: $model.noMail) {
+                Button("Copy address") { UIPasteboard.general.string = supportEmail }
+                Button("OK", role: .cancel) {}
+            } message: { Text("Send your report to \(supportEmail).") }
     }
 }
