@@ -58,6 +58,12 @@
     <string name="demo_history_3">두 번째 호수에 도착했어요. 여긴 휴대폰 신호가 전혀 없는데 메시는 잘 돼요 🙂</string>
     <string name="demo_history_4">알겠어요. 저녁은 7시에 캠프에서요.</string>
     <string name="demo_history_5">버너 가져와요?</string>
+    <string name="demo_sms_room">문자</string>
+    <string name="demo_sms_1">안녕! 거기 다들 괜찮아? 오늘 밤에 폭풍이 온대.</string>
+    <string name="demo_sms_2">다 괜찮아요, 엄마! 비 오기 전에 캠프로 돌아갈게요 🙂</string>
+    <string name="demo_sms_3">토요일에 산장에서 피자 어때? 올 사람 알려줘!</string>
+    <string name="demo_sms_4">우리도 갈게, 토요일에 봐!</string>
+    <string name="demo_history_6">좋네! 어제 폭풍 지나고 길은 어때?</string>
     <string name="demo_maya">마야의 무전기</string>
     <string name="demo_no_firmware">펌웨어를 설치하려면 실제 노드가 필요합니다. 데모에서는 버전만 표시할 수 있습니다.</string>
     <string name="demo_node">데모 노드</string>

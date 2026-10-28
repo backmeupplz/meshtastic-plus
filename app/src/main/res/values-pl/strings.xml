@@ -58,6 +58,12 @@
     <string name="demo_history_3">Dotarłam do drugiego jeziora. Zero zasięgu komórkowego, a sieć mesh dalej działa 🙂</string>
     <string name="demo_history_4">Przyjąłem. Kolacja o 19 w obozie.</string>
     <string name="demo_history_5">Weźmiesz kuchenkę?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">Cześć! Wszystko u was w porządku? Na dziś w nocy zapowiadają burze.</string>
+    <string name="demo_sms_2">Wszystko dobrze, mamo! Wrócimy do obozu przed deszczem 🙂</string>
+    <string name="demo_sms_3">Pizza w schronisku w sobotę? Dajcie znać, kto idzie!</string>
+    <string name="demo_sms_4">Wchodzimy w to, do soboty!</string>
+    <string name="demo_history_6">Super! Jak szlak po wczorajszej burzy?</string>
     <string name="demo_maya">Krótkofalówka Mai</string>
     <string name="demo_no_firmware">Instalacja firmware’u wymaga prawdziwego węzła; w wersji demo widać tylko listę wersji.</string>
     <string name="demo_node">Węzeł demo</string>

@@ -58,6 +58,12 @@
     <string name="demo_history_3">มาถึงทะเลสาบที่สองแล้ว ที่นี่ไม่มีสัญญาณมือถือเลย แต่เมชยังใช้ได้ 🙂</string>
     <string name="demo_history_4">รับทราบ กินข้าวเย็นหนึ่งทุ่มที่แคมป์</string>
     <string name="demo_history_5">เอาเตามาด้วยไหม</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">สวัสดี! ทุกคนบนนั้นโอเคไหม พยากรณ์บอกว่าคืนนี้จะมีพายุ</string>
+    <string name="demo_sms_2">ทุกอย่างโอเคครับแม่! เราจะกลับถึงแคมป์ก่อนฝนตก 🙂</string>
+    <string name="demo_sms_3">วันเสาร์กินพิซซ่าที่กระท่อมไหม บอกหน่อยว่าใครไปบ้าง!</string>
+    <string name="demo_sms_4">นับพวกเราด้วย เจอกันวันเสาร์!</string>
+    <string name="demo_history_6">เยี่ยม! เส้นทางเป็นยังไงบ้างหลังพายุเมื่อวาน</string>
     <string name="demo_maya">วิทยุของมายา</string>
     <string name="demo_no_firmware">การติดตั้งเฟิร์มแวร์ต้องใช้โหนดจริง โหมดสาธิตแสดงได้เพียงเวอร์ชันเท่านั้น</string>
     <string name="demo_node">โหนดสาธิต</string>

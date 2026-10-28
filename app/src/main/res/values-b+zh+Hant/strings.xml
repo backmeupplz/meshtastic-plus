@@ -58,6 +58,12 @@
     <string name="demo_history_3">到第二個湖了。這裡完全沒有手機訊號，Mesh 還是能用 🙂</string>
     <string name="demo_history_4">收到。晚上 7 點營地吃飯。</string>
     <string name="demo_history_5">你會帶爐頭嗎？</string>
+    <string name="demo_sms_room">簡訊</string>
+    <string name="demo_sms_1">嗨！你們在山上都還好嗎？天氣預報說今晚有暴風雨。</string>
+    <string name="demo_sms_2">都很好，媽！我們會在下雨前回到營地 🙂</string>
+    <string name="demo_sms_3">週六去小屋吃披薩？告訴我誰要來！</string>
+    <string name="demo_sms_4">算我們一份，週六見！</string>
+    <string name="demo_history_6">太好了！昨天暴風雨過後，步道怎麼樣？</string>
     <string name="demo_maya">Maya 的手持機</string>
     <string name="demo_no_firmware">安裝韌體需要真實節點；示範模式只能顯示版本。</string>
     <string name="demo_node">示範節點</string>

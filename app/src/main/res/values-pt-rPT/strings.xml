@@ -58,6 +58,12 @@
     <string name="demo_history_3">Cheguei ao segundo lago. Zero rede aqui, e a mesh continua a funcionar 🙂</string>
     <string name="demo_history_4">Entendido. Jantar às 7 no acampamento.</string>
     <string name="demo_history_5">Levas o fogareiro?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">Olá! Está tudo bem aí em cima? A previsão diz trovoada esta noite.</string>
+    <string name="demo_sms_2">Está tudo bem, mãe! Voltamos ao acampamento antes da chuva 🙂</string>
+    <string name="demo_sms_3">Pizza no refúgio no sábado? Digam-me quem vem!</string>
+    <string name="demo_sms_4">Contem connosco, até sábado!</string>
+    <string name="demo_history_6">Boa! Como está o trilho depois da tempestade de ontem?</string>
     <string name="demo_maya">Portátil da Maya</string>
     <string name="demo_no_firmware">Instalar firmware requer um nó real; a demonstração só pode mostrar as versões.</string>
     <string name="demo_node">Nó de demonstração</string>

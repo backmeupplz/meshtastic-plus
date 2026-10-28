@@ -58,6 +58,12 @@
     <string name="demo_history_3">Am zweiten See angekommen. Null Handyempfang hier, das Mesh läuft trotzdem 🙂</string>
     <string name="demo_history_4">Verstanden. Abendessen um 7 im Lager.</string>
     <string name="demo_history_5">Bringst du den Kocher mit?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">Hallo! Geht es euch da oben gut? Für heute Nacht sind Gewitter angesagt.</string>
+    <string name="demo_sms_2">Alles gut, Mama! Wir sind vor dem Regen zurück im Lager 🙂</string>
+    <string name="demo_sms_3">Pizza in der Hütte am Samstag? Sagt Bescheid, wer dabei ist!</string>
+    <string name="demo_sms_4">Wir sind dabei, bis Samstag!</string>
+    <string name="demo_history_6">Super! Wie ist der Weg nach dem Sturm gestern?</string>
     <string name="demo_maya">Mayas Handgerät</string>
     <string name="demo_no_firmware">Zum Installieren von Firmware brauchst du einen echten Knoten; die Demo kann nur die Versionen anzeigen.</string>
     <string name="demo_node">Demo-Knoten</string>

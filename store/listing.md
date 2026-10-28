@@ -10,7 +10,7 @@ Package: `com.borodutch.meshplus` · Bundle: `app/build/outputs/bundle/playRelea
 
 **Category**: Communication · **Contact email**: (yours) · **Website**: https://meshplus.app · **Privacy policy**: https://meshplus.app/privacy.html
 
-**Graphics**: `fastlane/metadata/android/en-US/images/` (icon.png, featureGraphic.png, phoneScreenshots/*.png; shared with F-Droid).
+**Graphics**: `fastlane/metadata/android/<language>/images/` (icon.png in en-US, featureGraphic.jpg and phone, 7" and 10" screenshots in every language; shared with F-Droid; see AGENTS.md).
 
 ## App access (for reviewers)
 

@@ -58,6 +58,12 @@
     <string name="demo_history_3">Arrivato al secondo lago. Qui zero campo, ma la mesh funziona ancora 🙂</string>
     <string name="demo_history_4">Ricevuto. Cena alle 19 al campo.</string>
     <string name="demo_history_5">Porti tu il fornelletto?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">Ciao! State tutti bene lassù? Il meteo dà temporali stanotte.</string>
+    <string name="demo_sms_2">Tutto bene, mamma! Torniamo al campo prima della pioggia 🙂</string>
+    <string name="demo_sms_3">Pizza al rifugio sabato? Fatemi sapere chi viene!</string>
+    <string name="demo_sms_4">Ci siamo anche noi, a sabato!</string>
+    <string name="demo_history_6">Bello! Com\'è il sentiero dopo il temporale di ieri?</string>
     <string name="demo_maya">Radio di Maya</string>
     <string name="demo_no_firmware">Per installare il firmware serve un nodo vero; la demo può solo mostrare le versioni.</string>
     <string name="demo_node">Nodo demo</string>

@@ -58,6 +58,12 @@
     <string name="demo_history_3">Sudah sampai di danau kedua. Di sini sama sekali tidak ada sinyal, tapi mesh tetap jalan 🙂</string>
     <string name="demo_history_4">Siap. Makan malam jam 7 di kemah.</string>
     <string name="demo_history_5">Kamu bawa kompornya?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">Hai! Kalian semua baik-baik saja di atas? Ramalan cuaca bilang ada badai malam ini.</string>
+    <string name="demo_sms_2">Semua aman, Bu! Kami kembali ke kemah sebelum hujan 🙂</string>
+    <string name="demo_sms_3">Pizza di pondok hari Sabtu? Kabari siapa yang ikut!</string>
+    <string name="demo_sms_4">Kami ikut, sampai ketemu Sabtu!</string>
+    <string name="demo_history_6">Mantap! Bagaimana jalurnya setelah badai kemarin?</string>
     <string name="demo_maya">Handheld Maya</string>
     <string name="demo_no_firmware">Menginstal firmware memerlukan node sungguhan; demo hanya dapat menampilkan versinya.</string>
     <string name="demo_node">Node Demo</string>

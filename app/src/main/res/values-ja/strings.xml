@@ -58,6 +58,12 @@
     <string name="demo_history_3">2つ目の湖に着いた。ここは携帯の電波ゼロだけど、メッシュはちゃんと使える 🙂</string>
     <string name="demo_history_4">了解。夕食は7時にキャンプで。</string>
     <string name="demo_history_5">バーナー持ってきますか？</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">こんにちは！そっちはみんな大丈夫？今夜は嵐になる予報だよ。</string>
+    <string name="demo_sms_2">大丈夫だよ、お母さん！雨が降る前にキャンプに戻るね 🙂</string>
+    <string name="demo_sms_3">土曜日に山小屋でピザはどう？来る人は教えてね！</string>
+    <string name="demo_sms_4">僕たちも行くよ、土曜日にね！</string>
+    <string name="demo_history_6">いいね！昨日の嵐のあと、道の様子はどう？</string>
     <string name="demo_maya">マヤのハンディ機</string>
     <string name="demo_no_firmware">ファームウェアのインストールには実際のノードが必要です。デモではバージョンの表示のみ可能です。</string>
     <string name="demo_node">デモノード</string>

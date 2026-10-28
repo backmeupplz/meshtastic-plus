@@ -37,6 +37,8 @@ class DemoLink : Link {
     private val channels = mutableMapOf(
         0 to (Pb().bytes(2, byteArrayOf(1)).build() to 1), // Public
         1 to (Pb().bytes(2, ByteArray(32) { (it * 37 + 11).toByte() }).str(3, string(R.string.demo_room).replace(" ", "").fitBytes(11)).build() to 2),
+        // Base Camp's phone has signal and relays SMS and calls into this room (see [Relay])
+        2 to (Pb().bytes(2, ByteArray(32) { (it * 53 + 29).toByte() }).str(3, string(R.string.demo_sms_room).replace(" ", "").fitBytes(11)).build() to 2),
     )
     private var inTransaction = false
     private var reply = 0
@@ -79,12 +81,24 @@ class DemoLink : Link {
         sections.forEach { (section, bytes) -> emit(Pb().msg(5, Pb().bytes(section, bytes))) }
         channels.forEach { (index, ch) -> emit(Pb().msg(10, Pb().uint(1, index.toLong()).bytes(2, ch.first).uint(3, ch.second.toLong()))) }
         emit(Pb().uint(7, id)) // config_complete_id
-        // A little history so the screens aren't empty (stable ids: the app skips ones it already has).
+        // A little history so the screens aren't empty, oldest first per conversation (stable ids: the app skips ones it
+        // already has).
         packet(peers[1], BROADCAST, 0, string(R.string.demo_history_1), 0x0de30101, 50)
         packet(peers[2], BROADCAST, 0, string(R.string.demo_history_2), 0x0de30102, 20)
         packet(peers[0], BROADCAST, 1, string(R.string.demo_history_3), 0x0de30103, 15)
+        mine(BROADCAST, 1, string(R.string.demo_history_6), 0x0de30106, 14)
         packet(peers[3], BROADCAST, 1, string(R.string.demo_history_4), 0x0de30104, 12)
         packet(peers[0], me, 0, string(R.string.demo_history_5), 0x0de30105, 8)
+        // The SMS room: texts and a missed call from outside numbers, answered through the relay (wire texts as [Relay] posts them)
+        val base = peers[3]
+        packet(base, BROADCAST, 2, "Relay on: SMS and calls to this phone will show up here. To text someone, send $SMS_COMMAND +15551234567 your message", 0x0de30110, 45)
+        packet(base, BROADCAST, 2, "SMS from +14155550142: ${string(R.string.demo_sms_1)}", 0x0de30111, 40)
+        packet(peers[0], BROADCAST, 2, "$SMS_COMMAND +14155550142 ${string(R.string.demo_sms_2)}", 0x0de30112, 37)
+        packet(base, BROADCAST, 2, "SMS to +14155550142 sent (asked by ${peers[0].long})", 0x0de30113, 37)
+        packet(base, BROADCAST, 2, "Missed call from +14155550177", 0x0de30114, 26)
+        packet(base, BROADCAST, 2, "SMS from +14155550177: ${string(R.string.demo_sms_3)}", 0x0de30115, 25)
+        mine(BROADCAST, 2, "$SMS_COMMAND +14155550177 ${string(R.string.demo_sms_4)}", 0x0de30116, 22)
+        packet(base, BROADCAST, 2, "SMS to +14155550177 sent (asked by $myLong)", 0x0de30117, 22)
     }
 
     private fun packet(from: Peer, to: Long, channel: Int, text: String, id: Long, agoMin: Int) {
@@ -92,6 +106,16 @@ class DemoLink : Link {
         emit(Pb().msg(2, Pb().fixed32(1, from.num).fixed32(2, to).uint(3, channel.toLong())
             .msg(4, Pb().uint(1, 1).str(2, text)).fixed32(6, id).fixed32(7, rx)
             .fixed32(8, from.snr.toRawBits().toLong()).uint(9, 3).uint(15, (3 + from.hops).toLong())))
+    }
+
+    /** A message this phone sent earlier, relayed by the mesh. The app keeps its own sent messages, so only once. */
+    private fun mine(to: Long, channel: Int, text: String, id: Long, agoMin: Int) {
+        if (Mesh.has(me, id)) return
+        val rx = System.currentTimeMillis() / 1000 - agoMin * 60
+        emit(Pb().msg(2, Pb().fixed32(1, me).fixed32(2, to).uint(3, channel.toLong())
+            .msg(4, Pb().uint(1, 1).str(2, text)).fixed32(6, id).fixed32(7, rx)))
+        emit(Pb().msg(2, Pb().fixed32(1, peers[1].num).fixed32(2, me) // someone rebroadcast it
+            .msg(4, Pb().uint(1, 5).bytes(2, ByteArray(0)).fixed32(6, id))))
     }
 
     /** The phone sent a message: confirm delivery (or a relay for rooms), then someone answers. */
@@ -102,6 +126,15 @@ class DemoLink : Link {
         val ack = Pb().msg(2, Pb().fixed32(1, dm?.num ?: peers[1].num).fixed32(2, me)
             .msg(4, Pb().uint(1, 5).bytes(2, ByteArray(0)).fixed32(6, p.long(6)))) // routing ack, no error
         main.postDelayed({ emit(ack) }, 1200)
+        val line = relayLine(text)
+        if (line is RelayLine.Info) return // this phone turned its relay on or off: nothing to answer
+        val sms = line as? RelayLine.Sms
+        if (dm == null && channel == 2 && sms != null && !sms.incoming) { // a text for the SMS room: Base Camp's phone sends it
+            main.postDelayed({
+                packet(peers[3], BROADCAST, 2, "SMS to ${dialable(sms.number)} sent (asked by $myLong)", System.nanoTime() and 0x7FFFFFFF, 0)
+            }, 3500)
+            return
+        }
         val responder = dm ?: if (channel == 1) peers[if (reply % 2 == 0) 0 else 3] else peers[reply % peers.size]
         val answer = replies[reply++ % replies.size]
         if (text.isNotBlank()) main.postDelayed({

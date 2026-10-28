@@ -58,6 +58,12 @@
     <string name="demo_history_3">Ya estoy en el segundo lago. Aquí no hay nada de cobertura, pero la red mesh sigue funcionando 🙂</string>
     <string name="demo_history_4">Recibido. Cena a las 7 en el campamento.</string>
     <string name="demo_history_5">¿Traes el hornillo?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">¡Hola! ¿Estáis todos bien ahí arriba? Dan tormentas para esta noche.</string>
+    <string name="demo_sms_2">¡Todo bien, mamá! Volveremos al campamento antes de la lluvia 🙂</string>
+    <string name="demo_sms_3">¿Pizza en el refugio el sábado? ¡Decidme quién se apunta!</string>
+    <string name="demo_sms_4">¡Contad con nosotros, nos vemos el sábado!</string>
+    <string name="demo_history_6">¡Genial! ¿Cómo está el sendero después de la tormenta de ayer?</string>
     <string name="demo_maya">Walkie de Maya</string>
     <string name="demo_no_firmware">Para instalar firmware hace falta un nodo real; la demo solo puede mostrar las versiones.</string>
     <string name="demo_node">Nodo de demostración</string>

@@ -58,6 +58,12 @@
     <string name="demo_history_3">दूसरी झील तक पहुँच गए। यहाँ मोबाइल सिग्नल बिल्कुल नहीं है, पर मेश फिर भी चल रहा है 🙂</string>
     <string name="demo_history_4">ठीक है। कैंप में 7 बजे डिनर।</string>
     <string name="demo_history_5">क्या तुम स्टोव ला रहे हो?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">नमस्ते! वहाँ ऊपर सब ठीक हैं? आज रात तूफ़ान का अनुमान है।</string>
+    <string name="demo_sms_2">सब ठीक है, माँ! हम बारिश से पहले कैंप लौट आएँगे 🙂</string>
+    <string name="demo_sms_3">शनिवार को लॉज में पिज़्ज़ा? बताओ कौन आ रहा है!</string>
+    <string name="demo_sms_4">हम भी आ रहे हैं, शनिवार को मिलते हैं!</string>
+    <string name="demo_history_6">बढ़िया! कल के तूफ़ान के बाद रास्ता कैसा है?</string>
     <string name="demo_maya">माया का रेडियो</string>
     <string name="demo_no_firmware">फ़र्मवेयर इंस्टॉल करने के लिए असली नोड चाहिए; डेमो सिर्फ़ वर्ज़न दिखा सकता है।</string>
     <string name="demo_node">डेमो नोड</string>

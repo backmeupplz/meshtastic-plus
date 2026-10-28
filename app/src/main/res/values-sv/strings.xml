@@ -58,6 +58,12 @@
     <string name="demo_history_3">Framme vid andra sjön. Ingen mobiltäckning alls här, men meshen funkar fortfarande 🙂</string>
     <string name="demo_history_4">Uppfattat. Middag kl. 19 i lägret.</string>
     <string name="demo_history_5">Tar du med stormköket?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">Hej! Är allt okej där uppe? Prognosen säger åska i natt.</string>
+    <string name="demo_sms_2">Allt är bra, mamma! Vi är tillbaka i lägret före regnet 🙂</string>
+    <string name="demo_sms_3">Pizza på stugan på lördag? Säg till vem som är med!</string>
+    <string name="demo_sms_4">Vi är med, vi ses på lördag!</string>
+    <string name="demo_history_6">Snyggt! Hur är leden efter gårdagens storm?</string>
     <string name="demo_maya">Mayas handenhet</string>
     <string name="demo_no_firmware">Det krävs en riktig nod för att installera firmware; demon kan bara visa versionerna.</string>
     <string name="demo_node">Demonod</string>

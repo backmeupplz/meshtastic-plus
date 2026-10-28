@@ -661,6 +661,9 @@ object Mesh {
         prefs().edit { putBoolean("named", true) }
     }
 
+    /** Whether the history holds message [id] from node [from], whichever node is connected (myNum isn't set yet while a node syncs). */
+    fun has(from: Long, id: Long) = all.any { it.from == from && it.id == id }
+
     private fun add(m: Message) {
         all += m
         save()

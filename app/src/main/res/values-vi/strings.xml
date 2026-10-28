@@ -58,6 +58,12 @@
     <string name="demo_history_3">Đã tới hồ thứ hai. Ở đây không có sóng điện thoại, nhưng mạng mesh vẫn chạy 🙂</string>
     <string name="demo_history_4">Rõ. Ăn tối lúc 7 giờ ở trại.</string>
     <string name="demo_history_5">Bạn có mang bếp theo không?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">Chào! Mọi người trên đó ổn cả chứ? Dự báo tối nay có bão.</string>
+    <string name="demo_sms_2">Mọi thứ ổn mẹ ạ! Tụi con sẽ về trại trước khi mưa 🙂</string>
+    <string name="demo_sms_3">Thứ Bảy ăn pizza ở nhà nghỉ nhé? Ai đi thì báo nhé!</string>
+    <string name="demo_sms_4">Tính cả tụi mình nhé, hẹn thứ Bảy!</string>
+    <string name="demo_history_6">Tuyệt! Đường mòn sau cơn bão hôm qua thế nào?</string>
     <string name="demo_maya">Máy cầm tay của Maya</string>
     <string name="demo_no_firmware">Cần node thật để cài firmware; bản demo chỉ hiển thị được các phiên bản.</string>
     <string name="demo_node">Node demo</string>

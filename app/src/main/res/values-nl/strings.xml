@@ -58,6 +58,12 @@
     <string name="demo_history_3">Bij het tweede meer aangekomen. Hier nul bereik, maar de mesh werkt nog 🙂</string>
     <string name="demo_history_4">Ontvangen. Om 7 uur eten in het kamp.</string>
     <string name="demo_history_5">Neem jij de brander mee?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">Hoi! Gaat alles goed daarboven? Er wordt vannacht onweer voorspeld.</string>
+    <string name="demo_sms_2">Alles goed, mam! We zijn voor de regen terug in het kamp 🙂</string>
+    <string name="demo_sms_3">Pizza in de hut op zaterdag? Laat weten wie er komt!</string>
+    <string name="demo_sms_4">Wij zijn erbij, tot zaterdag!</string>
+    <string name="demo_history_6">Mooi! Hoe is het pad na de storm van gisteren?</string>
     <string name="demo_maya">Maya\'s portofoon</string>
     <string name="demo_no_firmware">Voor het installeren van firmware is een echte node nodig; de demo kan alleen de versies tonen.</string>
     <string name="demo_node">Demonode</string>

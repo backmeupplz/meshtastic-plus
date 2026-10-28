@@ -240,13 +240,14 @@ object Relay {
 
     fun flush() {
         val ch = channel() ?: return
-        if (!Mesh.connected) return
+        // the demo has a room called "SMS" too: real texts and calls wait for the real node instead of landing there
+        if (!Mesh.connected || Mesh.demo) return
         while (outbox.isNotEmpty()) Mesh.send(outbox.removeFirst(), ch, 0)
     }
 
     /** A room message arrived: if it's "/sms <number> <text>" in the relay room, send that SMS. */
     fun command(m: Message) {
-        if (!enabled || m.mine || m.peer != 0L || m.channel != channel()) return
+        if (!enabled || Mesh.demo || m.mine || m.peer != 0L || m.channel != channel()) return // the demo's texts are pretend
         deliver(m.text, m.name)
     }
 
@@ -254,7 +255,7 @@ object Relay {
     fun sendOwn(command: String) {
         val ch = channel() ?: return
         Mesh.send(command, ch, 0)
-        deliver(command, "this phone")
+        if (!Mesh.demo) deliver(command, "this phone") // the demo node answers for it
     }
 
     private fun deliver(command: String, askedBy: String) {

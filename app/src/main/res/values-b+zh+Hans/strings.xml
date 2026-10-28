@@ -58,6 +58,12 @@
     <string name="demo_history_3">到第二个湖了。这里手机一点信号都没有，Mesh 照样能用 🙂</string>
     <string name="demo_history_4">收到。晚上 7 点营地吃饭。</string>
     <string name="demo_history_5">你带炉头了吗？</string>
+    <string name="demo_sms_room">短信</string>
+    <string name="demo_sms_1">嗨！你们在山上都还好吗？天气预报说今晚有暴风雨。</string>
+    <string name="demo_sms_2">都挺好的，妈！我们会在下雨前回到营地 🙂</string>
+    <string name="demo_sms_3">周六去小屋吃披萨？告诉我谁来！</string>
+    <string name="demo_sms_4">算我们一个，周六见！</string>
+    <string name="demo_history_6">太好了！昨天暴风雨过后，步道怎么样？</string>
     <string name="demo_maya">Maya 的手持机</string>
     <string name="demo_no_firmware">安装固件需要真实节点；演示模式只能显示版本。</string>
     <string name="demo_node">演示节点</string>

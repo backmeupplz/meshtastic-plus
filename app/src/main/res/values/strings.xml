@@ -450,4 +450,10 @@
     <string name="demo_history_3">Made it to the second lake. Zero cell signal here, the mesh still works 🙂</string>
     <string name="demo_history_4">Copy. Dinner at 7 at camp.</string>
     <string name="demo_history_5">Are you bringing the stove?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">Hi! Are you all OK up there? The forecast says storms tonight.</string>
+    <string name="demo_sms_2">All good, Mom! We\'ll be back at camp before the rain 🙂</string>
+    <string name="demo_sms_3">Pizza at the lodge on Saturday? Let me know who\'s in!</string>
+    <string name="demo_sms_4">Count us in, see you Saturday!</string>
+    <string name="demo_history_6">Nice! How\'s the trail after yesterday\'s storm?</string>
 </resources>

@@ -58,6 +58,12 @@
     <string name="demo_history_3">وصلت إلى البحيرة الثانية. لا توجد أي إشارة جوال هنا، لكن الشبكة ما زالت تعمل 🙂</string>
     <string name="demo_history_4">تمام. العشاء الساعة 7 في المخيم.</string>
     <string name="demo_history_5">هل ستُحضر الموقد؟</string>
+    <string name="demo_sms_room">رسائل</string>
+    <string name="demo_sms_1">مرحبًا! هل أنتم بخير هناك؟ النشرة تتوقع عواصف الليلة.</string>
+    <string name="demo_sms_2">كل شيء بخير يا أمي! سنعود إلى المخيم قبل المطر 🙂</string>
+    <string name="demo_sms_3">بيتزا في الكوخ يوم السبت؟ أخبروني من سيأتي!</string>
+    <string name="demo_sms_4">نحن معكم، نراكم يوم السبت!</string>
+    <string name="demo_history_6">رائع! كيف حال الدرب بعد عاصفة الأمس؟</string>
     <string name="demo_maya">جهاز مايا المحمول</string>
     <string name="demo_no_firmware">يتطلب تثبيت البرنامج الثابت عقدة حقيقية، فالعرض التجريبي يعرض الإصدارات فقط.</string>
     <string name="demo_node">عقدة تجريبية</string>

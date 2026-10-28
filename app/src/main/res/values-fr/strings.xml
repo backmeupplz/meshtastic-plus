@@ -58,6 +58,12 @@
     <string name="demo_history_3">Arrivé au deuxième lac. Zéro réseau ici, le mesh marche toujours 🙂</string>
     <string name="demo_history_4">Reçu. Dîner à 19 h au camp.</string>
     <string name="demo_history_5">Tu apportes le réchaud ?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">Salut ! Tout va bien là-haut ? La météo annonce des orages ce soir.</string>
+    <string name="demo_sms_2">Tout va bien, maman ! On sera de retour au camp avant la pluie 🙂</string>
+    <string name="demo_sms_3">Pizza au refuge samedi ? Dites-moi qui vient !</string>
+    <string name="demo_sms_4">On en est, à samedi !</string>
+    <string name="demo_history_6">Super ! Comment est le sentier après l\'orage d\'hier ?</string>
     <string name="demo_maya">Radio de Maya</string>
     <string name="demo_no_firmware">L\'installation d\'un firmware nécessite un vrai nœud ; la démo peut seulement afficher les versions.</string>
     <string name="demo_node">Nœud de démo</string>

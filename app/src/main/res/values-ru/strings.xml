@@ -58,6 +58,12 @@
     <string name="demo_history_3">Дошли до второго озера. Сотовой связи тут ноль, а Meshtastic работает 🙂</string>
     <string name="demo_history_4">Принято. Ужин в 7 в лагере.</string>
     <string name="demo_history_5">Ты возьмёшь горелку?</string>
+    <string name="demo_sms_room">СМС</string>
+    <string name="demo_sms_1">Привет! У вас там всё в порядке? Ночью обещают грозу.</string>
+    <string name="demo_sms_2">Всё хорошо, мам! Вернёмся в лагерь до дождя 🙂</string>
+    <string name="demo_sms_3">Пицца в домике в субботу? Напишите, кто идёт!</string>
+    <string name="demo_sms_4">Мы в деле, до субботы!</string>
+    <string name="demo_history_6">Класс! Как тропа после вчерашней грозы?</string>
     <string name="demo_maya">Рация Майи</string>
     <string name="demo_no_firmware">Для установки прошивки нужен настоящий узел; в демо можно только посмотреть версии.</string>
     <string name="demo_node">Демо-узел</string>

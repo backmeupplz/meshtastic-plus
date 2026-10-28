@@ -58,6 +58,12 @@
     <string name="demo_history_3">İkinci göle vardım. Burada hiç şebeke yok ama ağ hâlâ çalışıyor 🙂</string>
     <string name="demo_history_4">Anlaşıldı. Akşam yemeği 19.00\'da kampta.</string>
     <string name="demo_history_5">Ocağı getiriyor musun?</string>
+    <string name="demo_sms_room">SMS</string>
+    <string name="demo_sms_1">Merhaba! Orada her şey yolunda mı? Bu gece fırtına bekleniyor.</string>
+    <string name="demo_sms_2">Her şey yolunda anne! Yağmurdan önce kampa döneceğiz 🙂</string>
+    <string name="demo_sms_3">Cumartesi kulübede pizza? Kimler geliyor, haber verin!</string>
+    <string name="demo_sms_4">Biz de varız, cumartesi görüşürüz!</string>
+    <string name="demo_history_6">Harika! Dünkü fırtınadan sonra patika nasıl?</string>
     <string name="demo_maya">Maya\'nın El Telsizi</string>
     <string name="demo_no_firmware">Donanım yazılımı yüklemek için gerçek bir düğüm gerekir; demo yalnızca sürümleri gösterebilir.</string>
     <string name="demo_node">Demo Düğüm</string>
