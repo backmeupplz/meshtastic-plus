@@ -17,8 +17,11 @@ struct MeshPlusApp: App {
 final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(_ app: UIApplication, didFinishLaunchingWithOptions options: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         UNUserNotificationCenter.current().delegate = self
-        // UI tests: no transitions to wait out (XCUITest waits for the app to go idle after every step).
-        if CommandLine.arguments.contains("-uitest") { UIView.setAnimationsEnabled(false) }
+        // UI tests: no transitions to wait out (XCUITest waits for the app to go idle after every step). The store
+        // screenshots keep them (`-animations`), to look like the app in use: without them, on the Duo cover display
+        // simulator (iOS 27.1) closing the keyboard left a short conversation bottom-aligned to the navigation bar's
+        // collapsed inset, which put the newest message behind the message field once the bar came back (#249).
+        if CommandLine.arguments.contains("-uitest") && !CommandLine.arguments.contains("-animations") { UIView.setAnimationsEnabled(false) }
         #if DEBUG
         if CommandLine.arguments.contains("-foldtest") { FoldTest.observe() }
         #endif

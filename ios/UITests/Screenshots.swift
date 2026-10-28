@@ -33,7 +33,7 @@ final class Screenshots: XCTestCase {
         let app = XCUIApplication()
         let extra = env["SHOTS_ARGS"]?.split(separator: " ").map(String.init) ?? []
         let languageArgs = language == "en" ? [] : ["-AppleLanguages", "(\(language))", "-AppleLocale", language.replacingOccurrences(of: "-", with: "_")]
-        app.launchArguments = ["-uitest"] + languageArgs + extra
+        app.launchArguments = ["-uitest", "-animations"] + languageArgs + extra
         app.launch()
         // the demo room's name as the demo node has it (Demo.swift): no spaces, at most 11 bytes
         var room = t("Hiking").replacingOccurrences(of: " ", with: "")
@@ -52,8 +52,10 @@ final class Screenshots: XCTestCase {
         app.buttons[t("Send")].tap()
         XCTAssert(app.staticTexts[reply].waitForExistence(timeout: 10))
         app.hideKeyboard(above: reply, today: t("Today"))
-        // the list can stay scrolled up where the keyboard pushed it: bring the newest message back above the message field
-        let shown = { app.staticTexts[reply].isHittable && app.staticTexts[reply].frame.maxY + 30 <= field.frame.minY } // its time sits below the text
+        // the list can stay scrolled up where the keyboard pushed it: bring the newest message back above the message field,
+        // as drawn, not just as its accessibility frame says (#249)
+        let shown = { app.staticTexts[reply].isHittable && app.staticTexts[reply].frame.maxY + 30 <= field.frame.minY // its time sits below the text
+            && app.drawn(app.staticTexts[reply], above: field) }
         for _ in 0..<5 where !shown() {
             app.scrollViews.containing(.staticText, identifier: reply).firstMatch.swipeUp()
             sleep(1)

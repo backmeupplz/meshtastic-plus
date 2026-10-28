@@ -57,6 +57,8 @@ struct ConversationView: View {
     @Environment(HomeModel.self) private var model
     @FocusState private var typing: Bool
     @State private var instance = UUID()
+    @State private var lastShown = false // the newest message's bubble is on screen
+    @State private var tapClosed = false // a tap on the messages is closing the keyboard
 
     private var peer: Int64 { convo.hasPrefix("dm:") ? Int64(convo.dropFirst(3)) ?? 0 : 0 }
     private var channel: Int { convo.hasPrefix("ch:") ? Int(convo.dropFirst(3)) ?? 0 : 0 }
@@ -89,6 +91,8 @@ struct ConversationView: View {
                                 }
                             }
                             .id(i)
+                            .onAppear { if i == messages.count - 1 { lastShown = true } }
+                            .onDisappear { if i == messages.count - 1 { lastShown = false } }
                     }
                 }
                 .padding(12)
@@ -96,10 +100,17 @@ struct ConversationView: View {
             }
             .defaultScrollAnchor(.bottom)
             .scrollDismissesKeyboard(.immediately)
-            .onTapGesture { typing = false }
+            .onTapGesture { tapClosed = typing; typing = false }
             .onChange(of: messages.count) { _, n in
                 mesh.markRead(convo)
                 withAnimation { proxy.scrollTo(n - 1, anchor: .bottom) }
+            }
+            // Closing the keyboard with a tap can leave a short conversation shifted down, its newest message behind the
+            // message field (#249, on iPhone Duo's cover display): put that message back above the field if it was on screen.
+            // Not after a drag, which closes it too: that's someone scrolling through the history.
+            .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
+                if tapClosed && lastShown && !messages.isEmpty { withAnimation { proxy.scrollTo(messages.count - 1, anchor: .bottom) } }
+                tapClosed = false
             }
         }
         .overlay {
@@ -179,7 +190,7 @@ struct ConversationView: View {
         }
         .onChange(of: typing) { _, on in
             let model = model, me = instance
-            if on { model.focused = convo; model.composer = me; return }
+            if on { tapClosed = false; model.focused = convo; model.composer = me; return }
             // Folding takes the keyboard from the outgoing composer too, and that isn't the user closing it: forget it
             // only if no other composer came in meanwhile.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { if model.composer == me && model.focused == convo { model.focused = nil } }
