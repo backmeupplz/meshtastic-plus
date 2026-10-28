@@ -42,7 +42,7 @@ CJK = {'zh-Hans': "'PingFang SC'", 'zh-Hant': "'PingFang TC'", 'ja': "'Hiragino 
 BG = 'radial-gradient(120% 60% at 85% 0%, rgb(103 234 148 / 0.30), transparent 65%), radial-gradient(90% 50% at 0% 100%, rgb(103 234 148 / 0.14), transparent 60%), #060b08'
 GREEN = '#67ea94'
 GAP = 48  # caption to screenshot
-BRAND = os.path.join(repo, 'docs/fonts/bricolage-grotesque-normal-3b58e8bd.woff2')  # the site's display font, for the name
+BRAND = os.path.join(repo, 'docs/fonts/bricolage-grotesque-normal-fb207cb2.woff2')  # the site's display font, for the name
 # the icon's three nodes, without its background square
 MARK = f'''<svg data-box="icon" width="220" height="220" viewBox="10 12 56 62" xmlns="http://www.w3.org/2000/svg"><g fill="{GREEN}">
 <path d="M38,22 L22,50 L54,50 Z" fill="none" stroke="{GREEN}" stroke-width="4" stroke-linejoin="round"/>
