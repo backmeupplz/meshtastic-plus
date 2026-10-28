@@ -19,3 +19,7 @@ Then run `tea release create --repo backmeupplz/meshtastic-plus --tag vX.Y.Z --t
 To try a release without publishing anything, run the Release workflow by hand (Actions → Release → Run workflow on git.borodutch.com) with mode `dry-run`. It builds both apps and shows what it would do. Mode `testflight-only` uploads the iPhone build to TestFlight without submitting it.
 
 `.github/scripts` is shared with ABS+ and Todorant, so keep it identical in all three repos. The repo-specific values live in the workflow's `env`.
+
+## Store texts
+
+Each language's App Store listing (name, subtitle, keywords, promotional text, description, screenshot captions and the Play feature graphic tagline) is in `appstore/<App Store locale>/listing.md`, with en-US in `appstore/listing.md`. Its Play and F-Droid texts are in `fastlane/metadata/android/<Play code>/`. The App Store texts describe the iPhone app, which has no SMS relay, USB or firmware updates, and never name another platform. `node scripts/store-copy.mjs` checks every language against the stores' limits and keyword rules, and the Store texts workflow runs it on every change. The keyword research behind them is in prime-radiant `projects/meshplus/drafts/aso-<locale>.md`.

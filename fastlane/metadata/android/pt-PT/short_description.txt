@@ -1,0 +1,1 @@
+Converse sem internet com rádios Meshtastic e leia as SMS do telemóvel pela mesh

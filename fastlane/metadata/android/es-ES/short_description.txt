@@ -1,0 +1,1 @@
+Chatea sin internet con radios Meshtastic y recibe tus SMS por la red mesh

@@ -1,0 +1,1 @@
+Chatte ohne Netz über Meshtastic-Funkgeräte und lies deine SMS übers Mesh.

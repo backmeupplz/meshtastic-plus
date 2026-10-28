@@ -1,0 +1,1 @@
+Chat tanpa internet lewat radio Meshtastic, dan terima SMS ponsel lewat mesh

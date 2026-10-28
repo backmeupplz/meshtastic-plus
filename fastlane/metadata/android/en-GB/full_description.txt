@@ -1,0 +1,15 @@
+Mesh+ is a small, friendly companion app for Meshtastic radios. Pair your radio over Bluetooth or plug it in with a USB-C cable, and you can chat with people nearby across the LoRa mesh and keep up with your phone's texts and calls, without internet or mobile signal anywhere along the way.
+
+The SMS relay brings your texts over the mesh. Leave one phone where there's signal, at base camp, in the car or at home, and turn on its relay. Mesh+ forwards the SMS that phone receives and the number of each incoming call to a private, encrypted room on your radio, so you can read them wherever the mesh reaches. Answer from that room and the relay phone sends your reply as a regular SMS from its own number. Everyone in the room can read and answer, so keep it to people you trust. The relay is off until you turn it on in Settings, Android asks for SMS and call log access only then, and nothing is ever sent to us or any server.
+
+Setting up takes about a minute: pick your radio, type the PIN from its screen, choose your region and a name, and you're ready to chat.
+
+The public channel, private rooms you share with a QR code or link, and end-to-end encrypted direct messages all live in one list with unread badges, and you can mute the ones you don't want notifications from. Mesh+ keeps running in the background while you're connected and lets you know about new messages.
+
+Every radio setting has a short note on what it does and when you'd change it, from radio presets and hop limits to Bluetooth pairing, power saving and the screen.
+
+You can update nRF52 radios such as the Heltec T114 and RAK4631 from your phone, over a USB cable in about a minute or over Bluetooth, and pick the newest firmware release, a pre-release or any earlier version.
+
+Switch between all your radios from the top bar and see which board each one is, the firmware it runs and its battery voltage. If you don't have a radio yet, you can try the built-in demo.
+
+Mesh+ has no accounts, ads or analytics, and your messages stay on your phone. It's an independent open-source project and isn't affiliated with or endorsed by Meshtastic LLC. Meshtastic® is a registered trademark of Meshtastic LLC.

@@ -1,0 +1,1 @@
+Meshtastic telsizleriyle internetsiz mesajlaş, SMS’lerini de ağ üzerinden al

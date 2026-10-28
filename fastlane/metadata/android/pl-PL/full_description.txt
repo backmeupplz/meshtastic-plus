@@ -1,0 +1,15 @@
+Mesh+ to mała, przyjazna aplikacja do radiów Meshtastic. Połącz radio przez Bluetooth albo kablem USB-C, a będziesz rozmawiać z ludźmi w pobliżu przez sieć mesh LoRa i śledzić SMS-y oraz połączenia ze swojego telefonu, bez internetu i zasięgu komórkowego na całej trasie.
+
+Przekaźnik SMS przenosi Twoje SMS-y przez sieć mesh. Zostaw jeden telefon tam, gdzie jest zasięg, w bazie, w samochodzie albo w domu, i włącz na nim przekaźnik. Mesh+ przekazuje SMS-y, które dostaje ten telefon, i numer każdego połączenia przychodzącego do prywatnego, szyfrowanego pokoju na Twoim radiu, więc możesz je czytać wszędzie, dokąd sięga sieć. Odpowiedz z tego pokoju, a telefon przekaźnikowy wyśle Twoją odpowiedź jako zwykłego SMS-a ze swojego numeru. Wszyscy w pokoju mogą czytać i odpowiadać, więc zapraszaj tam tylko osoby, którym ufasz. Przekaźnik jest wyłączony, dopóki nie włączysz go w Ustawieniach, Android prosi o dostęp do SMS-ów i rejestru połączeń dopiero wtedy, a nic nigdy nie trafia do nas ani na żaden serwer.
+
+Konfiguracja zajmuje około minuty: wybierz swoje radio, wpisz PIN z jego ekranu, podaj region i imię, i już możesz pisać.
+
+Pokój publiczny, pokoje prywatne, które udostępniasz kodem QR lub linkiem, i wiadomości prywatne szyfrowane end-to-end są na jednej liście z licznikami nieprzeczytanych, a rozmowy, z których nie chcesz dostawać powiadomień, możesz wyciszyć. Gdy radio jest połączone, Mesh+ działa w tle i powiadamia Cię o nowych wiadomościach.
+
+Każde ustawienie radia ma krótką notkę o tym, co robi i kiedy warto je zmienić, od presetów radia i limitu przeskoków po parowanie przez Bluetooth, oszczędzanie energii i ekran.
+
+Radia z układem nRF52, takie jak Heltec T114 i RAK4631, zaktualizujesz z telefonu, kablem USB w około minutę albo przez Bluetooth, wybierając najnowsze wydanie firmware’u, wersję przedpremierową lub dowolną wcześniejszą.
+
+Przełączaj się między wszystkimi swoimi radiami na górnym pasku i sprawdzaj, jaką płytką jest każde z nich, jaki firmware na nim działa i jakie ma napięcie baterii. Jeśli nie masz jeszcze radia, możesz wypróbować wbudowane demo.
+
+Mesh+ nie ma kont, reklam ani analityki, a Twoje wiadomości zostają na Twoim telefonie. To niezależny projekt open source, który nie jest powiązany z Meshtastic LLC ani przez nią wspierany. Meshtastic® jest zastrzeżonym znakiem towarowym Meshtastic LLC.

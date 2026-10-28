@@ -1,0 +1,1 @@
+Nhắn tin không cần mạng qua radio Meshtastic, nhận cả SMS điện thoại qua mesh

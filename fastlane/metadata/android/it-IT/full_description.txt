@@ -1,0 +1,15 @@
+Mesh+ è una piccola app di accompagnamento, semplice e amichevole, per le radio Meshtastic. Abbina la tua radio via Bluetooth o collegala con un cavo USB-C, e potrai chattare con le persone vicine attraverso la rete mesh LoRa e tenere d'occhio gli SMS e le chiamate del tuo telefono, senza bisogno di internet né di campo lungo tutto il percorso, che tu sia in montagna, a un festival o in pieno blackout.
+
+L'inoltro SMS porta i tuoi messaggi sulla rete mesh. Lascia un telefono dove c'è campo, al rifugio, in macchina o a casa, e attiva il suo inoltro. Mesh+ inoltra gli SMS che riceve quel telefono e il numero di ogni chiamata in arrivo in una stanza privata e crittografata sulla tua radio, così puoi leggerli ovunque arrivi la rete mesh. Rispondi da quella stanza e il telefono di inoltro invia la tua risposta come un normale SMS dal proprio numero. Tutti nella stanza possono leggere e rispondere, quindi invita solo persone di cui ti fidi. L'inoltro resta spento finché non lo attivi nelle Impostazioni, solo allora Android chiede l'accesso agli SMS e al registro chiamate, e nulla viene mai inviato né a noi né ad alcun server.
+
+La configurazione richiede circa un minuto: scegli la tua radio, inserisci il PIN mostrato sul suo schermo, imposta la regione e un nome, e puoi iniziare a chattare.
+
+La stanza pubblica, le stanze private che condividi con un codice QR o un link e i messaggi diretti crittografati end-to-end stanno tutti in un'unica lista, con un badge per i messaggi non letti, e puoi silenziare quelli da cui non vuoi ricevere notifiche. Mesh+ continua a funzionare in background finché sei connesso e ti avvisa quando arrivano nuovi messaggi.
+
+Ogni impostazione della radio ha una breve nota che spiega a cosa serve e quando conviene cambiarla, dai preset radio e dal limite di salti fino all'abbinamento Bluetooth, al risparmio energetico e allo schermo.
+
+Puoi aggiornare dal telefono le radio nRF52 come la Heltec T114 e la RAK4631, con un cavo USB in circa un minuto oppure via Bluetooth, scegliendo la versione più recente del firmware, una versione preliminare o qualsiasi versione precedente.
+
+Passa da una radio all'altra dalla barra in alto e vedi per ciascuna di che scheda si tratta, quale firmware usa e la tensione della sua batteria. Se non hai ancora una radio, puoi provare la demo integrata.
+
+Mesh+ non richiede account e non contiene pubblicità né strumenti di analisi, e i tuoi messaggi restano sul tuo telefono. È un progetto open source indipendente, non affiliato a Meshtastic LLC né approvato da essa. Meshtastic® è un marchio registrato di Meshtastic LLC.

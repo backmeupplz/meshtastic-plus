@@ -1,0 +1,1 @@
+Discutez sans réseau avec des radios Meshtastic et recevez vos SMS via le mesh.

@@ -1,0 +1,15 @@
+Mesh+ là ứng dụng đồng hành nhỏ gọn, dễ dùng cho radio Meshtastic. Ghép nối radio qua Bluetooth hoặc cắm cáp USB-C, và bạn có thể trò chuyện với những người ở gần qua mạng mesh LoRa, đồng thời theo dõi SMS và cuộc gọi trên điện thoại của mình, mà suốt dọc đường không cần internet hay sóng di động, dù bạn đang đi phượt, cắm trại hay gặp thiên tai mất liên lạc.
+
+Tính năng chuyển tiếp SMS đưa tin nhắn của bạn qua mạng mesh. Hãy để lại một điện thoại ở nơi có sóng, như ở trại gốc, trong xe hay ở nhà, rồi bật chuyển tiếp trên máy đó. Mesh+ sẽ chuyển các SMS mà điện thoại đó nhận được và số của từng cuộc gọi đến vào một phòng riêng tư được mã hóa trên radio của bạn, để bạn đọc được ở bất cứ đâu mạng mesh vươn tới. Trả lời từ phòng đó, điện thoại chuyển tiếp sẽ gửi câu trả lời của bạn dưới dạng SMS thông thường từ chính số của nó. Mọi người trong phòng đều đọc và trả lời được, vì vậy chỉ nên để những người bạn tin tưởng trong phòng. Tính năng chuyển tiếp luôn tắt cho đến khi bạn bật nó trong Cài đặt, Android chỉ xin quyền truy cập SMS và nhật ký cuộc gọi vào lúc đó, và không có gì được gửi cho chúng tôi hay bất kỳ máy chủ nào.
+
+Việc cài đặt chỉ mất khoảng một phút: chọn radio, nhập mã PIN hiện trên màn hình của nó, chọn khu vực và đặt tên, thế là bạn đã sẵn sàng trò chuyện.
+
+Phòng công khai, phòng riêng tư mà bạn chia sẻ bằng mã QR hoặc đường liên kết, và tin nhắn riêng được mã hóa đầu cuối đều nằm chung một danh sách, có huy hiệu báo tin chưa đọc, và bạn có thể tắt tiếng những cuộc trò chuyện mà bạn không muốn nhận thông báo. Mesh+ tiếp tục chạy trong nền khi bạn đang kết nối và báo cho bạn khi có tin nhắn mới.
+
+Mỗi cài đặt của radio đều kèm một ghi chú ngắn cho biết nó làm gì và khi nào bạn nên thay đổi, từ cấu hình sẵn của radio và số bước nhảy tối đa đến ghép nối Bluetooth, tiết kiệm pin và màn hình.
+
+Bạn có thể cập nhật các radio nRF52 như Heltec T114 và RAK4631 ngay trên điện thoại, qua cáp USB trong khoảng một phút hoặc qua Bluetooth, và chọn bản firmware mới nhất, bản phát hành thử nghiệm hoặc bất kỳ phiên bản cũ nào.
+
+Chuyển qua lại giữa tất cả radio của bạn từ thanh trên cùng và xem từng chiếc là bo mạch nào, đang chạy firmware gì và điện áp pin bao nhiêu. Nếu chưa có radio, bạn có thể dùng thử bản demo có sẵn.
+
+Mesh+ không có tài khoản, quảng cáo hay phân tích, và tin nhắn của bạn chỉ nằm trên điện thoại. Đây là dự án mã nguồn mở độc lập, không liên kết với Meshtastic LLC và cũng không được Meshtastic LLC bảo trợ. Meshtastic® là nhãn hiệu đã đăng ký của Meshtastic LLC.

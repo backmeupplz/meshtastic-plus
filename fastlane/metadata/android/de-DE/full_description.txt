@@ -1,0 +1,15 @@
+Mesh+ ist eine kleine, freundliche Begleit-App für Meshtastic-Funkgeräte. Kopple dein Funkgerät per Bluetooth oder schließ es mit einem USB-C-Kabel an, dann kannst du mit Leuten in deiner Nähe über das LoRa-Mesh chatten und deine SMS und Anrufe im Blick behalten, ohne dass unterwegs irgendwo Internet oder Mobilfunk nötig ist, ob beim Wandern, auf einem Festival oder bei einem Stromausfall.
+
+Das SMS-Relay bringt deine SMS ins Mesh. Lass ein Telefon dort, wo es Netz hat, im Basislager, im Auto oder zu Hause, und schalte sein Relay ein. Mesh+ leitet die SMS, die dieses Telefon empfängt, und die Nummer jedes eingehenden Anrufs in einen privaten, verschlüsselten Raum auf deinem Funkgerät weiter, sodass du sie überall lesen kannst, wo das Mesh hinreicht. Antworte in diesem Raum, und das Relay-Telefon schickt deine Antwort als normale SMS von seiner eigenen Nummer. Alle in dem Raum können mitlesen und antworten, lade also nur Leute ein, denen du vertraust. Das Relay ist aus, bis du es in den Einstellungen einschaltest, erst dann fragt Android nach Zugriff auf SMS und Anrufliste, und nichts wird jemals an uns oder an einen Server gesendet.
+
+Die Einrichtung dauert etwa eine Minute: Wähle dein Funkgerät, gib die PIN von seinem Display ein, such dir eine Region und einen Namen aus, und schon kannst du loschatten.
+
+Der öffentliche Raum, private Räume, die du per QR-Code oder Link teilst, und Ende-zu-Ende-verschlüsselte Direktnachrichten stehen zusammen in einer Liste, in der du Ungelesenes sofort erkennst, und alles, wovon du keine Benachrichtigungen möchtest, kannst du stummschalten. Solange du verbunden bist, läuft Mesh+ im Hintergrund weiter und sagt dir Bescheid, wenn neue Nachrichten ankommen.
+
+Zu jeder Funkeinstellung gibt es eine kurze Erklärung, was sie bewirkt und wann du sie ändern würdest, von Funk-Presets und dem Hop-Limit über die Bluetooth-Kopplung und das Energiesparen bis zum Display.
+
+nRF52-Funkgeräte wie den Heltec T114 und den RAK4631 kannst du direkt vom Telefon aus aktualisieren, per USB-Kabel in etwa einer Minute oder per Bluetooth, und dabei die neueste Firmware, eine Vorabversion oder jede frühere Version wählen.
+
+Oben in der Leiste wechselst du zwischen all deinen Funkgeräten und siehst, welches Board jedes ist, welche Firmware darauf läuft und wie hoch seine Akkuspannung ist. Wenn du noch kein Funkgerät hast, kannst du die eingebaute Demo ausprobieren.
+
+Mesh+ kommt ohne Konten, Werbung und Analyse-Tools aus, und deine Nachrichten bleiben auf deinem Telefon. Es ist ein unabhängiges Open-Source-Projekt, das weder mit Meshtastic LLC verbunden ist noch von Meshtastic LLC unterstützt wird. Meshtastic® ist eine eingetragene Marke von Meshtastic LLC.

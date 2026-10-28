@@ -1,0 +1,15 @@
+Mesh+ est une petite application conviviale qui accompagne les radios Meshtastic. Jumelez votre radio en Bluetooth ou branchez-la avec un câble USB-C : vous pouvez alors discuter avec les personnes à proximité à travers le réseau mesh LoRa et suivre les SMS et les appels de votre téléphone, sans avoir besoin d'internet ni de réseau mobile à aucun moment, que ce soit en randonnée, dans un festival ou pendant une panne.
+
+Le relais SMS fait passer vos SMS par le réseau mesh. Laissez un téléphone là où il y a du réseau, au camp de base, dans la voiture ou à la maison, et activez son relais. Mesh+ transfère les SMS que reçoit ce téléphone et le numéro de chaque appel entrant vers un salon privé et chiffré sur votre radio, pour que vous puissiez les lire partout où le réseau mesh s'étend. Répondez depuis ce salon, et le téléphone relais envoie votre réponse sous forme de SMS classique depuis son propre numéro. Tous les membres du salon peuvent lire et répondre, alors n'y invitez que des personnes de confiance. Le relais reste désactivé tant que vous ne l'activez pas dans les Réglages, Android ne demande l'accès aux SMS et au journal d'appels qu'à ce moment-là, et rien n'est jamais envoyé, ni à nous ni à aucun serveur.
+
+La configuration prend environ une minute : choisissez votre radio, saisissez le PIN affiché sur son écran, indiquez votre région et un nom, et vous pouvez commencer à discuter.
+
+Le salon public, les salons privés que vous partagez avec un QR code ou un lien, et les messages privés chiffrés de bout en bout sont réunis dans une seule liste, avec des pastilles pour ce que vous n'avez pas encore lu, et vous pouvez mettre en sourdine ceux dont vous ne voulez pas recevoir de notifications. Mesh+ continue de fonctionner en arrière-plan tant que vous êtes connecté et vous prévient quand de nouveaux messages arrivent.
+
+Chaque réglage de la radio est accompagné d'une courte explication sur ce qu'il fait et sur le moment où il vaut la peine de le modifier, des préréglages radio et du nombre de sauts jusqu'à l'écran, en passant par le jumelage Bluetooth et l'économie d'énergie.
+
+Vous pouvez mettre à jour les radios nRF52 comme la Heltec T114 et la RAK4631 depuis votre téléphone, par câble USB en une minute environ ou en Bluetooth, en choisissant la dernière version du firmware, une préversion ou n'importe quelle version antérieure.
+
+Passez d'une radio à l'autre depuis la barre du haut et voyez pour chacune la carte, le firmware qu'elle utilise et la tension de sa batterie. Si vous n'avez pas encore de radio, vous pouvez essayer la démo intégrée.
+
+Mesh+ fonctionne sans compte, sans publicité et sans outil d'analyse, et vos messages restent sur votre téléphone. C'est un projet open source indépendant, qui n'est ni affilié à Meshtastic LLC ni approuvé par elle. Meshtastic® est une marque déposée de Meshtastic LLC.

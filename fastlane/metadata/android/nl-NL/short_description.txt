@@ -1,0 +1,1 @@
+Chat zonder bereik via Meshtastic-radio's en lees je sms'jes via de mesh.

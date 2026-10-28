@@ -1,0 +1,15 @@
+Mesh+ is een kleine, vriendelijke app voor Meshtastic-radio's. Koppel je radio via Bluetooth of sluit hem aan met een USB-C-kabel, en je kunt via de LoRa-mesh chatten met mensen in de buurt en de sms'jes en oproepen van je telefoon blijven volgen, zonder dat je onderweg ergens internet of mobiel bereik nodig hebt, of je nu wandelt, kampeert, op een festival bent of met een stroomstoring zit.
+
+De SMS-relay brengt je sms'jes naar de mesh. Laat één telefoon achter op een plek met bereik, in het basiskamp, in de auto of thuis, en zet de relay aan. Mesh+ stuurt de sms'jes die die telefoon ontvangt en het nummer van elke inkomende oproep door naar een privé, versleutelde ruimte op je radio, zodat je ze overal kunt lezen waar de mesh reikt. Antwoord vanuit die ruimte, en de relaytelefoon verstuurt je antwoord als gewone sms vanaf zijn eigen nummer. Iedereen in de ruimte kan meelezen en antwoorden, dus nodig alleen mensen uit die je vertrouwt. De relay staat uit tot je hem aanzet in Instellingen, pas dan vraagt Android om toegang tot sms en de oproeplijst, en er wordt nooit iets naar ons of naar een server gestuurd.
+
+Instellen duurt ongeveer een minuut: kies je radio, typ de pincode van het scherm in, kies je regio en een naam, en je kunt beginnen met chatten.
+
+De openbare ruimte, privéruimtes die je deelt met een QR-code of link, en end-to-end versleutelde privéberichten staan samen in één lijst, waarin je meteen ziet wat je nog niet hebt gelezen, en je kunt dempen waar je geen meldingen van wilt. Mesh+ blijft op de achtergrond draaien zolang je verbonden bent en laat je weten wanneer er nieuwe berichten binnenkomen.
+
+Bij elke radio-instelling staat een korte uitleg over wat die doet en wanneer je hem zou aanpassen, van radiopresets en het maximale aantal hops tot Bluetooth-koppeling, energiebesparing en het scherm.
+
+Je kunt nRF52-radio's zoals de Heltec T114 en de RAK4631 bijwerken vanaf je telefoon, met een USB-kabel in ongeveer een minuut of via Bluetooth, en daarbij kiezen voor de nieuwste firmware, een testversie of elke eerdere versie.
+
+Wissel via de balk bovenaan tussen al je radio's en zie welk bord elke radio is, welke firmware erop draait en wat de batterijspanning is. Heb je nog geen radio, dan kun je de ingebouwde demo proberen.
+
+Mesh+ werkt zonder account, advertenties of analytics, en je berichten blijven op je telefoon. Het is een onafhankelijk open-sourceproject dat niet gelieerd is aan Meshtastic LLC en ook niet door Meshtastic LLC wordt ondersteund. Meshtastic® is een geregistreerd handelsmerk van Meshtastic LLC.

@@ -1,0 +1,15 @@
+O Mesh+ é uma aplicação pequena e simpática que acompanha os seus rádios Meshtastic. Emparelhe o rádio por Bluetooth ou ligue-o com um cabo USB-C e pode conversar com pessoas nas proximidades pela mesh LoRa e acompanhar as SMS e as chamadas do seu telemóvel, sem internet nem rede em nenhum ponto do caminho, seja numa caminhada, num festival ou quando a rede vai abaixo.
+
+O reencaminhamento de SMS traz as suas mensagens pela mesh. Deixe um telemóvel onde haja rede, no acampamento, no carro ou em casa, e ative o reencaminhamento nele. O Mesh+ reencaminha as SMS que esse telemóvel recebe e o número de cada chamada recebida para uma sala privada e encriptada no seu rádio, para que as possa ler onde quer que a mesh chegue. Responda nessa sala e o telemóvel de reencaminhamento envia a sua resposta como uma SMS normal, a partir do próprio número. Todas as pessoas na sala podem ler e responder, por isso partilhe-a apenas com pessoas de confiança. O reencaminhamento está desligado até o ativar nas Definições, o Android só pede acesso às SMS e ao registo de chamadas nesse momento, e nada é enviado para nós nem para qualquer servidor.
+
+A configuração demora cerca de um minuto: escolha o seu rádio, introduza o PIN que aparece no ecrã dele, indique a sua região e um nome, e já pode conversar.
+
+O canal público, as salas privadas que partilha com um código QR ou uma ligação e as mensagens diretas encriptadas ponto a ponto estão todos numa só lista com um contador de mensagens por ler, e pode silenciar as conversas das quais não quer receber notificações. O Mesh+ continua a funcionar em segundo plano enquanto está ligado e avisa-o quando chegam mensagens novas.
+
+Cada definição do rádio tem uma breve nota que explica para que serve e quando vale a pena alterá-la, desde as predefinições de rádio e o número máximo de saltos até ao emparelhamento Bluetooth, à poupança de energia e ao ecrã.
+
+Pode atualizar rádios nRF52, como o Heltec T114 e o RAK4631, a partir do telemóvel, por cabo USB em cerca de um minuto ou por Bluetooth, e escolher a versão de firmware mais recente, uma versão de pré-lançamento ou qualquer versão anterior.
+
+Alterne entre todos os seus rádios na barra superior e veja que placa é cada um, que firmware tem instalado e a tensão da bateria. Se ainda não tem um rádio, pode experimentar a demonstração integrada.
+
+O Mesh+ não tem contas, anúncios nem estatísticas de utilização, e as suas mensagens ficam no seu telemóvel. É um projeto independente e de código aberto, sem qualquer afiliação à Meshtastic LLC nem aprovação da mesma. Meshtastic® é uma marca registada da Meshtastic LLC.

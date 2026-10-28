@@ -1,0 +1,1 @@
+Czat bez internetu przez radia Meshtastic, a SMS-y z telefonu przez sieć mesh

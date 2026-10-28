@@ -1,0 +1,1 @@
+Converse sem internet com rádios Meshtastic e receba seus SMS pela mesh

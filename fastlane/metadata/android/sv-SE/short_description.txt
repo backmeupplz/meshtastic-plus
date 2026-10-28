@@ -1,0 +1,1 @@
+Chatta utan internet via Meshtastic-radio och få telefonens sms över meshen

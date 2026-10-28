@@ -1,0 +1,15 @@
+Mesh+ är en liten och vänlig följeslagare till Meshtastic-radioapparater. Anslut din radio via Bluetooth eller med en USB-C-kabel, så kan du chatta med folk i närheten över LoRa-meshen och hålla koll på telefonens sms och samtal, utan internet eller mobiltäckning någonstans längs vägen.
+
+Sms-reläet tar dina sms över meshen. Lämna en telefon där det finns täckning, i baslägret, i bilen eller hemma, och slå på reläet i den. Mesh+ vidarebefordrar de sms den telefonen tar emot och numret för varje inkommande samtal till ett privat, krypterat rum på din radio, så att du kan läsa dem överallt där meshen når. Svara i rummet, så skickar relätelefonen ditt svar som ett vanligt sms från sitt eget nummer. Alla i rummet kan läsa och svara, så bjud bara in personer du litar på. Reläet är avstängt tills du slår på det under Inställningar, Android ber om åtkomst till sms och samtalslogg först då, och ingenting skickas någonsin till oss eller till någon server.
+
+Det tar ungefär en minut att komma igång: välj din radio, skriv in PIN-koden från dess skärm, välj region och namn, och sedan kan du börja chatta.
+
+Det offentliga rummet, privata rum som du delar med en QR-kod eller en länk och end-to-end-krypterade direktmeddelanden finns i samma lista, med märken som visar vad som är oläst, och du kan tysta de konversationer du inte vill få aviseringar från. Mesh+ fortsätter att köra i bakgrunden medan radion är ansluten och säger till när nya meddelanden kommer.
+
+Varje radioinställning har en kort förklaring av vad den gör och när du kan vilja ändra den, från radioförinställningar och hoppgränser till Bluetooth-parkoppling, energisparläge och skärmen.
+
+Du kan uppdatera nRF52-radioapparater som Heltec T114 och RAK4631 från telefonen, med USB-kabel på ungefär en minut eller via Bluetooth, och välja den senaste firmwareversionen, en förhandsversion eller valfri tidigare version.
+
+Växla mellan alla dina radioapparater i det övre fältet och se vilket kretskort var och en har, vilken firmware den kör och vilken spänning batteriet har. Om du inte har någon radio än kan du testa den inbyggda demon.
+
+Mesh+ har inga konton, ingen reklam och ingen analys, och dina meddelanden stannar i din telefon. Det är ett oberoende projekt med öppen källkod som inte är anslutet till eller godkänt av Meshtastic LLC. Meshtastic® är ett registrerat varumärke som tillhör Meshtastic LLC.

@@ -1,0 +1,1 @@
+Chatta senza campo con le radio Meshtastic e ricevi i tuoi SMS sulla rete mesh.
