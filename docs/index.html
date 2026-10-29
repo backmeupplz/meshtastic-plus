@@ -292,8 +292,8 @@
         <p class="fine">Mesh+ is free and open source, weighs about 3 MB and needs Android 12 or newer. No radio yet? The built-in demo lets you look around first.</p>
       </div>
       <div class="duo">
-        <div class="phone back"><img src="img/chats.webp" width="1080" height="2400" fetchpriority="low" alt="The Mesh+ chat list with the Public channel, the private rooms Hiking and Camp SMS, and a direct message from Maya, each with unread badges"></div>
-        <div class="phone front"><img src="img/room.webp" width="1080" height="2400" fetchpriority="low" alt="A private room called Hiking where friends share trail updates over the mesh, with check marks under the messages the mesh relayed"></div>
+        <div class="phone back"><img src="img/chats.webp" srcset="img/chats-540.webp 540w, img/chats.webp 720w" sizes="300px" width="1080" height="2400" fetchpriority="low" alt="The Mesh+ chat list with the Public channel, the private rooms Hiking and Camp SMS, and a direct message from Maya, each with unread badges"></div>
+        <div class="phone front"><img src="img/room.webp" srcset="img/room-540.webp 540w, img/room.webp 720w" sizes="300px" width="1080" height="2400" fetchpriority="low" alt="A private room called Hiking where friends share trail updates over the mesh, with check marks under the messages the mesh relayed"></div>
       </div>
     </div>
   </section>
@@ -306,7 +306,7 @@
         <p>Turn the sound on for a quick tour of private rooms, messages hopping across the mesh, firmware updates and the SMS relay.</p>
       </div>
       <div class="player">
-        <video src="launch.mp4" poster="img/launch-poster.webp" width="1920" height="1080" preload="none" playsinline controls
+        <video src="launch.mp4" data-poster="img/launch-poster.webp" width="1920" height="1080" preload="none" playsinline controls
           aria-label="Mesh+ launch video, 30 seconds with music: chatting with no cell signal, private rooms, messages hopping from radio to radio, QR code invites, nearby radios, firmware updates and the SMS relay."></video>
         <button class="play" type="button" aria-label="Play the launch video"><svg aria-hidden="true"><use href="#play"/></svg></button>
       </div>
@@ -616,6 +616,8 @@
   const player = document.querySelector('.player');
   const video = player.querySelector('video');
   video.controls = false;
+  // the poster (42 KB) waits for load, so on phones it doesn't hold up the first screen's text (PageSpeed's LCP)
+  addEventListener('load', () => (video.poster = video.dataset.poster));
   player.querySelector('.play').addEventListener('click', () => video.play());
   video.addEventListener('play', () => { player.classList.add('started'); video.controls = true; });
 </script>
