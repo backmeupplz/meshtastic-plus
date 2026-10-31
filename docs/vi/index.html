@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mesh+ · Nhắn tin cho bạn bè khi mất sóng</title>
+<meta name="description" content="Mesh+ là ứng dụng Android miễn phí, mã nguồn mở cho radio Meshtastic: trò chuyện không cần sóng di động, chuyển tiếp SMS, cập nhật firmware từ điện thoại.">
+<link rel="canonical" href="https://meshplus.app/vi/">
+<link rel="alternate" hreflang="en" href="https://meshplus.app/">
+<link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/">
+<link rel="alternate" hreflang="de" href="https://meshplus.app/de/">
+<link rel="alternate" hreflang="es" href="https://meshplus.app/es/">
+<link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/">
+<link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/">
+<link rel="alternate" hreflang="id" href="https://meshplus.app/id/">
+<link rel="alternate" hreflang="it" href="https://meshplus.app/it/">
+<link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/">
+<link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/">
+<link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/">
+<link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/">
+<link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/">
+<link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/">
+<link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/">
+<link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/">
+<link rel="alternate" hreflang="th" href="https://meshplus.app/th/">
+<link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/">
+<link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/">
+<link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/">
+<link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/">
+<link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/">
+<link rel="alternate" hreflang="x-default" href="https://meshplus.app/">
+<meta name="theme-color" content="#060b08">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ar_AR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="hi_IN">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="nl_NL">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="sv_SE">
+<meta property="og:locale:alternate" content="th_TH">
+<meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:locale:alternate" content="uk_UA">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:site_name" content="Mesh+">
+<meta property="og:url" content="https://meshplus.app/vi/">
+<meta property="og:title" content="Mesh+ · Nhắn tin cho bạn bè khi mất sóng">
+<meta property="og:description" content="Ứng dụng Android miễn phí, mã nguồn mở cho radio Meshtastic: phòng riêng tư, tin nhắn riêng mã hóa, chuyển tiếp SMS, cập nhật firmware từ điện thoại.">
+<meta property="og:image" content="https://meshplus.app/og/vi/home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mesh+ cho Android: nhắn tin cho bạn bè khi mất sóng. Hai điện thoại hiển thị một cuộc trò chuyện nhóm và một phòng chuyển tiếp SMS chạy qua các radio Meshtastic.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mesh+ · Nhắn tin cho bạn bè khi mất sóng">
+<meta name="twitter:description" content="Ứng dụng Android miễn phí, mã nguồn mở cho radio Meshtastic: phòng riêng tư, tin nhắn riêng mã hóa, chuyển tiếp SMS, cập nhật firmware từ điện thoại.">
+<meta name="twitter:image" content="https://meshplus.app/og/vi/home.jpg">
+<meta name="twitter:image:alt" content="Mesh+ cho Android: nhắn tin cho bạn bè khi mất sóng. Hai điện thoại hiển thị một cuộc trò chuyện nhóm và một phòng chuyển tiếp SMS chạy qua các radio Meshtastic.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #060b08; --bg2: #09120d; --card: #0e1913; --card2: #122019;
+    --line: rgba(103, 234, 148, 0.16); --line2: rgba(255, 255, 255, 0.08);
+    --fg: #eef5f0; --muted: #a6b8ad; --dim: #7f9388; --green: #67ea94; --ink: #052611; --warn: #ffd08f;
+    --display: ui-sans-serif, system-ui, sans-serif;
+    --body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--green); }
+  img { max-width: 100%; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: var(--display); letter-spacing: -0.025em; line-height: 1.08; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(32px, 4.4vw, 50px); }
+  h3 { font-size: 22px; letter-spacing: -0.015em; line-height: 1.25; }
+  p { margin: 0; }
+  .muted { color: var(--muted); }
+  .kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 18px; }
+  .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); }
+  :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 6px; }
+
+  /* nav */
+  .nav { position: sticky; top: 0; z-index: 10; background: rgba(6, 11, 8, 0.78); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line2); }
+  .nav .wrap { display: flex; align-items: center; gap: 28px; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 24px; letter-spacing: -0.03em; }
+  .brand svg { width: 34px; height: 34px; }
+  .brand b { color: var(--green); }
+  .nav nav { display: flex; gap: 26px; margin-left: auto; }
+  .nav nav a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; }
+  .nav nav a:hover { color: var(--fg); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 16px; text-decoration: none; border: 1px solid var(--line2); color: var(--fg); background: rgba(255, 255, 255, 0.03); transition: transform .15s ease, background .15s ease, box-shadow .15s ease; }
+  .btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.07); }
+  .btn.primary { background: var(--green); color: var(--ink); border-color: var(--green); box-shadow: 0 0 0 0 rgba(103, 234, 148, 0.5), 0 10px 30px rgba(103, 234, 148, 0.25); }
+  .btn.primary:hover { background: #7ff0a6; box-shadow: 0 12px 36px rgba(103, 234, 148, 0.35); }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+  .nav .btn { padding: 9px 18px; font-size: 15px; }
+
+  /* hero */
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line2); }
+  .hero .mesh { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: linear-gradient(100deg, transparent 22%, rgba(0, 0, 0, 0.35) 45%, #000 70%); mask-image: linear-gradient(100deg, transparent 22%, rgba(0, 0, 0, 0.35) 45%, #000 70%); }
+  .hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(900px 600px at 72% 40%, rgba(103, 234, 148, 0.10), transparent 70%); pointer-events: none; }
+  .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 40px; align-items: center; padding-top: 80px; padding-bottom: 96px; }
+  h1 { font-size: clamp(44px, 6.6vw, 82px); line-height: 1.0; letter-spacing: -0.035em; margin-bottom: 26px; }
+  h1 em { font-style: normal; color: var(--green); }
+  .lead { font-size: 20px; line-height: 1.6; color: var(--muted); max-width: 590px; margin-bottom: 34px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 14px; }
+  .fine { font-size: 14.5px; color: var(--dim); margin-top: 20px; max-width: 560px; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; width: 100%; max-width: 540px; margin-left: auto; }
+  .duo .phone { --w: 100%; }
+  .duo .back { margin-top: 80px; transform: rotate(-2deg); }
+  .duo .front { transform: rotate(2deg); }
+
+  /* phones */
+  .phone { --w: 290px; width: var(--w); padding: calc(var(--w) * 0.03); border-radius: 12.5% / 5.8%; background: linear-gradient(150deg, #3b3f46 0%, #16181c 32%, #0b0c0f 70%, #2c2f35 100%); box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.07) inset, 0 0 70px rgba(103, 234, 148, 0.07); flex: none; }
+  .phone img { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 2400; border-radius: 10% / 4.5%; background: #101510; }
+  .phone.sm { --w: 250px; }
+
+  /* sections */
+  section { padding: 110px 0; }
+  .center { text-align: center; max-width: 760px; margin: 0 auto 60px; }
+  .center p { font-size: 19px; color: var(--muted); margin-top: 18px; text-wrap: pretty; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: step; }
+  .step { position: relative; padding: 34px 30px 32px; border-radius: 26px; background: linear-gradient(180deg, var(--card2), var(--card)); border: 1px solid var(--line2); }
+  .step::before { counter-increment: step; content: counter(step); display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: rgba(103, 234, 148, 0.12); color: var(--green); font-family: var(--display); font-weight: 800; font-size: 22px; margin-bottom: 22px; }
+  .step h3 { margin-bottom: 10px; }
+  .step p { color: var(--muted); font-size: 16px; }
+
+  .feature { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+  .feature + .feature { margin-top: 140px; }
+  .feature.flip .copy { order: 2; }
+  .feature .copy p { color: var(--muted); font-size: 18px; margin-top: 20px; }
+  .feature .copy ul { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
+  .feature .copy li { display: flex; gap: 14px; color: var(--fg); font-size: 16.5px; }
+  .feature .copy li svg { flex: none; width: 22px; height: 22px; margin-top: 2px; color: var(--green); }
+  .shots { display: flex; justify-content: center; align-items: flex-start; gap: 26px; }
+  .shots .phone:nth-child(2) { margin-top: 70px; }
+
+  /* SMS relay */
+  .sms { background: linear-gradient(180deg, var(--bg2), var(--bg) 85%); border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2); position: relative; overflow: hidden; }
+  .sms::before { content: ""; position: absolute; inset: 0; background: radial-gradient(800px 500px at 50% 0%, rgba(103, 234, 148, 0.10), transparent 70%); pointer-events: none; }
+  .sms .wrap { position: relative; }
+  .diagram { border-radius: 30px; border: 1px solid var(--line); background: rgba(14, 25, 19, 0.7); padding: 26px 18px 18px; margin-bottom: 70px; }
+  .diagram svg { display: block; width: 100%; height: auto; }
+  .diagram text { font-family: var(--body); fill: var(--fg); }
+  .diagram .sub { fill: var(--dim); font-size: 15px; }
+  .chain { display: none; list-style: none; margin: 0; padding: 4px 6px; }
+  .chain li { position: relative; display: flex; align-items: center; gap: 16px; padding: 11px 0; font-size: 16px; color: var(--muted); }
+  .chain li + li::before { content: ""; position: absolute; left: 23px; top: -11px; height: 22px; border-left: 2px dotted var(--green); }
+  .chain b { color: var(--fg); font-weight: 600; }
+  .chain .ic { flex: none; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: rgba(103, 234, 148, 0.1); color: var(--green); }
+  .chain .ic svg { width: 26px; height: 26px; }
+  .chain .off { color: var(--muted); }
+  .flow { stroke-dasharray: 3 13; animation: flow 1.4s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -32; } }
+  .sms-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 60px; align-items: center; }
+  .points { display: grid; gap: 18px; }
+  .point { padding: 24px 26px; border-radius: 22px; background: var(--card); border: 1px solid var(--line2); }
+  .point h3 { font-size: 20px; margin-bottom: 8px; }
+  .point p { color: var(--muted); font-size: 16px; }
+  .point code { white-space: nowrap; font-size: 14.5px; background: rgba(103, 234, 148, 0.1); color: var(--green); padding: 2px 7px; border-radius: 6px; }
+  .note { display: flex; gap: 14px; margin-top: 18px; padding: 20px 22px; border-radius: 20px; background: rgba(255, 208, 143, 0.07); border: 1px solid rgba(255, 208, 143, 0.25); color: #f3e2c8; font-size: 15.5px; }
+  .note svg { flex: none; width: 22px; height: 22px; color: var(--warn); margin-top: 2px; }
+  .how-on { margin-top: 70px; display: grid; grid-template-columns: auto 1fr; gap: 50px; align-items: center; padding: 34px; border-radius: 30px; border: 1px solid var(--line2); background: var(--card); }
+  .how-on p { color: var(--muted); margin-top: 14px; font-size: 17px; }
+
+  /* small features */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .tile { padding: 30px 28px; border-radius: 24px; background: var(--card); border: 1px solid var(--line2); }
+  .tile .ic { width: 50px; height: 50px; border-radius: 16px; display: grid; place-items: center; background: rgba(103, 234, 148, 0.1); color: var(--green); margin-bottom: 20px; }
+  .tile .ic svg { width: 26px; height: 26px; }
+  .tile h3 { font-size: 19px; margin-bottom: 8px; }
+  .tile p { color: var(--muted); font-size: 15.5px; }
+
+  /* needs + faq */
+  .needs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 10px; }
+  .need { padding: 26px 26px; border-radius: 22px; border: 1px solid var(--line); background: rgba(103, 234, 148, 0.04); }
+  .need b { display: block; font-family: var(--display); font-size: 20px; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .need span { color: var(--muted); font-size: 15.5px; }
+  .faq { max-width: 860px; margin: 0 auto; display: grid; gap: 12px; }
+  details { border-radius: 20px; background: var(--card); border: 1px solid var(--line2); }
+  summary { cursor: pointer; list-style: none; padding: 22px 26px; font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--body); font-weight: 400; font-size: 28px; color: var(--green); transition: transform .2s ease; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { padding: 0 26px 24px; color: var(--muted); font-size: 16.5px; }
+
+  /* final cta */
+  .player { position: relative; max-width: 1040px; margin: 0 auto; border-radius: 26px; overflow: hidden; border: 1px solid var(--line); background: #030504; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55), 0 0 90px rgba(103, 234, 148, 0.08); }
+  .player video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #030504; }
+  .play { position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; border: 0; border-radius: 50%; cursor: pointer; display: grid; place-items: center; background: var(--green); color: var(--ink); box-shadow: 0 0 0 14px rgba(103, 234, 148, 0.18), 0 20px 50px rgba(0, 0, 0, 0.5); transition: transform .15s ease, box-shadow .15s ease; }
+  .play:hover { transform: scale(1.06); box-shadow: 0 0 0 18px rgba(103, 234, 148, 0.22), 0 20px 50px rgba(0, 0, 0, 0.5); }
+  .play svg { width: 40px; height: 40px; margin-left: 5px; }
+  .player.started .play { display: none; }
+  .final { text-align: center; padding: 120px 0 130px; position: relative; overflow: hidden; border-top: 1px solid var(--line2); }
+  .final::before { content: ""; position: absolute; inset: 0; background: radial-gradient(700px 400px at 50% 100%, rgba(103, 234, 148, 0.14), transparent 70%); }
+  .final .wrap { position: relative; }
+  .final svg.logo { width: 84px; height: 84px; margin-bottom: 26px; filter: drop-shadow(0 0 24px rgba(103, 234, 148, 0.45)); }
+  .final h2 { font-size: clamp(36px, 5.4vw, 62px); max-width: 820px; margin: 0 auto 20px; }
+  .final p { color: var(--muted); font-size: 19px; max-width: 640px; margin: 0 auto 34px; }
+  .final .ctas { justify-content: center; }
+  .final .fine { margin: 22px auto 0; }
+  footer { border-top: 1px solid var(--line2); padding: 34px 0 48px; color: var(--dim); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 30px; justify-content: space-between; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 980px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-top: 56px; padding-bottom: 70px; }
+    .duo { margin: 0 auto; }
+    .feature, .sms-grid { grid-template-columns: 1fr; gap: 50px; }
+    .feature.flip .copy { order: 0; }
+    .steps, .grid, .needs { grid-template-columns: 1fr 1fr; }
+    .how-on { grid-template-columns: 1fr; }
+    .hero .mesh { -webkit-mask-image: linear-gradient(180deg, transparent 48%, #000 82%); mask-image: linear-gradient(180deg, transparent 48%, #000 82%); }
+  }
+  @media (max-width: 680px) {
+    body { font-size: 16px; }
+    .player { border-radius: 18px; }
+    .play { width: 72px; height: 72px; margin: -36px 0 0 -36px; box-shadow: 0 0 0 10px rgba(103, 234, 148, 0.18), 0 14px 36px rgba(0, 0, 0, 0.5); }
+    .play svg { width: 30px; height: 30px; margin-left: 4px; }
+    .wrap { padding: 0 16px; }
+    .nav nav { display: none; }
+    .nav .btn { margin-left: auto; }
+    section { padding: 80px 0; }
+    .lead { font-size: 18px; }
+    .duo { gap: 16px; }
+    .duo .back { margin-top: 50px; }
+    .steps, .grid, .needs { grid-template-columns: 1fr; }
+    .shots { gap: 14px; }
+    .shots .phone { --w: 46vw; }
+    .shots .phone:nth-child(2) { margin-top: 40px; }
+    .feature + .feature { margin-top: 100px; }
+    .diagram { padding: 14px 12px; margin-bottom: 50px; }
+    .diagram > svg { display: none; }
+    .chain { display: grid; }
+    .how-on { padding: 24px; }
+    .how-on .phone { --w: 230px; margin: 0 auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .flow, .mesh * { animation: none !important; }
+  }
+nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0;padding:0;flex:0 0 100%}nav.langs a{display:inline-block;padding:4px 8px;min-height:32px;border-radius:6px}nav.langs a[aria-current]{font-weight:700;text-decoration:none;color:inherit}h1,h2,h3,p,li,summary{overflow-wrap:break-word;hyphens:auto}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "MobileApplication",
+ "name": "Mesh+",
+ "url": "https://meshplus.app/vi/",
+ "inLanguage": "vi",
+ "description": "Mesh+ là ứng dụng Android miễn phí, mã nguồn mở cho radio Meshtastic: trò chuyện không cần sóng di động, chuyển tiếp SMS, cập nhật firmware từ điện thoại.",
+ "applicationCategory": "CommunicationApplication",
+ "operatingSystem": "Android 12 trở lên",
+ "image": "https://meshplus.app/og/vi/home.jpg",
+ "offers": {
+  "@type": "Offer",
+  "price": "0",
+  "priceCurrency": "USD"
+ },
+ "installUrl": "https://play.google.com/store/apps/details?id=com.borodutch.meshplus",
+ "downloadUrl": "https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk",
+ "sameAs": [
+  "https://github.com/backmeupplz/meshtastic-plus",
+  "https://play.google.com/store/apps/details?id=com.borodutch.meshplus"
+ ],
+ "author": {
+  "@type": "Person",
+  "name": "Nikita Kolmogorov",
+  "url": "https://borodutch.com"
+ }
+}
+</script>
+<script defer src="https://lumen.borodutch.com/l.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="24 22 60 60"><path d="M54,38 L38,66 L70,66 Z" fill="none" stroke="#67ea94" stroke-width="4" stroke-linejoin="round"/><circle cx="54" cy="38" r="8" fill="#67ea94"/><circle cx="38" cy="66" r="8" fill="#67ea94"/><circle cx="70" cy="66" r="8" fill="#67ea94"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></symbol>
+  <symbol id="gplay" viewBox="0 0 24 24"><path d="M5 3.5v17L19.5 12zM5 3.5l9 11.5M5 20.5l9-11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="download" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Trang chủ Mesh+"><svg aria-hidden="true"><use href="#logo"/></svg><span>Mesh<b>+</b></span></a>
+    <nav aria-label="Các mục">
+      <a href="#how">Cách hoạt động</a>
+      <a href="#features">Tính năng</a>
+      <a href="#sms">Chuyển tiếp SMS</a>
+      <a href="#faq">Câu hỏi thường gặp</a>
+      <a href="https://github.com/backmeupplz/meshtastic-plus">GitHub</a>
+    </nav>
+    <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Tải ứng dụng</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding:0">
+    <svg class="mesh" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g stroke="#67ea94" stroke-opacity="0.13" stroke-width="1.2">
+        <path d="M80 140L260 90L420 210L610 120L780 250L960 160L1130 260L1320 150M260 90L300 330L420 210M610 120L640 380L780 250M960 160L1010 420L1130 260M300 330L470 520L640 380L820 560L1010 420L1200 590M80 140L120 420L300 330M1320 150L1380 420L1200 590M120 420L250 650L470 520M820 560L700 720M1200 590L1080 730M470 520L560 700"/>
+      </g>
+      <g fill="#67ea94">
+        <circle cx="80" cy="140" r="3" opacity=".4"/><circle cx="260" cy="90" r="4" opacity=".5"/><circle cx="420" cy="210" r="3" opacity=".4"/><circle cx="610" cy="120" r="4" opacity=".45"/><circle cx="780" cy="250" r="3" opacity=".4"/><circle cx="960" cy="160" r="5" opacity=".5"/><circle cx="1130" cy="260" r="3" opacity=".4"/><circle cx="1320" cy="150" r="4" opacity=".45"/><circle cx="300" cy="330" r="3" opacity=".35"/><circle cx="640" cy="380" r="4" opacity=".4"/><circle cx="1010" cy="420" r="3" opacity=".4"/><circle cx="470" cy="520" r="4" opacity=".35"/><circle cx="820" cy="560" r="3" opacity=".35"/><circle cx="1200" cy="590" r="4" opacity=".4"/><circle cx="120" cy="420" r="3" opacity=".3"/><circle cx="1380" cy="420" r="3" opacity=".3"/><circle cx="250" cy="650" r="3" opacity=".3"/><circle cx="560" cy="700" r="3" opacity=".3"/><circle cx="700" cy="720" r="3" opacity=".3"/><circle cx="1080" cy="730" r="3" opacity=".3"/>
+      </g>
+      <g stroke="#67ea94" stroke-width="2.4" fill="none" stroke-linecap="round">
+        <path class="flow" d="M260 90L420 210L610 120L780 250L960 160L1130 260"/>
+        <path class="flow" style="animation-duration:2.1s" d="M120 420L300 330L470 520L640 380L820 560L1010 420L1200 590" stroke-opacity=".6"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <div>
+        <h1>Nhắn tin cho bạn bè khi <em>mất sóng.</em></h1>
+        <p class="lead">Mesh+ là ứng dụng Android thân thiện dành cho radio Meshtastic. Hãy kết nối một radio LoRa nhỏ gọn bỏ vừa túi với điện thoại, và tin nhắn của bạn sẽ truyền từ radio này sang radio khác qua đồi núi và thung lũng, không cần trạm di động, Wi-Fi hay internet ở bất cứ đoạn nào.</p>
+        <div class="ctas">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>Tải trên Google Play</a>
+          <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>Tải APK</a>
+          <a class="btn" href="#video"><svg aria-hidden="true"><use href="#play"/></svg>Xem video 30 giây</a>
+        </div>
+        <p class="fine">Mesh+ miễn phí, mã nguồn mở, nặng khoảng 3 MB và cần Android 12 trở lên. Chưa có radio? Bản demo tích hợp sẵn cho phép bạn xem thử trước.</p>
+      </div>
+      <div class="duo">
+        <div class="phone back"><img src="/img/chats.webp" srcset="/img/chats-540.webp 540w, /img/chats.webp 720w" sizes="300px" width="1080" height="2400" fetchpriority="low" alt="Danh sách trò chuyện của Mesh+ với kênh Public, các phòng riêng tư Hiking và Camp SMS, và một tin nhắn riêng từ Maya, mỗi mục đều có huy hiệu chưa đọc"></div>
+        <div class="phone front"><img src="/img/room.webp" srcset="/img/room-540.webp 540w, /img/room.webp 720w" sizes="300px" width="1080" height="2400" fetchpriority="low" alt="Phòng riêng tư tên Hiking, nơi bạn bè chia sẻ tình hình đường mòn qua mạng mesh, với dấu tích dưới những tin nhắn mà mạng mesh đã chuyển tiếp"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="video" style="padding-bottom:40px">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">Video giới thiệu</div>
+        <h2>Xem Mesh+ làm được gì trong ba mươi giây.</h2>
+        <p>Hãy bật tiếng để xem nhanh các phòng riêng tư, tin nhắn truyền qua mạng mesh, cập nhật firmware và chuyển tiếp SMS.</p>
+      </div>
+      <div class="player">
+        <video src="/launch.mp4" data-poster="/img/launch-poster.webp" width="1920" height="1080" preload="none" playsinline controls
+          aria-label="Video giới thiệu Mesh+, 30 giây có nhạc: trò chuyện khi không có sóng di động, phòng riêng tư, tin nhắn truyền từ radio này sang radio khác, lời mời bằng mã QR, các radio ở gần, cập nhật firmware và chuyển tiếp SMS."></video>
+        <button class="play" type="button" aria-label="Phát video giới thiệu"><svg aria-hidden="true"><use href="#play"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">Cách hoạt động</div>
+        <h2>Từ lúc mở hộp đến tin nhắn đầu tiên chỉ mất khoảng một phút.</h2>
+        <p>Các radio Meshtastic chuyển tiếp tin nhắn cho nhau qua sóng vô tuyến LoRa tầm xa, nên mỗi radio trong tầm phủ sóng đều trở thành một phần của mạng. Mesh+ là cách điện thoại của bạn trò chuyện với radio của bạn.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3>Chuẩn bị một radio Meshtastic.</h3>
+          <p>Mesh+ hoạt động với các radio chạy firmware Meshtastic 2.x, chẳng hạn Heltec Mesh Node T114 hoặc RAK4631. Bạn bè muốn liên lạc cũng cần có một chiếc, và mỗi radio ở giữa đều giúp tin nhắn đi xa hơn.</p>
+        </div>
+        <div class="step">
+          <h3>Kết nối với điện thoại.</h3>
+          <p>Ghép nối qua Bluetooth bằng mã PIN hiện trên màn hình radio, hoặc cắm cáp USB-C để điện thoại cấp nguồn cho radio. Mesh+ nhớ các radio của bạn nên kết nối lại chỉ cần một lần chạm.</p>
+        </div>
+        <div class="step">
+          <h3>Chọn khu vực và đặt tên.</h3>
+          <p>Radio mới sẽ im lặng cho đến khi biết nên dùng băng tần nào, nên Mesh+ hỏi bạn một lần và gợi ý khu vực phù hợp theo quốc gia của điện thoại. Chọn tên hiển thị của bạn trên mạng mesh là bạn đã sẵn sàng trò chuyện.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" style="padding-top:40px">
+    <div class="wrap">
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">Trò chuyện</div>
+          <h2>Chat công khai, phòng riêng tư và tin nhắn riêng nằm chung một danh sách.</h2>
+          <p>Kênh công khai là phòng mở mà mọi người ở gần cùng dùng chung. Phòng riêng tư được mã hóa để chỉ những người bạn mời mới đọc được, còn tin nhắn riêng được firmware của radio mã hóa đầu cuối.</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Dấu tích dưới tin nhắn cho biết một radio khác đã chuyển tiếp nó, hoặc radio của bạn bè đã nhận được.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Huy hiệu chưa đọc cho thấy điều gì mới, và bạn có thể tắt tiếng bất kỳ phòng hay người nào mà bạn không cần nghe.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Mesh+ tiếp tục chạy nền khi bạn đang kết nối và thông báo cho bạn khi có tin nhắn mới.</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/public.webp" width="1080" height="2400" loading="lazy" alt="Kênh Public, nơi Ridge Repeater, Leo và Maya trò chuyện với mọi người ở gần"></div>
+          <div class="phone sm"><img src="/img/dm.webp" width="1080" height="2400" loading="lazy" alt="Cuộc trò chuyện tin nhắn riêng được mã hóa đầu cuối với Maya's Handheld, có dấu tích đã gửi tới dưới các tin nhắn đã gửi"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sms" id="sms">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">Chuyển tiếp SMS</div>
+        <h2>Chỉ cần một điện thoại có sóng, cả nhóm đều nhắn tin được.</h2>
+        <p>Ở vùng hoang dã, thường chỉ có một người, có thể ở trại chính hoặc trên sườn núi, bắt được một vạch sóng di động. Hãy biến điện thoại đó thành trạm chuyển tiếp và mọi người trên mạng mesh có thể gửi và nhận tin nhắn SMS thông thường qua nó.</p>
+      </div>
+
+      <div class="diagram" role="img" aria-label="Một trạm di động phủ sóng cho điện thoại ở Base Camp, điện thoại này chuyển tiếp tin nhắn qua hai radio Meshtastic tới điện thoại của một người bạn không có sóng">
+        <svg viewBox="0 0 1100 250">
+          <g fill="none" stroke="#67ea94" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M95 60v120M77 180l18-70 18 70M83 150h24M68 52a40 40 0 0 0 0 46M122 52a40 40 0 0 1 0 46M56 40a58 58 0 0 0 0 70M134 40a58 58 0 0 1 0 70" />
+          </g>
+          <path class="flow" d="M150 120 C 210 120, 230 120, 285 120" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <g transform="translate(300 52)">
+            <rect x="0" y="0" width="74" height="136" rx="15" fill="#101a14" stroke="#eef5f0" stroke-width="3"/>
+            <g fill="#67ea94"><rect x="44" y="18" width="4" height="6" rx="1"/><rect x="50" y="15" width="4" height="9" rx="1"/><rect x="56" y="12" width="4" height="12" rx="1"/><rect x="62" y="9" width="4" height="15" rx="1"/></g>
+            <path d="M20 60h34v24H32l-8 7v-7h-4z" fill="none" stroke="#67ea94" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="86" y="70" width="26" height="44" rx="6" fill="#67ea94"/><rect x="93" y="50" width="4" height="22" rx="2" fill="#67ea94"/><rect x="91" y="80" width="14" height="9" rx="2" fill="#052611"/>
+          </g>
+          <path class="flow" d="M420 140 Q 500 60 580 120" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path class="flow" d="M620 120 Q 700 60 780 140" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="600" cy="124" r="20" fill="#67ea94"/><rect x="593" y="114" width="14" height="20" rx="3" fill="#052611"/>
+          <g transform="translate(800 52)">
+            <rect x="0" y="0" width="74" height="136" rx="15" fill="#101a14" stroke="#eef5f0" stroke-width="3"/>
+            <g fill="#3a4a40"><rect x="44" y="18" width="4" height="6" rx="1"/><rect x="50" y="15" width="4" height="9" rx="1"/><rect x="56" y="12" width="4" height="12" rx="1"/><rect x="62" y="9" width="4" height="15" rx="1"/></g>
+            <path d="M20 60h34v24H32l-8 7v-7h-4z" fill="none" stroke="#a6b8ad" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="86" y="70" width="26" height="44" rx="6" fill="#67ea94"/><rect x="93" y="50" width="4" height="22" rx="2" fill="#67ea94"/><rect x="91" y="80" width="14" height="9" rx="2" fill="#052611"/>
+          </g>
+          <g text-anchor="middle" font-size="19" font-weight="600">
+            <text x="95" y="222">Trạm di động</text>
+            <text x="350" y="222">Trại chính</text><text class="sub" x="350" y="244">có sóng, chạy chuyển tiếp</text>
+            <text x="600" y="186">Các radio</text><text class="sub" x="600" y="208">chuyển tin qua mạng mesh</text>
+            <text x="850" y="222">Điện thoại của bạn</text><text class="sub" x="850" y="244">không sóng, chỉ có radio</text>
+          </g>
+        </svg>
+        <ol class="chain">
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 7v14M8 21l4-14 4 14M9.5 15h5M6 4a8 8 0 0 0 0 9M18 4a8 8 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Trạm di động</b> phủ sóng cho một điện thoại.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 3h10v18H7zM11 18h2M10 7.5l1.5-1 1.5 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Điện thoại ở Trại chính</b> có sóng và chạy chuyển tiếp.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 8h10v13H7zM10 8V3M9.5 12h5M9.5 15h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Các radio</b> chuyển tin nhắn qua mạng mesh.</span></li>
+          <li><span class="ic off"><svg viewBox="0 0 24 24"><path d="M7 3h10v18H7zM11 18h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Điện thoại của bạn</b> không có sóng, chỉ có radio.</span></li>
+        </ol>
+      </div>
+
+      <div class="sms-grid">
+        <div class="points">
+          <div class="point">
+            <h3>SMS và cuộc gọi hiện trong một phòng riêng tư.</h3>
+            <p>Mọi SMS mà điện thoại chuyển tiếp nhận được, cùng các cuộc gọi đến và cuộc gọi nhỡ, đều được đăng vào một phòng riêng tư do bạn chọn, và Mesh+ hiển thị chúng như một cuộc trò chuyện nhắn tin quen thuộc.</p>
+          </div>
+          <div class="point">
+            <h3>Ai trong phòng cũng có thể nhắn lại.</h3>
+            <p>Vuốt một tin nhắn để trả lời, hoặc chạm nút SMS để nhắn tới bất kỳ số hay liên hệ nào. Điện thoại chuyển tiếp sẽ gửi tin từ số của chính nó, và một dấu tích hiện ra khi tin đã được gửi đi.</p>
+          </div>
+          <div class="point">
+            <h3>Bạn bè dùng ứng dụng Meshtastic khác cũng tham gia được.</h3>
+            <p>Tin nhắn chuyển tiếp là văn bản thuần, nên người dùng ứng dụng Meshtastic khác vẫn đọc được và có thể gửi SMS bằng cách gõ <code>/sms +15551234567 your message</code>.</p>
+          </div>
+          <div class="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9.5 17h-19zM12 10v4.5M12 17.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Mọi người trong phòng chuyển tiếp đều đọc được các tin nhắn mà điện thoại đó nhận và gửi SMS từ số của nó, vì vậy chỉ nên để những người bạn tin tưởng trong phòng. SMS được tính phí theo mức thông thường của nhà mạng.</span></div>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/relay.webp" width="1080" height="2400" loading="lazy" alt="Phòng Camp SMS hiển thị tin nhắn từ các số điện thoại bên ngoài, câu trả lời gửi qua chuyển tiếp có dấu tích, và một cuộc gọi nhỡ"></div>
+          <div class="phone sm"><img src="/img/sms.webp" width="1080" height="2400" loading="lazy" alt="Hộp thoại Gửi SMS với một số điện thoại, bộ chọn liên hệ và tin nhắn Running late, see you at the trailhead at 9"></div>
+        </div>
+      </div>
+
+      <div class="how-on">
+        <div class="phone sm"><img src="/img/relay-settings.webp" width="1080" height="2400" loading="lazy" alt="Màn hình cài đặt chuyển tiếp SMS với bộ chọn phòng chuyển tiếp, công tắc bật và cảnh báo về những ai đọc được tin nhắn chuyển tiếp"></div>
+        <div>
+          <h3 style="font-size:30px">Bật lên chỉ mất vài giây.</h3>
+          <p>Trên điện thoại có sóng, hãy mở Cài đặt, rồi Chuyển tiếp SMS, chọn một phòng riêng tư (hoặc để Mesh+ tạo phòng tên Relay) và bật lên. Android sẽ hỏi quyền truy cập SMS và điện thoại một lần, và một thông báo sẽ hiển thị suốt thời gian chuyển tiếp đang chạy.</p>
+          <p>Chuyển tiếp ở trạng thái tắt cho đến khi bạn bật, và bạn có thể tắt bất cứ lúc nào từ cùng màn hình đó.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="more-features">
+    <div class="wrap">
+      <div class="feature flip">
+        <div class="copy">
+          <div class="kicker">Lời mời</div>
+          <h2>Mời bạn bè vào phòng riêng tư bằng mã QR hoặc liên kết.</h2>
+          <p>Tạo phòng chỉ với vài lần chạm rồi chia sẻ dưới dạng mã QR để quét, hoặc liên kết để gửi trước chuyến đi. Mesh+ dùng định dạng lời mời Meshtastic chuẩn, nên liên kết từ các ứng dụng Meshtastic chính thức mở được trong Mesh+, và liên kết của bạn cũng mở được trong các ứng dụng đó.</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Mỗi phòng riêng tư có khóa mã hóa riêng, nên người không có lời mời không đọc được dù radio của họ vẫn chuyển tiếp tin nhắn.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Tham gia nhanh như quét mã hoặc dán liên kết, và rời phòng chỉ cần một lần chạm.</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone"><img src="/img/invite.webp" width="1080" height="2400" loading="lazy" alt="Bảng lời mời cho phòng Hiking với mã QR và liên kết chia sẻ"></div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">Node</div>
+          <h2>Xem mọi radio mà node của bạn nghe thấy.</h2>
+          <p>Tab Node liệt kê tất cả những radio mà radio của bạn đã nghe thấy, với mục Yêu thích ở trên cùng và huy hiệu trực tuyến cho bất kỳ ai được nghe thấy trong hai giờ qua. Chạm vào một node để xem lần nghe thấy gần nhất, cách bao nhiêu chặng, tín hiệu mạnh đến đâu và còn bao nhiêu pin, rồi nhắn tin cho nó hoặc thêm vào mục yêu thích, được lưu ngay trên radio của bạn.</p>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/nodes.webp" width="1080" height="2400" loading="lazy" alt="Tab Node với Maya's Handheld là node yêu thích, còn Base Camp, Ridge Repeater và Leo đang trực tuyến"></div>
+          <div class="phone sm"><img src="/img/profile.webp" width="1080" height="2400" loading="lazy" alt="Hồ sơ Base Camp cho biết lần nghe thấy gần nhất, cách một chặng, tín hiệu và pin, với các nút để nhắn tin hoặc yêu thích"></div>
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="copy">
+          <div class="kicker">Cài đặt radio</div>
+          <h2>Mỗi cài đặt đều được giải thích bằng lời dễ hiểu.</h2>
+          <p>Vai trò, chuyển tiếp, cấu hình radio, giới hạn chặng, công suất phát, chia sẻ vị trí, tiết kiệm điện, màn hình và ghép nối Bluetooth đều chỉ cách một lần chạm, và mỗi mục có một ghi chú ngắn về tác dụng cũng như lúc nào bạn nên đổi. Mesh+ lưu các thay đổi của bạn cùng lúc, nên radio chỉ khởi động lại một lần.</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Đầu trang cho biết radio của bạn là bo mạch nào, firmware nó đang chạy và mức pin.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Khi có sự cố, bạn có thể xóa danh sách node, đặt lại cài đặt nhưng giữ nguyên danh tính, hoặc khôi phục cài đặt gốc hoàn toàn.</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/settings.webp" width="1080" height="2400" loading="lazy" alt="Cài đặt node cho Heltec Mesh Node T114 với nút Update to 2.7.26 và các cài đặt như Role và Relaying"></div>
+          <div class="phone sm"><img src="/img/info.webp" width="1080" height="2400" loading="lazy" alt="Phần giải thích Speed vs. range: cấu hình chậm hơn với xa hơn, cấu hình nhanh hơn truyền được nhiều tin nhắn hơn"></div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">Firmware</div>
+          <h2>Cập nhật firmware cho radio mà không cần máy tính.</h2>
+          <p>Khi có bản Meshtastic ổn định mới, Mesh+ đề xuất ngay trong cài đặt radio của bạn. Các bo mạch nRF52 như Heltec T114 và RAK4631 cập nhật qua cáp USB trong khoảng một phút, hoặc qua Bluetooth trong khoảng mười phút khi bạn không muốn cắm cáp.</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Bạn có thể chọn bất kỳ phiên bản đã phát hành nào, kể cả bản phát hành trước, hoặc quay về bản cũ hơn.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Cài đặt, phòng và tin nhắn của bạn vẫn được giữ nguyên, và radio bị kẹt ở chế độ cập nhật có thể được cứu từ màn hình kết nối.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Các bo mạch ESP32 cập nhật từ máy tính tại <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>.</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/firmware.webp" width="1080" height="2400" loading="lazy" alt="Màn hình firmware của Heltec Mesh Node T114, đề xuất cài Meshtastic 2.7.26 qua USB"></div>
+          <div class="phone sm"><img src="/img/firmware-progress.webp" width="1080" height="2400" loading="lazy" alt="Firmware 2.7.26 đang được cài qua cáp USB, hoàn thành 64%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">Thêm tính năng</div>
+        <h2>Những chi tiết nhỏ cũng đã được chăm chút.</h2>
+      </div>
+      <div class="grid">
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8h10v13H7zM10 8V3M9.5 12h5M9.5 15h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Mọi radio của bạn đều cách một lần chạm.</h3>
+          <p>Chuyển đổi giữa các radio từ thanh trên cùng và xem mỗi chiếc là bo mạch nào, chạy firmware gì và còn bao nhiêu pin.</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Bạn có thể dùng thử mà không cần radio.</h3>
+          <p>Bản demo tích hợp mô phỏng một radio với các phòng, tin nhắn riêng, câu trả lời và cài đặt, để bạn xem thử trước khi mua phần cứng.</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0M4 4l16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Phòng ồn ào có thể tắt tiếng.</h3>
+          <p>Tắt tiếng bất kỳ phòng hay tin nhắn riêng nào, và biểu tượng chuông gạch chéo trong danh sách trò chuyện sẽ nhắc bạn những cuộc nào đang im lặng.</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <h3>Tin nhắn của bạn vẫn là của bạn.</h3>
+          <p>Không có tài khoản, quảng cáo hay công cụ phân tích, và lịch sử tin nhắn chỉ được lưu trên điện thoại của bạn.</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Mã nguồn được mở công khai.</h3>
+          <p>Mesh+ được phát triển công khai trên GitHub, nơi ai cũng có thể đọc mã, tự biên dịch và gửi đóng góp cải tiến.</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v14M8 7l4-4 4 4M7 13v2l5 3 5-3v-2M12 21v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Một sợi cáp cấp nguồn cho radio.</h3>
+          <p>Qua USB-C, điện thoại cũng cấp nguồn cho radio, nên radio vẫn hoạt động ngay cả khi không có pin.</p>
+        </div>
+      </div>
+
+      <div class="center" style="margin:110px auto 40px">
+        <div class="kicker">Bạn cần gì</div>
+        <h2>Mesh+ cần rất ít để bắt đầu.</h2>
+      </div>
+      <div class="needs">
+        <div class="need"><b>Điện thoại Android 12 trở lên nào cũng được.</b><span>Mesh+ chiếm khoảng 3 MB và không cần tài khoản.</span></div>
+        <div class="need"><b>Radio của bạn cần firmware Meshtastic 2.x.</b><span>Radio như vậy đều kết nối được qua Bluetooth, còn qua USB thì Mesh+ đã được thử với các bo mạch nRF52 như Heltec T114.</span></div>
+        <div class="need"><b>Bạn bè của bạn cũng cần có radio.</b><span>Họ có thể dùng Mesh+ hoặc bất kỳ ứng dụng Meshtastic nào khác, và mỗi radio trong tầm phủ sóng đều mở rộng mạng mesh.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:20px">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">Câu hỏi thường gặp</div>
+        <h2>Đây là câu trả lời cho những câu hỏi mọi người hay hỏi nhất.</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Tôi có cần sóng di động hay internet không?</summary>
+          <p>Không. Tin nhắn truyền giữa các radio Meshtastic qua LoRa, nên bạn trò chuyện được ở bất cứ nơi nào các radio với tới nhau. Mesh+ chỉ kết nối mạng để kiểm tra và tải bản cập nhật firmware.</p>
+        </details>
+        <details>
+          <summary>Tin nhắn đi được bao xa?</summary>
+          <p>Hai radio cầm tay có tầm nhìn thông thoáng thường với tới nhau qua vài kilômét, và mỗi radio ở giữa đều có thể chuyển tin đi xa hơn. Đồi núi, nhà cao tầng và cây cối làm giảm tầm phủ sóng, vì thế người ta thích đặt trạm lặp ở nơi cao.</p>
+        </details>
+        <details>
+          <summary>Tôi có thể trò chuyện với người dùng ứng dụng Meshtastic chính thức không?</summary>
+          <p>Có. Mesh+ dùng cùng giao thức, nên mọi người trên một kênh đều thấy tin nhắn của nhau dù dùng ứng dụng nào, và liên kết mời vào phòng dùng được theo cả hai chiều.</p>
+        </details>
+        <details>
+          <summary>Ai đọc được các tin nhắn đi qua chuyển tiếp SMS?</summary>
+          <p>Mọi người trong phòng chuyển tiếp đều đọc được các tin nhắn và cuộc gọi mà điện thoại chuyển tiếp nhận được, và có thể gửi SMS từ số của nó. Phòng được mã hóa nên người ngoài phòng không đọc được, nhưng hãy chọn thành viên cẩn thận. Không có gì được gửi tới chúng tôi hay bất kỳ máy chủ nào.</p>
+        </details>
+        <details>
+          <summary>Mesh+ có trên Google Play hay F-Droid không?</summary>
+          <p>Mesh+ có <a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">trên Google Play</a>, và đang trên đường lên F-Droid. Bạn cũng có thể cài <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">tệp APK</a> từ trang này: mở tệp trên điện thoại và, khi Android hỏi, cho phép trình duyệt cài ứng dụng.</p>
+        </details>
+        <details>
+          <summary>Có phiên bản cho iPhone không?</summary>
+          <p>Hiện tại Mesh+ chỉ có cho Android. Bạn bè dùng iPhone có thể tham gia các phòng của bạn bằng ứng dụng Meshtastic chính thức.</p>
+        </details>
+        <details>
+          <summary>Mesh+ có mất phí không?</summary>
+          <p>Không. Mesh+ miễn phí và mã nguồn mở, không có tài khoản, quảng cáo, công cụ phân tích hay giao dịch mua trong ứng dụng.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <svg class="logo" aria-hidden="true"><use href="#logo"/></svg>
+      <h2>Mang nhóm chat của bạn ra ngoài vùng phủ sóng.</h2>
+      <p>Tải Mesh+, kết nối radio và gửi tin nhắn đầu tiên qua mạng mesh trong khoảng một phút.</p>
+      <div class="ctas">
+        <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>Tải trên Google Play</a>
+          <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>Tải APK</a>
+        <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus">Xem mã nguồn trên GitHub</a>
+      </div>
+      <p class="fine">Để cài APK, hãy mở tệp trên điện thoại và, khi Android hỏi, cho phép trình duyệt cài ứng dụng.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Mesh+ là một dự án mã nguồn mở độc lập, không liên kết hay được bảo trợ bởi Meshtastic LLC. Meshtastic® là nhãn hiệu đã đăng ký của Meshtastic LLC.</span>
+    <span><a href="https://github.com/backmeupplz/meshtastic-plus">Mã nguồn</a> · <a href="https://github.com/backmeupplz/meshtastic-plus/releases">Các bản phát hành</a> · <a href="/vi/compare.html">So sánh với ứng dụng chính thức</a> · <a href="/vi/privacy.html">Chính sách quyền riêng tư</a></span>
+    <nav class="langs" aria-label="Ngôn ngữ"><a href="/" hreflang="en" lang="en">English</a> <a href="/ar/" hreflang="ar" lang="ar">العربية</a> <a href="/de/" hreflang="de" lang="de">Deutsch</a> <a href="/es/" hreflang="es" lang="es">Español</a> <a href="/fr/" hreflang="fr" lang="fr">Français</a> <a href="/hi/" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/" hreflang="it" lang="it">Italiano</a> <a href="/ja/" hreflang="ja" lang="ja">日本語</a> <a href="/ko/" hreflang="ko" lang="ko">한국어</a> <a href="/nl/" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/" hreflang="ru" lang="ru">Русский</a> <a href="/sv/" hreflang="sv" lang="sv">Svenska</a> <a href="/th/" hreflang="th" lang="th">ไทย</a> <a href="/tr/" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/" hreflang="uk" lang="uk">Українська</a> <a href="/vi/" hreflang="vi" lang="vi" aria-current="page">Tiếng Việt</a> <a href="/zh-hans/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>
+  </div>
+</footer>
+<script>
+  const player = document.querySelector('.player');
+  const video = player.querySelector('video');
+  video.controls = false;
+  // the poster (42 KB) waits for load, so on phones it doesn't hold up the first screen's text (PageSpeed's LCP)
+  addEventListener('load', () => (video.poster = video.dataset.poster));
+  player.querySelector('.play').addEventListener('click', () => video.play());
+  video.addEventListener('play', () => { player.classList.add('started'); video.controls = true; });
+</script>
+</body>
+</html>

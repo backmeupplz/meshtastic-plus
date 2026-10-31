@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mesh+ · 圏外でも友だちとメッセージ</title>
+<meta name="description" content="Mesh+は、Meshtastic無線機で使える無料のオープンソースAndroidアプリです。携帯の電波がなくてもプライベートルームや暗号化ダイレクトメッセージでチャットでき、SMSリレーでテキストも送れ、無線機のファームウェアもスマートフォンから更新できます。">
+<link rel="canonical" href="https://meshplus.app/ja/">
+<link rel="alternate" hreflang="en" href="https://meshplus.app/">
+<link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/">
+<link rel="alternate" hreflang="de" href="https://meshplus.app/de/">
+<link rel="alternate" hreflang="es" href="https://meshplus.app/es/">
+<link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/">
+<link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/">
+<link rel="alternate" hreflang="id" href="https://meshplus.app/id/">
+<link rel="alternate" hreflang="it" href="https://meshplus.app/it/">
+<link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/">
+<link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/">
+<link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/">
+<link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/">
+<link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/">
+<link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/">
+<link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/">
+<link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/">
+<link rel="alternate" hreflang="th" href="https://meshplus.app/th/">
+<link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/">
+<link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/">
+<link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/">
+<link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/">
+<link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/">
+<link rel="alternate" hreflang="x-default" href="https://meshplus.app/">
+<meta name="theme-color" content="#060b08">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ar_AR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="hi_IN">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="nl_NL">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="sv_SE">
+<meta property="og:locale:alternate" content="th_TH">
+<meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:locale:alternate" content="uk_UA">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:site_name" content="Mesh+">
+<meta property="og:url" content="https://meshplus.app/ja/">
+<meta property="og:title" content="Mesh+ · 圏外でも友だちとメッセージ">
+<meta property="og:description" content="Meshtastic無線機で使える無料のオープンソースAndroidアプリ。プライベートルーム、暗号化ダイレクトメッセージ、SMSリレー、スマートフォンからのファームウェア更新に対応。">
+<meta property="og:image" content="https://meshplus.app/og/ja/home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Android向けMesh+：電波が届かない場所でも友だちにメッセージを送れます。2台のスマートフォンに、Meshtastic無線機を介したグループチャットとSMSリレーのルームが表示されています。">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mesh+ · 圏外でも友だちとメッセージ">
+<meta name="twitter:description" content="Meshtastic無線機で使える無料のオープンソースAndroidアプリ。プライベートルーム、暗号化ダイレクトメッセージ、SMSリレー、スマートフォンからのファームウェア更新に対応。">
+<meta name="twitter:image" content="https://meshplus.app/og/ja/home.jpg">
+<meta name="twitter:image:alt" content="Android向けMesh+：電波が届かない場所でも友だちにメッセージを送れます。2台のスマートフォンに、Meshtastic無線機を介したグループチャットとSMSリレーのルームが表示されています。">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #060b08; --bg2: #09120d; --card: #0e1913; --card2: #122019;
+    --line: rgba(103, 234, 148, 0.16); --line2: rgba(255, 255, 255, 0.08);
+    --fg: #eef5f0; --muted: #a6b8ad; --dim: #7f9388; --green: #67ea94; --ink: #052611; --warn: #ffd08f;
+    --display: ui-sans-serif, system-ui, sans-serif;
+    --body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--green); }
+  img { max-width: 100%; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: var(--display); letter-spacing: -0.025em; line-height: 1.08; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(32px, 4.4vw, 50px); }
+  h3 { font-size: 22px; letter-spacing: -0.015em; line-height: 1.25; }
+  p { margin: 0; }
+  .muted { color: var(--muted); }
+  .kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 18px; }
+  .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); }
+  :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 6px; }
+
+  /* nav */
+  .nav { position: sticky; top: 0; z-index: 10; background: rgba(6, 11, 8, 0.78); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line2); }
+  .nav .wrap { display: flex; align-items: center; gap: 28px; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 24px; letter-spacing: -0.03em; }
+  .brand svg { width: 34px; height: 34px; }
+  .brand b { color: var(--green); }
+  .nav nav { display: flex; gap: 26px; margin-left: auto; }
+  .nav nav a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; }
+  .nav nav a:hover { color: var(--fg); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 16px; text-decoration: none; border: 1px solid var(--line2); color: var(--fg); background: rgba(255, 255, 255, 0.03); transition: transform .15s ease, background .15s ease, box-shadow .15s ease; }
+  .btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.07); }
+  .btn.primary { background: var(--green); color: var(--ink); border-color: var(--green); box-shadow: 0 0 0 0 rgba(103, 234, 148, 0.5), 0 10px 30px rgba(103, 234, 148, 0.25); }
+  .btn.primary:hover { background: #7ff0a6; box-shadow: 0 12px 36px rgba(103, 234, 148, 0.35); }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+  .nav .btn { padding: 9px 18px; font-size: 15px; }
+
+  /* hero */
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line2); }
+  .hero .mesh { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: linear-gradient(100deg, transparent 22%, rgba(0, 0, 0, 0.35) 45%, #000 70%); mask-image: linear-gradient(100deg, transparent 22%, rgba(0, 0, 0, 0.35) 45%, #000 70%); }
+  .hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(900px 600px at 72% 40%, rgba(103, 234, 148, 0.10), transparent 70%); pointer-events: none; }
+  .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 40px; align-items: center; padding-top: 80px; padding-bottom: 96px; }
+  h1 { font-size: clamp(44px, 6.6vw, 82px); line-height: 1.0; letter-spacing: -0.035em; margin-bottom: 26px; }
+  h1 em { font-style: normal; color: var(--green); }
+  .lead { font-size: 20px; line-height: 1.6; color: var(--muted); max-width: 590px; margin-bottom: 34px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 14px; }
+  .fine { font-size: 14.5px; color: var(--dim); margin-top: 20px; max-width: 560px; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; width: 100%; max-width: 540px; margin-left: auto; }
+  .duo .phone { --w: 100%; }
+  .duo .back { margin-top: 80px; transform: rotate(-2deg); }
+  .duo .front { transform: rotate(2deg); }
+
+  /* phones */
+  .phone { --w: 290px; width: var(--w); padding: calc(var(--w) * 0.03); border-radius: 12.5% / 5.8%; background: linear-gradient(150deg, #3b3f46 0%, #16181c 32%, #0b0c0f 70%, #2c2f35 100%); box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.07) inset, 0 0 70px rgba(103, 234, 148, 0.07); flex: none; }
+  .phone img { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 2400; border-radius: 10% / 4.5%; background: #101510; }
+  .phone.sm { --w: 250px; }
+
+  /* sections */
+  section { padding: 110px 0; }
+  .center { text-align: center; max-width: 760px; margin: 0 auto 60px; }
+  .center p { font-size: 19px; color: var(--muted); margin-top: 18px; text-wrap: pretty; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: step; }
+  .step { position: relative; padding: 34px 30px 32px; border-radius: 26px; background: linear-gradient(180deg, var(--card2), var(--card)); border: 1px solid var(--line2); }
+  .step::before { counter-increment: step; content: counter(step); display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: rgba(103, 234, 148, 0.12); color: var(--green); font-family: var(--display); font-weight: 800; font-size: 22px; margin-bottom: 22px; }
+  .step h3 { margin-bottom: 10px; }
+  .step p { color: var(--muted); font-size: 16px; }
+
+  .feature { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+  .feature + .feature { margin-top: 140px; }
+  .feature.flip .copy { order: 2; }
+  .feature .copy p { color: var(--muted); font-size: 18px; margin-top: 20px; }
+  .feature .copy ul { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
+  .feature .copy li { display: flex; gap: 14px; color: var(--fg); font-size: 16.5px; }
+  .feature .copy li svg { flex: none; width: 22px; height: 22px; margin-top: 2px; color: var(--green); }
+  .shots { display: flex; justify-content: center; align-items: flex-start; gap: 26px; }
+  .shots .phone:nth-child(2) { margin-top: 70px; }
+
+  /* SMS relay */
+  .sms { background: linear-gradient(180deg, var(--bg2), var(--bg) 85%); border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2); position: relative; overflow: hidden; }
+  .sms::before { content: ""; position: absolute; inset: 0; background: radial-gradient(800px 500px at 50% 0%, rgba(103, 234, 148, 0.10), transparent 70%); pointer-events: none; }
+  .sms .wrap { position: relative; }
+  .diagram { border-radius: 30px; border: 1px solid var(--line); background: rgba(14, 25, 19, 0.7); padding: 26px 18px 18px; margin-bottom: 70px; }
+  .diagram svg { display: block; width: 100%; height: auto; }
+  .diagram text { font-family: var(--body); fill: var(--fg); }
+  .diagram .sub { fill: var(--dim); font-size: 15px; }
+  .chain { display: none; list-style: none; margin: 0; padding: 4px 6px; }
+  .chain li { position: relative; display: flex; align-items: center; gap: 16px; padding: 11px 0; font-size: 16px; color: var(--muted); }
+  .chain li + li::before { content: ""; position: absolute; left: 23px; top: -11px; height: 22px; border-left: 2px dotted var(--green); }
+  .chain b { color: var(--fg); font-weight: 600; }
+  .chain .ic { flex: none; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: rgba(103, 234, 148, 0.1); color: var(--green); }
+  .chain .ic svg { width: 26px; height: 26px; }
+  .chain .off { color: var(--muted); }
+  .flow { stroke-dasharray: 3 13; animation: flow 1.4s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -32; } }
+  .sms-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 60px; align-items: center; }
+  .points { display: grid; gap: 18px; }
+  .point { padding: 24px 26px; border-radius: 22px; background: var(--card); border: 1px solid var(--line2); }
+  .point h3 { font-size: 20px; margin-bottom: 8px; }
+  .point p { color: var(--muted); font-size: 16px; }
+  .point code { white-space: nowrap; font-size: 14.5px; background: rgba(103, 234, 148, 0.1); color: var(--green); padding: 2px 7px; border-radius: 6px; }
+  .note { display: flex; gap: 14px; margin-top: 18px; padding: 20px 22px; border-radius: 20px; background: rgba(255, 208, 143, 0.07); border: 1px solid rgba(255, 208, 143, 0.25); color: #f3e2c8; font-size: 15.5px; }
+  .note svg { flex: none; width: 22px; height: 22px; color: var(--warn); margin-top: 2px; }
+  .how-on { margin-top: 70px; display: grid; grid-template-columns: auto 1fr; gap: 50px; align-items: center; padding: 34px; border-radius: 30px; border: 1px solid var(--line2); background: var(--card); }
+  .how-on p { color: var(--muted); margin-top: 14px; font-size: 17px; }
+
+  /* small features */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .tile { padding: 30px 28px; border-radius: 24px; background: var(--card); border: 1px solid var(--line2); }
+  .tile .ic { width: 50px; height: 50px; border-radius: 16px; display: grid; place-items: center; background: rgba(103, 234, 148, 0.1); color: var(--green); margin-bottom: 20px; }
+  .tile .ic svg { width: 26px; height: 26px; }
+  .tile h3 { font-size: 19px; margin-bottom: 8px; }
+  .tile p { color: var(--muted); font-size: 15.5px; }
+
+  /* needs + faq */
+  .needs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 10px; }
+  .need { padding: 26px 26px; border-radius: 22px; border: 1px solid var(--line); background: rgba(103, 234, 148, 0.04); }
+  .need b { display: block; font-family: var(--display); font-size: 20px; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .need span { color: var(--muted); font-size: 15.5px; }
+  .faq { max-width: 860px; margin: 0 auto; display: grid; gap: 12px; }
+  details { border-radius: 20px; background: var(--card); border: 1px solid var(--line2); }
+  summary { cursor: pointer; list-style: none; padding: 22px 26px; font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--body); font-weight: 400; font-size: 28px; color: var(--green); transition: transform .2s ease; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { padding: 0 26px 24px; color: var(--muted); font-size: 16.5px; }
+
+  /* final cta */
+  .player { position: relative; max-width: 1040px; margin: 0 auto; border-radius: 26px; overflow: hidden; border: 1px solid var(--line); background: #030504; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55), 0 0 90px rgba(103, 234, 148, 0.08); }
+  .player video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #030504; }
+  .play { position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; border: 0; border-radius: 50%; cursor: pointer; display: grid; place-items: center; background: var(--green); color: var(--ink); box-shadow: 0 0 0 14px rgba(103, 234, 148, 0.18), 0 20px 50px rgba(0, 0, 0, 0.5); transition: transform .15s ease, box-shadow .15s ease; }
+  .play:hover { transform: scale(1.06); box-shadow: 0 0 0 18px rgba(103, 234, 148, 0.22), 0 20px 50px rgba(0, 0, 0, 0.5); }
+  .play svg { width: 40px; height: 40px; margin-left: 5px; }
+  .player.started .play { display: none; }
+  .final { text-align: center; padding: 120px 0 130px; position: relative; overflow: hidden; border-top: 1px solid var(--line2); }
+  .final::before { content: ""; position: absolute; inset: 0; background: radial-gradient(700px 400px at 50% 100%, rgba(103, 234, 148, 0.14), transparent 70%); }
+  .final .wrap { position: relative; }
+  .final svg.logo { width: 84px; height: 84px; margin-bottom: 26px; filter: drop-shadow(0 0 24px rgba(103, 234, 148, 0.45)); }
+  .final h2 { font-size: clamp(36px, 5.4vw, 62px); max-width: 820px; margin: 0 auto 20px; }
+  .final p { color: var(--muted); font-size: 19px; max-width: 640px; margin: 0 auto 34px; }
+  .final .ctas { justify-content: center; }
+  .final .fine { margin: 22px auto 0; }
+  footer { border-top: 1px solid var(--line2); padding: 34px 0 48px; color: var(--dim); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 30px; justify-content: space-between; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 980px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-top: 56px; padding-bottom: 70px; }
+    .duo { margin: 0 auto; }
+    .feature, .sms-grid { grid-template-columns: 1fr; gap: 50px; }
+    .feature.flip .copy { order: 0; }
+    .steps, .grid, .needs { grid-template-columns: 1fr 1fr; }
+    .how-on { grid-template-columns: 1fr; }
+    .hero .mesh { -webkit-mask-image: linear-gradient(180deg, transparent 48%, #000 82%); mask-image: linear-gradient(180deg, transparent 48%, #000 82%); }
+  }
+  @media (max-width: 680px) {
+    body { font-size: 16px; }
+    .player { border-radius: 18px; }
+    .play { width: 72px; height: 72px; margin: -36px 0 0 -36px; box-shadow: 0 0 0 10px rgba(103, 234, 148, 0.18), 0 14px 36px rgba(0, 0, 0, 0.5); }
+    .play svg { width: 30px; height: 30px; margin-left: 4px; }
+    .wrap { padding: 0 16px; }
+    .nav nav { display: none; }
+    .nav .btn { margin-left: auto; }
+    section { padding: 80px 0; }
+    .lead { font-size: 18px; }
+    .duo { gap: 16px; }
+    .duo .back { margin-top: 50px; }
+    .steps, .grid, .needs { grid-template-columns: 1fr; }
+    .shots { gap: 14px; }
+    .shots .phone { --w: 46vw; }
+    .shots .phone:nth-child(2) { margin-top: 40px; }
+    .feature + .feature { margin-top: 100px; }
+    .diagram { padding: 14px 12px; margin-bottom: 50px; }
+    .diagram > svg { display: none; }
+    .chain { display: grid; }
+    .how-on { padding: 24px; }
+    .how-on .phone { --w: 230px; margin: 0 auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .flow, .mesh * { animation: none !important; }
+  }
+nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0;padding:0;flex:0 0 100%}nav.langs a{display:inline-block;padding:4px 8px;min-height:32px;border-radius:6px}nav.langs a[aria-current]{font-weight:700;text-decoration:none;color:inherit}h1,h2,h3,p,li,summary{overflow-wrap:break-word;hyphens:auto}h1,h2,h3,.kicker{letter-spacing:0}h1,h2,h3{line-height:1.3}h1,h2{max-width:none}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "MobileApplication",
+ "name": "Mesh+",
+ "url": "https://meshplus.app/ja/",
+ "inLanguage": "ja",
+ "description": "Mesh+は、Meshtastic無線機で使える無料のオープンソースAndroidアプリです。携帯の電波がなくてもプライベートルームや暗号化ダイレクトメッセージでチャットでき、SMSリレーでテキストも送れ、無線機のファームウェアもスマートフォンから更新できます。",
+ "applicationCategory": "CommunicationApplication",
+ "operatingSystem": "Android 12以降",
+ "image": "https://meshplus.app/og/ja/home.jpg",
+ "offers": {
+  "@type": "Offer",
+  "price": "0",
+  "priceCurrency": "USD"
+ },
+ "installUrl": "https://play.google.com/store/apps/details?id=com.borodutch.meshplus",
+ "downloadUrl": "https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk",
+ "sameAs": [
+  "https://github.com/backmeupplz/meshtastic-plus",
+  "https://play.google.com/store/apps/details?id=com.borodutch.meshplus"
+ ],
+ "author": {
+  "@type": "Person",
+  "name": "Nikita Kolmogorov",
+  "url": "https://borodutch.com"
+ }
+}
+</script>
+<script defer src="https://lumen.borodutch.com/l.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="24 22 60 60"><path d="M54,38 L38,66 L70,66 Z" fill="none" stroke="#67ea94" stroke-width="4" stroke-linejoin="round"/><circle cx="54" cy="38" r="8" fill="#67ea94"/><circle cx="38" cy="66" r="8" fill="#67ea94"/><circle cx="70" cy="66" r="8" fill="#67ea94"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></symbol>
+  <symbol id="gplay" viewBox="0 0 24 24"><path d="M5 3.5v17L19.5 12zM5 3.5l9 11.5M5 20.5l9-11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="download" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Mesh+ ホーム"><svg aria-hidden="true"><use href="#logo"/></svg><span>Mesh<b>+</b></span></a>
+    <nav aria-label="セクション">
+      <a href="#how">使い方</a>
+      <a href="#features">機能</a>
+      <a href="#sms">SMSリレー</a>
+      <a href="#faq">よくある質問</a>
+      <a href="https://github.com/backmeupplz/meshtastic-plus">GitHub</a>
+    </nav>
+    <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">アプリを入手</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding:0">
+    <svg class="mesh" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g stroke="#67ea94" stroke-opacity="0.13" stroke-width="1.2">
+        <path d="M80 140L260 90L420 210L610 120L780 250L960 160L1130 260L1320 150M260 90L300 330L420 210M610 120L640 380L780 250M960 160L1010 420L1130 260M300 330L470 520L640 380L820 560L1010 420L1200 590M80 140L120 420L300 330M1320 150L1380 420L1200 590M120 420L250 650L470 520M820 560L700 720M1200 590L1080 730M470 520L560 700"/>
+      </g>
+      <g fill="#67ea94">
+        <circle cx="80" cy="140" r="3" opacity=".4"/><circle cx="260" cy="90" r="4" opacity=".5"/><circle cx="420" cy="210" r="3" opacity=".4"/><circle cx="610" cy="120" r="4" opacity=".45"/><circle cx="780" cy="250" r="3" opacity=".4"/><circle cx="960" cy="160" r="5" opacity=".5"/><circle cx="1130" cy="260" r="3" opacity=".4"/><circle cx="1320" cy="150" r="4" opacity=".45"/><circle cx="300" cy="330" r="3" opacity=".35"/><circle cx="640" cy="380" r="4" opacity=".4"/><circle cx="1010" cy="420" r="3" opacity=".4"/><circle cx="470" cy="520" r="4" opacity=".35"/><circle cx="820" cy="560" r="3" opacity=".35"/><circle cx="1200" cy="590" r="4" opacity=".4"/><circle cx="120" cy="420" r="3" opacity=".3"/><circle cx="1380" cy="420" r="3" opacity=".3"/><circle cx="250" cy="650" r="3" opacity=".3"/><circle cx="560" cy="700" r="3" opacity=".3"/><circle cx="700" cy="720" r="3" opacity=".3"/><circle cx="1080" cy="730" r="3" opacity=".3"/>
+      </g>
+      <g stroke="#67ea94" stroke-width="2.4" fill="none" stroke-linecap="round">
+        <path class="flow" d="M260 90L420 210L610 120L780 250L960 160L1130 260"/>
+        <path class="flow" style="animation-duration:2.1s" d="M120 420L300 330L470 520L640 380L820 560L1010 420L1200 590" stroke-opacity=".6"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <div>
+        <h1><em>圏外</em>でも、友だちにメッセージを送れます。</h1>
+        <p class="lead">Mesh+は、Meshtastic無線機で使えるやさしいAndroidアプリです。ポケットに入る小さなLoRa無線機をスマートフォンにつなぐと、メッセージは無線機から無線機へと丘や谷を越えて届きます。途中に基地局もWi-Fiもインターネットも要りません。</p>
+        <div class="ctas">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>Google Playで入手</a>
+          <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>APKをダウンロード</a>
+          <a class="btn" href="#video"><svg aria-hidden="true"><use href="#play"/></svg>30秒の動画を見る</a>
+        </div>
+        <p class="fine">Mesh+は無料のオープンソースで、サイズは約3 MB、Android 12以降で動作します。無線機をまだお持ちでなくても、内蔵のデモで先に中の様子を見られます。</p>
+      </div>
+      <div class="duo">
+        <div class="phone back"><img src="/img/chats.webp" srcset="/img/chats-540.webp 540w, /img/chats.webp 720w" sizes="300px" width="1080" height="2400" fetchpriority="low" alt="Publicチャンネル、プライベートルームのHikingとCamp SMS、Mayaからのダイレクトメッセージが並ぶMesh+のチャット一覧。それぞれに未読バッジが付いています"></div>
+        <div class="phone front"><img src="/img/room.webp" srcset="/img/room-540.webp 540w, /img/room.webp 720w" sizes="300px" width="1080" height="2400" fetchpriority="low" alt="友だちがメッシュ越しに道の状況を共有しているHikingというプライベートルーム。メッシュが中継したメッセージの下にチェックマークが付いています"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="video" style="padding-bottom:40px">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">紹介動画</div>
+        <h2>Mesh+でできることを、30秒でご覧ください。</h2>
+        <p>音を出して、プライベートルーム、メッシュを飛び交うメッセージ、ファームウェアの更新、SMSリレーを手早く見て回りましょう。</p>
+      </div>
+      <div class="player">
+        <video src="/launch.mp4" data-poster="/img/launch-poster.webp" width="1920" height="1080" preload="none" playsinline controls
+          aria-label="Mesh+の紹介動画（30秒、音楽付き）：携帯の電波がない場所でのチャット、プライベートルーム、無線機から無線機へ飛ぶメッセージ、QRコードでの招待、近くの無線機、ファームウェアの更新、SMSリレー。"></video>
+        <button class="play" type="button" aria-label="紹介動画を再生"><svg aria-hidden="true"><use href="#play"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">使い方</div>
+        <h2>箱を開けてから最初のメッセージまで、1分ほどです。</h2>
+        <p>Meshtastic無線機は、長距離に届くLoRa無線でメッセージを互いに受け渡すので、電波の届く範囲にある無線機がすべてネットワークの一部になります。あなたの無線機とスマートフォンをつなぐのが、Mesh+です。</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3>Meshtastic無線機を用意します。</h3>
+          <p>Mesh+は、Meshtasticファームウェア2.xが動作する無線機（Heltec Mesh Node T114やRAK4631など）で使えます。連絡したい友だちにも無線機が必要で、間にある無線機がすべてメッセージをさらに遠くへ運んでくれます。</p>
+        </div>
+        <div class="step">
+          <h3>スマートフォンに接続します。</h3>
+          <p>無線機の画面に表示されるPINでBluetoothペアリングするか、USB-Cケーブルでつないでスマートフォンから給電します。Mesh+は使った無線機を覚えているので、次からはワンタップで再接続できます。</p>
+        </div>
+        <div class="step">
+          <h3>地域と名前を選びます。</h3>
+          <p>新しい無線機は、どの周波数帯を使うかがわかるまで送信しません。そのためMesh+が最初に一度だけ尋ね、スマートフォンの国から合う地域を提案します。メッシュ上での名前を決めれば、チャットを始められます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" style="padding-top:40px">
+    <div class="wrap">
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">チャット</div>
+          <h2>公開チャットも、プライベートルームも、ダイレクトメッセージも、ひとつの一覧に。</h2>
+          <p>公開チャンネルは、近くにいる全員が共有するオープンなルームです。プライベートルームは暗号化されていて、招待した人だけが読めます。ダイレクトメッセージは、無線機のファームウェアによってエンドツーエンドで暗号化されます。</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>メッセージの下のチェックマークで、ほかの無線機が中継したことや、友だちの無線機が受信したことがわかります。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>未読バッジで新着がひと目でわかり、通知が不要なルームや相手はミュートできます。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>接続中はMesh+がバックグラウンドで動き続け、メッセージが届くと通知します。</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/public.webp" width="1080" height="2400" loading="lazy" alt="Ridge Repeater、Leo、Mayaが近くの全員とチャットしているPublicチャンネル"></div>
+          <div class="phone sm"><img src="/img/dm.webp" width="1080" height="2400" loading="lazy" alt="Maya's Handheldとのエンドツーエンド暗号化ダイレクトメッセージ。送信したメッセージの下に配信済みのチェックマークが付いています"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sms" id="sms">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">SMSリレー</div>
+        <h2>1台のスマートフォンに電波があれば、グループ全員がテキストを送れます。</h2>
+        <p>山奥では、ベースキャンプや尾根の上にいるひとりだけが、かろうじて携帯の電波をつかめる、ということがよくあります。そのスマートフォンをリレーにすれば、メッシュにいる全員が、それを通じて通常のテキストメッセージを送受信できます。</p>
+      </div>
+
+      <div class="diagram" role="img" aria-label="基地局の電波がBase Campのスマートフォンに届き、そのスマートフォンが2台のMeshtastic無線機を経由して、電波のない友だちのスマートフォンにテキストを中継する様子">
+        <svg viewBox="0 0 1100 250">
+          <g fill="none" stroke="#67ea94" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M95 60v120M77 180l18-70 18 70M83 150h24M68 52a40 40 0 0 0 0 46M122 52a40 40 0 0 1 0 46M56 40a58 58 0 0 0 0 70M134 40a58 58 0 0 1 0 70" />
+          </g>
+          <path class="flow" d="M150 120 C 210 120, 230 120, 285 120" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <g transform="translate(300 52)">
+            <rect x="0" y="0" width="74" height="136" rx="15" fill="#101a14" stroke="#eef5f0" stroke-width="3"/>
+            <g fill="#67ea94"><rect x="44" y="18" width="4" height="6" rx="1"/><rect x="50" y="15" width="4" height="9" rx="1"/><rect x="56" y="12" width="4" height="12" rx="1"/><rect x="62" y="9" width="4" height="15" rx="1"/></g>
+            <path d="M20 60h34v24H32l-8 7v-7h-4z" fill="none" stroke="#67ea94" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="86" y="70" width="26" height="44" rx="6" fill="#67ea94"/><rect x="93" y="50" width="4" height="22" rx="2" fill="#67ea94"/><rect x="91" y="80" width="14" height="9" rx="2" fill="#052611"/>
+          </g>
+          <path class="flow" d="M420 140 Q 500 60 580 120" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path class="flow" d="M620 120 Q 700 60 780 140" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="600" cy="124" r="20" fill="#67ea94"/><rect x="593" y="114" width="14" height="20" rx="3" fill="#052611"/>
+          <g transform="translate(800 52)">
+            <rect x="0" y="0" width="74" height="136" rx="15" fill="#101a14" stroke="#eef5f0" stroke-width="3"/>
+            <g fill="#3a4a40"><rect x="44" y="18" width="4" height="6" rx="1"/><rect x="50" y="15" width="4" height="9" rx="1"/><rect x="56" y="12" width="4" height="12" rx="1"/><rect x="62" y="9" width="4" height="15" rx="1"/></g>
+            <path d="M20 60h34v24H32l-8 7v-7h-4z" fill="none" stroke="#a6b8ad" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="86" y="70" width="26" height="44" rx="6" fill="#67ea94"/><rect x="93" y="50" width="4" height="22" rx="2" fill="#67ea94"/><rect x="91" y="80" width="14" height="9" rx="2" fill="#052611"/>
+          </g>
+          <g text-anchor="middle" font-size="19" font-weight="600">
+            <text x="95" y="222">基地局</text>
+            <text x="350" y="222">ベースキャンプ</text><text class="sub" x="350" y="244">電波あり、リレーを動かす</text>
+            <text x="600" y="186">無線機</text><text class="sub" x="600" y="208">メッシュ越しにテキストを受け渡す</text>
+            <text x="850" y="222">あなたのスマートフォン</text><text class="sub" x="850" y="244">電波なし、無線機のみ</text>
+          </g>
+        </svg>
+        <ol class="chain">
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 7v14M8 21l4-14 4 14M9.5 15h5M6 4a8 8 0 0 0 0 9M18 4a8 8 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>基地局</b>の電波は1台のスマートフォンに届きます。</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 3h10v18H7zM11 18h2M10 7.5l1.5-1 1.5 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>ベースキャンプのスマートフォン</b>には電波があり、リレーを動かします。</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 8h10v13H7zM10 8V3M9.5 12h5M9.5 15h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>無線機</b>がメッシュ越しにテキストを受け渡します。</span></li>
+          <li><span class="ic off"><svg viewBox="0 0 24 24"><path d="M7 3h10v18H7zM11 18h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>あなたのスマートフォン</b>には電波がなく、無線機だけがあります。</span></li>
+        </ol>
+      </div>
+
+      <div class="sms-grid">
+        <div class="points">
+          <div class="point">
+            <h3>SMSと着信は、プライベートルームに届きます。</h3>
+            <p>リレー用のスマートフォンが受信したSMSと、その着信や不在着信は、あなたが選んだプライベートルームに投稿され、Mesh+ではおなじみのメッセージのやりとりとして表示されます。</p>
+          </div>
+          <div class="point">
+            <h3>ルームにいる誰でも、返信できます。</h3>
+            <p>テキストをスワイプすれば返信でき、SMSボタンをタップすれば任意の番号や連絡先に送れます。リレー用のスマートフォン自身の番号から送信され、送信が済むとチェックマークが付きます。</p>
+          </div>
+          <div class="point">
+            <h3>ほかのMeshtasticアプリを使う友だちも参加できます。</h3>
+            <p>リレーのメッセージはプレーンテキストなので、ほかのMeshtasticアプリを使っている人もそれを読め、<code>/sms +15551234567 your message</code>と入力すればテキストを送れます。</p>
+          </div>
+          <div class="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9.5 17h-19zM12 10v4.5M12 17.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>リレーのルームにいる全員が、そのスマートフォンが受信したテキストを読め、その番号からSMSを送れます。ルームには信頼できる人だけを入れてください。テキストの送信には、ご契約の通信事業者の通常料金がかかります。</span></div>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/relay.webp" width="1080" height="2400" loading="lazy" alt="外部の電話番号からのテキスト、リレー経由で送った返信（チェックマーク付き）、不在着信が表示されたCamp SMSルーム"></div>
+          <div class="phone sm"><img src="/img/sms.webp" width="1080" height="2400" loading="lazy" alt="電話番号、連絡先の選択、メッセージ「Running late, see you at the trailhead at 9」が入力されたSMS送信ダイアログ"></div>
+        </div>
+      </div>
+
+      <div class="how-on">
+        <div class="phone sm"><img src="/img/relay-settings.webp" width="1080" height="2400" loading="lazy" alt="リレーするルームの選択、オンのスイッチ、リレーされるテキストを誰が読めるかについての警告が表示されたSMSリレーの設定画面"></div>
+        <div>
+          <h3 style="font-size:30px">オンにするのは、数秒で済みます。</h3>
+          <p>電波のあるスマートフォンで「設定」を開き、「SMSリレー」でプライベートルームを選び（Relayという名前のルームをMesh+に作らせることもできます）、オンにします。AndroidからSMSと電話へのアクセスを一度だけ求められ、リレーが動いている間は通知が表示され続けます。</p>
+          <p>リレーは、オンにするまでオフのままで、同じ画面からいつでもオフにできます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="more-features">
+    <div class="wrap">
+      <div class="feature flip">
+        <div class="copy">
+          <div class="kicker">招待</div>
+          <h2>QRコードやリンクで、プライベートルームに友だちを招待できます。</h2>
+          <p>ルームは数回のタップで作成でき、スキャンしてもらうQRコードや、出発前に送るリンクとして共有できます。Mesh+はMeshtastic標準の招待形式を使っているので、公式MeshtasticアプリのリンクはMesh+で開き、Mesh+のリンクは公式アプリで開きます。</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>プライベートルームにはそれぞれ専用の暗号鍵があるため、招待を受けていない人は、その無線機がメッセージを中継していても読めません。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>参加はコードをスキャンするかリンクを貼り付けるだけで、退出もワンタップです。</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone"><img src="/img/invite.webp" width="1080" height="2400" loading="lazy" alt="QRコードと共有リンクが表示された、Hikingルームの招待シート"></div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">ノード</div>
+          <h2>あなたのノードが受信できた無線機を、すべて見られます。</h2>
+          <p>「ノード」タブには、無線機が受信した相手が一覧で表示され、お気に入りが先頭に並び、直近2時間以内に受信した相手にはオンラインのバッジが付きます。ノードをタップすると、最終受信の時刻、何ホップ先にあるか、信号の強さ、バッテリー残量がわかります。そこからメッセージを送ったり、お気に入りに追加したりでき、お気に入りは無線機に保存されます。</p>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/nodes.webp" width="1080" height="2400" loading="lazy" alt="お気に入りのMaya's Handheldと、オンラインのBase Camp、Ridge Repeater、Leoが表示されたノードタブ"></div>
+          <div class="phone sm"><img src="/img/profile.webp" width="1080" height="2400" loading="lazy" alt="最終受信の時刻、1ホップ先であること、信号、バッテリーが表示され、メッセージとお気に入りのボタンが並ぶBase Campのプロフィール"></div>
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="copy">
+          <div class="kicker">無線機の設定</div>
+          <h2>どの設定も、何のためのものかをわかりやすい言葉で説明しています。</h2>
+          <p>役割、中継、無線のプリセット、最大ホップ数、送信出力、位置情報の共有、省電力、画面、Bluetoothペアリングはどれもタップひとつで開け、それぞれに、何の設定でどんなときに変えるかの短い説明が付いています。Mesh+は変更をまとめて保存するので、無線機の再起動は1回で済みます。</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>ページの先頭に、お使いの無線機のボード、動作中のファームウェア、バッテリーが表示されます。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>困ったときは、ノードリストを消去したり、IDを残したまま設定をリセットしたり、完全に工場出荷時の状態に戻したりできます。</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/settings.webp" width="1080" height="2400" loading="lazy" alt="Heltec Mesh Node T114のノード設定。「2.7.26にアップデート」ボタンと、役割や中継などの設定が表示されています"></div>
+          <div class="phone sm"><img src="/img/info.webp" width="1080" height="2400" loading="lazy" alt="「速度と距離」の説明：低速なプリセットほど遠くまで届き、高速なプリセットほど多くのメッセージを送れます"></div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">ファームウェア</div>
+          <h2>パソコンなしで、無線機のファームウェアを更新できます。</h2>
+          <p>Meshtasticの新しい安定版が公開されると、Mesh+が無線機の設定画面でそのまま案内します。Heltec T114やRAK4631のようなnRF52ボードは、USBケーブルなら1分ほど、ケーブルをつなぎたくないときはBluetoothで10分ほどで更新できます。</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>プレリリース版を含め、公開されているどのバージョンも選べ、古いバージョンに戻すこともできます。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>設定、ルーム、メッセージはそのまま残り、アップデートモードで止まってしまった無線機も、接続画面から復旧できます。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>ESP32ボードは、パソコンから<a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>で更新します。</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/firmware.webp" width="1080" height="2400" loading="lazy" alt="Heltec Mesh Node T114のファームウェア画面。USB経由でインストールできるMeshtastic 2.7.26が案内されています"></div>
+          <div class="phone sm"><img src="/img/firmware-progress.webp" width="1080" height="2400" loading="lazy" alt="USBケーブル経由でファームウェア2.7.26をインストール中。進捗は64%です"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">その他の機能</div>
+        <h2>ちょっとしたところにも、気を配っています。</h2>
+      </div>
+      <div class="grid">
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8h10v13H7zM10 8V3M9.5 12h5M9.5 15h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>無線機はどれも、ワンタップで切り替えられます。</h3>
+          <p>上部のバーから無線機を切り替えられ、それぞれのボード、動作中のファームウェア、バッテリーを確認できます。</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>無線機がなくても試せます。</h3>
+          <p>内蔵のデモは、ルーム、ダイレクトメッセージ、返信、設定のそろった無線機を再現するので、ハードウェアを買う前に中を見て回れます。</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0M4 4l16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>にぎやかなルームは、ミュートできます。</h3>
+          <p>ルームやダイレクトメッセージを静かにでき、チャット一覧に表示される斜線入りのベルで、どれがミュート中かがわかります。</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <h3>メッセージは、あなただけのものです。</h3>
+          <p>アカウントも広告も分析もなく、メッセージの履歴はお使いのスマートフォンにだけ保存されます。</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>コードはオープンソースです。</h3>
+          <p>Mesh+はGitHubで公開しながら開発されていて、誰でもコードを読み、自分でビルドし、改善を送れます。</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v14M8 7l4-4 4 4M7 13v2l5 3 5-3v-2M12 21v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>ケーブルで、無線機に給電できます。</h3>
+          <p>USB-Cなら、スマートフォンが無線機にも給電するので、無線機にバッテリーがなくても動き続けます。</p>
+        </div>
+      </div>
+
+      <div class="center" style="margin:110px auto 40px">
+        <div class="kicker">必要なもの</div>
+        <h2>Mesh+を始めるのに、必要なものはわずかです。</h2>
+      </div>
+      <div class="needs">
+        <div class="need"><b>Android 12以降のスマートフォンなら、どれでも使えます。</b><span>Mesh+の容量は約3 MBで、アカウントは要りません。</span></div>
+        <div class="need"><b>無線機には、Meshtasticファームウェア2.xが必要です。</b><span>該当する無線機ならどれでもBluetoothで接続でき、USB接続ではMesh+をHeltec T114のようなnRF52ボードで動作確認しています。</span></div>
+        <div class="need"><b>友だちにも無線機が必要です。</b><span>Mesh+でも、ほかのMeshtasticアプリでも使え、電波の届く範囲にある無線機が増えるほどメッシュが広がります。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:20px">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">よくある質問</div>
+        <h2>よくいただく質問に、お答えします。</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>携帯の電波やインターネットは必要ですか？</summary>
+          <p>いいえ。メッセージはLoRaでMeshtastic無線機の間を行き来するので、無線機どうしが届く場所ならどこでもチャットできます。Mesh+がオンラインになるのは、ファームウェアの更新を確認してダウンロードするときだけです。</p>
+        </details>
+        <details>
+          <summary>メッセージはどのくらい遠くまで届きますか？</summary>
+          <p>見通しのよい場所なら、2台のハンディ無線機で数キロメートル離れていても届くことがよくあり、間にある無線機がメッセージをさらに先へ渡してくれます。丘、建物、木があると距離は短くなるので、中継器を高い場所に置く人も多くいます。</p>
+        </details>
+        <details>
+          <summary>公式のMeshtasticアプリを使っている人ともチャットできますか？</summary>
+          <p>はい。Mesh+は同じプロトコルを使っているので、どのアプリを使っていてもチャンネルの全員がお互いのメッセージを見られ、ルームの招待リンクも双方向で使えます。</p>
+        </details>
+        <details>
+          <summary>SMSリレーを通るテキストは、誰が読めますか？</summary>
+          <p>リレーのルームにいる全員が、リレー用のスマートフォンが受信したテキストや着信を読め、その番号からテキストを送れます。ルームは暗号化されているので外部の人は読めませんが、メンバーは慎重に選んでください。私たちやどこかのサーバーに送られるものは一切ありません。</p>
+        </details>
+        <details>
+          <summary>Mesh+はGoogle PlayやF-Droidにありますか？</summary>
+          <p>Mesh+は<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Playにあり</a>、F-Droidにも近日中に登場する予定です。このページから<a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>をインストールすることもできます。スマートフォンでファイルを開き、Androidに尋ねられたら、ブラウザからのアプリのインストールを許可してください。</p>
+        </details>
+        <details>
+          <summary>iPhone版はありますか？</summary>
+          <p>Mesh+は今のところAndroid専用です。iPhoneをお使いの友だちは、公式のMeshtasticアプリであなたのルームに参加できます。</p>
+        </details>
+        <details>
+          <summary>Mesh+は有料ですか？</summary>
+          <p>いいえ。Mesh+は無料のオープンソースで、アカウント、広告、分析、アプリ内課金はありません。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <svg class="logo" aria-hidden="true"><use href="#logo"/></svg>
+      <h2>グループチャットを、圏外へ連れ出そう。</h2>
+      <p>Mesh+をダウンロードして無線機をつなげば、1分ほどでメッシュ越しに最初のメッセージを送れます。</p>
+      <div class="ctas">
+        <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>Google Playで入手</a>
+          <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>APKをダウンロード</a>
+        <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus">GitHubでソースを見る</a>
+      </div>
+      <p class="fine">APKをインストールするには、スマートフォンでファイルを開き、Androidに尋ねられたら、ブラウザからのアプリのインストールを許可してください。</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Mesh+は独立したオープンソースのプロジェクトであり、Meshtastic LLCとは提携しておらず、承認も受けていません。Meshtastic®はMeshtastic LLCの登録商標です。</span>
+    <span><a href="https://github.com/backmeupplz/meshtastic-plus">ソースコード</a> · <a href="https://github.com/backmeupplz/meshtastic-plus/releases">リリース</a> · <a href="/ja/compare.html">公式アプリとの比較</a> · <a href="/ja/privacy.html">プライバシーポリシー</a></span>
+    <nav class="langs" aria-label="言語"><a href="/" hreflang="en" lang="en">English</a> <a href="/ar/" hreflang="ar" lang="ar">العربية</a> <a href="/de/" hreflang="de" lang="de">Deutsch</a> <a href="/es/" hreflang="es" lang="es">Español</a> <a href="/fr/" hreflang="fr" lang="fr">Français</a> <a href="/hi/" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/" hreflang="it" lang="it">Italiano</a> <a href="/ja/" hreflang="ja" lang="ja" aria-current="page">日本語</a> <a href="/ko/" hreflang="ko" lang="ko">한국어</a> <a href="/nl/" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/" hreflang="ru" lang="ru">Русский</a> <a href="/sv/" hreflang="sv" lang="sv">Svenska</a> <a href="/th/" hreflang="th" lang="th">ไทย</a> <a href="/tr/" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/" hreflang="uk" lang="uk">Українська</a> <a href="/vi/" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>
+  </div>
+</footer>
+<script>
+  const player = document.querySelector('.player');
+  const video = player.querySelector('video');
+  video.controls = false;
+  // the poster (42 KB) waits for load, so on phones it doesn't hold up the first screen's text (PageSpeed's LCP)
+  addEventListener('load', () => (video.poster = video.dataset.poster));
+  player.querySelector('.play').addEventListener('click', () => video.play());
+  video.addEventListener('play', () => { player.classList.add('started'); video.controls = true; });
+</script>
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mesh+ · Kirim pesan ke teman saat tak ada sinyal</title>
+<meta name="description" content="Mesh+, aplikasi Android gratis dan open source untuk radio Meshtastic: chat pribadi terenkripsi tanpa sinyal, relay SMS, dan pembaruan firmware dari ponsel.">
+<link rel="canonical" href="https://meshplus.app/id/">
+<link rel="alternate" hreflang="en" href="https://meshplus.app/">
+<link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/">
+<link rel="alternate" hreflang="de" href="https://meshplus.app/de/">
+<link rel="alternate" hreflang="es" href="https://meshplus.app/es/">
+<link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/">
+<link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/">
+<link rel="alternate" hreflang="id" href="https://meshplus.app/id/">
+<link rel="alternate" hreflang="it" href="https://meshplus.app/it/">
+<link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/">
+<link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/">
+<link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/">
+<link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/">
+<link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/">
+<link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/">
+<link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/">
+<link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/">
+<link rel="alternate" hreflang="th" href="https://meshplus.app/th/">
+<link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/">
+<link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/">
+<link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/">
+<link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/">
+<link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/">
+<link rel="alternate" hreflang="x-default" href="https://meshplus.app/">
+<meta name="theme-color" content="#060b08">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="id_ID">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ar_AR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="hi_IN">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="nl_NL">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="sv_SE">
+<meta property="og:locale:alternate" content="th_TH">
+<meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:locale:alternate" content="uk_UA">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:site_name" content="Mesh+">
+<meta property="og:url" content="https://meshplus.app/id/">
+<meta property="og:title" content="Mesh+ · Kirim pesan ke teman saat tak ada sinyal">
+<meta property="og:description" content="Aplikasi Android gratis dan open source untuk radio Meshtastic, dengan ruang pribadi, pesan langsung terenkripsi, relay SMS, dan pembaruan firmware dari ponsel.">
+<meta property="og:image" content="https://meshplus.app/og/id/home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mesh+ untuk Android: kirim pesan ke teman saat tak ada sinyal. Dua ponsel menampilkan obrolan grup dan ruang relay SMS yang berjalan lewat radio Meshtastic.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mesh+ · Kirim pesan ke teman saat tak ada sinyal">
+<meta name="twitter:description" content="Aplikasi Android gratis dan open source untuk radio Meshtastic, dengan ruang pribadi, pesan langsung terenkripsi, relay SMS, dan pembaruan firmware dari ponsel.">
+<meta name="twitter:image" content="https://meshplus.app/og/id/home.jpg">
+<meta name="twitter:image:alt" content="Mesh+ untuk Android: kirim pesan ke teman saat tak ada sinyal. Dua ponsel menampilkan obrolan grup dan ruang relay SMS yang berjalan lewat radio Meshtastic.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+/* fonts served from this site; optional = they never swap in late and shift the page */
+@font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 600 800; font-display: optional; src: url(/fonts/bricolage-grotesque-normal-5bb66ad1.woff2) format('woff2'); unicode-range: U+0020-007E, U+00A0, U+00AE, U+00B7, U+2013-2014, U+2018-2019, U+201C-201D, U+2022, U+2026, U+2122, U+2190-2193; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 650; font-display: optional; src: url(/fonts/inter-normal-c37b8e5e.woff2) format('woff2'); unicode-range: U+0020-007E, U+00A0, U+00AE, U+00B7, U+2013-2014, U+2018-2019, U+201C-201D, U+2022, U+2026, U+2122, U+2190-2193; }
+</style>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #060b08; --bg2: #09120d; --card: #0e1913; --card2: #122019;
+    --line: rgba(103, 234, 148, 0.16); --line2: rgba(255, 255, 255, 0.08);
+    --fg: #eef5f0; --muted: #a6b8ad; --dim: #7f9388; --green: #67ea94; --ink: #052611; --warn: #ffd08f;
+    --display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+    --body: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--green); }
+  img { max-width: 100%; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: var(--display); letter-spacing: -0.025em; line-height: 1.08; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(32px, 4.4vw, 50px); }
+  h3 { font-size: 22px; letter-spacing: -0.015em; line-height: 1.25; }
+  p { margin: 0; }
+  .muted { color: var(--muted); }
+  .kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 18px; }
+  .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); }
+  :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 6px; }
+
+  /* nav */
+  .nav { position: sticky; top: 0; z-index: 10; background: rgba(6, 11, 8, 0.78); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line2); }
+  .nav .wrap { display: flex; align-items: center; gap: 28px; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 24px; letter-spacing: -0.03em; }
+  .brand svg { width: 34px; height: 34px; }
+  .brand b { color: var(--green); }
+  .nav nav { display: flex; gap: 26px; margin-left: auto; }
+  .nav nav a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; }
+  .nav nav a:hover { color: var(--fg); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 16px; text-decoration: none; border: 1px solid var(--line2); color: var(--fg); background: rgba(255, 255, 255, 0.03); transition: transform .15s ease, background .15s ease, box-shadow .15s ease; }
+  .btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.07); }
+  .btn.primary { background: var(--green); color: var(--ink); border-color: var(--green); box-shadow: 0 0 0 0 rgba(103, 234, 148, 0.5), 0 10px 30px rgba(103, 234, 148, 0.25); }
+  .btn.primary:hover { background: #7ff0a6; box-shadow: 0 12px 36px rgba(103, 234, 148, 0.35); }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+  .nav .btn { padding: 9px 18px; font-size: 15px; }
+
+  /* hero */
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line2); }
+  .hero .mesh { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: linear-gradient(100deg, transparent 22%, rgba(0, 0, 0, 0.35) 45%, #000 70%); mask-image: linear-gradient(100deg, transparent 22%, rgba(0, 0, 0, 0.35) 45%, #000 70%); }
+  .hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(900px 600px at 72% 40%, rgba(103, 234, 148, 0.10), transparent 70%); pointer-events: none; }
+  .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 40px; align-items: center; padding-top: 80px; padding-bottom: 96px; }
+  h1 { font-size: clamp(44px, 6.6vw, 82px); line-height: 1.0; letter-spacing: -0.035em; margin-bottom: 26px; }
+  h1 em { font-style: normal; color: var(--green); }
+  .lead { font-size: 20px; line-height: 1.6; color: var(--muted); max-width: 590px; margin-bottom: 34px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 14px; }
+  .fine { font-size: 14.5px; color: var(--dim); margin-top: 20px; max-width: 560px; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; width: 100%; max-width: 540px; margin-left: auto; }
+  .duo .phone { --w: 100%; }
+  .duo .back { margin-top: 80px; transform: rotate(-2deg); }
+  .duo .front { transform: rotate(2deg); }
+
+  /* phones */
+  .phone { --w: 290px; width: var(--w); padding: calc(var(--w) * 0.03); border-radius: 12.5% / 5.8%; background: linear-gradient(150deg, #3b3f46 0%, #16181c 32%, #0b0c0f 70%, #2c2f35 100%); box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.07) inset, 0 0 70px rgba(103, 234, 148, 0.07); flex: none; }
+  .phone img { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 2400; border-radius: 10% / 4.5%; background: #101510; }
+  .phone.sm { --w: 250px; }
+
+  /* sections */
+  section { padding: 110px 0; }
+  .center { text-align: center; max-width: 760px; margin: 0 auto 60px; }
+  .center p { font-size: 19px; color: var(--muted); margin-top: 18px; text-wrap: pretty; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: step; }
+  .step { position: relative; padding: 34px 30px 32px; border-radius: 26px; background: linear-gradient(180deg, var(--card2), var(--card)); border: 1px solid var(--line2); }
+  .step::before { counter-increment: step; content: counter(step); display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: rgba(103, 234, 148, 0.12); color: var(--green); font-family: var(--display); font-weight: 800; font-size: 22px; margin-bottom: 22px; }
+  .step h3 { margin-bottom: 10px; }
+  .step p { color: var(--muted); font-size: 16px; }
+
+  .feature { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+  .feature + .feature { margin-top: 140px; }
+  .feature.flip .copy { order: 2; }
+  .feature .copy p { color: var(--muted); font-size: 18px; margin-top: 20px; }
+  .feature .copy ul { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
+  .feature .copy li { display: flex; gap: 14px; color: var(--fg); font-size: 16.5px; }
+  .feature .copy li svg { flex: none; width: 22px; height: 22px; margin-top: 2px; color: var(--green); }
+  .shots { display: flex; justify-content: center; align-items: flex-start; gap: 26px; }
+  .shots .phone:nth-child(2) { margin-top: 70px; }
+
+  /* SMS relay */
+  .sms { background: linear-gradient(180deg, var(--bg2), var(--bg) 85%); border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2); position: relative; overflow: hidden; }
+  .sms::before { content: ""; position: absolute; inset: 0; background: radial-gradient(800px 500px at 50% 0%, rgba(103, 234, 148, 0.10), transparent 70%); pointer-events: none; }
+  .sms .wrap { position: relative; }
+  .diagram { border-radius: 30px; border: 1px solid var(--line); background: rgba(14, 25, 19, 0.7); padding: 26px 18px 18px; margin-bottom: 70px; }
+  .diagram svg { display: block; width: 100%; height: auto; }
+  .diagram text { font-family: var(--body); fill: var(--fg); }
+  .diagram .sub { fill: var(--dim); font-size: 15px; }
+  .chain { display: none; list-style: none; margin: 0; padding: 4px 6px; }
+  .chain li { position: relative; display: flex; align-items: center; gap: 16px; padding: 11px 0; font-size: 16px; color: var(--muted); }
+  .chain li + li::before { content: ""; position: absolute; left: 23px; top: -11px; height: 22px; border-left: 2px dotted var(--green); }
+  .chain b { color: var(--fg); font-weight: 600; }
+  .chain .ic { flex: none; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: rgba(103, 234, 148, 0.1); color: var(--green); }
+  .chain .ic svg { width: 26px; height: 26px; }
+  .chain .off { color: var(--muted); }
+  .flow { stroke-dasharray: 3 13; animation: flow 1.4s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -32; } }
+  .sms-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 60px; align-items: center; }
+  .points { display: grid; gap: 18px; }
+  .point { padding: 24px 26px; border-radius: 22px; background: var(--card); border: 1px solid var(--line2); }
+  .point h3 { font-size: 20px; margin-bottom: 8px; }
+  .point p { color: var(--muted); font-size: 16px; }
+  .point code { white-space: nowrap; font-size: 14.5px; background: rgba(103, 234, 148, 0.1); color: var(--green); padding: 2px 7px; border-radius: 6px; }
+  .note { display: flex; gap: 14px; margin-top: 18px; padding: 20px 22px; border-radius: 20px; background: rgba(255, 208, 143, 0.07); border: 1px solid rgba(255, 208, 143, 0.25); color: #f3e2c8; font-size: 15.5px; }
+  .note svg { flex: none; width: 22px; height: 22px; color: var(--warn); margin-top: 2px; }
+  .how-on { margin-top: 70px; display: grid; grid-template-columns: auto 1fr; gap: 50px; align-items: center; padding: 34px; border-radius: 30px; border: 1px solid var(--line2); background: var(--card); }
+  .how-on p { color: var(--muted); margin-top: 14px; font-size: 17px; }
+
+  /* small features */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .tile { padding: 30px 28px; border-radius: 24px; background: var(--card); border: 1px solid var(--line2); }
+  .tile .ic { width: 50px; height: 50px; border-radius: 16px; display: grid; place-items: center; background: rgba(103, 234, 148, 0.1); color: var(--green); margin-bottom: 20px; }
+  .tile .ic svg { width: 26px; height: 26px; }
+  .tile h3 { font-size: 19px; margin-bottom: 8px; }
+  .tile p { color: var(--muted); font-size: 15.5px; }
+
+  /* needs + faq */
+  .needs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 10px; }
+  .need { padding: 26px 26px; border-radius: 22px; border: 1px solid var(--line); background: rgba(103, 234, 148, 0.04); }
+  .need b { display: block; font-family: var(--display); font-size: 20px; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .need span { color: var(--muted); font-size: 15.5px; }
+  .faq { max-width: 860px; margin: 0 auto; display: grid; gap: 12px; }
+  details { border-radius: 20px; background: var(--card); border: 1px solid var(--line2); }
+  summary { cursor: pointer; list-style: none; padding: 22px 26px; font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--body); font-weight: 400; font-size: 28px; color: var(--green); transition: transform .2s ease; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { padding: 0 26px 24px; color: var(--muted); font-size: 16.5px; }
+
+  /* final cta */
+  .player { position: relative; max-width: 1040px; margin: 0 auto; border-radius: 26px; overflow: hidden; border: 1px solid var(--line); background: #030504; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55), 0 0 90px rgba(103, 234, 148, 0.08); }
+  .player video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #030504; }
+  .play { position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; border: 0; border-radius: 50%; cursor: pointer; display: grid; place-items: center; background: var(--green); color: var(--ink); box-shadow: 0 0 0 14px rgba(103, 234, 148, 0.18), 0 20px 50px rgba(0, 0, 0, 0.5); transition: transform .15s ease, box-shadow .15s ease; }
+  .play:hover { transform: scale(1.06); box-shadow: 0 0 0 18px rgba(103, 234, 148, 0.22), 0 20px 50px rgba(0, 0, 0, 0.5); }
+  .play svg { width: 40px; height: 40px; margin-left: 5px; }
+  .player.started .play { display: none; }
+  .final { text-align: center; padding: 120px 0 130px; position: relative; overflow: hidden; border-top: 1px solid var(--line2); }
+  .final::before { content: ""; position: absolute; inset: 0; background: radial-gradient(700px 400px at 50% 100%, rgba(103, 234, 148, 0.14), transparent 70%); }
+  .final .wrap { position: relative; }
+  .final svg.logo { width: 84px; height: 84px; margin-bottom: 26px; filter: drop-shadow(0 0 24px rgba(103, 234, 148, 0.45)); }
+  .final h2 { font-size: clamp(36px, 5.4vw, 62px); max-width: 820px; margin: 0 auto 20px; }
+  .final p { color: var(--muted); font-size: 19px; max-width: 640px; margin: 0 auto 34px; }
+  .final .ctas { justify-content: center; }
+  .final .fine { margin: 22px auto 0; }
+  footer { border-top: 1px solid var(--line2); padding: 34px 0 48px; color: var(--dim); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 30px; justify-content: space-between; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 980px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-top: 56px; padding-bottom: 70px; }
+    .duo { margin: 0 auto; }
+    .feature, .sms-grid { grid-template-columns: 1fr; gap: 50px; }
+    .feature.flip .copy { order: 0; }
+    .steps, .grid, .needs { grid-template-columns: 1fr 1fr; }
+    .how-on { grid-template-columns: 1fr; }
+    .hero .mesh { -webkit-mask-image: linear-gradient(180deg, transparent 48%, #000 82%); mask-image: linear-gradient(180deg, transparent 48%, #000 82%); }
+  }
+  @media (max-width: 680px) {
+    body { font-size: 16px; }
+    .player { border-radius: 18px; }
+    .play { width: 72px; height: 72px; margin: -36px 0 0 -36px; box-shadow: 0 0 0 10px rgba(103, 234, 148, 0.18), 0 14px 36px rgba(0, 0, 0, 0.5); }
+    .play svg { width: 30px; height: 30px; margin-left: 4px; }
+    .wrap { padding: 0 16px; }
+    .nav nav { display: none; }
+    .nav .btn { margin-left: auto; }
+    section { padding: 80px 0; }
+    .lead { font-size: 18px; }
+    .duo { gap: 16px; }
+    .duo .back { margin-top: 50px; }
+    .steps, .grid, .needs { grid-template-columns: 1fr; }
+    .shots { gap: 14px; }
+    .shots .phone { --w: 46vw; }
+    .shots .phone:nth-child(2) { margin-top: 40px; }
+    .feature + .feature { margin-top: 100px; }
+    .diagram { padding: 14px 12px; margin-bottom: 50px; }
+    .diagram > svg { display: none; }
+    .chain { display: grid; }
+    .how-on { padding: 24px; }
+    .how-on .phone { --w: 230px; margin: 0 auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .flow, .mesh * { animation: none !important; }
+  }
+nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0;padding:0;flex:0 0 100%}nav.langs a{display:inline-block;padding:4px 8px;min-height:32px;border-radius:6px}nav.langs a[aria-current]{font-weight:700;text-decoration:none;color:inherit}h1,h2,h3,p,li,summary{overflow-wrap:break-word;hyphens:auto}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "MobileApplication",
+ "name": "Mesh+",
+ "url": "https://meshplus.app/id/",
+ "inLanguage": "id",
+ "description": "Mesh+, aplikasi Android gratis dan open source untuk radio Meshtastic: chat pribadi terenkripsi tanpa sinyal, relay SMS, dan pembaruan firmware dari ponsel.",
+ "applicationCategory": "CommunicationApplication",
+ "operatingSystem": "Android 12 atau yang lebih baru",
+ "image": "https://meshplus.app/og/id/home.jpg",
+ "offers": {
+  "@type": "Offer",
+  "price": "0",
+  "priceCurrency": "USD"
+ },
+ "installUrl": "https://play.google.com/store/apps/details?id=com.borodutch.meshplus",
+ "downloadUrl": "https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk",
+ "sameAs": [
+  "https://github.com/backmeupplz/meshtastic-plus",
+  "https://play.google.com/store/apps/details?id=com.borodutch.meshplus"
+ ],
+ "author": {
+  "@type": "Person",
+  "name": "Nikita Kolmogorov",
+  "url": "https://borodutch.com"
+ }
+}
+</script>
+<script defer src="https://lumen.borodutch.com/l.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="24 22 60 60"><path d="M54,38 L38,66 L70,66 Z" fill="none" stroke="#67ea94" stroke-width="4" stroke-linejoin="round"/><circle cx="54" cy="38" r="8" fill="#67ea94"/><circle cx="38" cy="66" r="8" fill="#67ea94"/><circle cx="70" cy="66" r="8" fill="#67ea94"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></symbol>
+  <symbol id="gplay" viewBox="0 0 24 24"><path d="M5 3.5v17L19.5 12zM5 3.5l9 11.5M5 20.5l9-11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="download" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Beranda Mesh+"><svg aria-hidden="true"><use href="#logo"/></svg><span>Mesh<b>+</b></span></a>
+    <nav aria-label="Bagian">
+      <a href="#how">Cara kerja</a>
+      <a href="#features">Fitur</a>
+      <a href="#sms">Relay SMS</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/backmeupplz/meshtastic-plus">GitHub</a>
+    </nav>
+    <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Dapatkan aplikasinya</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding:0">
+    <svg class="mesh" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g stroke="#67ea94" stroke-opacity="0.13" stroke-width="1.2">
+        <path d="M80 140L260 90L420 210L610 120L780 250L960 160L1130 260L1320 150M260 90L300 330L420 210M610 120L640 380L780 250M960 160L1010 420L1130 260M300 330L470 520L640 380L820 560L1010 420L1200 590M80 140L120 420L300 330M1320 150L1380 420L1200 590M120 420L250 650L470 520M820 560L700 720M1200 590L1080 730M470 520L560 700"/>
+      </g>
+      <g fill="#67ea94">
+        <circle cx="80" cy="140" r="3" opacity=".4"/><circle cx="260" cy="90" r="4" opacity=".5"/><circle cx="420" cy="210" r="3" opacity=".4"/><circle cx="610" cy="120" r="4" opacity=".45"/><circle cx="780" cy="250" r="3" opacity=".4"/><circle cx="960" cy="160" r="5" opacity=".5"/><circle cx="1130" cy="260" r="3" opacity=".4"/><circle cx="1320" cy="150" r="4" opacity=".45"/><circle cx="300" cy="330" r="3" opacity=".35"/><circle cx="640" cy="380" r="4" opacity=".4"/><circle cx="1010" cy="420" r="3" opacity=".4"/><circle cx="470" cy="520" r="4" opacity=".35"/><circle cx="820" cy="560" r="3" opacity=".35"/><circle cx="1200" cy="590" r="4" opacity=".4"/><circle cx="120" cy="420" r="3" opacity=".3"/><circle cx="1380" cy="420" r="3" opacity=".3"/><circle cx="250" cy="650" r="3" opacity=".3"/><circle cx="560" cy="700" r="3" opacity=".3"/><circle cx="700" cy="720" r="3" opacity=".3"/><circle cx="1080" cy="730" r="3" opacity=".3"/>
+      </g>
+      <g stroke="#67ea94" stroke-width="2.4" fill="none" stroke-linecap="round">
+        <path class="flow" d="M260 90L420 210L610 120L780 250L960 160L1130 260"/>
+        <path class="flow" style="animation-duration:2.1s" d="M120 420L300 330L470 520L640 380L820 560L1010 420L1200 590" stroke-opacity=".6"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <div>
+        <h1>Kirim pesan ke teman saat <em>tak ada sinyal.</em></h1>
+        <p class="lead">Mesh+ adalah aplikasi Android yang ramah untuk radio Meshtastic. Hubungkan radio LoRa seukuran saku ke ponsel Anda, dan pesan Anda akan melompat dari radio ke radio melewati bukit dan lembah, tanpa menara seluler, Wi-Fi, atau internet di sepanjang jalan.</p>
+        <div class="ctas">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>Dapatkan di Google Play</a>
+          <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>Unduh APK</a>
+          <a class="btn" href="#video"><svg aria-hidden="true"><use href="#play"/></svg>Tonton video 30 detik</a>
+        </div>
+        <p class="fine">Mesh+ gratis dan open source, berukuran sekitar 3 MB, dan membutuhkan Android 12 atau yang lebih baru. Belum punya radio? Demo bawaan memungkinkan Anda melihat-lihat dulu.</p>
+      </div>
+      <div class="duo">
+        <div class="phone back"><img src="/img/chats.webp" srcset="/img/chats-540.webp 540w, /img/chats.webp 720w" sizes="300px" width="1080" height="2400" fetchpriority="low" alt="Daftar obrolan Mesh+ dengan kanal Public, ruang pribadi Hiking dan Camp SMS, serta pesan langsung dari Maya, masing-masing dengan lencana belum dibaca"></div>
+        <div class="phone front"><img src="/img/room.webp" srcset="/img/room-540.webp 540w, /img/room.webp 720w" sizes="300px" width="1080" height="2400" fetchpriority="low" alt="Ruang pribadi bernama Hiking tempat teman-teman berbagi kabar jalur pendakian lewat mesh, dengan tanda centang di bawah pesan yang diteruskan mesh"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="video" style="padding-bottom:40px">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">Video peluncuran</div>
+        <h2>Lihat apa saja yang bisa dilakukan Mesh+ dalam tiga puluh detik.</h2>
+        <p>Nyalakan suaranya untuk tur singkat tentang ruang pribadi, pesan yang melompat melintasi mesh, pembaruan firmware, dan relay SMS.</p>
+      </div>
+      <div class="player">
+        <video src="/launch.mp4" data-poster="/img/launch-poster.webp" width="1920" height="1080" preload="none" playsinline controls
+          aria-label="Video peluncuran Mesh+, 30 detik dengan musik: chat tanpa sinyal seluler, ruang pribadi, pesan yang melompat dari radio ke radio, undangan kode QR, radio di sekitar, pembaruan firmware, dan relay SMS."></video>
+        <button class="play" type="button" aria-label="Putar video peluncuran"><svg aria-hidden="true"><use href="#play"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">Cara kerja</div>
+        <h2>Dari kotak kemasan sampai pesan pertama, hanya butuh sekitar satu menit.</h2>
+        <p>Radio Meshtastic saling meneruskan pesan lewat radio LoRa jarak jauh, sehingga setiap radio dalam jangkauan menjadi bagian dari jaringan. Mesh+ adalah cara ponsel Anda berbicara dengan radio Anda.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3>Siapkan radio Meshtastic.</h3>
+          <p>Mesh+ bekerja dengan radio yang menjalankan firmware Meshtastic 2.x, seperti Heltec Mesh Node T114 atau RAK4631. Teman yang ingin Anda hubungi juga perlu memilikinya, dan setiap radio di antara kalian ikut membawa pesan lebih jauh.</p>
+        </div>
+        <div class="step">
+          <h3>Hubungkan ke ponsel Anda.</h3>
+          <p>Pasangkan lewat Bluetooth dengan PIN yang tampil di layar radio, atau colokkan dengan kabel USB-C dan biarkan ponsel Anda yang menyuplai dayanya. Mesh+ mengingat radio Anda, jadi menghubungkan kembali cukup dengan satu ketukan.</p>
+        </div>
+        <div class="step">
+          <h3>Pilih wilayah dan nama.</h3>
+          <p>Radio baru tetap diam sampai tahu pita frekuensi mana yang harus dipakai, jadi Mesh+ bertanya sekali dan menyarankan wilayah yang tepat berdasarkan negara ponsel Anda. Pilih nama yang akan tampil di mesh, lalu Anda siap mengobrol.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" style="padding-top:40px">
+    <div class="wrap">
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">Obrolan</div>
+          <h2>Chat publik, ruang pribadi, dan pesan langsung ada dalam satu daftar.</h2>
+          <p>Kanal publik adalah ruang terbuka yang dipakai bersama oleh semua orang di sekitar. Ruang pribadi dienkripsi sehingga hanya orang yang Anda undang yang bisa membacanya, dan pesan langsung dienkripsi end-to-end oleh firmware radio.</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Tanda centang di bawah pesan Anda menunjukkan bahwa radio lain telah meneruskannya, atau bahwa radio teman Anda sudah menerimanya.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Lencana belum dibaca menunjukkan apa yang baru, dan Anda bisa membisukan ruang atau orang mana pun yang tidak perlu Anda dengar.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Mesh+ tetap berjalan di latar belakang selama Anda terhubung dan memberi tahu Anda saat ada pesan masuk.</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/public.webp" width="1080" height="2400" loading="lazy" alt="Kanal Public, tempat Ridge Repeater, Leo, dan Maya mengobrol dengan semua orang di sekitar"></div>
+          <div class="phone sm"><img src="/img/dm.webp" width="1080" height="2400" loading="lazy" alt="Percakapan pesan langsung terenkripsi end-to-end dengan Maya's Handheld, dengan tanda centang terkirim di bawah pesan yang dikirim"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sms" id="sms">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">Relay SMS</div>
+        <h2>Saat satu ponsel punya sinyal, seluruh grup bisa berkirim SMS.</h2>
+        <p>Di alam liar, biasanya hanya satu orang, mungkin di base camp atau di atas punggung bukit, yang kebagian sinyal seluler. Jadikan ponsel itu relay, dan semua orang di mesh bisa mengirim dan menerima SMS biasa lewat ponsel tersebut.</p>
+      </div>
+
+      <div class="diagram" role="img" aria-label="Menara seluler menjangkau ponsel Base Camp, yang meneruskan SMS lewat dua radio Meshtastic ke ponsel teman yang tak punya sinyal">
+        <svg viewBox="0 0 1100 250">
+          <g fill="none" stroke="#67ea94" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M95 60v120M77 180l18-70 18 70M83 150h24M68 52a40 40 0 0 0 0 46M122 52a40 40 0 0 1 0 46M56 40a58 58 0 0 0 0 70M134 40a58 58 0 0 1 0 70" />
+          </g>
+          <path class="flow" d="M150 120 C 210 120, 230 120, 285 120" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <g transform="translate(300 52)">
+            <rect x="0" y="0" width="74" height="136" rx="15" fill="#101a14" stroke="#eef5f0" stroke-width="3"/>
+            <g fill="#67ea94"><rect x="44" y="18" width="4" height="6" rx="1"/><rect x="50" y="15" width="4" height="9" rx="1"/><rect x="56" y="12" width="4" height="12" rx="1"/><rect x="62" y="9" width="4" height="15" rx="1"/></g>
+            <path d="M20 60h34v24H32l-8 7v-7h-4z" fill="none" stroke="#67ea94" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="86" y="70" width="26" height="44" rx="6" fill="#67ea94"/><rect x="93" y="50" width="4" height="22" rx="2" fill="#67ea94"/><rect x="91" y="80" width="14" height="9" rx="2" fill="#052611"/>
+          </g>
+          <path class="flow" d="M420 140 Q 500 60 580 120" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path class="flow" d="M620 120 Q 700 60 780 140" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="600" cy="124" r="20" fill="#67ea94"/><rect x="593" y="114" width="14" height="20" rx="3" fill="#052611"/>
+          <g transform="translate(800 52)">
+            <rect x="0" y="0" width="74" height="136" rx="15" fill="#101a14" stroke="#eef5f0" stroke-width="3"/>
+            <g fill="#3a4a40"><rect x="44" y="18" width="4" height="6" rx="1"/><rect x="50" y="15" width="4" height="9" rx="1"/><rect x="56" y="12" width="4" height="12" rx="1"/><rect x="62" y="9" width="4" height="15" rx="1"/></g>
+            <path d="M20 60h34v24H32l-8 7v-7h-4z" fill="none" stroke="#a6b8ad" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="86" y="70" width="26" height="44" rx="6" fill="#67ea94"/><rect x="93" y="50" width="4" height="22" rx="2" fill="#67ea94"/><rect x="91" y="80" width="14" height="9" rx="2" fill="#052611"/>
+          </g>
+          <g text-anchor="middle" font-size="19" font-weight="600">
+            <text x="95" y="222">Menara seluler</text>
+            <text x="350" y="222">Base Camp</text><text class="sub" x="350" y="244">punya sinyal, menjalankan relay</text>
+            <text x="600" y="186">Radio</text><text class="sub" x="600" y="208">meneruskan SMS lewat mesh</text>
+            <text x="850" y="222">Ponsel Anda</text><text class="sub" x="850" y="244">tak ada sinyal, hanya radio</text>
+          </g>
+        </svg>
+        <ol class="chain">
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 7v14M8 21l4-14 4 14M9.5 15h5M6 4a8 8 0 0 0 0 9M18 4a8 8 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Menara seluler</b> menjangkau satu ponsel.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 3h10v18H7zM11 18h2M10 7.5l1.5-1 1.5 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Ponsel Base Camp</b> punya sinyal dan menjalankan relay.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 8h10v13H7zM10 8V3M9.5 12h5M9.5 15h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Radio</b> meneruskan SMS lewat mesh.</span></li>
+          <li><span class="ic off"><svg viewBox="0 0 24 24"><path d="M7 3h10v18H7zM11 18h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Ponsel Anda</b> tak punya sinyal, hanya radio.</span></li>
+        </ol>
+      </div>
+
+      <div class="sms-grid">
+        <div class="points">
+          <div class="point">
+            <h3>SMS dan panggilan masuk ke sebuah ruang pribadi.</h3>
+            <p>Setiap SMS yang diterima ponsel relay, beserta panggilan masuk dan panggilan tak terjawabnya, dikirim ke ruang pribadi pilihan Anda, dan Mesh+ menampilkannya sebagai percakapan SMS yang sudah familier.</p>
+          </div>
+          <div class="point">
+            <h3>Siapa pun di ruang itu bisa membalas SMS.</h3>
+            <p>Geser sebuah SMS untuk membalasnya, atau ketuk tombol SMS untuk menulis ke nomor atau kontak mana pun. Ponsel relay mengirimkannya dari nomornya sendiri, dan tanda centang muncul setelah SMS terkirim.</p>
+          </div>
+          <div class="point">
+            <h3>Teman yang memakai aplikasi Meshtastic lain juga bisa ikut.</h3>
+            <p>Pesan relay berupa teks biasa, jadi orang yang memakai aplikasi Meshtastic lain bisa membacanya dan mengirim SMS dengan mengetik <code>/sms +15551234567 your message</code>.</p>
+          </div>
+          <div class="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9.5 17h-19zM12 10v4.5M12 17.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Semua orang di ruang relay bisa membaca SMS yang diterima ponsel itu dan mengirim SMS dari nomornya, jadi batasi ruang itu hanya untuk orang yang Anda percayai. SMS dikenai tarif operator seperti biasa.</span></div>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/relay.webp" width="1080" height="2400" loading="lazy" alt="Ruang Camp SMS yang menampilkan SMS dari nomor telepon luar, balasan yang dikirim lewat relay dengan tanda centang, dan satu panggilan tak terjawab"></div>
+          <div class="phone sm"><img src="/img/sms.webp" width="1080" height="2400" loading="lazy" alt="Dialog Kirim SMS dengan nomor telepon, pemilih kontak, dan pesan Aku telat, sampai ketemu di pintu jalur pendakian jam 9"></div>
+        </div>
+      </div>
+
+      <div class="how-on">
+        <div class="phone sm"><img src="/img/relay-settings.webp" width="1080" height="2400" loading="lazy" alt="Layar pengaturan relay SMS dengan pemilih ruang relay, sakelar nyala, dan peringatan tentang siapa yang bisa membaca SMS yang diteruskan"></div>
+        <div>
+          <h3 style="font-size:30px">Mengaktifkannya hanya butuh beberapa detik.</h3>
+          <p>Di ponsel yang punya sinyal, buka Pengaturan, lalu Relay SMS, pilih ruang pribadi (atau biarkan Mesh+ membuat satu ruang bernama Relay), dan nyalakan. Android meminta izin akses SMS dan telepon satu kali, dan sebuah notifikasi tetap tampil selama relay berjalan.</p>
+          <p>Relay nonaktif sampai Anda menyalakannya, dan Anda bisa mematikannya kapan saja dari layar yang sama.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="more-features">
+    <div class="wrap">
+      <div class="feature flip">
+        <div class="copy">
+          <div class="kicker">Undangan</div>
+          <h2>Undang teman ke ruang pribadi dengan kode QR atau tautan.</h2>
+          <p>Buat ruang dengan beberapa ketukan, lalu bagikan sebagai kode QR untuk dipindai atau sebagai tautan yang dikirim sebelum perjalanan. Mesh+ memakai format undangan Meshtastic standar, jadi tautan dari aplikasi Meshtastic resmi terbuka di Mesh+, dan tautan dari Mesh+ terbuka di aplikasi mereka.</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Setiap ruang pribadi punya kunci enkripsinya sendiri, jadi orang tanpa undangan tidak bisa membacanya meskipun radio mereka ikut meneruskannya.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Bergabung secepat memindai kode atau menempel tautan, dan keluar cukup dengan satu ketukan.</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone"><img src="/img/invite.webp" width="1080" height="2400" loading="lazy" alt="Lembar undangan untuk ruang Hiking dengan kode QR dan tautan bagikan"></div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">Node</div>
+          <h2>Lihat setiap radio yang bisa didengar node Anda.</h2>
+          <p>Tab Node menampilkan semua yang pernah didengar radio Anda, dengan favorit di bagian atas dan lencana online untuk siapa pun yang terdengar dalam dua jam terakhir. Ketuk sebuah node untuk melihat kapan terakhir terdengar, berapa hop jaraknya, sekuat apa sinyalnya, dan berapa sisa baterainya, lalu kirim pesan atau tambahkan ke favorit, yang disimpan di radio Anda.</p>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/nodes.webp" width="1080" height="2400" loading="lazy" alt="Tab Node dengan Maya's Handheld sebagai favorit serta Base Camp, Ridge Repeater, dan Leo yang online"></div>
+          <div class="phone sm"><img src="/img/profile.webp" width="1080" height="2400" loading="lazy" alt="Profil Base Camp yang menampilkan kapan terakhir terdengar, bahwa jaraknya satu hop, sinyalnya, dan baterainya, dengan tombol untuk mengirim pesan atau memfavoritkannya"></div>
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="copy">
+          <div class="kicker">Pengaturan radio</div>
+          <h2>Setiap pengaturan dijelaskan dengan kata-kata yang sederhana.</h2>
+          <p>Peran, penerusan, preset radio, batas hop, daya pancar, berbagi lokasi, penghematan daya, layar, dan pemasangan Bluetooth masing-masing hanya sejauh satu ketukan, dan semuanya disertai catatan singkat tentang fungsinya dan kapan Anda perlu mengubahnya. Mesh+ menyimpan perubahan Anda sekaligus, sehingga radio hanya dimulai ulang satu kali.</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Bagian atas halaman menunjukkan jenis board radio Anda, firmware yang dijalankannya, dan baterainya.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Saat ada yang tidak beres, Anda bisa menghapus daftar node, mereset pengaturan dengan tetap mempertahankan identitas Anda, atau melakukan reset pabrik penuh.</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/settings.webp" width="1080" height="2400" loading="lazy" alt="Pengaturan node untuk Heltec Mesh Node T114 dengan tombol Perbarui ke 2.7.26 dan pengaturan seperti Peran dan Penerusan"></div>
+          <div class="phone sm"><img src="/img/info.webp" width="1080" height="2400" loading="lazy" alt="Penjelasan tentang Kecepatan vs. jangkauan: preset yang lebih lambat menjangkau lebih jauh, yang lebih cepat membawa lebih banyak pesan"></div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">Firmware</div>
+          <h2>Perbarui firmware radio Anda tanpa komputer.</h2>
+          <p>Saat rilis Meshtastic stabil yang baru keluar, Mesh+ menawarkannya langsung di pengaturan radio Anda. Board nRF52 seperti Heltec T114 dan RAK4631 diperbarui lewat kabel USB dalam sekitar satu menit, atau lewat Bluetooth dalam sekitar sepuluh menit jika Anda tidak ingin mencolokkan kabel.</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Anda bisa memilih versi apa pun yang sudah dipublikasikan, termasuk pra-rilis, atau kembali ke versi yang lebih lama.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Pengaturan, ruang, dan pesan Anda tetap aman, dan radio yang macet di mode pembaruan bisa diselamatkan dari layar sambungan.</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>Board ESP32 diperbarui dari komputer di <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>.</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/firmware.webp" width="1080" height="2400" loading="lazy" alt="Layar firmware untuk Heltec Mesh Node T114, yang menawarkan Meshtastic 2.7.26 untuk dipasang lewat USB"></div>
+          <div class="phone sm"><img src="/img/firmware-progress.webp" width="1080" height="2400" loading="lazy" alt="Firmware 2.7.26 sedang dipasang lewat kabel USB, selesai 64 persen"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">Fitur lainnya</div>
+        <h2>Hal-hal kecil pun sudah diperhatikan.</h2>
+      </div>
+      <div class="grid">
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8h10v13H7zM10 8V3M9.5 12h5M9.5 15h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Semua radio Anda hanya satu ketukan jauhnya.</h3>
+          <p>Beralihlah antarradio dari bilah atas dan lihat jenis board masing-masing, firmware yang dijalankannya, dan baterainya.</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Anda bisa mencobanya tanpa radio.</h3>
+          <p>Demo bawaan mensimulasikan sebuah radio lengkap dengan ruang, pesan langsung, balasan, dan pengaturan, sehingga Anda bisa melihat-lihat sebelum membeli perangkat keras.</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0M4 4l16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Ruang yang berisik bisa dibisukan.</h3>
+          <p>Bisukan ruang atau pesan langsung mana pun, dan ikon lonceng yang dicoret di daftar obrolan mengingatkan Anda mana saja yang sedang senyap.</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <h3>Pesan Anda tetap milik Anda.</h3>
+          <p>Tidak ada akun, iklan, atau analitik, dan riwayat pesan Anda hanya disimpan di ponsel Anda.</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Kodenya open source.</h3>
+          <p>Mesh+ dibangun secara terbuka di GitHub, tempat siapa pun bisa membaca kodenya, membangunnya sendiri, dan mengirim perbaikan.</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v14M8 7l4-4 4 4M7 13v2l5 3 5-3v-2M12 21v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Kabel menyuplai daya radio Anda.</h3>
+          <p>Lewat USB-C, ponsel Anda juga menyuplai daya ke radio, sehingga radio tetap berfungsi meskipun tidak punya baterai.</p>
+        </div>
+      </div>
+
+      <div class="center" style="margin:110px auto 40px">
+        <div class="kicker">Yang Anda butuhkan</div>
+        <h2>Mesh+ hanya butuh sedikit hal untuk mulai berjalan.</h2>
+      </div>
+      <div class="needs">
+        <div class="need"><b>Ponsel Android 12 atau yang lebih baru mana pun bisa dipakai.</b><span>Mesh+ berukuran sekitar 3 MB dan tidak memerlukan akun.</span></div>
+        <div class="need"><b>Radio Anda membutuhkan firmware Meshtastic 2.x.</b><span>Radio semacam itu terhubung lewat Bluetooth, sedangkan untuk USB, Mesh+ sudah diuji dengan board nRF52 seperti Heltec T114.</span></div>
+        <div class="need"><b>Teman Anda juga perlu punya radio.</b><span>Mereka bisa memakai Mesh+ atau aplikasi Meshtastic lain, dan setiap radio dalam jangkauan memperluas mesh.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:20px">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">FAQ</div>
+        <h2>Berikut jawaban untuk pertanyaan yang paling sering diajukan.</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Apakah saya butuh sinyal seluler atau internet?</summary>
+          <p>Tidak. Pesan berpindah antarradio Meshtastic lewat LoRa, jadi chat bisa berjalan di mana pun radio Anda saling terjangkau. Mesh+ hanya online untuk memeriksa dan mengunduh pembaruan firmware.</p>
+        </details>
+        <details>
+          <summary>Seberapa jauh sebuah pesan bisa terkirim?</summary>
+          <p>Dua radio genggam dengan garis pandang yang jelas sering kali bisa saling terjangkau sejauh beberapa kilometer, dan setiap radio di antaranya bisa meneruskan pesan lebih jauh. Bukit, bangunan, dan pepohonan memperpendek jangkauan, itulah sebabnya orang suka menaruh repeater di tempat yang tinggi.</p>
+        </details>
+        <details>
+          <summary>Bisakah saya chat dengan orang yang memakai aplikasi Meshtastic resmi?</summary>
+          <p>Bisa. Mesh+ memakai protokol yang sama, jadi semua orang di sebuah kanal saling melihat pesan satu sama lain apa pun aplikasinya, dan tautan undangan ruang berfungsi di kedua arah.</p>
+        </details>
+        <details>
+          <summary>Siapa yang bisa membaca SMS yang lewat relay SMS?</summary>
+          <p>Semua orang di ruang relay bisa membaca SMS dan panggilan yang diterima ponsel relay, serta bisa mengirim SMS dari nomornya. Ruang itu dienkripsi, jadi orang di luar ruang tidak bisa membacanya, tetapi pilih anggotanya dengan hati-hati. Tidak ada yang pernah dikirim kepada kami atau ke server mana pun.</p>
+        </details>
+        <details>
+          <summary>Apakah Mesh+ ada di Google Play atau F-Droid?</summary>
+          <p>Mesh+ <a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">ada di Google Play</a>, dan sedang dalam perjalanan menuju F-Droid. Anda juga bisa memasang <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK-nya</a> dari halaman ini: buka file itu di ponsel Anda dan, saat Android bertanya, izinkan browser Anda memasang aplikasi.</p>
+        </details>
+        <details>
+          <summary>Apakah ada versi iPhone?</summary>
+          <p>Untuk saat ini Mesh+ hanya tersedia di Android. Teman yang memakai iPhone bisa bergabung ke ruang Anda dengan aplikasi Meshtastic resmi.</p>
+        </details>
+        <details>
+          <summary>Apakah Mesh+ berbayar?</summary>
+          <p>Tidak. Mesh+ gratis dan open source, tanpa akun, iklan, analitik, atau pembelian dalam aplikasi.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <svg class="logo" aria-hidden="true"><use href="#logo"/></svg>
+      <h2>Bawa chat grup Anda ke tempat tanpa sinyal.</h2>
+      <p>Unduh Mesh+, hubungkan radio Anda, dan kirim pesan pertama Anda melintasi mesh dalam waktu sekitar satu menit.</p>
+      <div class="ctas">
+        <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>Dapatkan di Google Play</a>
+          <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>Unduh APK</a>
+        <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus">Lihat kode sumber di GitHub</a>
+      </div>
+      <p class="fine">Untuk memasang APK, buka file itu di ponsel Anda dan, saat Android bertanya, izinkan browser Anda memasang aplikasi.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Mesh+ adalah proyek open source independen dan tidak berafiliasi dengan atau didukung oleh Meshtastic LLC. Meshtastic® adalah merek dagang terdaftar milik Meshtastic LLC.</span>
+    <span><a href="https://github.com/backmeupplz/meshtastic-plus">Kode sumber</a> · <a href="https://github.com/backmeupplz/meshtastic-plus/releases">Rilis</a> · <a href="/id/compare.html">Dibandingkan dengan aplikasi resmi</a> · <a href="/id/privacy.html">Kebijakan privasi</a></span>
+    <nav class="langs" aria-label="Bahasa"><a href="/" hreflang="en" lang="en">English</a> <a href="/ar/" hreflang="ar" lang="ar">العربية</a> <a href="/de/" hreflang="de" lang="de">Deutsch</a> <a href="/es/" hreflang="es" lang="es">Español</a> <a href="/fr/" hreflang="fr" lang="fr">Français</a> <a href="/hi/" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/" hreflang="id" lang="id" aria-current="page">Bahasa Indonesia</a> <a href="/it/" hreflang="it" lang="it">Italiano</a> <a href="/ja/" hreflang="ja" lang="ja">日本語</a> <a href="/ko/" hreflang="ko" lang="ko">한국어</a> <a href="/nl/" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/" hreflang="ru" lang="ru">Русский</a> <a href="/sv/" hreflang="sv" lang="sv">Svenska</a> <a href="/th/" hreflang="th" lang="th">ไทย</a> <a href="/tr/" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/" hreflang="uk" lang="uk">Українська</a> <a href="/vi/" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>
+  </div>
+</footer>
+<script>
+  const player = document.querySelector('.player');
+  const video = player.querySelector('video');
+  video.controls = false;
+  // the poster (42 KB) waits for load, so on phones it doesn't hold up the first screen's text (PageSpeed's LCP)
+  addEventListener('load', () => (video.poster = video.dataset.poster));
+  player.querySelector('.play').addEventListener('click', () => video.play());
+  video.addEventListener('play', () => { player.classList.add('started'); video.controls = true; });
+</script>
+</body>
+</html>

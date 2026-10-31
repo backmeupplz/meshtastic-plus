@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mesh+ · 沒有訊號，也能傳訊息給朋友</title>
+<meta name="description" content="Mesh+ 是免費開源的 Android App，專為 Meshtastic 無線電設計。沒有手機訊號也能在私人聊天室和加密私訊中聊天，透過 SMS 轉發傳簡訊，還能直接用手機更新無線電韌體。">
+<link rel="canonical" href="https://meshplus.app/zh-hant/">
+<link rel="alternate" hreflang="en" href="https://meshplus.app/">
+<link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/">
+<link rel="alternate" hreflang="de" href="https://meshplus.app/de/">
+<link rel="alternate" hreflang="es" href="https://meshplus.app/es/">
+<link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/">
+<link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/">
+<link rel="alternate" hreflang="id" href="https://meshplus.app/id/">
+<link rel="alternate" hreflang="it" href="https://meshplus.app/it/">
+<link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/">
+<link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/">
+<link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/">
+<link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/">
+<link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/">
+<link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/">
+<link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/">
+<link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/">
+<link rel="alternate" hreflang="th" href="https://meshplus.app/th/">
+<link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/">
+<link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/">
+<link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/">
+<link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/">
+<link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/">
+<link rel="alternate" hreflang="x-default" href="https://meshplus.app/">
+<meta name="theme-color" content="#060b08">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ar_AR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="hi_IN">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="nl_NL">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="sv_SE">
+<meta property="og:locale:alternate" content="th_TH">
+<meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:locale:alternate" content="uk_UA">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:site_name" content="Mesh+">
+<meta property="og:url" content="https://meshplus.app/zh-hant/">
+<meta property="og:title" content="Mesh+ · 沒有訊號，也能傳訊息給朋友">
+<meta property="og:description" content="免費開源的 Android App，專為 Meshtastic 無線電設計：私人聊天室、加密私訊、SMS 轉發，還能用手機更新韌體。">
+<meta property="og:image" content="https://meshplus.app/og/zh-hant/home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Android 版 Mesh+：沒有訊號時，也能傳訊息給朋友。兩支手機分別顯示群組聊天，以及透過 Meshtastic 無線電運作的 SMS 轉發聊天室。">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mesh+ · 沒有訊號，也能傳訊息給朋友">
+<meta name="twitter:description" content="免費開源的 Android App，專為 Meshtastic 無線電設計：私人聊天室、加密私訊、SMS 轉發，還能用手機更新韌體。">
+<meta name="twitter:image" content="https://meshplus.app/og/zh-hant/home.jpg">
+<meta name="twitter:image:alt" content="Android 版 Mesh+：沒有訊號時，也能傳訊息給朋友。兩支手機分別顯示群組聊天，以及透過 Meshtastic 無線電運作的 SMS 轉發聊天室。">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #060b08; --bg2: #09120d; --card: #0e1913; --card2: #122019;
+    --line: rgba(103, 234, 148, 0.16); --line2: rgba(255, 255, 255, 0.08);
+    --fg: #eef5f0; --muted: #a6b8ad; --dim: #7f9388; --green: #67ea94; --ink: #052611; --warn: #ffd08f;
+    --display: ui-sans-serif, system-ui, sans-serif;
+    --body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--green); }
+  img { max-width: 100%; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: var(--display); letter-spacing: -0.025em; line-height: 1.08; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(32px, 4.4vw, 50px); }
+  h3 { font-size: 22px; letter-spacing: -0.015em; line-height: 1.25; }
+  p { margin: 0; }
+  .muted { color: var(--muted); }
+  .kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 18px; }
+  .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); }
+  :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 6px; }
+
+  /* nav */
+  .nav { position: sticky; top: 0; z-index: 10; background: rgba(6, 11, 8, 0.78); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line2); }
+  .nav .wrap { display: flex; align-items: center; gap: 28px; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 24px; letter-spacing: -0.03em; }
+  .brand svg { width: 34px; height: 34px; }
+  .brand b { color: var(--green); }
+  .nav nav { display: flex; gap: 26px; margin-left: auto; }
+  .nav nav a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; }
+  .nav nav a:hover { color: var(--fg); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 16px; text-decoration: none; border: 1px solid var(--line2); color: var(--fg); background: rgba(255, 255, 255, 0.03); transition: transform .15s ease, background .15s ease, box-shadow .15s ease; }
+  .btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.07); }
+  .btn.primary { background: var(--green); color: var(--ink); border-color: var(--green); box-shadow: 0 0 0 0 rgba(103, 234, 148, 0.5), 0 10px 30px rgba(103, 234, 148, 0.25); }
+  .btn.primary:hover { background: #7ff0a6; box-shadow: 0 12px 36px rgba(103, 234, 148, 0.35); }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+  .nav .btn { padding: 9px 18px; font-size: 15px; }
+
+  /* hero */
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line2); }
+  .hero .mesh { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: linear-gradient(100deg, transparent 22%, rgba(0, 0, 0, 0.35) 45%, #000 70%); mask-image: linear-gradient(100deg, transparent 22%, rgba(0, 0, 0, 0.35) 45%, #000 70%); }
+  .hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(900px 600px at 72% 40%, rgba(103, 234, 148, 0.10), transparent 70%); pointer-events: none; }
+  .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 40px; align-items: center; padding-top: 80px; padding-bottom: 96px; }
+  h1 { font-size: clamp(44px, 6.6vw, 82px); line-height: 1.0; letter-spacing: -0.035em; margin-bottom: 26px; }
+  h1 em { font-style: normal; color: var(--green); }
+  .lead { font-size: 20px; line-height: 1.6; color: var(--muted); max-width: 590px; margin-bottom: 34px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 14px; }
+  .fine { font-size: 14.5px; color: var(--dim); margin-top: 20px; max-width: 560px; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; width: 100%; max-width: 540px; margin-left: auto; }
+  .duo .phone { --w: 100%; }
+  .duo .back { margin-top: 80px; transform: rotate(-2deg); }
+  .duo .front { transform: rotate(2deg); }
+
+  /* phones */
+  .phone { --w: 290px; width: var(--w); padding: calc(var(--w) * 0.03); border-radius: 12.5% / 5.8%; background: linear-gradient(150deg, #3b3f46 0%, #16181c 32%, #0b0c0f 70%, #2c2f35 100%); box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.07) inset, 0 0 70px rgba(103, 234, 148, 0.07); flex: none; }
+  .phone img { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 2400; border-radius: 10% / 4.5%; background: #101510; }
+  .phone.sm { --w: 250px; }
+
+  /* sections */
+  section { padding: 110px 0; }
+  .center { text-align: center; max-width: 760px; margin: 0 auto 60px; }
+  .center p { font-size: 19px; color: var(--muted); margin-top: 18px; text-wrap: pretty; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: step; }
+  .step { position: relative; padding: 34px 30px 32px; border-radius: 26px; background: linear-gradient(180deg, var(--card2), var(--card)); border: 1px solid var(--line2); }
+  .step::before { counter-increment: step; content: counter(step); display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: rgba(103, 234, 148, 0.12); color: var(--green); font-family: var(--display); font-weight: 800; font-size: 22px; margin-bottom: 22px; }
+  .step h3 { margin-bottom: 10px; }
+  .step p { color: var(--muted); font-size: 16px; }
+
+  .feature { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+  .feature + .feature { margin-top: 140px; }
+  .feature.flip .copy { order: 2; }
+  .feature .copy p { color: var(--muted); font-size: 18px; margin-top: 20px; }
+  .feature .copy ul { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
+  .feature .copy li { display: flex; gap: 14px; color: var(--fg); font-size: 16.5px; }
+  .feature .copy li svg { flex: none; width: 22px; height: 22px; margin-top: 2px; color: var(--green); }
+  .shots { display: flex; justify-content: center; align-items: flex-start; gap: 26px; }
+  .shots .phone:nth-child(2) { margin-top: 70px; }
+
+  /* SMS relay */
+  .sms { background: linear-gradient(180deg, var(--bg2), var(--bg) 85%); border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2); position: relative; overflow: hidden; }
+  .sms::before { content: ""; position: absolute; inset: 0; background: radial-gradient(800px 500px at 50% 0%, rgba(103, 234, 148, 0.10), transparent 70%); pointer-events: none; }
+  .sms .wrap { position: relative; }
+  .diagram { border-radius: 30px; border: 1px solid var(--line); background: rgba(14, 25, 19, 0.7); padding: 26px 18px 18px; margin-bottom: 70px; }
+  .diagram svg { display: block; width: 100%; height: auto; }
+  .diagram text { font-family: var(--body); fill: var(--fg); }
+  .diagram .sub { fill: var(--dim); font-size: 15px; }
+  .chain { display: none; list-style: none; margin: 0; padding: 4px 6px; }
+  .chain li { position: relative; display: flex; align-items: center; gap: 16px; padding: 11px 0; font-size: 16px; color: var(--muted); }
+  .chain li + li::before { content: ""; position: absolute; left: 23px; top: -11px; height: 22px; border-left: 2px dotted var(--green); }
+  .chain b { color: var(--fg); font-weight: 600; }
+  .chain .ic { flex: none; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: rgba(103, 234, 148, 0.1); color: var(--green); }
+  .chain .ic svg { width: 26px; height: 26px; }
+  .chain .off { color: var(--muted); }
+  .flow { stroke-dasharray: 3 13; animation: flow 1.4s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -32; } }
+  .sms-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 60px; align-items: center; }
+  .points { display: grid; gap: 18px; }
+  .point { padding: 24px 26px; border-radius: 22px; background: var(--card); border: 1px solid var(--line2); }
+  .point h3 { font-size: 20px; margin-bottom: 8px; }
+  .point p { color: var(--muted); font-size: 16px; }
+  .point code { white-space: nowrap; font-size: 14.5px; background: rgba(103, 234, 148, 0.1); color: var(--green); padding: 2px 7px; border-radius: 6px; }
+  .note { display: flex; gap: 14px; margin-top: 18px; padding: 20px 22px; border-radius: 20px; background: rgba(255, 208, 143, 0.07); border: 1px solid rgba(255, 208, 143, 0.25); color: #f3e2c8; font-size: 15.5px; }
+  .note svg { flex: none; width: 22px; height: 22px; color: var(--warn); margin-top: 2px; }
+  .how-on { margin-top: 70px; display: grid; grid-template-columns: auto 1fr; gap: 50px; align-items: center; padding: 34px; border-radius: 30px; border: 1px solid var(--line2); background: var(--card); }
+  .how-on p { color: var(--muted); margin-top: 14px; font-size: 17px; }
+
+  /* small features */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .tile { padding: 30px 28px; border-radius: 24px; background: var(--card); border: 1px solid var(--line2); }
+  .tile .ic { width: 50px; height: 50px; border-radius: 16px; display: grid; place-items: center; background: rgba(103, 234, 148, 0.1); color: var(--green); margin-bottom: 20px; }
+  .tile .ic svg { width: 26px; height: 26px; }
+  .tile h3 { font-size: 19px; margin-bottom: 8px; }
+  .tile p { color: var(--muted); font-size: 15.5px; }
+
+  /* needs + faq */
+  .needs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 10px; }
+  .need { padding: 26px 26px; border-radius: 22px; border: 1px solid var(--line); background: rgba(103, 234, 148, 0.04); }
+  .need b { display: block; font-family: var(--display); font-size: 20px; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .need span { color: var(--muted); font-size: 15.5px; }
+  .faq { max-width: 860px; margin: 0 auto; display: grid; gap: 12px; }
+  details { border-radius: 20px; background: var(--card); border: 1px solid var(--line2); }
+  summary { cursor: pointer; list-style: none; padding: 22px 26px; font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--body); font-weight: 400; font-size: 28px; color: var(--green); transition: transform .2s ease; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { padding: 0 26px 24px; color: var(--muted); font-size: 16.5px; }
+
+  /* final cta */
+  .player { position: relative; max-width: 1040px; margin: 0 auto; border-radius: 26px; overflow: hidden; border: 1px solid var(--line); background: #030504; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55), 0 0 90px rgba(103, 234, 148, 0.08); }
+  .player video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #030504; }
+  .play { position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; border: 0; border-radius: 50%; cursor: pointer; display: grid; place-items: center; background: var(--green); color: var(--ink); box-shadow: 0 0 0 14px rgba(103, 234, 148, 0.18), 0 20px 50px rgba(0, 0, 0, 0.5); transition: transform .15s ease, box-shadow .15s ease; }
+  .play:hover { transform: scale(1.06); box-shadow: 0 0 0 18px rgba(103, 234, 148, 0.22), 0 20px 50px rgba(0, 0, 0, 0.5); }
+  .play svg { width: 40px; height: 40px; margin-left: 5px; }
+  .player.started .play { display: none; }
+  .final { text-align: center; padding: 120px 0 130px; position: relative; overflow: hidden; border-top: 1px solid var(--line2); }
+  .final::before { content: ""; position: absolute; inset: 0; background: radial-gradient(700px 400px at 50% 100%, rgba(103, 234, 148, 0.14), transparent 70%); }
+  .final .wrap { position: relative; }
+  .final svg.logo { width: 84px; height: 84px; margin-bottom: 26px; filter: drop-shadow(0 0 24px rgba(103, 234, 148, 0.45)); }
+  .final h2 { font-size: clamp(36px, 5.4vw, 62px); max-width: 820px; margin: 0 auto 20px; }
+  .final p { color: var(--muted); font-size: 19px; max-width: 640px; margin: 0 auto 34px; }
+  .final .ctas { justify-content: center; }
+  .final .fine { margin: 22px auto 0; }
+  footer { border-top: 1px solid var(--line2); padding: 34px 0 48px; color: var(--dim); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 30px; justify-content: space-between; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 980px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-top: 56px; padding-bottom: 70px; }
+    .duo { margin: 0 auto; }
+    .feature, .sms-grid { grid-template-columns: 1fr; gap: 50px; }
+    .feature.flip .copy { order: 0; }
+    .steps, .grid, .needs { grid-template-columns: 1fr 1fr; }
+    .how-on { grid-template-columns: 1fr; }
+    .hero .mesh { -webkit-mask-image: linear-gradient(180deg, transparent 48%, #000 82%); mask-image: linear-gradient(180deg, transparent 48%, #000 82%); }
+  }
+  @media (max-width: 680px) {
+    body { font-size: 16px; }
+    .player { border-radius: 18px; }
+    .play { width: 72px; height: 72px; margin: -36px 0 0 -36px; box-shadow: 0 0 0 10px rgba(103, 234, 148, 0.18), 0 14px 36px rgba(0, 0, 0, 0.5); }
+    .play svg { width: 30px; height: 30px; margin-left: 4px; }
+    .wrap { padding: 0 16px; }
+    .nav nav { display: none; }
+    .nav .btn { margin-left: auto; }
+    section { padding: 80px 0; }
+    .lead { font-size: 18px; }
+    .duo { gap: 16px; }
+    .duo .back { margin-top: 50px; }
+    .steps, .grid, .needs { grid-template-columns: 1fr; }
+    .shots { gap: 14px; }
+    .shots .phone { --w: 46vw; }
+    .shots .phone:nth-child(2) { margin-top: 40px; }
+    .feature + .feature { margin-top: 100px; }
+    .diagram { padding: 14px 12px; margin-bottom: 50px; }
+    .diagram > svg { display: none; }
+    .chain { display: grid; }
+    .how-on { padding: 24px; }
+    .how-on .phone { --w: 230px; margin: 0 auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .flow, .mesh * { animation: none !important; }
+  }
+nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0;padding:0;flex:0 0 100%}nav.langs a{display:inline-block;padding:4px 8px;min-height:32px;border-radius:6px}nav.langs a[aria-current]{font-weight:700;text-decoration:none;color:inherit}h1,h2,h3,p,li,summary{overflow-wrap:break-word;hyphens:auto}h1,h2,h3,.kicker{letter-spacing:0}h1,h2,h3{line-height:1.3}h1,h2{max-width:none}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "MobileApplication",
+ "name": "Mesh+",
+ "url": "https://meshplus.app/zh-hant/",
+ "inLanguage": "zh-Hant",
+ "description": "Mesh+ 是免費開源的 Android App，專為 Meshtastic 無線電設計。沒有手機訊號也能在私人聊天室和加密私訊中聊天，透過 SMS 轉發傳簡訊，還能直接用手機更新無線電韌體。",
+ "applicationCategory": "CommunicationApplication",
+ "operatingSystem": "Android 12 或更新版本",
+ "image": "https://meshplus.app/og/zh-hant/home.jpg",
+ "offers": {
+  "@type": "Offer",
+  "price": "0",
+  "priceCurrency": "USD"
+ },
+ "installUrl": "https://play.google.com/store/apps/details?id=com.borodutch.meshplus",
+ "downloadUrl": "https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk",
+ "sameAs": [
+  "https://github.com/backmeupplz/meshtastic-plus",
+  "https://play.google.com/store/apps/details?id=com.borodutch.meshplus"
+ ],
+ "author": {
+  "@type": "Person",
+  "name": "Nikita Kolmogorov",
+  "url": "https://borodutch.com"
+ }
+}
+</script>
+<script defer src="https://lumen.borodutch.com/l.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="24 22 60 60"><path d="M54,38 L38,66 L70,66 Z" fill="none" stroke="#67ea94" stroke-width="4" stroke-linejoin="round"/><circle cx="54" cy="38" r="8" fill="#67ea94"/><circle cx="38" cy="66" r="8" fill="#67ea94"/><circle cx="70" cy="66" r="8" fill="#67ea94"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></symbol>
+  <symbol id="gplay" viewBox="0 0 24 24"><path d="M5 3.5v17L19.5 12zM5 3.5l9 11.5M5 20.5l9-11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="download" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Mesh+ 首頁"><svg aria-hidden="true"><use href="#logo"/></svg><span>Mesh<b>+</b></span></a>
+    <nav aria-label="網頁區段">
+      <a href="#how">運作方式</a>
+      <a href="#features">功能</a>
+      <a href="#sms">SMS 轉發</a>
+      <a href="#faq">常見問題</a>
+      <a href="https://github.com/backmeupplz/meshtastic-plus">GitHub</a>
+    </nav>
+    <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">取得 App</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding:0">
+    <svg class="mesh" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g stroke="#67ea94" stroke-opacity="0.13" stroke-width="1.2">
+        <path d="M80 140L260 90L420 210L610 120L780 250L960 160L1130 260L1320 150M260 90L300 330L420 210M610 120L640 380L780 250M960 160L1010 420L1130 260M300 330L470 520L640 380L820 560L1010 420L1200 590M80 140L120 420L300 330M1320 150L1380 420L1200 590M120 420L250 650L470 520M820 560L700 720M1200 590L1080 730M470 520L560 700"/>
+      </g>
+      <g fill="#67ea94">
+        <circle cx="80" cy="140" r="3" opacity=".4"/><circle cx="260" cy="90" r="4" opacity=".5"/><circle cx="420" cy="210" r="3" opacity=".4"/><circle cx="610" cy="120" r="4" opacity=".45"/><circle cx="780" cy="250" r="3" opacity=".4"/><circle cx="960" cy="160" r="5" opacity=".5"/><circle cx="1130" cy="260" r="3" opacity=".4"/><circle cx="1320" cy="150" r="4" opacity=".45"/><circle cx="300" cy="330" r="3" opacity=".35"/><circle cx="640" cy="380" r="4" opacity=".4"/><circle cx="1010" cy="420" r="3" opacity=".4"/><circle cx="470" cy="520" r="4" opacity=".35"/><circle cx="820" cy="560" r="3" opacity=".35"/><circle cx="1200" cy="590" r="4" opacity=".4"/><circle cx="120" cy="420" r="3" opacity=".3"/><circle cx="1380" cy="420" r="3" opacity=".3"/><circle cx="250" cy="650" r="3" opacity=".3"/><circle cx="560" cy="700" r="3" opacity=".3"/><circle cx="700" cy="720" r="3" opacity=".3"/><circle cx="1080" cy="730" r="3" opacity=".3"/>
+      </g>
+      <g stroke="#67ea94" stroke-width="2.4" fill="none" stroke-linecap="round">
+        <path class="flow" d="M260 90L420 210L610 120L780 250L960 160L1130 260"/>
+        <path class="flow" style="animation-duration:2.1s" d="M120 420L300 330L470 520L640 380L820 560L1010 420L1200 590" stroke-opacity=".6"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <div>
+        <h1><em>沒有訊號</em>，也能傳訊息給朋友。</h1>
+        <p class="lead">Mesh+ 是一款親切好用、專為 Meshtastic 無線電設計的 Android App。把口袋大小的 LoRa 無線電連上手機，你的訊息就能一台接一台地翻山越嶺，沿途不需要基地台、Wi-Fi 或網路。</p>
+        <div class="ctas">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>前往 Google Play 下載</a>
+          <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>下載 APK</a>
+          <a class="btn" href="#video"><svg aria-hidden="true"><use href="#play"/></svg>觀看 30 秒影片</a>
+        </div>
+        <p class="fine">Mesh+ 免費又開源，大小約 3 MB，需要 Android 12 或更新版本。還沒有無線電嗎？可以先用內建的示範模式逛逛。</p>
+      </div>
+      <div class="duo">
+        <div class="phone back"><img src="/img/chats.webp" srcset="/img/chats-540.webp 540w, /img/chats.webp 720w" sizes="300px" width="1080" height="2400" fetchpriority="low" alt="Mesh+ 的聊天列表，有 Public 頻道、私人聊天室 Hiking 和 Camp SMS，以及來自 Maya 的私訊，每個都有未讀標記"></div>
+        <div class="phone front"><img src="/img/room.webp" srcset="/img/room-540.webp 540w, /img/room.webp 720w" sizes="300px" width="1080" height="2400" fetchpriority="low" alt="名為 Hiking 的私人聊天室，朋友們在 Mesh 網路上分享步道動態，Mesh 網路已轉發的訊息下方有勾號"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="video" style="padding-bottom:40px">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">發表影片</div>
+        <h2>三十秒看完 Mesh+ 能做什麼。</h2>
+        <p>打開聲音，快速瀏覽私人聊天室、在 Mesh 網路中一跳一跳傳送的訊息、韌體更新和 SMS 轉發。</p>
+      </div>
+      <div class="player">
+        <video src="/launch.mp4" data-poster="/img/launch-poster.webp" width="1920" height="1080" preload="none" playsinline controls
+          aria-label="Mesh+ 發表影片，30 秒，附音樂：沒有行動訊號也能聊天、私人聊天室、訊息在無線電之間一跳一跳傳送、QR Code 邀請、附近的無線電、韌體更新和 SMS 轉發。"></video>
+        <button class="play" type="button" aria-label="播放發表影片"><svg aria-hidden="true"><use href="#play"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">運作方式</div>
+        <h2>從開箱到傳出第一則訊息，大約只要一分鐘。</h2>
+        <p>Meshtastic 無線電會透過遠距離的 LoRa 無線電互相轉傳訊息，所以範圍內的每一台無線電都成為網路的一部分。Mesh+ 就是讓你的手機與無線電溝通的橋樑。</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3>準備一台 Meshtastic 無線電。</h3>
+          <p>Mesh+ 適用於執行 Meshtastic 韌體 2.x 的無線電，例如 Heltec Mesh Node T114 或 RAK4631。你想聯絡的朋友也需要一台，而中間每一台無線電都能幫忙把訊息傳得更遠。</p>
+        </div>
+        <div class="step">
+          <h3>連接到你的手機。</h3>
+          <p>可以用無線電螢幕上顯示的 PIN 透過藍牙配對，也可以用 USB-C 線接上，讓手機為它供電。Mesh+ 會記住你的無線電，下次只要點一下就能重新連線。</p>
+        </div>
+        <div class="step">
+          <h3>選擇地區和名稱。</h3>
+          <p>全新的無線電在知道該用哪個頻段之前會保持靜默，所以 Mesh+ 只會問你一次，並依照手機所在的國家建議合適的地區。選好你在 Mesh 網路上的名稱，就可以開始聊天了。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" style="padding-top:40px">
+    <div class="wrap">
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">聊天</div>
+          <h2>公開聊天、私人聊天室和私訊，都在同一份列表裡。</h2>
+          <p>公開頻道是附近所有人共用的開放聊天室。私人聊天室經過加密，只有你邀請的人才能閱讀；私訊則由無線電韌體提供端對端加密。</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>訊息下方的勾號會告訴你，訊息已被其他無線電轉發，或是朋友的無線電已經收到。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>未讀標記會顯示有哪些新訊息，不需要打擾的聊天室或對象也可以靜音。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>連線期間，Mesh+ 會在背景持續執行，有新訊息時通知你。</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/public.webp" width="1080" height="2400" loading="lazy" alt="Public 頻道，Ridge Repeater、Leo 和 Maya 在這裡與附近所有人聊天"></div>
+          <div class="phone sm"><img src="/img/dm.webp" width="1080" height="2400" loading="lazy" alt="與 Maya's Handheld 的端對端加密私訊對話，已傳送的訊息下方有已送達的勾號"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sms" id="sms">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">SMS 轉發</div>
+        <h2>只要有一支手機有訊號，整個群組都能傳簡訊。</h2>
+        <p>在深山野外，常常只有一個人，也許是在營地或山稜上，才有一格行動網路訊號。把那支手機設為轉發手機，Mesh 網路上的每個人都能透過它收發一般的簡訊。</p>
+      </div>
+
+      <div class="diagram" role="img" aria-label="基地台連到 Base Camp 的手機，這支手機透過兩台 Meshtastic 無線電，把簡訊轉發給沒有訊號的朋友手機">
+        <svg viewBox="0 0 1100 250">
+          <g fill="none" stroke="#67ea94" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M95 60v120M77 180l18-70 18 70M83 150h24M68 52a40 40 0 0 0 0 46M122 52a40 40 0 0 1 0 46M56 40a58 58 0 0 0 0 70M134 40a58 58 0 0 1 0 70" />
+          </g>
+          <path class="flow" d="M150 120 C 210 120, 230 120, 285 120" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <g transform="translate(300 52)">
+            <rect x="0" y="0" width="74" height="136" rx="15" fill="#101a14" stroke="#eef5f0" stroke-width="3"/>
+            <g fill="#67ea94"><rect x="44" y="18" width="4" height="6" rx="1"/><rect x="50" y="15" width="4" height="9" rx="1"/><rect x="56" y="12" width="4" height="12" rx="1"/><rect x="62" y="9" width="4" height="15" rx="1"/></g>
+            <path d="M20 60h34v24H32l-8 7v-7h-4z" fill="none" stroke="#67ea94" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="86" y="70" width="26" height="44" rx="6" fill="#67ea94"/><rect x="93" y="50" width="4" height="22" rx="2" fill="#67ea94"/><rect x="91" y="80" width="14" height="9" rx="2" fill="#052611"/>
+          </g>
+          <path class="flow" d="M420 140 Q 500 60 580 120" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path class="flow" d="M620 120 Q 700 60 780 140" stroke="#67ea94" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="600" cy="124" r="20" fill="#67ea94"/><rect x="593" y="114" width="14" height="20" rx="3" fill="#052611"/>
+          <g transform="translate(800 52)">
+            <rect x="0" y="0" width="74" height="136" rx="15" fill="#101a14" stroke="#eef5f0" stroke-width="3"/>
+            <g fill="#3a4a40"><rect x="44" y="18" width="4" height="6" rx="1"/><rect x="50" y="15" width="4" height="9" rx="1"/><rect x="56" y="12" width="4" height="12" rx="1"/><rect x="62" y="9" width="4" height="15" rx="1"/></g>
+            <path d="M20 60h34v24H32l-8 7v-7h-4z" fill="none" stroke="#a6b8ad" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="86" y="70" width="26" height="44" rx="6" fill="#67ea94"/><rect x="93" y="50" width="4" height="22" rx="2" fill="#67ea94"/><rect x="91" y="80" width="14" height="9" rx="2" fill="#052611"/>
+          </g>
+          <g text-anchor="middle" font-size="19" font-weight="600">
+            <text x="95" y="222">基地台</text>
+            <text x="350" y="222">Base Camp</text><text class="sub" x="350" y="244">有訊號，執行轉發</text>
+            <text x="600" y="186">無線電</text><text class="sub" x="600" y="208">在 Mesh 網路中傳遞簡訊</text>
+            <text x="850" y="222">你的手機</text><text class="sub" x="850" y="244">沒有訊號，只有無線電</text>
+          </g>
+        </svg>
+        <ol class="chain">
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 7v14M8 21l4-14 4 14M9.5 15h5M6 4a8 8 0 0 0 0 9M18 4a8 8 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>基地台</b>連到一支手機。</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 3h10v18H7zM11 18h2M10 7.5l1.5-1 1.5 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Base Camp 的手機</b>有訊號，負責執行轉發。</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 8h10v13H7zM10 8V3M9.5 12h5M9.5 15h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>無線電</b>在 Mesh 網路中接力傳送簡訊。</span></li>
+          <li><span class="ic off"><svg viewBox="0 0 24 24"><path d="M7 3h10v18H7zM11 18h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>你的手機</b>沒有訊號，只有一台無線電。</span></li>
+        </ol>
+      </div>
+
+      <div class="sms-grid">
+        <div class="points">
+          <div class="point">
+            <h3>簡訊和來電會出現在私人聊天室。</h3>
+            <p>轉發手機收到的每一則 SMS，以及來電和未接來電，都會發到你選定的私人聊天室，Mesh+ 會以大家熟悉的簡訊對話串顯示。</p>
+          </div>
+          <div class="point">
+            <h3>聊天室裡的任何人都能回覆簡訊。</h3>
+            <p>滑動簡訊即可回覆，也可以點 SMS 按鈕寫給任何號碼或聯絡人。轉發手機會用自己的號碼寄出，寄出後會出現一個勾號。</p>
+          </div>
+          <div class="point">
+            <h3>使用其他 Meshtastic App 的朋友也能加入。</h3>
+            <p>轉發的訊息是純文字，所以使用其他 Meshtastic App 的人也能閱讀，並輸入 <code>/sms +15551234567 your message</code> 來傳簡訊。</p>
+          </div>
+          <div class="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9.5 17h-19zM12 10v4.5M12 17.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>轉發聊天室裡的每個人都能閱讀那支手機收到的簡訊，也能用它的號碼傳送 SMS，所以請只讓信任的人加入聊天室。簡訊依電信業者的一般費率計費。</span></div>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/relay.webp" width="1080" height="2400" loading="lazy" alt="Camp SMS 聊天室，顯示來自外部電話號碼的簡訊、透過轉發寄出並帶有勾號的回覆，以及一通未接來電"></div>
+          <div class="phone sm"><img src="/img/sms.webp" width="1080" height="2400" loading="lazy" alt="「傳送 SMS」對話框，有電話號碼、聯絡人選擇器，以及訊息 Running late, see you at the trailhead at 9"></div>
+        </div>
+      </div>
+
+      <div class="how-on">
+        <div class="phone sm"><img src="/img/relay-settings.webp" width="1080" height="2400" loading="lazy" alt="SMS 轉發設定畫面，有轉發聊天室選擇器、開啟開關，以及關於誰能讀到轉發簡訊的警告"></div>
+        <div>
+          <h3 style="font-size:30px">開啟只要幾秒鐘。</h3>
+          <p>在有訊號的那支手機上，開啟「設定」，進入「SMS 轉發」，選擇一個私人聊天室（或讓 Mesh+ 建立一個名為 Relay 的聊天室），然後開啟。Android 會一次詢問 SMS 和電話的存取權限，轉發執行期間會一直顯示一則通知。</p>
+          <p>轉發功能在你開啟之前都是關閉的，也隨時可以在同一個畫面關閉。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="more-features">
+    <div class="wrap">
+      <div class="feature flip">
+        <div class="copy">
+          <div class="kicker">邀請</div>
+          <h2>用 QR Code 或連結邀請朋友加入私人聊天室。</h2>
+          <p>只要點幾下就能建立聊天室，並以 QR Code 讓對方掃描，或把連結在出發前傳給對方。Mesh+ 使用標準的 Meshtastic 邀請格式，所以 Meshtastic 官方 App 的連結能在 Mesh+ 開啟，你的連結也能在官方 App 開啟。</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>每個私人聊天室都有自己的加密金鑰，沒有邀請的人即使他們的無線電會幫忙轉傳，也讀不到內容。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>加入只要掃描 QR Code 或貼上連結，退出只要點一下。</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone"><img src="/img/invite.webp" width="1080" height="2400" loading="lazy" alt="Hiking 聊天室的邀請頁面，有 QR Code 和分享連結"></div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">節點</div>
+          <h2>看見你的節點聽得到的每一台無線電。</h2>
+          <p>「節點」分頁會列出你的無線電收到過的所有節點，最愛排在最上面，過去兩小時內收到訊號的節點會有線上標記。點一下節點，就能看到上次收到的時間、距離幾跳、訊號強弱和剩餘電量，還能傳訊息給它，或加入最愛；最愛會儲存在你的無線電上。</p>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/nodes.webp" width="1080" height="2400" loading="lazy" alt="「節點」分頁，Maya's Handheld 已加入最愛，Base Camp、Ridge Repeater 和 Leo 在線上"></div>
+          <div class="phone sm"><img src="/img/profile.webp" width="1080" height="2400" loading="lazy" alt="Base Camp 的個人資料，顯示上次收到的時間、距離一跳、訊號強弱和電量，並有傳訊息或加入最愛的按鈕"></div>
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="copy">
+          <div class="kicker">無線電設定</div>
+          <h2>每項設定都用淺顯的文字說明用途。</h2>
+          <p>角色、轉發、無線電預設組合、跳數上限、發射功率、位置分享、省電、螢幕和藍牙配對，都只要點一下就能設定，而且每一項都附有簡短說明，告訴你它的作用以及何時需要調整。Mesh+ 會一次儲存你的所有變更，所以無線電只會重新啟動一次。</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>頁面頂端會顯示你的無線電是哪一種開發板、執行的韌體版本和電量。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>遇到狀況時，你可以清除節點列表、在保留身分的情況下重置設定，或是完整回復原廠設定。</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/settings.webp" width="1080" height="2400" loading="lazy" alt="Heltec Mesh Node T114 的節點設定，有「更新至 2.7.26」按鈕，以及角色和轉發等設定"></div>
+          <div class="phone sm"><img src="/img/info.webp" width="1080" height="2400" loading="lazy" alt="「速度與距離」的說明：較慢的預設組合傳得較遠，較快的則能傳送更多訊息"></div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="copy">
+          <div class="kicker">韌體</div>
+          <h2>不用電腦，也能更新無線電的韌體。</h2>
+          <p>Meshtastic 發布新的穩定版時，Mesh+ 會直接在無線電的設定中提供更新。Heltec T114 和 RAK4631 這類 nRF52 開發板，用 USB 線大約一分鐘就能更新；不想接線的話，透過藍牙大約十分鐘。</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>你可以選擇任何已發布的版本，包括預先發行版，也可以退回較舊的版本。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>你的設定、聊天室和訊息都會保留，卡在更新模式的無線電也可以從連線畫面救回來。</span></li>
+            <li><svg aria-hidden="true"><use href="#check"/></svg><span>ESP32 開發板請用電腦到 <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a> 更新。</span></li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="phone sm"><img src="/img/firmware.webp" width="1080" height="2400" loading="lazy" alt="Heltec Mesh Node T114 的韌體畫面，提供 Meshtastic 2.7.26 可透過 USB 安裝"></div>
+          <div class="phone sm"><img src="/img/firmware-progress.webp" width="1080" height="2400" loading="lazy" alt="韌體 2.7.26 正透過 USB 線安裝，完成 64%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">更多功能</div>
+        <h2>連小地方也都照顧到了。</h2>
+      </div>
+      <div class="grid">
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8h10v13H7zM10 8V3M9.5 12h5M9.5 15h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>你所有的無線電，只要點一下。</h3>
+          <p>從頂端列就能在不同無線電之間切換，並看到每一台是哪種開發板、執行的韌體版本和電量。</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>沒有無線電也能試用。</h3>
+          <p>內建的示範模式會模擬一台無線電，包含聊天室、私訊、回覆和設定，讓你在買硬體之前先四處看看。</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0M4 4l16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>太吵的聊天室可以靜音。</h3>
+          <p>任何聊天室或私訊都能靜音，聊天列表中劃掉的鈴鐺圖示會提醒你哪些是安靜的。</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <h3>你的訊息只屬於你。</h3>
+          <p>沒有帳號、廣告或分析工具，你的訊息紀錄只儲存在你的手機上。</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>程式碼是開源的。</h3>
+          <p>Mesh+ 在 GitHub 上公開開發，任何人都能閱讀程式碼、自行建置，並提出改進。</p>
+        </div>
+        <div class="tile">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v14M8 7l4-4 4 4M7 13v2l5 3 5-3v-2M12 21v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>一條線就能為無線電供電。</h3>
+          <p>透過 USB-C，手機也會為無線電供電，所以即使無線電沒有電池，也能繼續運作。</p>
+        </div>
+      </div>
+
+      <div class="center" style="margin:110px auto 40px">
+        <div class="kicker">你需要準備什麼</div>
+        <h2>Mesh+ 需要的東西很少。</h2>
+      </div>
+      <div class="needs">
+        <div class="need"><b>任何 Android 12 或更新版本的手機都可以。</b><span>Mesh+ 大小約 3 MB，也不需要帳號。</span></div>
+        <div class="need"><b>你的無線電需要 Meshtastic 韌體 2.x。</b><span>這類無線電都能透過藍牙連線；透過 USB 連線時，Mesh+ 已用 Heltec T114 這類 nRF52 開發板測試過。</span></div>
+        <div class="need"><b>你的朋友也需要無線電。</b><span>他們可以使用 Mesh+ 或任何其他 Meshtastic App，範圍內的每一台無線電都能擴大 Mesh 網路。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:20px">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">常見問題</div>
+        <h2>以下是大家最常問的問題。</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>需要行動網路或網際網路嗎？</summary>
+          <p>不需要。訊息是透過 LoRa 在 Meshtastic 無線電之間傳送，所以只要你們的無線電互相收得到，就能聊天。Mesh+ 只有在檢查和下載韌體更新時才會連上網路。</p>
+        </details>
+        <details>
+          <summary>訊息可以傳多遠？</summary>
+          <p>兩台手持無線電在視線清楚的情況下，通常可以相隔好幾公里互相連線，中間的每一台無線電也都能把訊息再往前傳。山丘、建築物和樹木會縮短距離，所以大家都喜歡把中繼站架在高處。</p>
+        </details>
+        <details>
+          <summary>可以和使用 Meshtastic 官方 App 的人聊天嗎？</summary>
+          <p>可以。Mesh+ 使用相同的通訊協定，所以不論用哪個 App，同一個頻道的所有人都看得到彼此的訊息，聊天室邀請連結也能雙向通用。</p>
+        </details>
+        <details>
+          <summary>誰能讀到經過 SMS 轉發的簡訊？</summary>
+          <p>轉發聊天室裡的每個人都能讀到轉發手機收到的簡訊和來電，也能用它的號碼傳送簡訊。聊天室經過加密，所以外人看不到，但請謹慎挑選成員。我們不會收到任何內容，也不會傳送給任何伺服器。</p>
+        </details>
+        <details>
+          <summary>Mesh+ 有上架 Google Play 或 F-Droid 嗎？</summary>
+          <p>Mesh+ <a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">已在 Google Play 上架</a>，F-Droid 也即將推出。你也可以從這個頁面安裝 <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>：在手機上開啟檔案，Android 詢問時，允許瀏覽器安裝 App 即可。</p>
+        </details>
+        <details>
+          <summary>有 iPhone 版本嗎？</summary>
+          <p>目前 Mesh+ 只有 Android 版。使用 iPhone 的朋友可以用 Meshtastic 官方 App 加入你的聊天室。</p>
+        </details>
+        <details>
+          <summary>Mesh+ 要付費嗎？</summary>
+          <p>不用。Mesh+ 免費又開源，沒有帳號、廣告、分析工具或 App 內購買。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <svg class="logo" aria-hidden="true"><use href="#logo"/></svg>
+      <h2>讓你的群組聊天，離開網路也能繼續。</h2>
+      <p>下載 Mesh+、連上無線電，大約一分鐘就能在 Mesh 網路上傳出第一則訊息。</p>
+      <div class="ctas">
+        <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>前往 Google Play 下載</a>
+          <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>下載 APK</a>
+        <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus">在 GitHub 查看原始碼</a>
+      </div>
+      <p class="fine">安裝 APK 時，請在手機上開啟檔案，Android 詢問時，允許瀏覽器安裝 App。</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Mesh+ 是獨立的開源專案，與 Meshtastic LLC 無關，也未獲其認可。Meshtastic® 是 Meshtastic LLC 的註冊商標。</span>
+    <span><a href="https://github.com/backmeupplz/meshtastic-plus">原始碼</a> · <a href="https://github.com/backmeupplz/meshtastic-plus/releases">版本發布</a> · <a href="/zh-hant/compare.html">與官方 App 比較</a> · <a href="/zh-hant/privacy.html">隱私權政策</a></span>
+    <nav class="langs" aria-label="語言"><a href="/" hreflang="en" lang="en">English</a> <a href="/ar/" hreflang="ar" lang="ar">العربية</a> <a href="/de/" hreflang="de" lang="de">Deutsch</a> <a href="/es/" hreflang="es" lang="es">Español</a> <a href="/fr/" hreflang="fr" lang="fr">Français</a> <a href="/hi/" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/" hreflang="it" lang="it">Italiano</a> <a href="/ja/" hreflang="ja" lang="ja">日本語</a> <a href="/ko/" hreflang="ko" lang="ko">한국어</a> <a href="/nl/" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/" hreflang="ru" lang="ru">Русский</a> <a href="/sv/" hreflang="sv" lang="sv">Svenska</a> <a href="/th/" hreflang="th" lang="th">ไทย</a> <a href="/tr/" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/" hreflang="uk" lang="uk">Українська</a> <a href="/vi/" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></nav>
+  </div>
+</footer>
+<script>
+  const player = document.querySelector('.player');
+  const video = player.querySelector('video');
+  video.controls = false;
+  // the poster (42 KB) waits for load, so on phones it doesn't hold up the first screen's text (PageSpeed's LCP)
+  addEventListener('load', () => (video.poster = video.dataset.poster));
+  player.querySelector('.play').addEventListener('click', () => video.play());
+  video.addEventListener('play', () => { player.classList.add('started'); video.controls = true; });
+</script>
+</body>
+</html>
