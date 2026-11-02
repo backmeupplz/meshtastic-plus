@@ -1,0 +1,83 @@
+name: Android
+# The Android app's unit tests (both flavors) and the shared release scripts. iOS, site and Markdown changes skip it
+# (ios.yml checks the iPhone app).
+on:
+  pull_request:
+    paths: ['app/**', 'gradle/**', '*.gradle.kts', 'gradle.properties', 'gradlew', '.github/scripts/**', '.forgejo/workflows/android.yml']
+  push:
+    branches: [main]
+    paths: ['app/**', 'gradle/**', '*.gradle.kts', 'gradle.properties', 'gradlew', '.github/scripts/**', '.forgejo/workflows/android.yml']
+permissions:
+  contents: read
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  android:
+    # Our own pushes and PRs run on the Mac runners, where the JDK, the SDK, Gradle's caches and a per-runner checkout
+    # with its build directory persist between runs. Outsiders' PRs (bridged from GitHub by the `github` user) never
+    # touch the Mac: they run in android-outside below.
+    if: github.event_name != 'pull_request' || contains(fromJSON('["backmeupplz","renovate","claude","radiant"]'), github.event.pull_request.user.login)
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      # A per-runner git checkout instead of actions/checkout: no action to download, and the path stays the same, so
+      # Gradle's configuration cache and the previous run's outputs stay valid and only what changed is rebuilt and
+      # retested. Only what the build reads (cone mode adds the root files), without the store and site images.
+      - name: Sources
+        run: |
+          src="${PWD%%/work/*}/ci/meshtastic-plus-android"
+          mkdir -p "$src" && cd "$src"
+          rm -f .git/index.lock .git/shallow.lock # left by a cancelled run
+          [ -d .git ] || { git init -q && git sparse-checkout set app gradle .github/scripts; }
+          # Blobs up to 128 KB (every source file, not the store images) come with the fetch, so checkout fetches nothing more
+          git fetch -q --no-tags --depth=1 --filter=blob:limit=128k "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "$GITHUB_SHA"
+          git checkout -q -f FETCH_HEAD
+          echo "SRC=$src" >> "$GITHUB_ENV"
+      - run: python3 -m unittest discover -s "$SRC/.github/scripts" # the shared release scripts
+      # A pinned, checked Temurin and an SDK directory holding only the license (Gradle installs the platform and build
+      # tools it needs), kept per runner. Homebrew's JDK can't load the user's private freetype there. Same JDK and SDK directory as ABS+.
+      - name: Toolchain
+        run: |
+          base="${PWD%%/work/*}"
+          dir="$base/temurin-21.0.13+9"
+          if [ ! -x "$dir/Contents/Home/bin/java" ]; then
+            rm -rf "$dir.tmp" && mkdir -p "$dir.tmp"
+            curl -fsSL -o "$dir.tmp/jdk.tgz" "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13%2B9/OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.13_9.tar.gz"
+            echo "bf036b35b071bfb2f54f2c0af8ee8d88afa95ee6eb3dce02c0f94cfc2524d04a  $dir.tmp/jdk.tgz" | shasum -a 256 -c
+            tar -xzf "$dir.tmp/jdk.tgz" -C "$dir.tmp" --strip-components 1 && rm "$dir.tmp/jdk.tgz" && mv "$dir.tmp" "$dir"
+          fi
+          echo "JAVA_HOME=$dir/Contents/Home" >> "$GITHUB_ENV"
+          mkdir -p "$base/android-sdk/licenses"
+          printf '\n24333f8a63b6825ea9c5514f83c2829b004d1fee' > "$base/android-sdk/licenses/android-sdk-license"
+          echo "ANDROID_HOME=$base/android-sdk" >> "$GITHUB_ENV"
+      # A Gradle daemon per runner (shared by ABS+ and Mesh+, stopped by Gradle after 3 idle hours) stays up between jobs,
+      # so a job doesn't pay for a cold JVM, loading the Android plugin and reading the configuration cache. No file system
+      # watching: the daemon must hash what git changed, never trust a file event it may have missed.
+      - name: Test and build
+        working-directory: ${{ env.SRC }}
+        run: ./gradlew --daemon --no-watch-fs --build-cache --configuration-cache testFdroidDebugUnitTest testPlayDebugUnitTest
+
+  # Outsiders' PRs: Linux, which downloads everything each time (rare, so not worth caching)
+  android-outside:
+    if: github.event_name == 'pull_request' && !contains(fromJSON('["backmeupplz","renovate","claude","radiant"]'), github.event.pull_request.user.login)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            app
+            gradle
+            .github/scripts
+      - run: python3 -m unittest discover -s .github/scripts
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: SDK license
+        run: |
+          mkdir -p "$HOME/android-sdk/licenses"
+          printf '\n24333f8a63b6825ea9c5514f83c2829b004d1fee' > "$HOME/android-sdk/licenses/android-sdk-license"
+          echo "ANDROID_HOME=$HOME/android-sdk" >> "$GITHUB_ENV"
+      - run: ./gradlew --no-daemon testFdroidDebugUnitTest testPlayDebugUnitTest
