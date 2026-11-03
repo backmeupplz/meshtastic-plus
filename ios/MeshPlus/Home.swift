@@ -79,7 +79,9 @@ enum HomeSheet: Identifiable {
     @ObservationIgnored var composer: UUID? // the composer that came on screen or took the keyboard last
     var leaving: Int? // room waiting for "Leave"
     var reporting: Message?
-    var noMail = false
+    var acting: Message? // tapped message whose actions are showing
+    var reported = false // "Report sent" is showing
+    var blocked = false // "Blocked" is showing
 
     /// Opens a conversation over the current one, or goes back to it if it's already open further down: the wide
     /// layout shows only the last one, so a second copy would pile up unseen.
@@ -211,7 +213,7 @@ struct ConversationRow: View {
             Text(title).fontWeight(unread > 0 ? .semibold : .regular).lineLimit(big ? 2 : 1)
             if mesh.isMuted(convo) { Image(systemName: "bell.slash").font(.caption).foregroundStyle(.secondary).accessibilityLabel("Muted") }
         }
-        let preview = Text(last.map { ($0.mine ? String(localized: "You") : $0.name) + ": " + $0.text } ?? String(localized: "No messages yet"))
+        let preview = Text(last.map { ($0.mine ? String(localized: "You") : $0.name) + ": " + clean($0.text) } ?? String(localized: "No messages yet"))
             .font(.subheadline).foregroundStyle(.secondary).lineLimit(big ? 2 : 1)
         let time = last.map { Text(shortTime($0.time)).font(.caption).foregroundStyle(.secondary) }
         let badge = unread > 0 ? Text(verbatim: "\(unread)").font(.caption2.bold()).foregroundStyle(.white)
@@ -248,7 +250,7 @@ struct ChatsTab: View {
         // DMs: everyone we've talked to, plus favorites so they're one tap away.
         var peers: [Int64] = []
         for p in mesh.messages.filter({ $0.peer != 0 }).sorted(by: { $0.time > $1.time }).map(\.peer) +
-            mesh.nodes.values.filter({ $0.favorite && $0.num != mesh.myNum && !mesh.blocked.contains($0.num) }).map(\.num) where !peers.contains(p) {
+            mesh.nodes.values.filter({ $0.favorite && $0.num != mesh.myNum && !mesh.hidden($0.num) }).map(\.num) where !peers.contains(p) {
             peers.append(p)
         }
         return list {
@@ -351,12 +353,12 @@ struct ProfileSheet: View {
                 .buttonStyle(.bordered).disabled(!mesh.connected)
             }
             .controlSize(.large).padding(.top, 14)
-            Button(role: blocked ? nil : .destructive) { mesh.setBlocked(num, !blocked) } label: {
+            Button(role: blocked ? nil : .destructive) { if blocked { mesh.setBlocked(num, false) } else { blockAndTell(num) } } label: {
                 Label(blocked ? String(localized: "Unblock") : String(localized: "Block"), systemImage: "hand.raised").frame(maxWidth: .infinity)
             }
             .buttonStyle(.bordered).controlSize(.large)
-            Text(blocked ? String(localized: "Their messages and DMs are hidden on this phone.")
-                 : String(localized: "Blocking hides their messages and DMs on this phone and stops their notifications."))
+            Text(blocked ? String(localized: "Their messages and DMs are hidden on this phone. The developer was notified and reviews it within 24 hours.")
+                 : String(localized: "Blocking hides their messages and DMs on this phone, stops their notifications and tells the developer so they can review them."))
                 .font(.footnote).foregroundStyle(.secondary)
         }
         .padding(24)
@@ -395,6 +397,7 @@ struct SettingsSheet: View {
                     NavigationLink { BlockedView() } label: {
                         LabeledContent("Blocked nodes", value: mesh.blocked.isEmpty ? String(localized: "None") : "\(mesh.blocked.count)")
                     }
+                    Toggle("Filter objectionable words", isOn: Binding(get: { mesh.filter }, set: { mesh.setFilter($0) }))
                     Link("Terms of use", destination: URL(string: "https://meshplus.app/terms.html")!)
                     Link("Privacy policy", destination: URL(string: "https://meshplus.app/privacy.html")!)
                     Button("Send feedback") {

@@ -57,13 +57,14 @@ final class DemoTests: XCTestCase {
         app.buttons["Report"].tap()
         XCTAssert(shows(app.buttons["Report only"]))
         app.buttons["Report only"].tap()
-        // The simulator has no Mail app: the report falls back to showing the support address.
-        let noMail = app.alerts["No email app"]
-        if shows(noMail) { noMail.buttons["OK"].tap() }
+        XCTAssert(shows(app.alerts["Report sent"]))
+        app.alerts["Report sent"].buttons["OK"].tap()
 
         maya.press(forDuration: 1.2)
         XCTAssert(shows(app.buttons["Block Maya's Handheld"]))
         app.buttons["Block Maya's Handheld"].tap()
+        XCTAssert(shows(app.alerts["Blocked"])) // blocking also tells the developer
+        app.alerts["Blocked"].buttons["OK"].tap()
         waitGone(maya)
         XCTAssert(app.staticTexts["Copy. Dinner at 7 at camp."].exists) // others stay
 

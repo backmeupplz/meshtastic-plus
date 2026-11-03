@@ -2,6 +2,7 @@ import CoreBluetooth
 import Foundation
 import Observation
 import Security
+import UIKit
 import UserNotifications
 
 struct Message: Codable, Equatable {
@@ -77,6 +78,8 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
     var lastRead: [String: Double] = [:] // "node/conversation" -> time it was last open
     private var muted: Set<String> = [] // "node/conversation" that don't notify
     var blocked: Set<Int64> = [] // nodes whose messages are hidden on this phone
+    var banned: Set<Int64> = [] // nodes the developer removed after reports (meshplus.app/blocklist.json), hidden everywhere
+    var filter = true // mask objectionable words (Settings)
     var saved: [Saved] = [] // devices used before
     var current: String? // key of the device we're on, as in `saved`
     var status = ""
@@ -109,7 +112,57 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
 
     /// History of the connected node only, without blocked nodes.
     var messages: [Message] {
-        all.filter { $0.me == myNum && ($0.mine || !blocked.contains($0.from)) && !blocked.contains($0.peer) }
+        all.filter { $0.me == myNum && ($0.mine || !hidden($0.from)) && !hidden($0.peer) }
+    }
+
+    func hidden(_ num: Int64) -> Bool { blocked.contains(num) || banned.contains(num) }
+
+    /// The developer's list of nodes removed after reports. Kept from the last fetch when offline.
+    func fetchBanned() {
+        URLSession.shared.dataTask(with: URL(string: "https://meshplus.app/blocklist.json")!) { data, _, _ in
+            guard let data, let ids = try? JSONDecoder().decode([String].self, from: data) else { return }
+            let nums = ids.compactMap { Int64($0.trimmingCharacters(in: CharacterSet(charactersIn: "!")), radix: 16) }
+            DispatchQueue.main.async {
+                self.banned = Set(nums)
+                self.defaults.set(nums, forKey: "banned")
+            }
+        }.resume()
+    }
+
+    /// Tells the developer about a report or block (reports.meshplus.app sends it to them on Telegram). Reports wait in
+    /// `reports` while the phone is offline and go out on a later try.
+    func report(_ kind: String, _ num: Int64, _ messages: some Sequence<Message>) {
+        let place: String? = messages.first(where: { _ in true }).map { $0.peer != 0 ? "direct message" : "room " + (rooms[$0.channel]?.title ?? "#\($0.channel)") }
+        let r: [String: Any] = [
+            "kind": kind, "node": hexId(num), "name": nameOf(num), "place": place ?? "", "demo": demo,
+            "messages": messages.map { ["time": Date(timeIntervalSince1970: $0.time / 1000).ISO8601Format(), "text": $0.text] },
+            "app": Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "", "os": "iOS " + UIDevice.current.systemVersion,
+        ]
+        guard let data = try? JSONSerialization.data(withJSONObject: r) else { return }
+        defaults.set((defaults.array(forKey: "reports") as? [Data] ?? []) + [data], forKey: "reports")
+        sendReports()
+    }
+
+    func sendReports() {
+        if CommandLine.arguments.contains("-uitest") { return } // UI tests file nothing
+        for data in defaults.array(forKey: "reports") as? [Data] ?? [] {
+            var req = URLRequest(url: URL(string: "https://reports.meshplus.app/report")!)
+            req.httpMethod = "POST"
+            req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            req.httpBody = data
+            URLSession.shared.dataTask(with: req) { _, res, _ in
+                // 400: a report the server will never take, so it's dropped too
+                guard let code = (res as? HTTPURLResponse)?.statusCode, code == 200 || code == 400 else { return }
+                DispatchQueue.main.async {
+                    self.defaults.set((self.defaults.array(forKey: "reports") as? [Data] ?? []).filter { $0 != data }, forKey: "reports")
+                }
+            }.resume()
+        }
+    }
+
+    func setFilter(_ on: Bool) {
+        filter = on
+        defaults.set(on, forKey: "filter")
     }
 
     private init() {
@@ -122,6 +175,10 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
         lastRead = defaults.dictionary(forKey: "read") as? [String: Double] ?? [:]
         muted = Set(defaults.stringArray(forKey: "muted") ?? [])
         blocked = Set((defaults.array(forKey: "blocked") as? [Int64]) ?? [])
+        banned = Set((defaults.array(forKey: "banned") as? [Int64]) ?? [])
+        filter = defaults.object(forKey: "filter") as? Bool ?? true
+        fetchBanned()
+        sendReports()
         saved = (defaults.array(forKey: "saved") as? [[String]] ?? []).compactMap { $0.count == 2 ? Saved(key: $0[0], name: $0[1]) : nil }
         // Reconnect on launch to the last node.
         if let last = defaults.string(forKey: "ble") { connect(last) }
@@ -517,11 +574,11 @@ enum Notify {
     static func message(_ m: Message) {
         let mesh = Mesh.shared
         if mesh.visible && mesh.openConvo == m.convo { return }
-        if mesh.isMuted(m.convo, me: m.me) || mesh.blocked.contains(m.from) { return }
+        if mesh.isMuted(m.convo, me: m.me) || mesh.hidden(m.from) { return }
         let content = UNMutableNotificationContent()
         let dm = m.peer != 0
         content.title = dm ? m.name : mesh.rooms[m.channel]?.title ?? String(localized: "Room")
-        content.body = dm ? m.text : "\(m.name): \(m.text)"
+        content.body = dm ? clean(m.text) : "\(m.name): \(clean(m.text))"
         content.sound = .default
         content.threadIdentifier = m.convo
         content.userInfo = ["convo": m.convo]
@@ -531,4 +588,24 @@ enum Notify {
     static func clear(_ convo: String) {
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [convo])
     }
+}
+
+/// Words masked in messages while Settings → Filter objectionable words is on (the default). Whole words only, so
+/// "class" or "Scunthorpe" stay as they are.
+private let objectionable = try! NSRegularExpression(pattern: "\\b(" + [
+    "fuck(s|ed|er|ers|ing|in)?", "motherfuck(er|ers|ing)?", "shit(s|ty|ting)?", "bullshit", "bitch(es|y)?", "cunts?",
+    "dick(s|head|heads)?", "cocks?", "cocksucker", "pussy", "pussies", "asshole(s)?", "bastard(s)?", "whore(s)?",
+    "slut(s)?", "wank(er|ers)?", "twat(s)?", "prick(s)?", "piss(ed)?", "retard(s|ed)?", "nigg(a|as|er|ers)", "fag(s|got|gots)?",
+    "kike(s)?", "spic(s)?", "chink(s)?", "wetback(s)?", "tranny", "trannies", "dyke(s)?", "rape(d|s)?", "rapist(s)?",
+    "porn", "kys", "kill yourself", "nazi(s)?", "heil",
+].joined(separator: "|") + ")\\b", options: .caseInsensitive)
+
+/// The message as shown: objectionable words become bullets while the filter is on.
+func clean(_ text: String) -> String {
+    guard Mesh.shared.filter else { return text }
+    let out = NSMutableString(string: text)
+    for match in objectionable.matches(in: text, range: NSRange(location: 0, length: out.length)).reversed() {
+        out.replaceCharacters(in: match.range, with: String(repeating: "•", count: match.range.length))
+    }
+    return out as String
 }

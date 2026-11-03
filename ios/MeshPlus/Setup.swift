@@ -26,8 +26,9 @@ struct TermsView: View {
                     .multilineTextAlignment(.center).foregroundStyle(.secondary)
                 VStack(alignment: .leading, spacing: 14) {
                     Label("Press and hold any message to report it or block its sender. You can also block someone from their profile in Nodes.", systemImage: "exclamationmark.bubble")
-                    Label("Blocking hides everything from that person on this phone, including their notifications.", systemImage: "hand.raised")
-                    Label("Reports go to the developer, who reviews and acts on them.", systemImage: "envelope")
+                    Label("Blocking hides everything from that person on this phone, including their notifications, and tells the developer.", systemImage: "hand.raised")
+                    Label("Objectionable words are filtered out of messages. You can turn the filter off in Settings.", systemImage: "eye.slash")
+                    Label("The developer reviews every report and block within 24 hours and removes abusive users from Mesh+ for everyone.", systemImage: "envelope")
                 }
                 .padding(.vertical, 8)
                 Link("Read the terms of use", destination: URL(string: "https://meshplus.app/terms.html")!)

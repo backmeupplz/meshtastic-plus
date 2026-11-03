@@ -16,6 +16,7 @@ struct DayChip: View {
 
 struct Bubble: View {
     let m: Message, showName: Bool
+    var onTap: () -> Void = {} // someone else's message: its actions, for pointers that can't long-press
 
     var body: some View {
         let mesh = Mesh.shared
@@ -28,7 +29,7 @@ struct Bubble: View {
                 Text(mesh.nodes[m.from]?.name ?? m.name).font(.caption.weight(.semibold)).foregroundStyle(nodeColor(m.from)).padding(.leading, 4)
             }
             VStack(alignment: .trailing, spacing: 2) {
-                Text(m.text).multilineTextAlignment(.leading)
+                Text(clean(m.text)).multilineTextAlignment(.leading)
                 HStack(spacing: 4) {
                     Text(Date(timeIntervalSince1970: m.time / 1000).formatted(date: .omitted, time: .shortened))
                     if m.mine { Image(systemName: icon).accessibilityLabel(label) }
@@ -39,7 +40,7 @@ struct Bubble: View {
             .foregroundStyle(m.mine ? Color.white : .primary)
             .background(m.mine ? Color("Bubble") : Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 20))
             .frame(maxWidth: 290, alignment: m.mine ? .trailing : .leading)
-            .onTapGesture { if failed && mesh.connected { mesh.retry(m) } }
+            .onTapGesture { if failed && mesh.connected { mesh.retry(m) } else if !m.mine { onTap() } }
             if failed {
                 // Room messages have no delivery receipts, only "someone relayed it"; missing that isn't proof of failure.
                 Text(m.peer != 0 ? String(localized: "Not delivered · Tap to retry") : String(localized: "Not confirmed · Tap to resend")).font(.caption2).foregroundStyle(.red)
@@ -79,13 +80,13 @@ struct ConversationView: View {
                         let prev = i > 0 ? messages[i - 1] : nil
                         let newDay = prev.map { !Calendar.current.isDate(Date(timeIntervalSince1970: $0.time / 1000), inSameDayAs: Date(timeIntervalSince1970: m.time / 1000)) } ?? true
                         if newDay { DayChip(ms: m.time) }
-                        Bubble(m: m, showName: peer == 0 && (newDay || prev?.from != m.from || prev?.mine != m.mine))
+                        Bubble(m: m, showName: peer == 0 && (newDay || prev?.from != m.from || prev?.mine != m.mine)) { model.acting = m }
                             .contextMenu {
                                 Button { UIPasteboard.general.string = m.text } label: { Label("Copy", systemImage: "doc.on.doc") }
                                 if !m.mine {
                                     Button { model.reporting = m } label: { Label("Report", systemImage: "exclamationmark.bubble") }
                                     Button(role: .destructive) {
-                                        mesh.setBlocked(m.from, true)
+                                        blockAndTell(m.from); model.blocked = true
                                         if peer != 0 { model.close(convo) }
                                     } label: { Label("Block \(mesh.nameOf(m.from))", systemImage: "hand.raised") }
                                 }
@@ -170,7 +171,7 @@ struct ConversationView: View {
                         .disabled(!mesh.connected)
                     }
                     if peer != 0 {
-                        Button(role: .destructive) { mesh.setBlocked(peer, true); model.close(convo) } label: {
+                        Button(role: .destructive) { blockAndTell(peer); model.blocked = true; model.close(convo) } label: {
                             Label("Block \(mesh.nameOf(peer))", systemImage: "hand.raised")
                         }
                     }
@@ -198,19 +199,23 @@ struct ConversationView: View {
     }
 }
 
+/// Blocks a node and tells the developer who was blocked, with their latest messages, so the developer can review
+/// them and remove the node for everyone (meshplus.app/blocklist.json).
+@MainActor func blockAndTell(_ num: Int64) {
+    let mesh = Mesh.shared
+    mesh.report("block", num, mesh.messages.filter { $0.from == num && !$0.mine }.suffix(5))
+    mesh.setBlocked(num, true)
+}
+
 /// The conversation's prompts, presented from above Home's layout switch so folding the phone doesn't dismiss them.
 struct ConversationPrompts: ViewModifier {
     @Bindable var model: HomeModel
     @Environment(\.openURL) private var openURL
 
-    /// Opens an email to the developer with the message, who sent it and when.
+    /// Sends the message, who sent it and when to the developer.
     private func report(_ m: Message) {
-        let mesh = Mesh.shared
-        let place = m.peer != 0 ? "a direct message" : "the room \(mesh.rooms[m.channel]?.title ?? "#\(m.channel)")"
-        let when = Date(timeIntervalSince1970: m.time / 1000).formatted(date: .abbreviated, time: .standard)
-        let body = "I'm reporting this message in Mesh+.\n\nFrom: \(mesh.nameOf(m.from)) (\(hexId(m.from)))\nTime: \(when)\nIn: \(place)\n\n" +
-            "Message:\n\(m.text)\n\nWhat's wrong with it (optional):\n"
-        openURL(mailURL(subject: "Mesh+ report: message from \(hexId(m.from))", body: body)) { accepted in if !accepted { model.noMail = true } }
+        Mesh.shared.report("report", m.from, [m])
+        model.reported = true
     }
 
     func body(content: Content) -> some View {
@@ -223,6 +228,18 @@ struct ConversationPrompts: ViewModifier {
                 Button("Leave", role: .destructive) { mesh.leaveRoom(index); model.close(convoKey(index, 0)) }
                 Button("Cancel", role: .cancel) {}
             } message: { _ in Text("You'll need a new invite to come back.") }
+            // A tap on someone's message: the long-press menu's actions, which pointers (AssistiveTouch) can't reach
+            .confirmationDialog(model.acting.map { String(localized: "Message from \(mesh.nameOf($0.from))") } ?? "",
+                                isPresented: Binding(get: { model.acting != nil }, set: { if !$0 { model.acting = nil } }),
+                                titleVisibility: .visible, presenting: model.acting) { m in
+                Button("Report") { DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { model.reporting = m } }
+                Button("Block \(mesh.nameOf(m.from))", role: .destructive) {
+                    blockAndTell(m.from); model.blocked = true
+                    if m.peer != 0 { model.close(m.convo) }
+                }
+                Button("Copy") { UIPasteboard.general.string = m.text }
+                Button("Cancel", role: .cancel) {}
+            }
             .confirmationDialog("Report this message?", isPresented: Binding(get: { model.reporting != nil }, set: { if !$0 { model.reporting = nil } }),
                                 titleVisibility: .visible, presenting: model.reporting) { m in
                 Button("Report and block \(mesh.nameOf(m.from))", role: .destructive) {
@@ -233,11 +250,13 @@ struct ConversationPrompts: ViewModifier {
                 Button("Report only") { report(m) }
                 Button("Cancel", role: .cancel) {}
             } message: { m in
-                Text("Mesh+ opens an email to the developer with this message, who sent it and when. Blocking also hides everything from \(mesh.nameOf(m.from)) on this phone.")
+                Text("Mesh+ sends this message, who sent it and when to the developer. Blocking also hides everything from \(mesh.nameOf(m.from)) on this phone.")
             }
-            .alert("No email app", isPresented: $model.noMail) {
-                Button("Copy address") { UIPasteboard.general.string = supportEmail }
+            .alert("Report sent", isPresented: $model.reported) {
                 Button("OK", role: .cancel) {}
-            } message: { Text("Send your report to \(supportEmail).") }
+            } message: { Text("The developer reviews every report within 24 hours and removes abusive users from Mesh+ for everyone. Offline, Mesh+ sends it once you're back online.") }
+            .alert("Blocked", isPresented: $model.blocked) {
+                Button("OK", role: .cancel) {}
+            } message: { Text("You won't see anything from them on this phone. The developer was notified and reviews it within 24 hours.") }
     }
 }
