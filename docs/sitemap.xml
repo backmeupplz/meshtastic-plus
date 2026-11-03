@@ -2288,4 +2288,7 @@
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/terms.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/terms.html"/>
   </url>
+  <url>
+    <loc>https://meshplus.app/update-meshtastic-firmware.html</loc>
+  </url>
 </urlset>
