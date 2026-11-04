@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meshtastic-firmware updaten vanaf je telefoon</title>
+<meta name="description" content="Werk een Meshtastic nRF52-radio (Heltec T114, RAK4631, T-Echo) bij met Mesh+ (Android): kies in Node-instellingen een versie, installeer via USB in 90 seconden.">
+<link rel="canonical" href="https://meshplus.app/nl/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html">
+<link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ar_AR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="hi_IN">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="sv_SE">
+<meta property="og:locale:alternate" content="th_TH">
+<meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:locale:alternate" content="uk_UA">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:site_name" content="Mesh+">
+<meta property="og:url" content="https://meshplus.app/nl/update-meshtastic-firmware.html">
+<meta property="og:title" content="Meshtastic-firmware updaten vanaf je telefoon">
+<meta property="og:description" content="Werk een Meshtastic nRF52-radio (Heltec T114, RAK4631, T-Echo) bij met Mesh+ (Android): kies in Node-instellingen een versie, installeer via USB in 90 seconden.">
+<meta property="og:image" content="https://meshplus.app/og/nl/update-meshtastic-firmware.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Meshtastic-firmware updaten vanaf je telefoon: de stappen voor nRF52-radio's via USB of Bluetooth, met de app Mesh+.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Meshtastic-firmware updaten vanaf je telefoon">
+<meta name="twitter:description" content="Werk een Meshtastic nRF52-radio (Heltec T114, RAK4631, T-Echo) bij met Mesh+ (Android): kies in Node-instellingen een versie, installeer via USB in 90 seconden.">
+<meta name="twitter:image" content="https://meshplus.app/og/nl/update-meshtastic-firmware.jpg">
+<meta name="twitter:image:alt" content="Meshtastic-firmware updaten vanaf je telefoon: de stappen voor nRF52-radio's via USB of Bluetooth, met de app Mesh+.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+/* fonts served from this site; optional = they never swap in late and shift the page */
+@font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 700 800; font-display: optional; src: url(/fonts/bricolage-grotesque-normal-5bb66ad1.woff2) format('woff2'); unicode-range: U+0020-007E, U+00A0, U+00AE, U+00B7, U+2013-2014, U+2018-2019, U+201C-201D, U+2022, U+2026, U+2122, U+2190-2193; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: optional; src: url(/fonts/inter-normal-c37b8e5e.woff2) format('woff2'); unicode-range: U+0020-007E, U+00A0, U+00AE, U+00B7, U+2013-2014, U+2018-2019, U+201C-201D, U+2022, U+2026, U+2122, U+2190-2193; }
+</style>
+<style>
+  :root { color-scheme: dark; --bg: #060b08; --fg: #eef5f0; --muted: #a6b8ad; --green: #67ea94; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1, h2 { font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.02em; line-height: 1.15; }
+  h1 { font-size: 40px; margin: 0 0 4px; }
+  h2 { font-size: 22px; margin: 36px 0 8px; }
+  .muted { color: var(--muted); }
+  a { color: var(--green); }
+nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0;padding:0;flex:0 0 100%}nav.langs a{display:inline-block;padding:4px 8px;min-height:32px;border-radius:6px}nav.langs a[aria-current]{font-weight:700;text-decoration:none;color:inherit}h1,h2,h3,p,li,summary{overflow-wrap:break-word;hyphens:auto}
+</style>
+<script defer src="https://lumen.borodutch.com/l.js"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Meshtastic-firmware updaten vanaf je telefoon", "description": "Werk een Meshtastic nRF52-radio (Heltec T114, RAK4631, T-Echo) bij met Mesh+ (Android): kies in Node-instellingen een versie, installeer via USB in 90 seconden.", "url": "https://meshplus.app/update-meshtastic-firmware.html", "mainEntityOfPage": "https://meshplus.app/update-meshtastic-firmware.html", "image": "https://meshplus.app/og/update-meshtastic-firmware.jpg", "inLanguage": "en", "datePublished": "2026-11-03", "dateModified": "2026-11-03", "author": {"@type": "Person", "name": "Nikita Kolmogorov", "url": "https://borodutch.com"}, "publisher": {"@type": "Organization", "name": "Mesh+", "url": "https://meshplus.app/"}}, {"@type": "HowTo", "name": "Meshtastic-firmware updaten vanaf je telefoon", "description": "Werk een Meshtastic nRF52-radio (Heltec T114, RAK4631, T-Echo) bij met Mesh+ (Android): kies in Node-instellingen een versie, installeer via USB in 90 seconden.", "totalTime": "PT2M", "supply": [{"@type": "HowToSupply", "name": "A Meshtastic radio with an nRF52840 chip"}, {"@type": "HowToSupply", "name": "A USB-C cable that carries data"}], "tool": [{"@type": "HowToTool", "name": "Mesh+ for Android"}], "step": [{"@type": "HowToStep", "position": 1, "name": "Open Node settings", "text": "Connect your radio in Mesh+ and open Node settings. The board card at the top shows which board Mesh+ recognizes, its chip and the installed firmware, for example nRF52840 · Firmware 2.7.15."}, {"@type": "HowToStep", "position": 2, "name": "Tap Update or open Firmware options", "text": "When Meshtastic has published a newer stable release for your exact board, the card shows Update to followed by the version. Otherwise it reads Up to date · firmware options, which opens the same screen."}, {"@type": "HowToStep", "position": 3, "name": "Choose the version", "text": "The Firmware screen lists every version Meshtastic publishes for the board, newest first, tagged newest and installed. Switch on pre-releases if you want alpha builds. Picking an older version shows a warning first."}, {"@type": "HowToStep", "position": 4, "name": "Tap Install", "text": "Mesh+ downloads the board's update package from Meshtastic's firmware site, restarts the node into update mode, asks for USB permission, erases the old firmware and installs the new one with a progress bar."}, {"@type": "HowToStep", "position": 5, "name": "Wait for the restart", "text": "When the bar finishes, Mesh+ says the node is restarting with the new version and reconnects by itself. Your settings, rooms and messages are still there."}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I update an ESP32 Meshtastic radio with Mesh+?", "acceptedAnswer": {"@type": "Answer", "text": "No. Mesh+ updates nRF52840 boards, such as the Heltec Mesh Node T114, the RAK WisBlock 4631 and the LILYGO T-Echo. For ESP32 boards such as the Heltec V3, use flasher.meshtastic.org from a computer."}}, {"@type": "Question", "name": "Will an update erase my messages and settings?", "acceptedAnswer": {"@type": "Answer", "text": "No. Your settings, rooms and messages stay on the node. If an update is interrupted, the node waits in update mode and you can try again."}}, {"@type": "Question", "name": "What if the node is stuck in update mode?", "acceptedAnswer": {"@type": "Answer", "text": "On the connect screen, tap Node stuck in update mode?, plug the node in (or keep the phone close if the update was running over Bluetooth) and tap Try again. If the node never enters update mode, unplug it, double-press its reset button, plug it in and try again."}}, {"@type": "Question", "name": "Can I go back to an older Meshtastic firmware?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Firmware options lists every version Meshtastic publishes for your board, and you can pick an older one. Mesh+ warns you that older firmware may not understand newer settings, and suggests Reset settings if the node acts up."}}, {"@type": "Question", "name": "How long does a Meshtastic firmware update take?", "acceptedAnswer": {"@type": "Answer", "text": "About a minute and a half over a USB cable. Over Bluetooth it takes about 10 minutes, and the app has to stay open with the phone close to the node."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Mesh+", "item": "https://meshplus.app/"}, {"@type": "ListItem", "position": 2, "name": "Meshtastic-firmware updaten vanaf je telefoon", "item": "https://meshplus.app/update-meshtastic-firmware.html"}]}]}</script>
+</head>
+<body>
+<main>
+  <p><a href="/nl/">← Mesh+</a></p>
+  <h1>Meshtastic-firmware updaten vanaf je telefoon</h1>
+  <p class="muted">Gecontroleerd aan de hand van de broncode van Mesh+ en de releaselijst van Meshtastic op 3 november 2026.</p>
+
+  <p>
+    Heeft je Meshtastic-radio een nRF52840-chip, zoals de Heltec Mesh Node T114, de RAK WisBlock 4631 of de LILYGO T-Echo, dan kun je de firmware bijwerken vanaf een Android-telefoon met Mesh+: open Node-instellingen, kies een versie, tik op Installeer en wacht ongeveer anderhalve minuut via een USB-C-kabel. Je instellingen, ruimtes en berichten blijven op de node. Borden met een ESP32-chip, zoals de Heltec V3, werk je bij vanaf een computer via <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>.
+  </p>
+
+  <h2>Wat je nodig hebt</h2>
+  <ul>
+    <li>Mesh+ voor Android (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> of de <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>), op Android 12 of nieuwer, met internettoegang voor de download.</li>
+    <li>Een radio met Meshtastic-firmware 2.x op een van de 39 nRF52-borden in de hardwarelijst van Mesh+ (in totaal 118 borden).</li>
+    <li>Een USB-C-kabel die ook gegevens doorgeeft, of de radio gekoppeld via Bluetooth.</li>
+  </ul>
+
+  <h2>Meshtastic-firmware bijwerken, stap voor stap</h2>
+  <ol>
+    <li><strong>Open Node-instellingen.</strong> Verbind je radio in Mesh+ en open Node-instellingen. De bordkaart bovenaan laat zien welk bord Mesh+ herkent, welke chip het heeft en welke firmware erop staat, bijvoorbeeld nRF52840 · Firmware 2.7.15.</li>
+    <li><strong>Tik op Bijwerken of open de firmwareopties.</strong> Als Meshtastic een nieuwere stabiele release voor precies jouw bord heeft gepubliceerd, staat er op de kaart Bijwerken naar, gevolgd door de versie. Anders staat er Up-to-date · firmwareopties, en dat opent hetzelfde scherm.</li>
+    <li><strong>Kies de versie.</strong> Het scherm Firmware toont elke versie die Meshtastic voor het bord publiceert, de nieuwste bovenaan, met de labels nieuwste en geïnstalleerd. Zet testversies aan als je alfabuilds wilt. Kies je een oudere versie, dan krijg je eerst een waarschuwing.</li>
+    <li><strong>Tik op Installeer.</strong> Mesh+ downloadt het updatepakket van het bord van de firmwaresite van Meshtastic, start de node opnieuw op in updatemodus, vraagt om USB-toestemming, wist de oude firmware en installeert de nieuwe met een voortgangsbalk.</li>
+    <li><strong>Wacht op de herstart.</strong> Als de balk vol is, meldt Mesh+ dat de node herstart met de nieuwe versie en maakt vanzelf opnieuw verbinding. Je instellingen, ruimtes en berichten staan er nog.</li>
+  </ol>
+
+  <h2>Welke versie je vandaag krijgt</h2>
+  <p>
+    Op 3 november 2026 bood de firmwarelijst van Meshtastic op api.meshtastic.org 2.7.26.54e0d8d en 2.7.15.567b8ea aan als stabiele releases, en 2.8.2.4c89b69 als nieuwste alfa. Mesh+ vergelijkt alleen het x.y.z-deel, dus een nieuwe build met een andere commit-hash verschijnt nooit als update. Het updatepakket dat de app voor een Heltec Mesh Node T114 downloadt, is <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> van de firmwaresite van Meshtastic, die met status 200 antwoordde toen we het controleerden. Hoe de bytes bij de bootloader komen, lees je in <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>.
+  </p>
+
+  <h2>USB of Bluetooth</h2>
+  <p>
+    Een kabel is de snelle manier: ongeveer anderhalve minuut. Via Bluetooth duurt dezelfde update ongeveer 10 minuten, moet de app open blijven en moet de telefoon dicht bij de node blijven, en je hebt een telefoon nodig waarmee de node al is gekoppeld. Wordt een Bluetooth-update onderbroken, dan wacht de node in updatemodus: sluit hem aan en tik op Probeer opnieuw. Hapert de USB-overdracht nadat de node in updatemodus is gegaan, dan begint Mesh+ vanzelf opnieuw, tot drie keer toe, voordat er een foutmelding verschijnt.
+  </p>
+
+  <h2>Als de update halverwege stopt</h2>
+  <p>
+    Een onderbroken update laat de node wachten in updatemodus, en de app kan hem afmaken. Tik op het verbindingsscherm van Mesh+ op <em>Node vast in updatemodus?</em>, sluit de node aan en tik op <em>Probeer opnieuw</em>. Gaat de node helemaal niet in updatemodus, koppel hem dan los, druk twee keer kort op de resetknop, sluit hem weer aan en probeer het opnieuw. Zonder verbonden radio toont de demomodus de schermen, maar kan hij niets installeren.
+  </p>
+
+  <h2>Veelgestelde vragen</h2>
+  <h3>Kan ik een Meshtastic-radio met ESP32 bijwerken met Mesh+?</h3>
+  <p>Nee. Mesh+ werkt nRF52840-borden bij, zoals de Heltec Mesh Node T114, de RAK WisBlock 4631 en de LILYGO T-Echo. Gebruik voor ESP32-borden zoals de Heltec V3 flasher.meshtastic.org vanaf een computer.</p>
+  <h3>Worden mijn berichten en instellingen door een update gewist?</h3>
+  <p>Nee. Je instellingen, ruimtes en berichten blijven op de node. Wordt een update onderbroken, dan wacht de node in updatemodus en kun je het opnieuw proberen.</p>
+  <h3>Wat als de node vastzit in updatemodus?</h3>
+  <p>Tik op het verbindingsscherm op Node vast in updatemodus?, sluit de node aan (of houd de telefoon dichtbij als de update via Bluetooth liep) en tik op Probeer opnieuw. Gaat de node nooit in updatemodus, koppel hem dan los, druk twee keer kort op de resetknop, sluit hem weer aan en probeer het opnieuw.</p>
+  <h3>Kan ik teruggaan naar oudere Meshtastic-firmware?</h3>
+  <p>Ja. Firmwareopties toont elke versie die Meshtastic voor jouw bord publiceert, en je kunt een oudere kiezen. Mesh+ waarschuwt je dat oudere firmware nieuwere instellingen misschien niet begrijpt, en raadt Reset instellingen aan als de node vreemd doet.</p>
+  <h3>Hoe lang duurt een Meshtastic-firmware-update?</h3>
+  <p>Ongeveer anderhalve minuut via een USB-kabel. Via Bluetooth duurt het ongeveer 10 minuten, en moet de app open blijven met de telefoon dicht bij de node.</p>
+
+  <p class="muted">
+    Bronnen: <a href="https://github.com/backmeupplz/meshtastic-plus">de broncode van Mesh+</a> (het scherm Firmware en de updater, main bij commit 0993c10), de README en de firmwarelijst van Meshtastic op api.meshtastic.org, allemaal gelezen op 3 november 2026. Mesh+ is een onafhankelijk project en is niet verbonden aan Meshtastic LLC. Meshtastic® is een gedeponeerd handelsmerk van Meshtastic LLC.
+  </p>
+</main>
+<nav class="langs" aria-label="Taal"><a href="/update-meshtastic-firmware.html" hreflang="en" lang="en">English</a> <a href="/ar/update-meshtastic-firmware.html" hreflang="ar" lang="ar">العربية</a> <a href="/de/update-meshtastic-firmware.html" hreflang="de" lang="de">Deutsch</a> <a href="/es/update-meshtastic-firmware.html" hreflang="es" lang="es">Español</a> <a href="/fr/update-meshtastic-firmware.html" hreflang="fr" lang="fr">Français</a> <a href="/hi/update-meshtastic-firmware.html" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/update-meshtastic-firmware.html" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/update-meshtastic-firmware.html" hreflang="it" lang="it">Italiano</a> <a href="/ja/update-meshtastic-firmware.html" hreflang="ja" lang="ja">日本語</a> <a href="/ko/update-meshtastic-firmware.html" hreflang="ko" lang="ko">한국어</a> <a href="/nl/update-meshtastic-firmware.html" hreflang="nl" lang="nl" aria-current="page">Nederlands</a> <a href="/pl/update-meshtastic-firmware.html" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/update-meshtastic-firmware.html" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/update-meshtastic-firmware.html" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/update-meshtastic-firmware.html" hreflang="ru" lang="ru">Русский</a> <a href="/sv/update-meshtastic-firmware.html" hreflang="sv" lang="sv">Svenska</a> <a href="/th/update-meshtastic-firmware.html" hreflang="th" lang="th">ไทย</a> <a href="/tr/update-meshtastic-firmware.html" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/update-meshtastic-firmware.html" hreflang="uk" lang="uk">Українська</a> <a href="/vi/update-meshtastic-firmware.html" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/update-meshtastic-firmware.html" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/update-meshtastic-firmware.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>
+</body>
+</html>

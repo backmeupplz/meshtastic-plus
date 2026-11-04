@@ -2290,5 +2290,574 @@
   </url>
   <url>
     <loc>https://meshplus.app/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/ar/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/de/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/es/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/fr/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/hi/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/id/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/it/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/ja/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/ko/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/nl/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/pl/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/pt-br/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/pt-pt/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/ru/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/sv/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/th/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/tr/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/uk/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/vi/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/zh-hans/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/zh-hant/update-meshtastic-firmware.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
   </url>
 </urlset>
