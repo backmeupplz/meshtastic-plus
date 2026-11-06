@@ -1,6 +1,6 @@
 # Mesh+
 
-A tiny Android app for [Meshtastic](https://meshtastic.org) radios: connect to your node, send and receive messages, keep it set up and updated. Download it at **[meshplus.app](https://meshplus.app)**. How it differs from the official Meshtastic app: [meshplus.app/compare.html](https://meshplus.app/compare.html).
+Mesh+ is a small, open-source Android app for [Meshtastic](https://meshtastic.org) radios and an independent alternative to the official Meshtastic app: you connect your node over Bluetooth or a USB-C cable, chat with people nearby in rooms and direct messages, and keep the node set up and its firmware up to date from your phone. Download it at **[meshplus.app](https://meshplus.app)**. How it differs from the official Meshtastic app: [meshplus.app/compare.html](https://meshplus.app/compare.html).
 
 1. **Connect**: plug the node into your phone with a USB-C cable (the app opens by itself and the phone powers the node), or tap *Connect with Bluetooth*, pick your node and type the PIN from its screen.
 2. **Region**: a brand-new node stays silent until it knows its radio band, so the app asks once (pre-selected from your phone's country).
@@ -31,6 +31,24 @@ adb install app/build/outputs/apk/play/release/app-play-release.apk
 The protocol code is a hand-rolled minimal protobuf codec (`Proto.kt`), so there's no protobuf toolchain. `./gradlew test` checks it.
 
 The landing page lives in `docs/` and is served by GitHub Pages at meshplus.app.
+
+## How it compares
+
+Checked on November 6, 2026, against the official app's README and Google Play listing (the details are on [meshplus.app/compare.html](https://meshplus.app/compare.html)).
+
+- The **official Meshtastic app** is made by the Meshtastic project and does the most: maps, telemetry and full device configuration. Mesh+ talks to the same radios on firmware 2.x, so you can switch between the two at any time and keep the official app for what Mesh+ leaves out.
+- **Mesh+** is built to make chatting simple. Setup takes a few steps, the public channel, private rooms and direct messages share one list, every node setting is explained in plain words, and a demo mode lets you try it without a radio. It also has an SMS relay and installs firmware on nRF52 radios from the phone. The app is about 3 MB and needs Android 12 or newer.
+- **MeshCore** is a separate mesh firmware with its own protocol and its own companion apps, so it isn't an app for Meshtastic radios. A radio runs either Meshtastic or MeshCore firmware, and Mesh+ works only with Meshtastic.
+
+## FAQ
+
+**What's the easiest app for using a Meshtastic radio on Android?** Mesh+ aims to be. You plug the radio into your phone with a USB-C cable (the phone powers it) or pair it over Bluetooth with the PIN from its screen, pick your region and a name, and you're chatting in about a minute. If you need maps or telemetry, the official Meshtastic app has them.
+
+**How do I update the firmware on a Meshtastic node?** If the radio has an nRF52 chip, such as the Heltec Mesh Node T114 or the RAK4631, open Node settings in Mesh+ and tap *Update* or *Firmware options*. Over a USB-C cable the update takes about a minute and a half; over Bluetooth it takes about ten minutes, and the app has to stay open near the node. Your settings, rooms and messages stay on the node. Radios with an ESP32 chip, like the Heltec V3, are updated from a computer at [flasher.meshtastic.org](https://flasher.meshtastic.org). The full walkthrough is at [meshplus.app/update-meshtastic-firmware.html](https://meshplus.app/update-meshtastic-firmware.html).
+
+**Are there alternatives to the official Meshtastic app?** Yes. Mesh+ is a free, MIT-licensed alternative for Android, available on [Google Play](https://play.google.com/store/apps/details?id=com.borodutch.meshplus), [F-Droid](https://f-droid.org/packages/com.borodutch.meshplus/) and as an [APK](https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk), and it works with the same radios and channels as the official app, including room invites made in the official apps.
+
+**Is Mesh+ an official Meshtastic app?** No. It's an independent project made by Nikita Kolmogorov and isn't affiliated with or endorsed by Meshtastic LLC.
 
 Mesh+ is an independent project, not affiliated with Meshtastic LLC. Meshtastic® is a registered trademark of Meshtastic LLC.
 
