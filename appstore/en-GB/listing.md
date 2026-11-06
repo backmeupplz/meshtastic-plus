@@ -13,7 +13,7 @@ Chat with people nearby over a LoRa mesh radio, with no internet or mobile signa
 messenger,offline,offgrid,texting,network,hiking,camping,emergency,prepper,survival,backcountry,node
 
 ## Description (max 4000)
-Mesh+ lets you text people nearby through a LoRa mesh radio when there's no internet or mobile signal. Pair a Meshtastic® radio over Bluetooth, and your messages hop from radio to radio across the mesh, so you can stay in touch on a hike, at a festival or when the network is down.
+Mesh+ is an independent alternative to the official Meshtastic® app that lets you text people nearby through a LoRa mesh radio when there's no internet or mobile signal. Pair a Meshtastic radio over Bluetooth, and your messages hop from radio to radio across the mesh, so you can stay in touch on a hike, at a festival or when the network is down.
 
 Setting up takes about a minute: pick your radio, type the PIN from its screen, choose your region and a name, and you're ready to chat.
 
