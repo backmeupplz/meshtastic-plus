@@ -12,17 +12,18 @@ android {
         applicationId = "com.borodutch.meshplus"
         minSdk = 31
         targetSdk = 36
-        versionCode = 9
-        versionName = "0.5.0"
+        versionCode = 10
+        versionName = "0.5.1"
     }
-    buildFeatures { compose = true }
+    buildFeatures { compose = true; buildConfig = true }
     // F-Droid rejects APKs carrying Google's encrypted dependency block, which blocks reproducible builds there. Play still gets it from the bundle.
     dependenciesInfo { includeInApk = false }
     // play: Google's QR scanner (no camera permission). fdroid: open-source ZXing scanner, no Google code.
     flavorDimensions += "store"
     productFlavors {
-        create("play") { dimension = "store" }
-        create("fdroid") { dimension = "store" }
+        // SMS relay is F-Droid/APK only: Play rejected its SMS & call log permissions (2026-11), see app/src/play/AndroidManifest.xml.
+        create("play") { dimension = "store"; buildConfigField("boolean", "SMS_RELAY", "false") }
+        create("fdroid") { dimension = "store"; buildConfigField("boolean", "SMS_RELAY", "true") }
     }
     // Upload key for Play (and the APKs on meshplus.app); kept outside the repo. Without it (e.g. on F-Droid's build server), release builds are unsigned.
     val upload = Properties().apply {

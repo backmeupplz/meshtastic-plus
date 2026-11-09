@@ -1,0 +1,1 @@
+Manda mensajes a tus amigos con radios Meshtastic cuando no hay señal

@@ -1,0 +1,13 @@
+Mesh+ adalah aplikasi pendamping yang kecil dan bersahabat untuk radio Meshtastic. Pasangkan radio Anda lewat Bluetooth atau colokkan dengan kabel USB-C, lalu Anda bisa mengobrol dengan orang di sekitar lewat jaringan mesh LoRa tanpa internet atau sinyal seluler di sepanjang jalan, baik saat mendaki gunung, berkemah, maupun saat bencana memutus jaringan.
+
+Penyiapannya hanya sekitar satu menit: pilih radio Anda, ketik PIN yang tampil di layarnya, pilih wilayah dan nama, lalu Anda siap mengobrol.
+
+Ruang publik, ruang pribadi yang Anda bagikan lewat kode QR atau tautan, dan pesan langsung yang terenkripsi end-to-end semuanya ada dalam satu daftar dengan tanda pesan yang belum dibaca, dan Anda bisa membisukan yang notifikasinya tidak ingin Anda terima. Mesh+ tetap berjalan di latar belakang selama terhubung dan memberi tahu Anda saat ada pesan baru.
+
+Setiap pengaturan radio dilengkapi catatan singkat tentang fungsinya dan kapan Anda perlu mengubahnya, mulai dari preset radio dan batas hop hingga pemasangan Bluetooth, hemat daya, dan layar.
+
+Anda bisa memperbarui radio nRF52 seperti Heltec T114 dan RAK4631 dari ponsel, lewat kabel USB dalam sekitar satu menit atau lewat Bluetooth, dan memilih rilis firmware terbaru, pra-rilis, atau versi lama mana pun.
+
+Berpindahlah di antara semua radio Anda dari bilah atas dan lihat board masing-masing, firmware yang dijalankannya, serta tegangan baterainya. Kalau belum punya radio, Anda bisa mencoba demo bawaannya.
+
+Mesh+ tidak memakai akun, iklan, atau analitik, dan pesan Anda tetap tersimpan di ponsel. Ini adalah proyek open source independen yang tidak berafiliasi dengan atau didukung oleh Meshtastic LLC. Meshtastic® adalah merek dagang terdaftar milik Meshtastic LLC.

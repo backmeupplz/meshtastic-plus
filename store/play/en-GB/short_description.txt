@@ -1,0 +1,1 @@
+Chat with friends over Meshtastic radios when there's no mobile signal.

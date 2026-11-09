@@ -1,0 +1,1 @@
+Chatta con gli amici tramite le radio Meshtastic quando non c'è campo.

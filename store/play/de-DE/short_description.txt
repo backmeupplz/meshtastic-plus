@@ -1,0 +1,1 @@
+Chatte mit Freunden über Meshtastic-Funkgeräte, wenn es kein Handynetz gibt.

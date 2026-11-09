@@ -45,6 +45,10 @@ jobs:
           PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
         run: |
           [ -n "$PLAY_SERVICE_ACCOUNT_JSON" ] || { echo "::error::No PLAY_SERVICE_ACCOUNT_JSON secret"; exit 1; }
+          # Play has no SMS relay (rejected under the SMS/call log policy): store/play/<language>/ replaces the descriptions
+          # F-Droid shows, and screenshots 2-4 (relay room, sending a text, relay settings) are left out
+          cp -R store/play/. fastlane/metadata/android/
+          rm -f fastlane/metadata/android/*/images/*Screenshots/[234].*
           python3 .github/scripts/listings.py play $DRY
       - name: App Store
         if: ${{ !cancelled() && inputs.store != 'play' }}

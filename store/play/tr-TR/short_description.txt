@@ -1,0 +1,1 @@
+Şebeke çekmediğinde Meshtastic telsizleriyle arkadaşlarınla mesajlaş

@@ -1,0 +1,13 @@
+Mesh+, Meshtastic telsizleri için küçük ve kullanımı kolay bir yardımcı uygulamadır. Telsizini Bluetooth ile ya da USB-C kabloyla bağladığında yakınındaki insanlarla LoRa mesh ağı üzerinden sohbet edebilirsin; yolun hiçbir yerinde internete ya da hücresel şebekeye ihtiyaç duymazsın.
+
+Kurulum yaklaşık bir dakika sürer: telsizini seç, ekranındaki PIN’i gir, bölgeni ve adını belirle, ardından sohbete başlayabilirsin.
+
+Herkese açık oda, QR kod veya bağlantıyla paylaştığın özel odalar ve uçtan uca şifreli özel mesajlar okunmamış rozetleriyle tek bir listede durur ve bildirim almak istemediğin sohbetleri sessize alabilirsin. Mesh+ telsizine bağlıyken arka planda çalışmaya devam eder ve yeni mesajları sana bildirir.
+
+Telsiz ön ayarlarından atlama sınırlarına, Bluetooth eşleştirmeden güç tasarrufuna ve ekrana kadar her telsiz ayarının yanında, ne işe yaradığını ve ne zaman değiştirmen gerekebileceğini anlatan kısa bir not bulunur.
+
+Heltec T114 ve RAK4631 gibi nRF52 telsizlerini telefonundan, USB kabloyla yaklaşık bir dakikada ya da Bluetooth üzerinden güncelleyebilir, en yeni donanım yazılımı sürümünü, bir ön sürümü veya önceki herhangi bir sürümü seçebilirsin.
+
+Üst çubuktan tüm telsizlerin arasında geçiş yapabilir, her birinin hangi kart olduğunu, hangi donanım yazılımını çalıştırdığını ve pil voltajını görebilirsin. Henüz telsizin yoksa yerleşik demoyu deneyebilirsin.
+
+Mesh+’ta hesap, reklam ya da analitik yoktur ve mesajların telefonunda kalır. Mesh+ bağımsız, açık kaynaklı bir projedir; Meshtastic LLC ile bağlantılı değildir ve onun tarafından onaylanmamıştır. Meshtastic®, Meshtastic LLC’nin tescilli ticari markasıdır.

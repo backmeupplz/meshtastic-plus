@@ -30,6 +30,8 @@ Category: Communication / messaging. User-to-user communication: **Yes** (users 
 - Internet use: only to fetch the firmware version list (api.meshtastic.org) and firmware files (GitHub), without personal data.
 
 ## SMS relay on Play (permissions declaration)
+**Since 0.5.1 (code 10, 2026-11-09) Play has NO relay again**: the declaration was rejected on 2026-10-31 and 2026-11-03, the appeal was denied on 2026-11-05, and the v3 video was rejected after that. The `play` flavor sets SMS_RELAY=false and app/src/play/AndroidManifest.xml strips the permissions and receivers. The Play listing comes from store/play/<language>/ (relay-free texts) copied over fastlane/ by the Listings workflow, which also drops screenshots 2 to 4. fastlane/ (F-Droid) keeps the relay. The history below is kept for reference.
+
 v0.4 (code 4) was rejected 2026-10-10 under the SMS/Call Log policy: the review couldn't verify "Cross-device synchronization or transfer of SMS or calls" from the demo video. v0.4.2 to 0.4.4 shipped to Play without the relay. The relay came back to the play flavor on branch `play-sms-relay` (PR: merge only once Play approves; if Play rejects, leave it unmerged so regular releases keep shipping):
 - The listing leads with the relay (fastlane texts above), and screenshots 2 to 4 show it.
 - In the app, turning the relay on first shows a disclosure dialog (what's read, posted and sent, and that nothing goes to a server), then Android's permission prompts.

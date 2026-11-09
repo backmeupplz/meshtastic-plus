@@ -1,0 +1,1 @@
+Converse com os amigos através de rádios Meshtastic quando não há rede

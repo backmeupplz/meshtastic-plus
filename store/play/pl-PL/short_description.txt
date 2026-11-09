@@ -1,0 +1,1 @@
+Rozmawiaj ze znajomymi przez radia Meshtastic, gdy nie ma zasięgu

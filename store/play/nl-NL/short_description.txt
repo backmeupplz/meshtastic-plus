@@ -1,0 +1,1 @@
+Chat met vrienden via Meshtastic-radio's als je geen mobiel bereik hebt.

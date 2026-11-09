@@ -1,0 +1,1 @@
+Mengobrol dengan teman lewat radio Meshtastic saat tidak ada sinyal seluler

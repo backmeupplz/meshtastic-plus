@@ -1024,7 +1024,7 @@ fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: (
                 supportingContent = { Text(listOfNotNull(currentBoard()?.name, stringResource(R.string.node_settings_summary)).joinToString(" · ")) },
                 modifier = Modifier.clickable { onDismiss(); onNodeSettings() },
             )
-            ListItem(
+            if (BuildConfig.SMS_RELAY) ListItem(
                 leadingContent = { Icon(Icons.Outlined.Sms, null) },
                 headlineContent = { Text(stringResource(R.string.sms_relay)) },
                 supportingContent = { Text(if (Relay.enabled) stringResource(R.string.relay_on_summary, Relay.room) else stringResource(R.string.relay_off_summary)) },

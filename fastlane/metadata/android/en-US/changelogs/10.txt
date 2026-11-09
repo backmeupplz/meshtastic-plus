@@ -1,0 +1,1 @@
+Mesh+ now speaks 23 languages, asks once whether you're enjoying it, and has Send feedback in Settings. On Google Play the SMS relay is no longer included.
