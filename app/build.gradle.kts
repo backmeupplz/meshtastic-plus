@@ -12,8 +12,8 @@ android {
         applicationId = "com.borodutch.meshplus"
         minSdk = 31
         targetSdk = 36
-        versionCode = 10
-        versionName = "0.5.1"
+        versionCode = 11
+        versionName = "0.5.2"
     }
     buildFeatures { compose = true; buildConfig = true }
     // F-Droid rejects APKs carrying Google's encrypted dependency block, which blocks reproducible builds there. Play still gets it from the bundle.

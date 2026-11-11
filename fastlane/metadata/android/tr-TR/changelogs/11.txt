@@ -1,0 +1,1 @@
+Mesh+'ın mağaza sayfası artık 24 dilde ve her dilde kendi ekran görüntüleriyle birlikte. Uygulamanın kendisi eskisi gibi çalışıyor.

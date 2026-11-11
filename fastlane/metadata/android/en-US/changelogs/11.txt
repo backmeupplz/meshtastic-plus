@@ -1,0 +1,1 @@
+Mesh+'s store page now speaks 24 languages, with screenshots in each one. The app itself works just as before.
