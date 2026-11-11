@@ -1,8 +1,8 @@
 # Mesh+
 
-> Mesh+ is a free, open-source Android app for Meshtastic radios. Chat in private rooms and encrypted direct messages with no cell service, text through an SMS relay, and update your radio's firmware from your phone.
+> Mesh+ is a free, open-source app for Meshtastic radios on Android and iPhone. Chat in private rooms and encrypted direct messages with no cell service, text through an SMS relay, and update your radio's firmware from your phone.
 
-Connect a Meshtastic radio to your phone and messages hop from radio to radio over long-range LoRa, with no cell towers, Wi-Fi or internet along the way. Mesh+ weighs about 3 MB, needs Android 12 or newer, works with radios on Meshtastic firmware 2.x (such as the Heltec Mesh Node T114 or the RAK4631) and has a built-in demo for people without a radio. It's made by Nikita Kolmogorov.
+Connect a Meshtastic radio to your phone and messages hop from radio to radio over long-range LoRa, with no cell towers, Wi-Fi or internet along the way. Mesh+ weighs about 3 MB, needs Android 12 or newer or iOS 17 or newer on iPhone (the iPhone app connects over Bluetooth and has no SMS relay or firmware updates), works with radios on Meshtastic firmware 2.x (such as the Heltec Mesh Node T114 or the RAK4631) and has a built-in demo for people without a radio. It's made by Nikita Kolmogorov.
 
 ## What it does
 
@@ -13,6 +13,8 @@ Connect a Meshtastic radio to your phone and messages hop from radio to radio ov
 ## Get it
 
 - [Google Play](https://play.google.com/store/apps/details?id=com.borodutch.meshplus)
+- [App Store](https://apps.apple.com/app/id6823711977)
+- [F-Droid](https://f-droid.org/packages/com.borodutch.meshplus/)
 - [APK](https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk)
 
 ## Links
