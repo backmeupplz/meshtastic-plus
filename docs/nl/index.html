@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mesh+ · Chat met je vrienden zonder bereik</title>
-<meta name="description" content="Mesh+ is een gratis Android-app met open broncode voor Meshtastic-radio's: chat zonder bereik, stuur sms'jes via een relay en update firmware vanaf je telefoon.">
+<meta name="description" content="Mesh+ is een gratis app met open broncode voor Meshtastic-radio's op Android en iPhone: chat zonder bereik, sms via relay, firmware-updates vanaf je telefoon.">
 <link rel="canonical" href="https://meshplus.app/nl/">
 <link rel="alternate" hreflang="en" href="https://meshplus.app/">
 <link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/">
@@ -56,16 +56,16 @@
 <meta property="og:site_name" content="Mesh+">
 <meta property="og:url" content="https://meshplus.app/nl/">
 <meta property="og:title" content="Mesh+ · Chat met je vrienden zonder bereik">
-<meta property="og:description" content="Gratis Android-app met open broncode voor Meshtastic-radio's, met privéruimtes, versleutelde privéberichten, een SMS-relay en firmware-updates.">
+<meta property="og:description" content="Gratis open-source app voor Meshtastic-radio's op Android en iPhone: privéruimtes, versleutelde privéberichten, op Android ook sms-relay en firmware-updates.">
 <meta property="og:image" content="https://meshplus.app/og/nl/home.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Mesh+ voor Android: stuur je vrienden berichten als je geen bereik hebt. Twee telefoons tonen een groepschat en een sms-relayruimte die over Meshtastic-radio's lopen.">
+<meta property="og:image:alt" content="Mesh+ voor Android en iPhone: stuur je vrienden berichten als je geen bereik hebt. Twee telefoons tonen een groepschat en een sms-relayruimte die over Meshtastic-radio's lopen.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Mesh+ · Chat met je vrienden zonder bereik">
-<meta name="twitter:description" content="Gratis Android-app met open broncode voor Meshtastic-radio's, met privéruimtes, versleutelde privéberichten, een SMS-relay en firmware-updates.">
+<meta name="twitter:description" content="Gratis open-source app voor Meshtastic-radio's op Android en iPhone: privéruimtes, versleutelde privéberichten, op Android ook sms-relay en firmware-updates.">
 <meta name="twitter:image" content="https://meshplus.app/og/nl/home.jpg">
-<meta name="twitter:image:alt" content="Mesh+ voor Android: stuur je vrienden berichten als je geen bereik hebt. Twee telefoons tonen een groepschat en een sms-relayruimte die over Meshtastic-radio's lopen.">
+<meta name="twitter:image:alt" content="Mesh+ voor Android en iPhone: stuur je vrienden berichten als je geen bereik hebt. Twee telefoons tonen een groepschat en een sms-relayruimte die over Meshtastic-radio's lopen.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>
@@ -266,9 +266,9 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
  "name": "Mesh+",
  "url": "https://meshplus.app/nl/",
  "inLanguage": "nl",
- "description": "Mesh+ is een gratis Android-app met open broncode voor Meshtastic-radio's: chat zonder bereik, stuur sms'jes via een relay en update firmware vanaf je telefoon.",
+ "description": "Mesh+ is een gratis app met open broncode voor Meshtastic-radio's op Android en iPhone: chat zonder bereik, sms via relay, firmware-updates vanaf je telefoon.",
  "applicationCategory": "CommunicationApplication",
- "operatingSystem": "Android 12 of nieuwer",
+ "operatingSystem": "Android 12 of nieuwer, iOS 17 of nieuwer",
  "image": "https://meshplus.app/og/nl/home.jpg",
  "offers": {
   "@type": "Offer",
@@ -279,7 +279,9 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
  "downloadUrl": "https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk",
  "sameAs": [
   "https://github.com/backmeupplz/meshtastic-plus",
-  "https://play.google.com/store/apps/details?id=com.borodutch.meshplus"
+  "https://play.google.com/store/apps/details?id=com.borodutch.meshplus",
+  "https://apps.apple.com/app/id6823711977",
+  "https://f-droid.org/packages/com.borodutch.meshplus/"
  ],
  "author": {
   "@type": "Person",
@@ -296,6 +298,7 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></symbol>
   <symbol id="gplay" viewBox="0 0 24 24"><path d="M5 3.5v17L19.5 12zM5 3.5l9 11.5M5 20.5l9-11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="apple" viewBox="-9 -6 46 46"><path d="M9.302 34C4.242 33.971.056 23.641.056 18.38c0-8.593 6.447-10.474 8.931-10.474 1.12 0 2.315.44 3.37.829.737.271 1.5.551 1.924.551.254 0 .852-.238 1.38-.447 1.127-.449 2.529-1.006 4.161-1.006h.01c1.219 0 4.914.268 7.136 3.604l.52.782-.749.565c-1.07.808-3.022 2.28-3.022 5.198 0 3.455 2.211 4.784 3.273 5.423.469.282.955.573.955 1.209 0 .415-3.316 9.334-8.13 9.334-1.178 0-2.01-.354-2.745-.666-.743-.316-1.384-.588-2.444-.588-.537 0-1.216.254-1.935.523-.982.367-2.094.783-3.356.783ZM20.331 0c.126 4.521-3.107 7.657-6.337 7.46C13.462 3.853 17.223 0 20.331 0Z" fill="currentColor"/></symbol>
   <symbol id="download" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
@@ -330,13 +333,14 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
     <div class="wrap">
       <div>
         <h1>Chat met je vrienden, ook <em>zonder bereik.</em></h1>
-        <p class="lead">Mesh+ is een vriendelijke Android-app voor Meshtastic-radio's. Verbind een radio op zakformaat via LoRa met je telefoon, en je berichten springen van radio naar radio over heuvels en door dalen, zonder dat er onderweg zendmasten, wifi of internet aan te pas komen.</p>
+        <p class="lead">Mesh+ is een vriendelijke app voor Android en iPhone voor Meshtastic-radio's. Verbind een radio op zakformaat via LoRa met je telefoon, en je berichten springen van radio naar radio over heuvels en door dalen, zonder dat er onderweg zendmasten, wifi of internet aan te pas komen.</p>
         <div class="ctas">
           <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>Download via Google Play</a>
+          <a class="btn primary" href="https://apps.apple.com/app/id6823711977"><svg aria-hidden="true"><use href="#apple"/></svg>Download in de App Store</a>
           <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>Download de APK</a>
           <a class="btn" href="#video"><svg aria-hidden="true"><use href="#play"/></svg>Bekijk de video van 30 seconden</a>
         </div>
-        <p class="fine">Mesh+ is gratis en heeft open broncode, is ongeveer 3 MB groot en heeft Android 12 of nieuwer nodig. Nog geen radio? Met de ingebouwde demo kun je eerst rondkijken. De sms-relay zit in de F-Droid-versie en in de APK; de versie voor Google Play laat hem weg, omdat Play niet toestaat dat apps sms'jes doorsturen.</p>
+        <p class="fine">Mesh+ is gratis en heeft open broncode, is ongeveer 3 MB groot en heeft Android 12 of nieuwer nodig, of een iPhone met iOS 17 of nieuwer. Nog geen radio? Met de ingebouwde demo kun je eerst rondkijken. De sms-relay zit in de F-Droid-versie en in de APK; de versie voor Google Play laat hem weg, omdat Play niet toestaat dat apps sms'jes doorsturen. Op de iPhone verbindt Mesh+ via Bluetooth en zijn er geen sms-relay en geen firmware-updates.</p>
       </div>
       <div class="duo">
         <div class="phone back"><img src="/img/chats.webp" srcset="/img/chats-540.webp 540w, /img/chats.webp 720w" sizes="300px" width="1080" height="2400" fetchpriority="low" alt="De chatlijst van Mesh+ met het kanaal Public, de privéruimtes Hiking en Camp SMS en een privébericht van Maya, elk met badges voor ongelezen berichten"></div>
@@ -592,7 +596,7 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
         <h2>Mesh+ heeft maar weinig nodig om te beginnen.</h2>
       </div>
       <div class="needs">
-        <div class="need"><b>Elke telefoon met Android 12 of nieuwer volstaat.</b><span>Mesh+ neemt ongeveer 3 MB in beslag en vraagt geen account.</span></div>
+        <div class="need"><b>Elke telefoon met Android 12 of nieuwer volstaat, of een iPhone met iOS 17 of nieuwer.</b><span>Mesh+ neemt ongeveer 3 MB in beslag en vraagt geen account.</span></div>
         <div class="need"><b>Je radio heeft Meshtastic-firmware 2.x nodig.</b><span>Elke zo'n radio verbindt via Bluetooth, en via USB is Mesh+ getest met nRF52-borden zoals de Heltec T114.</span></div>
         <div class="need"><b>Je vrienden hebben ook radio's nodig.</b><span>Zij kunnen Mesh+ of een andere Meshtastic-app gebruiken, en elke radio binnen bereik vergroot de mesh.</span></div>
       </div>
@@ -628,7 +632,7 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
         </details>
         <details>
           <summary>Is er een iPhone-versie?</summary>
-          <p>Mesh+ is voorlopig alleen voor Android. Vrienden met een iPhone kunnen met de officiële Meshtastic-app lid worden van je ruimtes.</p>
+          <p>Ja. Mesh+ staat <a href="https://apps.apple.com/app/id6823711977">in de App Store</a> voor iPhones met iOS 17 of nieuwer, met hetzelfde openbare kanaal, dezelfde privéruimtes en privéberichten, zodat vrienden met een iPhone en met Android in dezelfde ruimtes kunnen chatten. Op de iPhone verbindt Mesh+ alleen via Bluetooth met je radio en zijn er geen sms-relay en geen firmware-updates; update de radio vanaf een Android-telefoon of met <a href="https://flasher.meshtastic.org">de webflasher van Meshtastic</a>.</p>
         </details>
         <details>
           <summary>Kost Mesh+ iets?</summary>
@@ -645,6 +649,7 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
       <p>Download Mesh+, verbind je radio en stuur in ongeveer een minuut je eerste bericht over de mesh.</p>
       <div class="ctas">
         <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus"><svg aria-hidden="true"><use href="#gplay"/></svg>Download via Google Play</a>
+        <a class="btn primary" href="https://apps.apple.com/app/id6823711977"><svg aria-hidden="true"><use href="#apple"/></svg>Download in de App Store</a>
           <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk"><svg aria-hidden="true"><use href="#download"/></svg>Download de APK</a>
         <a class="btn" href="https://github.com/backmeupplz/meshtastic-plus">Bekijk de broncode op GitHub</a>
       </div>
