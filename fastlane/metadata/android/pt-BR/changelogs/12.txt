@@ -1,0 +1,1 @@
+Nova aba Mapa: veja onde estão os nós ao seu redor e toque em um para abrir a página dele. A página de cada nó agora também mostra a localização, que abre no seu app de mapas com um toque.

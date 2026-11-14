@@ -12,8 +12,8 @@ android {
         applicationId = "com.borodutch.meshplus"
         minSdk = 31
         targetSdk = 36
-        versionCode = 11
-        versionName = "0.5.2"
+        versionCode = 12
+        versionName = "0.6.0"
     }
     buildFeatures { compose = true; buildConfig = true }
     // F-Droid rejects APKs carrying Google's encrypted dependency block, which blocks reproducible builds there. Play still gets it from the bundle.
@@ -55,6 +55,7 @@ dependencies {
     implementation("com.github.mik3y:usb-serial-for-android:3.11.0")
     implementation("no.nordicsemi.android:dfu:2.11.0") // firmware updates over Bluetooth (legacy nRF52 DFU)
     implementation("com.google.zxing:core:3.5.4") // QR codes for room invites
+    implementation("org.osmdroid:osmdroid-android:6.1.20") // node map on OpenStreetMap tiles, no Google services or API key
     "playImplementation"("com.google.android.gms:play-services-code-scanner:16.1.0") // QR scanning, no camera permission
     "playImplementation"("com.google.android.play:review:2.0.2") // Play's own rating card
     "fdroidImplementation"("com.journeyapps:zxing-android-embedded:4.3.0")

@@ -137,6 +137,9 @@
     <string name="no_messages">Nog geen berichten</string>
     <string name="no_nodes">Nog geen nodes</string>
     <string name="no_nodes_body">Nodes verschijnen hier zodra je radio ze hoort.</string>
+    <string name="map">Kaart</string>
+    <string name="no_positions">Nog geen locaties</string>
+    <string name="no_positions_body">Nodes verschijnen hier zodra ze hun locatie delen.</string>
     <string name="no_one_blocked">Niemand is geblokkeerd.</string>
     <string name="no_sms">Deze telefoon kan geen SMS versturen of ontvangen en kan dus geen relay zijn.</string>
     <string name="no_switch_update_mode">De node schakelde niet over naar updatemodus.</string>

@@ -137,6 +137,9 @@
     <string name="no_messages">Ancora nessun messaggio</string>
     <string name="no_nodes">Ancora nessun nodo</string>
     <string name="no_nodes_body">I nodi compaiono qui man mano che la tua radio li riceve.</string>
+    <string name="map">Mappa</string>
+    <string name="no_positions">Ancora nessuna posizione</string>
+    <string name="no_positions_body">I nodi compaiono qui quando condividono la loro posizione.</string>
     <string name="no_one_blocked">Nessuno è bloccato.</string>
     <string name="no_sms">Questo telefono non può inviare né ricevere SMS, quindi non può fare da ponte.</string>
     <string name="no_switch_update_mode">Il nodo non è passato in modalità aggiornamento.</string>

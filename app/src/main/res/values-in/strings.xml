@@ -137,6 +137,9 @@
     <string name="no_messages">Belum ada pesan</string>
     <string name="no_nodes">Belum ada node</string>
     <string name="no_nodes_body">Node muncul di sini saat radio Anda mendengarnya.</string>
+    <string name="map">Peta</string>
+    <string name="no_positions">Belum ada lokasi</string>
+    <string name="no_positions_body">Node muncul di sini setelah membagikan lokasinya.</string>
     <string name="no_one_blocked">Tidak ada yang diblokir.</string>
     <string name="no_sms">Ponsel ini tidak dapat mengirim atau menerima SMS, jadi tidak bisa menjadi relay.</string>
     <string name="no_switch_update_mode">Node tidak beralih ke mode pembaruan.</string>

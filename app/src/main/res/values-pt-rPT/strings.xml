@@ -137,6 +137,9 @@
     <string name="no_messages">Ainda não há mensagens</string>
     <string name="no_nodes">Ainda não há nós</string>
     <string name="no_nodes_body">Os nós aparecem aqui à medida que o seu rádio os ouve.</string>
+    <string name="map">Mapa</string>
+    <string name="no_positions">Ainda sem localizações</string>
+    <string name="no_positions_body">Os nós aparecem aqui quando partilham a localização.</string>
     <string name="no_one_blocked">Ninguém está bloqueado.</string>
     <string name="no_sms">Este telemóvel não consegue enviar nem receber SMS, por isso não pode servir de reencaminhamento.</string>
     <string name="no_switch_update_mode">O nó não mudou para o modo de atualização.</string>

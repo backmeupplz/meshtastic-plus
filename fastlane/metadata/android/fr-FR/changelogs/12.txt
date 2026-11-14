@@ -1,0 +1,1 @@
+Nouvel onglet Carte : voyez où se trouvent les nœuds autour de vous et touchez-en un pour ouvrir sa page. La page d'un nœud affiche aussi sa position, qui s'ouvre dans votre app de cartes d'un simple toucher.

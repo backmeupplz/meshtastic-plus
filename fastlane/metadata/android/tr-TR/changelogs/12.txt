@@ -1,0 +1,1 @@
+Yeni Harita sekmesi: çevrendeki düğümlerin nerede olduğunu gör ve sayfasını açmak için birine dokun. Bir düğümün sayfası artık konumunu da gösteriyor; dokununca harita uygulamanda açılıyor.

@@ -137,6 +137,9 @@
     <string name="no_messages">No messages yet</string>
     <string name="no_nodes">No nodes yet</string>
     <string name="no_nodes_body">Nodes show up here as your radio hears them.</string>
+    <string name="map">Map</string>
+    <string name="no_positions">No locations yet</string>
+    <string name="no_positions_body">Nodes show up here once they share their location.</string>
     <string name="no_one_blocked">No one is blocked.</string>
     <string name="no_sms">This phone can\'t send or receive SMS, so it can\'t be a relay.</string>
     <string name="no_switch_update_mode">The node didn\'t switch to update mode.</string>

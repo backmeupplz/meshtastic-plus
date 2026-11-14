@@ -137,6 +137,9 @@
     <string name="no_messages">メッセージはまだありません</string>
     <string name="no_nodes">ノードはまだありません</string>
     <string name="no_nodes_body">無線機が受信したノードがここに表示されます。</string>
+    <string name="map">マップ</string>
+    <string name="no_positions">位置情報はまだありません</string>
+    <string name="no_positions_body">ノードが位置情報を共有するとここに表示されます。</string>
     <string name="no_one_blocked">ブロック中のユーザーはいません。</string>
     <string name="no_sms">このスマートフォンはSMSを送受信できないため、リレーとして使えません。</string>
     <string name="no_switch_update_mode">ノードがアップデートモードに切り替わりませんでした。</string>

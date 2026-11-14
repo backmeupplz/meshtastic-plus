@@ -137,6 +137,9 @@
     <string name="no_messages">Noch keine Nachrichten</string>
     <string name="no_nodes">Noch keine Knoten</string>
     <string name="no_nodes_body">Knoten erscheinen hier, sobald dein Funkgerät sie hört.</string>
+    <string name="map">Karte</string>
+    <string name="no_positions">Noch keine Standorte</string>
+    <string name="no_positions_body">Knoten erscheinen hier, sobald sie ihren Standort teilen.</string>
     <string name="no_one_blocked">Niemand ist blockiert.</string>
     <string name="no_sms">Dieses Telefon kann keine SMS senden oder empfangen und daher kein Relay sein.</string>
     <string name="no_switch_update_mode">Der Knoten hat nicht in den Update-Modus gewechselt.</string>

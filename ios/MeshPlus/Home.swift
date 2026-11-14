@@ -143,6 +143,7 @@ struct HomeView: View {
             TabView(selection: $model.tab) {
                 ChatsTab().tabItem { Label("Chats", systemImage: "bubble.left.and.bubble.right") }.tag(0).badge(unread)
                 NodesTab { model.sheet = .profile($0) }.tabItem { Label("Nodes", systemImage: "point.3.connected.trianglepath.dotted") }.tag(1)
+                MapTab { model.sheet = .profile($0) }.tabItem { Label("Map", systemImage: "map") }.tag(2)
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: String.self) { ConversationView(convo: $0) }
@@ -158,9 +159,14 @@ struct HomeView: View {
                 Picker("", selection: $model.tab) {
                     (unread > 0 ? Text("Chats \(unread)") : Text("Chats")).tag(0) // the tab bar's unread badge
                     Text("Nodes").tag(1)
+                    Text("Map").tag(2)
                 }
                 .pickerStyle(.segmented).labelsHidden().padding(.horizontal).padding(.bottom, 8)
-                if model.tab == 0 { ChatsTab(selection: selection) } else { NodesTab { model.sheet = .profile($0) } }
+                switch model.tab {
+                case 0: ChatsTab(selection: selection)
+                case 1: NodesTab { model.sheet = .profile($0) }
+                default: MapTab { model.sheet = .profile($0) }
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbar }
@@ -344,6 +350,13 @@ struct ProfileSheet: View {
             if let h = hops(n) { Label(h, systemImage: "point.3.connected.trianglepath.dotted") }
             if let snr = n.snr { Label { Text("Signal \(snr, specifier: "%.1f") dB SNR") } icon: { Image(systemName: "cellularbars") } }
             if let p = n.power { Label(p, systemImage: "battery.75percent") }
+            if let lat = n.lat, let lon = n.lon {
+                // Opens Apple Maps (directions, offline maps); the Map tab is the mesh view
+                Link(destination: URL(string: "https://maps.apple.com/?ll=\(lat),\(lon)&q=\(n.name.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? "")")!) {
+                    Label(String(format: "%.5f, %.5f", lat, lon), systemImage: "mappin.and.ellipse")
+                }
+                .foregroundStyle(.primary)
+            }
             HStack(spacing: 12) {
                 Button { dismiss(); onMessage() } label: { Label("Message", systemImage: "bubble.left").frame(maxWidth: .infinity) }
                     .buttonStyle(.borderedProminent).disabled(blocked)

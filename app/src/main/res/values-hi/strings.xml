@@ -137,6 +137,9 @@
     <string name="no_messages">अभी कोई मैसेज नहीं</string>
     <string name="no_nodes">अभी कोई नोड नहीं</string>
     <string name="no_nodes_body">जैसे-जैसे आपका रेडियो नोड को सुनता है, वे यहाँ दिखते हैं।</string>
+    <string name="map">मैप</string>
+    <string name="no_positions">अभी कोई लोकेशन नहीं</string>
+    <string name="no_positions_body">नोड अपनी लोकेशन शेयर करते ही यहाँ दिखते हैं।</string>
     <string name="no_one_blocked">कोई भी ब्लॉक नहीं है।</string>
     <string name="no_sms">यह फ़ोन SMS भेज या पा नहीं सकता, इसलिए यह रिले नहीं बन सकता।</string>
     <string name="no_switch_update_mode">नोड अपडेट मोड में नहीं गया।</string>

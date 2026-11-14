@@ -137,6 +137,9 @@
     <string name="no_messages">لا توجد رسائل بعد</string>
     <string name="no_nodes">لا توجد عُقد بعد</string>
     <string name="no_nodes_body">تظهر العُقد هنا عندما يلتقطها الراديو لديك.</string>
+    <string name="map">الخريطة</string>
+    <string name="no_positions">لا توجد مواقع بعد</string>
+    <string name="no_positions_body">تظهر العُقد هنا عندما تشارك موقعها.</string>
     <string name="no_one_blocked">لا يوجد أي شخص محظور.</string>
     <string name="no_sms">لا يستطيع هذا الهاتف إرسال الرسائل النصية أو استقبالها، لذا لا يمكن استخدامه كمُرحِّل.</string>
     <string name="no_switch_update_mode">لم تنتقل العقدة إلى وضع التحديث.</string>

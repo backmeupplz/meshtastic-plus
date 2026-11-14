@@ -1,0 +1,1 @@
+Neuer Karten-Tab: Sieh, wo die Knoten um dich herum sind, und tippe auf einen, um seine Seite zu öffnen. Die Seite eines Knotens zeigt jetzt auch seinen Standort, der sich per Tippen in deiner Karten-App öffnet.

@@ -1,0 +1,1 @@
+Tab Peta baru: lihat lokasi node di sekitar Anda dan ketuk salah satunya untuk membuka halamannya. Halaman node kini juga menampilkan lokasinya, yang terbuka di aplikasi peta saat diketuk.

@@ -1,0 +1,1 @@
+Nueva pestaña Mapa: mira dónde están los nodos a tu alrededor y toca uno para abrir su página. La página de cada nodo ahora también muestra su ubicación, que se abre en tu app de mapas al tocarla.

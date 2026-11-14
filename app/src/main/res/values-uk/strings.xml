@@ -137,6 +137,9 @@
     <string name="no_messages">Повідомлень поки немає</string>
     <string name="no_nodes">Вузлів поки немає</string>
     <string name="no_nodes_body">Вузли з’являються тут, коли ваша рація їх чує.</string>
+    <string name="map">Мапа</string>
+    <string name="no_positions">Поки немає розташувань</string>
+    <string name="no_positions_body">Вузли з’являться тут, коли поділяться своїм розташуванням.</string>
     <string name="no_one_blocked">Заблокованих немає.</string>
     <string name="no_sms">Цей телефон не може надсилати й отримувати SMS, тому не може бути ретранслятором.</string>
     <string name="no_switch_update_mode">Вузол не перейшов у режим оновлення.</string>

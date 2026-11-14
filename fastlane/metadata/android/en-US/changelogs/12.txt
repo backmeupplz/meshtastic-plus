@@ -1,0 +1,1 @@
+New Map tab: see where the nodes around you are and tap one to open its page. A node's page now shows its location too, and tapping it opens your maps app.

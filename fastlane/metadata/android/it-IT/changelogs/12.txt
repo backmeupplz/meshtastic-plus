@@ -1,0 +1,1 @@
+Nuova scheda Mappa: guarda dove sono i nodi intorno a te e toccane uno per aprire la sua pagina. La pagina di un nodo ora mostra anche la sua posizione, che si apre nella tua app di mappe con un tocco.

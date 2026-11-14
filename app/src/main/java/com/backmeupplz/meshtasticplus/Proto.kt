@@ -69,6 +69,13 @@ class Msg(b: ByteArray) {
     fun msg(f: Int) = bytes(f)?.let(::Msg)
 }
 
+/** Position.latitude_i/longitude_i: sfixed32 in 1e-7 degrees. Nodes without a fix send none, or 0,0. */
+fun latLon(p: Msg): Pair<Double, Double>? {
+    val lat = p.long(1).toInt() * 1e-7
+    val lon = p.long(2).toInt() * 1e-7
+    return if (lat == 0.0 && lon == 0.0) null else lat to lon
+}
+
 /** Serial stream framing: 0x94 0xC3 len_hi len_lo payload. Anything else on the wire (debug logs) is skipped. */
 fun frame(b: ByteArray) = byteArrayOf(0x94.toByte(), 0xC3.toByte(), (b.size shr 8).toByte(), b.size.toByte()) + b
 

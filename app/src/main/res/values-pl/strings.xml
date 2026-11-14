@@ -137,6 +137,9 @@
     <string name="no_messages">Brak wiadomości</string>
     <string name="no_nodes">Brak węzłów</string>
     <string name="no_nodes_body">Węzły pojawiają się tu, gdy Twoje radio je usłyszy.</string>
+    <string name="map">Mapa</string>
+    <string name="no_positions">Brak lokalizacji</string>
+    <string name="no_positions_body">Węzły pojawiają się tu, gdy udostępnią swoją lokalizację.</string>
     <string name="no_one_blocked">Nikt nie jest zablokowany.</string>
     <string name="no_sms">Ten telefon nie może wysyłać ani odbierać SMS-ów, więc nie może być przekaźnikiem.</string>
     <string name="no_switch_update_mode">Węzeł nie przełączył się w tryb aktualizacji.</string>

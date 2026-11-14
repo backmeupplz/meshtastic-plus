@@ -137,6 +137,9 @@
     <string name="no_messages">Сообщений пока нет</string>
     <string name="no_nodes">Узлов пока нет</string>
     <string name="no_nodes_body">Узлы появляются здесь, когда ваша рация их слышит.</string>
+    <string name="map">Карта</string>
+    <string name="no_positions">Пока нет местоположений</string>
+    <string name="no_positions_body">Узлы появятся здесь, когда поделятся своим местоположением.</string>
     <string name="no_one_blocked">Заблокированных нет.</string>
     <string name="no_sms">Этот телефон не может отправлять и получать SMS, поэтому не может быть ретранслятором.</string>
     <string name="no_switch_update_mode">Узел не перешёл в режим обновления.</string>

@@ -137,6 +137,9 @@
     <string name="no_messages">ยังไม่มีข้อความ</string>
     <string name="no_nodes">ยังไม่มีโหนด</string>
     <string name="no_nodes_body">โหนดจะแสดงที่นี่เมื่อวิทยุของคุณได้ยิน</string>
+    <string name="map">แผนที่</string>
+    <string name="no_positions">ยังไม่มีตำแหน่ง</string>
+    <string name="no_positions_body">โหนดจะแสดงที่นี่เมื่อแชร์ตำแหน่ง</string>
     <string name="no_one_blocked">ไม่มีใครถูกบล็อก</string>
     <string name="no_sms">โทรศัพท์เครื่องนี้ส่งหรือรับ SMS ไม่ได้ จึงใช้เป็นตัวส่งต่อไม่ได้</string>
     <string name="no_switch_update_mode">โหนดไม่ได้เปลี่ยนเข้าสู่โหมดอัปเดต</string>

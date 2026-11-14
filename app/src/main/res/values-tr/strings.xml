@@ -137,6 +137,9 @@
     <string name="no_messages">Henüz mesaj yok</string>
     <string name="no_nodes">Henüz düğüm yok</string>
     <string name="no_nodes_body">Telsizin duydukça düğümler burada görünür.</string>
+    <string name="map">Harita</string>
+    <string name="no_positions">Henüz konum yok</string>
+    <string name="no_positions_body">Düğümler konumlarını paylaştığında burada görünür.</string>
     <string name="no_one_blocked">Engellenen kimse yok.</string>
     <string name="no_sms">Bu telefon SMS gönderip alamadığı için aktarıcı olamaz.</string>
     <string name="no_switch_update_mode">Düğüm güncelleme moduna geçmedi.</string>

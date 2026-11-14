@@ -137,6 +137,9 @@
     <string name="no_messages">还没有消息</string>
     <string name="no_nodes">还没有节点</string>
     <string name="no_nodes_body">你的电台收到的节点会显示在这里。</string>
+    <string name="map">地图</string>
+    <string name="no_positions">暂无位置</string>
+    <string name="no_positions_body">节点分享位置后会显示在这里。</string>
     <string name="no_one_blocked">没有屏蔽任何人。</string>
     <string name="no_sms">这部手机无法收发短信，因此不能用作中继。</string>
     <string name="no_switch_update_mode">节点未切换到更新模式。</string>

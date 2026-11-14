@@ -71,6 +71,7 @@ data class Node(
     val num: Long, val long: String = "", val short: String = "",
     val lastHeard: Long = 0, val snr: Float? = null, val hops: Int? = null,
     val favorite: Boolean = false, val battery: Int? = null, val voltage: Float? = null,
+    val lat: Double? = null, val lon: Double? = null, // last shared position (GPS or fixed)
 ) {
     /** "Battery 62% · 3.71 V" / "Plugged in · 4.18 V": the voltage shows whether a battery is there and charging. */
     val power get() = listOfNotNull(
@@ -98,6 +99,7 @@ const val BROADCAST = 0xFFFFFFFFL
 private const val TEXT_APP = 1L
 private const val NODEINFO_APP = 4L
 private const val ROUTING_APP = 5L
+private const val POSITION_APP = 3L
 private const val ADMIN_APP = 6L
 private const val TELEMETRY_APP = 67L
 private const val USB_PERMISSION = "com.backmeupplz.meshtasticplus.USB_PERMISSION"
@@ -389,6 +391,7 @@ object Mesh {
                 voltage = ni.msg(6)?.let(::voltage) ?: old.voltage,
             )
             ni.msg(2)?.let { user(num, it) }
+            ni.msg(3)?.let { position(num, it) }
         }
         fr.msg(5)?.let { c -> c.fields.keys.forEach { configs[it] = c.bytes(it) ?: ByteArray(0) } } // Config: one section per frame
         fr.msg(5)?.bytes(6)?.let { region = Msg(it).long(7).toInt() } // Config.lora.region
@@ -429,6 +432,11 @@ object Mesh {
         if (num == myNum) { myLong = u.str(2); myShort = u.str(3); if (hwModel == 0) hwModel = u.long(5).toInt() }
     }
 
+    private fun position(num: Long, p: Msg) {
+        val (lat, lon) = latLon(p) ?: return
+        nodes[num] = (nodes[num] ?: Node(num)).copy(lat = lat, lon = lon)
+    }
+
     private fun packet(p: Msg) {
         val from = p.long(1)
         if (from != myNum && from != 0L) {
@@ -456,6 +464,7 @@ object Mesh {
                 if (!m.mine) { Notify.message(m); Relay.command(m) }
             }
             NODEINFO_APP -> user(from, Msg(payload))
+            POSITION_APP -> position(from, Msg(payload))
             TELEMETRY_APP -> Msg(payload).msg(2)?.let { m -> // DeviceMetrics
                 nodes[from]?.let { nodes[from] = it.copy(battery = if (m.has(1)) m.long(1).toInt() else it.battery, voltage = voltage(m) ?: it.voltage) }
             }

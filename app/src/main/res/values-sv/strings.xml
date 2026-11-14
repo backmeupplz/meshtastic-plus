@@ -137,6 +137,9 @@
     <string name="no_messages">Inga meddelanden än</string>
     <string name="no_nodes">Inga noder än</string>
     <string name="no_nodes_body">Noder visas här när din radio hör dem.</string>
+    <string name="map">Karta</string>
+    <string name="no_positions">Inga platser än</string>
+    <string name="no_positions_body">Noder visas här när de delar sin plats.</string>
     <string name="no_one_blocked">Ingen är blockerad.</string>
     <string name="no_sms">Den här telefonen kan inte skicka eller ta emot SMS och kan därför inte vara ett relä.</string>
     <string name="no_switch_update_mode">Noden växlade inte till uppdateringsläge.</string>

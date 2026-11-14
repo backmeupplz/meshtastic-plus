@@ -1,0 +1,1 @@
+Nowa karta Mapa: zobacz, gdzie są węzły wokół Ciebie, i dotknij jednego, aby otworzyć jego stronę. Strona węzła pokazuje teraz też jego lokalizację, którą otworzysz w aplikacji z mapami jednym dotknięciem.

@@ -137,6 +137,9 @@
     <string name="no_messages">Aucun message pour l\'instant</string>
     <string name="no_nodes">Aucun nœud pour l\'instant</string>
     <string name="no_nodes_body">Les nœuds apparaissent ici à mesure que votre radio les capte.</string>
+    <string name="map">Carte</string>
+    <string name="no_positions">Aucune position pour l\'instant</string>
+    <string name="no_positions_body">Les nœuds apparaissent ici dès qu\'ils partagent leur position.</string>
     <string name="no_one_blocked">Personne n\'est bloqué.</string>
     <string name="no_sms">Ce téléphone ne peut ni envoyer ni recevoir de SMS : il ne peut donc pas servir de relais.</string>
     <string name="no_switch_update_mode">Le nœud n\'est pas passé en mode mise à jour.</string>

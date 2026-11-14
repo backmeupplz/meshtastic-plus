@@ -28,6 +28,13 @@ final class DemoTests: XCTestCase {
         app.buttons["No radio yet? Try the demo"].tap()
         XCTAssert(shows(app.staticTexts["Hiking"], 15))
 
+        // The map shows every node that shared a position; tapping one opens its page with the coordinates.
+        app.tab("Map")
+        XCTAssert(shows(app.buttons["Leo"], 10))
+        app.buttons["Leo"].tap()
+        XCTAssert(shows(app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", "-123.05070")).firstMatch))
+        app.swipeDown(velocity: .fast)
+
         // Blocking and unblocking from a node's page, then messaging them from it.
         app.tab("Nodes")
         app.staticTexts["Leo"].tap()

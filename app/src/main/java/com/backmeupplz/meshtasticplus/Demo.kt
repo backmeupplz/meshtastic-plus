@@ -13,17 +13,19 @@ const val DEMO = "demo" // [Mesh.current] while the simulated node is in use
  */
 class DemoLink : Link {
     private class Peer(val num: Long, val long: String, val short: String, val hops: Int, val snr: Float,
-                       val battery: Int, val volts: Float, var favorite: Boolean, val heardAgoMin: Int)
+                       val battery: Int, val volts: Float, var favorite: Boolean, val heardAgoMin: Int,
+                       val lat: Double, val lon: Double)
 
     private val main = Handler(Looper.getMainLooper())
     private val me = 0x0de30001L
     private var myLong = string(R.string.demo_node)
     private var myShort = "DEMO"
+    // Around Garibaldi Lake, BC: a group spread along a trail, with the base camp down at the trailhead.
     private val peers = listOf(
-        Peer(0x6a3f21c0, string(R.string.demo_maya).fitBytes(39), "MAYA", 0, 9.5f, 78, 3.92f, true, 2),
-        Peer(0x2b7e9d14, string(R.string.demo_ridge).fitBytes(39), "RDGE", 1, -4.25f, 101, 4.18f, false, 5),
-        Peer(0x91c4e5a2, "Leo", "LEO", 2, -11f, 34, 3.61f, false, 25),
-        Peer(0x5d02f7b8, string(R.string.demo_base).fitBytes(39), "BASE", 1, 2.5f, 92, 4.05f, false, 180),
+        Peer(0x6a3f21c0, string(R.string.demo_maya).fitBytes(39), "MAYA", 0, 9.5f, 78, 3.92f, true, 2, 49.9250, -123.0431),
+        Peer(0x2b7e9d14, string(R.string.demo_ridge).fitBytes(39), "RDGE", 1, -4.25f, 101, 4.18f, false, 5, 49.9521, -123.0081),
+        Peer(0x91c4e5a2, "Leo", "LEO", 2, -11f, 34, 3.61f, false, 25, 49.9188, -123.0507),
+        Peer(0x5d02f7b8, string(R.string.demo_base).fitBytes(39), "BASE", 1, 2.5f, 92, 4.05f, false, 180, 49.8960, -123.1010),
     )
     private val sections = mutableMapOf( // Config oneof field -> section bytes, like a node's saved config
         1 to Pb().uint(7, 10800).build(), // device: announce every 3h
@@ -67,13 +69,15 @@ class DemoLink : Link {
 
     private fun metrics(battery: Int, volts: Float) = Pb().uint(1, battery.toLong()).fixed32(2, volts.toRawBits().toLong())
 
+    private fun position(lat: Double, lon: Double) = Pb().fixed32(1, (lat * 1e7).toLong()).fixed32(2, (lon * 1e7).toLong())
+
     /** What a node sends when an app connects: who it is, its config, rooms, nodes, then queued messages. */
     private fun sync(id: Long) {
         val now = System.currentTimeMillis() / 1000
         emit(Pb().msg(3, Pb().uint(1, me).str(13, "heltec-mesh-node-t114")))
-        emit(Pb().msg(4, Pb().uint(1, me).msg(2, user(me, myLong, myShort)).fixed32(5, now).msg(6, metrics(64, 3.81f))))
+        emit(Pb().msg(4, Pb().uint(1, me).msg(2, user(me, myLong, myShort)).msg(3, position(49.9322, -123.0583)).fixed32(5, now).msg(6, metrics(64, 3.81f))))
         peers.forEach { n ->
-            emit(Pb().msg(4, Pb().uint(1, n.num).msg(2, user(n.num, n.long, n.short)).fixed32(4, n.snr.toRawBits().toLong())
+            emit(Pb().msg(4, Pb().uint(1, n.num).msg(2, user(n.num, n.long, n.short)).msg(3, position(n.lat, n.lon)).fixed32(4, n.snr.toRawBits().toLong())
                 .fixed32(5, now - n.heardAgoMin * 60).msg(6, metrics(n.battery, n.volts)).uint(9, n.hops.toLong())
                 .uint(10, if (n.favorite) 1 else 0)))
         }

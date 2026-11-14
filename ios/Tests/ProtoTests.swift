@@ -3,6 +3,14 @@ import XCTest
 
 /// Same checks as the Android app's ProtoTest, plus the edge cases a Swift parser must not crash on.
 final class ProtoTests: XCTestCase {
+    func testPosition() throws {
+        // Position { latitude_i = 499357000, longitude_i = -1230345000 } as sfixed32: west/south must stay negative.
+        let (lat, lon) = try XCTUnwrap(latLon(XCTUnwrap(Msg(Pb().fixed32(1, 499_357_000).fixed32(2, -1_230_345_000).build))))
+        XCTAssertEqual(lat, 49.9357, accuracy: 1e-7)
+        XCTAssertEqual(lon, -123.0345, accuracy: 1e-7)
+        XCTAssertNil(latLon(try XCTUnwrap(Msg([])))) // no fix
+    }
+
     func testRoundTrip() throws {
         let data = Pb().uint(1, 1).str(2, "привет")
         let pkt = try XCTUnwrap(Msg(Pb().fixed32(1, 0xDEAD_BEEF).fixed32(2, 0xFFFF_FFFF).msg(4, data).uint(9, 300).build))

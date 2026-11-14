@@ -137,6 +137,9 @@
     <string name="no_messages">尚無訊息</string>
     <string name="no_nodes">尚無節點</string>
     <string name="no_nodes_body">你的無線電收到的節點會顯示在這裡。</string>
+    <string name="map">地圖</string>
+    <string name="no_positions">尚無位置</string>
+    <string name="no_positions_body">節點分享位置後會顯示在這裡。</string>
     <string name="no_one_blocked">沒有封鎖任何人。</string>
     <string name="no_sms">這支手機無法收發 SMS，因此無法作為轉發手機。</string>
     <string name="no_switch_update_mode">節點沒有切換到更新模式。</string>

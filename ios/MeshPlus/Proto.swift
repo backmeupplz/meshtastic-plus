@@ -81,6 +81,13 @@ struct Msg {
     func float(_ f: Int) -> Float? { has(f) ? Float(bitPattern: UInt32(truncatingIfNeeded: long(f))) : nil }
 }
 
+/// Position.latitude_i/longitude_i: sfixed32 in 1e-7 degrees. Nodes without a fix send none, or 0,0.
+func latLon(_ p: Msg) -> (Double, Double)? {
+    let lat = Double(Int32(truncatingIfNeeded: p.long(1))) * 1e-7
+    let lon = Double(Int32(truncatingIfNeeded: p.long(2))) * 1e-7
+    return lat == 0 && lon == 0 ? nil : (lat, lon)
+}
+
 func base64url(_ b: [UInt8]) -> String {
     Data(b).base64EncodedString().replacingOccurrences(of: "+", with: "-").replacingOccurrences(of: "/", with: "_")
         .replacingOccurrences(of: "=", with: "")

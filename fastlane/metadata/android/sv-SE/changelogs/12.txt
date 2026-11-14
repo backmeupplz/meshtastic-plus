@@ -1,0 +1,1 @@
+Ny kartflik: se var noderna runt dig finns och tryck på en för att öppna dess sida. En nods sida visar nu också dess plats, som öppnas i din kartapp när du trycker på den.

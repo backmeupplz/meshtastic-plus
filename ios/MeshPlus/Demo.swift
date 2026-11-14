@@ -9,15 +9,17 @@ final class DemoLink: RadioLink {
         let num: Int64, long: String, short: String, hops: Int, snr: Float, battery: Int, volts: Float
         var favorite: Bool
         let heardAgoMin: Int
+        let lat: Double, lon: Double
     }
 
     private let me: Int64 = 0x0de3_0001
     private var myLong = String(localized: "Demo Node"), myShort = "DEMO"
+    // Around Garibaldi Lake, BC: a group spread along a trail, with the base camp down at the trailhead.
     private var peers = [
-        Peer(num: 0x6a3f_21c0, long: String(localized: "Maya's Handheld").fitBytes(39), short: "MAYA", hops: 0, snr: 9.5, battery: 78, volts: 3.92, favorite: true, heardAgoMin: 2),
-        Peer(num: 0x2b7e_9d14, long: String(localized: "Ridge Repeater").fitBytes(39), short: "RDGE", hops: 1, snr: -4.25, battery: 101, volts: 4.18, favorite: false, heardAgoMin: 5),
-        Peer(num: 0x91c4_e5a2, long: "Leo", short: "LEO", hops: 2, snr: -11, battery: 34, volts: 3.61, favorite: false, heardAgoMin: 25),
-        Peer(num: 0x5d02_f7b8, long: String(localized: "Base Camp").fitBytes(39), short: "BASE", hops: 1, snr: 2.5, battery: 92, volts: 4.05, favorite: false, heardAgoMin: 180),
+        Peer(num: 0x6a3f_21c0, long: String(localized: "Maya's Handheld").fitBytes(39), short: "MAYA", hops: 0, snr: 9.5, battery: 78, volts: 3.92, favorite: true, heardAgoMin: 2, lat: 49.9250, lon: -123.0431),
+        Peer(num: 0x2b7e_9d14, long: String(localized: "Ridge Repeater").fitBytes(39), short: "RDGE", hops: 1, snr: -4.25, battery: 101, volts: 4.18, favorite: false, heardAgoMin: 5, lat: 49.9521, lon: -123.0081),
+        Peer(num: 0x91c4_e5a2, long: "Leo", short: "LEO", hops: 2, snr: -11, battery: 34, volts: 3.61, favorite: false, heardAgoMin: 25, lat: 49.9188, lon: -123.0507),
+        Peer(num: 0x5d02_f7b8, long: String(localized: "Base Camp").fitBytes(39), short: "BASE", hops: 1, snr: 2.5, battery: 92, volts: 4.05, favorite: false, heardAgoMin: 180, lat: 49.8960, lon: -123.1010),
     ]
     private var sections: [Int: [UInt8]] = [ // Config oneof field -> section bytes, like a node's saved config
         1: Pb().uint(7, 10800).build, // device: announce every 3h
@@ -71,13 +73,15 @@ final class DemoLink: RadioLink {
 
     private func metrics(_ battery: Int, _ volts: Float) -> Pb { Pb().uint(1, Int64(battery)).fixed32(2, Int64(volts.bitPattern)) }
 
+    private func position(_ lat: Double, _ lon: Double) -> Pb { Pb().fixed32(1, Int64(lat * 1e7)).fixed32(2, Int64(lon * 1e7)) }
+
     /// What a node sends when an app connects: who it is, its config, rooms, nodes, then queued messages.
     private func sync(_ id: Int64) {
         let now = Int64(Date().timeIntervalSince1970)
         emit(Pb().msg(3, Pb().uint(1, me).str(13, "heltec-mesh-node-t114")))
-        emit(Pb().msg(4, Pb().uint(1, me).msg(2, user(me, myLong, myShort)).fixed32(5, now).msg(6, metrics(64, 3.81))))
+        emit(Pb().msg(4, Pb().uint(1, me).msg(2, user(me, myLong, myShort)).msg(3, position(49.9322, -123.0583)).fixed32(5, now).msg(6, metrics(64, 3.81))))
         for n in peers {
-            emit(Pb().msg(4, Pb().uint(1, n.num).msg(2, user(n.num, n.long, n.short)).fixed32(4, Int64(n.snr.bitPattern))
+            emit(Pb().msg(4, Pb().uint(1, n.num).msg(2, user(n.num, n.long, n.short)).msg(3, position(n.lat, n.lon)).fixed32(4, Int64(n.snr.bitPattern))
                 .fixed32(5, now - Int64(n.heardAgoMin * 60)).msg(6, metrics(n.battery, n.volts)).uint(9, Int64(n.hops))
                 .uint(10, n.favorite ? 1 : 0)))
         }

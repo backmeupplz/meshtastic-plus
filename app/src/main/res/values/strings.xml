@@ -109,6 +109,9 @@
     <string name="no_dms">Open someone in Nodes to message them privately.</string>
     <string name="no_nodes">No nodes yet</string>
     <string name="no_nodes_body">Nodes show up here as your radio hears them.</string>
+    <string name="map">Map</string>
+    <string name="no_positions">No locations yet</string>
+    <string name="no_positions_body">Nodes show up here once they share their location.</string>
     <string name="online">Online</string>
     <string name="offline">Offline</string>
     <string name="favorited">Favorited</string>

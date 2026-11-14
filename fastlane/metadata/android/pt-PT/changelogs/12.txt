@@ -1,0 +1,1 @@
+Novo separador Mapa: veja onde estão os nós à sua volta e toque num para abrir a página dele. A página de cada nó mostra agora também a localização, que abre na sua app de mapas com um toque.

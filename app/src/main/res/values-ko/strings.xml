@@ -137,6 +137,9 @@
     <string name="no_messages">아직 메시지가 없습니다</string>
     <string name="no_nodes">아직 노드가 없습니다</string>
     <string name="no_nodes_body">무전기가 수신한 노드가 여기에 표시됩니다.</string>
+    <string name="map">지도</string>
+    <string name="no_positions">아직 위치 정보가 없습니다</string>
+    <string name="no_positions_body">노드가 위치를 공유하면 여기에 표시됩니다.</string>
     <string name="no_one_blocked">차단한 사용자가 없습니다.</string>
     <string name="no_sms">이 휴대폰은 SMS를 주고받을 수 없어 릴레이로 사용할 수 없습니다.</string>
     <string name="no_switch_update_mode">노드가 업데이트 모드로 전환되지 않았습니다.</string>

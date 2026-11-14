@@ -5,6 +5,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ProtoTest {
+    @Test fun position() {
+        // Position { latitude_i = 499357000, longitude_i = -1230345000 } as sfixed32: west/south must stay negative.
+        val (lat, lon) = latLon(Msg(Pb().fixed32(1, 499357000).fixed32(2, -1230345000).build()))!!
+        assertEquals(49.9357, lat, 1e-7)
+        assertEquals(-123.0345, lon, 1e-7)
+        assertEquals(null, latLon(Msg(ByteArray(0)))) // no fix
+    }
+
     @Test fun roundTrip() {
         val data = Pb().uint(1, 1).str(2, "привет")
         val pkt = Msg(Pb().fixed32(1, 0xDEADBEEF).fixed32(2, 0xFFFFFFFF).msg(4, data).uint(9, 300).build())

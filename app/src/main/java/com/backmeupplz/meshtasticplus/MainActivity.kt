@@ -67,6 +67,8 @@ import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.ContentPaste
 import androidx.compose.material.icons.outlined.Hub
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Map
+import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.NotificationsOff
 import androidx.compose.material.icons.outlined.Person
@@ -702,6 +704,7 @@ fun HomeScreen(onOpen: (String) -> Unit, onProfile: (Long) -> Unit, onEditName: 
                             Icon(Icons.Outlined.Hub, null)
                         }
                     })
+                    Tab(tab == 2, { tab = 2 }, text = { Text(stringResource(R.string.map)) }, icon = { Icon(Icons.Outlined.Map, null) })
                 }
             }
         },
@@ -709,7 +712,11 @@ fun HomeScreen(onOpen: (String) -> Unit, onProfile: (Long) -> Unit, onEditName: 
             if (tab == 0) ExtendedFloatingActionButton(text = { Text(stringResource(R.string.room)) }, icon = { Icon(Icons.Rounded.Add, null) }, onClick = { newRoom = true })
         },
     ) { padding ->
-        if (tab == 0) ChatsTab(padding, onOpen) else NodesTab(padding, now, onProfile)
+        when (tab) {
+            0 -> ChatsTab(padding, onOpen)
+            1 -> NodesTab(padding, now, onProfile)
+            else -> MapTab(padding, now, onProfile)
+        }
     }
     if (settings) SettingsSheet({ settings = false }, onEditName, onEditRegion, onNodeSettings) { devices = true }
     if (devices) DevicesSheet { devices = false }
@@ -898,6 +905,14 @@ fun ProfileSheet(num: Long, onDismiss: () -> Unit, onMessage: () -> Unit) {
             hops(n)?.let { Detail(Icons.Outlined.Hub, it) }
             n.snr?.let { Detail(Icons.Outlined.SignalCellularAlt, stringResource(R.string.signal_snr, "%.1f".format(it))) }
             n.power?.let { Detail(Icons.Outlined.BatteryFull, it) }
+            if (n.lat != null && n.lon != null) {
+                val ctx = LocalContext.current
+                val at = "%.5f, %.5f".format(Locale.US, n.lat, n.lon)
+                // Opens the phone's maps app (navigation, offline maps); tap the Map tab for the mesh view
+                Detail(Icons.Outlined.Place, at) {
+                    runCatching { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("geo:${n.lat},${n.lon}?q=${n.lat},${n.lon}(${Uri.encode(n.name)})"))) }
+                }
+            }
             Spacer(Modifier.height(24.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Button(onMessage, Modifier.weight(1f).height(52.dp), enabled = !blocked, contentPadding = HalfButtonPadding) {
@@ -975,8 +990,8 @@ fun ReportDialog(m: Message, onDone: () -> Unit) {
 }
 
 @Composable
-fun Detail(icon: ImageVector, text: String) {
-    Row(Modifier.padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+fun Detail(icon: ImageVector, text: String, onClick: (() -> Unit)? = null) {
+    Row(Modifier.then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier).padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
         Icon(icon, null, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.width(12.dp))
         Text(text)

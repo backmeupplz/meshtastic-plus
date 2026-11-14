@@ -137,6 +137,9 @@
     <string name="no_messages">Chưa có tin nhắn</string>
     <string name="no_nodes">Chưa có node nào</string>
     <string name="no_nodes_body">Các node sẽ hiện ở đây khi radio của bạn nghe thấy chúng.</string>
+    <string name="map">Bản đồ</string>
+    <string name="no_positions">Chưa có vị trí</string>
+    <string name="no_positions_body">Các node sẽ hiện ở đây khi chúng chia sẻ vị trí.</string>
     <string name="no_one_blocked">Chưa chặn ai.</string>
     <string name="no_sms">Điện thoại này không gửi hay nhận được SMS nên không thể làm trạm chuyển tiếp.</string>
     <string name="no_switch_update_mode">Node không chuyển sang chế độ cập nhật.</string>

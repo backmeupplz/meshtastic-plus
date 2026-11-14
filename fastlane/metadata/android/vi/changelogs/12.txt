@@ -1,0 +1,1 @@
+Thẻ Bản đồ mới: xem các node quanh bạn đang ở đâu và chạm vào một node để mở trang của nó. Trang của node giờ cũng hiển thị vị trí, chạm vào sẽ mở trong ứng dụng bản đồ của bạn.

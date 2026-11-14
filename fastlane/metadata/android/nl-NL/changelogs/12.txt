@@ -1,0 +1,1 @@
+Nieuw tabblad Kaart: zie waar de nodes om je heen zijn en tik op een node om zijn pagina te openen. De pagina van een node toont nu ook zijn locatie, die met een tik opent in je kaarten-app.

@@ -32,6 +32,7 @@ struct Node: Equatable {
     var favorite = false
     var battery: Int?
     var voltage: Float?
+    var lat: Double?, lon: Double? // last shared position (GPS or fixed)
 
     var name: String { long.isEmpty ? hexId(num) : long }
     func online(_ now: Double) -> Bool { now - lastHeard < 2 * 3600_000 } // same 2h rule as the official apps
@@ -62,7 +63,7 @@ protocol RadioLink: AnyObject {
 }
 
 let BROADCAST: Int64 = 0xFFFF_FFFF
-private let TEXT_APP: Int64 = 1, NODEINFO_APP: Int64 = 4, ROUTING_APP: Int64 = 5, ADMIN_APP: Int64 = 6, TELEMETRY_APP: Int64 = 67
+private let TEXT_APP: Int64 = 1, POSITION_APP: Int64 = 3, NODEINFO_APP: Int64 = 4, ROUTING_APP: Int64 = 5, ADMIN_APP: Int64 = 6, TELEMETRY_APP: Int64 = 67
 private let INVITE = "https://meshtastic.org/e/#"
 let DEMO = "demo" // `Mesh.current` while the simulated node is in use
 
@@ -314,6 +315,7 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
             if ni.has(9) { n.hops = Int(ni.long(9)) }
             n.favorite = ni.long(10) == 1
             if let dm = ni.msg(6) { metrics(&n, dm) }
+            if let p = ni.msg(3), let (lat, lon) = latLon(p) { n.lat = lat; n.lon = lon }
             nodes[num] = n
             if let u = ni.msg(2) { user(num, u) }
         }
@@ -386,6 +388,12 @@ func randomId() -> Int64 { Int64.random(in: 1...0xFFFF_FFFF) }
             if !m.mine { Notify.message(m) }
         case NODEINFO_APP:
             if let u = Msg(payload) { user(from, u) }
+        case POSITION_APP:
+            if let p = Msg(payload), let (lat, lon) = latLon(p) {
+                var n = nodes[from] ?? Node(num: from)
+                n.lat = lat; n.lon = lon
+                nodes[from] = n
+            }
         case TELEMETRY_APP:
             if let dm = Msg(payload)?.msg(2), var n = nodes[from] { metrics(&n, dm); nodes[from] = n }
         case ROUTING_APP:
