@@ -451,4 +451,8 @@
     <plurals name="seconds">
         <item quantity="other">%1$d秒</item>
     </plurals>
+    <string name="theme">テーマ</string>
+    <string name="theme_system">システム</string>
+    <string name="theme_light">ライト</string>
+    <string name="theme_dark">ダーク</string>
 </resources>

@@ -463,4 +463,8 @@
         <item quantity="many">%1$d secondi</item>
         <item quantity="other">%1$d secondi</item>
     </plurals>
+    <string name="theme">Tema</string>
+    <string name="theme_system">Sistema</string>
+    <string name="theme_light">Chiaro</string>
+    <string name="theme_dark">Scuro</string>
 </resources>

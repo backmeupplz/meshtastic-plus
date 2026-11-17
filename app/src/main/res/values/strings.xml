@@ -459,4 +459,8 @@
     <string name="demo_sms_3">Pizza at the lodge on Saturday? Let me know who\'s in!</string>
     <string name="demo_sms_4">Count us in, see you Saturday!</string>
     <string name="demo_history_6">Nice! How\'s the trail after yesterday\'s storm?</string>
+    <string name="theme">Theme</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
 </resources>

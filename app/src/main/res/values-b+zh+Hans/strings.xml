@@ -451,4 +451,8 @@
     <plurals name="seconds">
         <item quantity="other">%1$d 秒</item>
     </plurals>
+    <string name="theme">主题</string>
+    <string name="theme_system">跟随系统</string>
+    <string name="theme_light">浅色</string>
+    <string name="theme_dark">深色</string>
 </resources>

@@ -26,6 +26,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
@@ -60,6 +61,7 @@ import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.BatteryFull
 import androidx.compose.material.icons.outlined.Block
+import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.Feedback
 import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material.icons.outlined.VerifiedUser
@@ -158,6 +160,14 @@ val pendingConvo = mutableStateOf<String?>(null)
 /** The SMS relay screen is open (reached from Settings). */
 val relayScreen = mutableStateOf(false)
 
+/** Settings → Theme, or the system's light or dark mode. */
+@Composable
+fun darkTheme() = when (Mesh.theme) {
+    1 -> false
+    2 -> true
+    else -> isSystemInDarkTheme()
+}
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -166,7 +176,12 @@ class MainActivity : ComponentActivity() {
         handle(intent)
         setContent {
             val ctx = LocalContext.current
-            MaterialTheme(if (isSystemInDarkTheme()) dynamicDarkColorScheme(ctx) else dynamicLightColorScheme(ctx)) {
+            val dark = darkTheme()
+            LaunchedEffect(dark) { // status and navigation bar icons follow the app's theme, not the system's
+                val bars = SystemBarStyle.auto(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT) { dark }
+                enableEdgeToEdge(bars, bars)
+            }
+            MaterialTheme(if (dark) dynamicDarkColorScheme(ctx) else dynamicLightColorScheme(ctx)) {
                 App()
             }
         }
@@ -1050,6 +1065,12 @@ fun SettingsSheet(onDismiss: () -> Unit, onEditName: () -> Unit, onEditRegion: (
                 headlineContent = { Text(stringResource(R.string.your_devices)) },
                 supportingContent = { Text(stringResource(R.string.connected_over, transportName())) },
                 modifier = Modifier.clickable { onDismiss(); onDevices() },
+            )
+            ListItem(
+                leadingContent = { Icon(Icons.Outlined.DarkMode, null) },
+                headlineContent = { Text(stringResource(R.string.theme)) },
+                supportingContent = { Text(stringResource(listOf(R.string.theme_system, R.string.theme_light, R.string.theme_dark)[Mesh.theme])) },
+                modifier = Modifier.clickable { Mesh.pickTheme((Mesh.theme + 1) % 3) },
             )
             if (Mesh.blocked.isNotEmpty()) ListItem(
                 leadingContent = { Icon(Icons.Outlined.Block, null) },

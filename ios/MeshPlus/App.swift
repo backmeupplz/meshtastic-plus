@@ -44,12 +44,22 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
 }
 
 struct RootView: View {
+    @AppStorage("theme") private var theme = 0 // Settings → Theme: 0 follows the system, 1 light, 2 dark
+
     var body: some View {
-        #if DEBUG
-        if CommandLine.arguments.contains("-foldtest") { screen.modifier(FoldTest()) } else { screen }
-        #else
-        screen
-        #endif
+        Group {
+            #if DEBUG
+            if CommandLine.arguments.contains("-foldtest") { screen.modifier(FoldTest()) } else { screen }
+            #else
+            screen
+            #endif
+        }
+        // On the windows, not .preferredColorScheme: an open sheet (Settings) doesn't leave dark for nil with that.
+        .onChange(of: theme, initial: true) { _, t in
+            for case let scene as UIWindowScene in UIApplication.shared.connectedScenes {
+                scene.windows.forEach { $0.overrideUserInterfaceStyle = UIUserInterfaceStyle(rawValue: t) ?? .unspecified } // same 0/1/2
+            }
+        }
     }
 
     // Layouts follow the width size class (and view geometry), never the device or orientation: iPhone Duo's cover

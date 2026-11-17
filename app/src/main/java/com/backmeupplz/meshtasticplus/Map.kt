@@ -8,7 +8,6 @@ import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -35,7 +34,7 @@ fun MapTab(padding: PaddingValues, now: Long, onProfile: (Long) -> Unit) {
     if (placed.isEmpty()) {
         return EmptyState(padding, Icons.Outlined.Map, stringResource(R.string.no_positions), stringResource(R.string.no_positions_body))
     }
-    val dark = isSystemInDarkTheme()
+    val dark = darkTheme()
     AndroidView(
         factory = { ctx ->
             Configuration.getInstance().apply {
@@ -48,15 +47,16 @@ fun MapTab(padding: PaddingValues, now: Long, onProfile: (Long) -> Unit) {
                 zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
                 isTilesScaledToDpi = true
                 // "© OpenStreetMap contributors", required by the tile license
-                overlays.add(CopyrightOverlay(ctx).apply { if (dark) setTextColor(android.graphics.Color.LTGRAY) })
-                if (dark) overlayManager.tilesOverlay.setColorFilter(ColorMatrixColorFilter(NIGHT))
+                overlays.add(CopyrightOverlay(ctx))
                 addOnFirstLayoutListener { _, _, _, _, _ ->
                     zoomToBoundingBox(BoundingBox.fromGeoPoints(placed.map { GeoPoint(it.lat!!, it.lon!!) }), false, 96)
                     if (zoomLevelDouble > 15.0) controller.setZoom(15.0) // one node (or all in one spot): not street level
                 }
             }
         },
-        update = { map ->
+        update = { map -> // runs again when Settings → Theme flips it
+            map.overlays.filterIsInstance<CopyrightOverlay>().forEach { it.setTextColor(if (dark) android.graphics.Color.LTGRAY else android.graphics.Color.BLACK) }
+            map.overlayManager.tilesOverlay.setColorFilter(if (dark) ColorMatrixColorFilter(NIGHT) else null)
             map.overlays.removeAll { it is Marker }
             placed.forEach { n ->
                 map.overlays.add(Marker(map).apply {

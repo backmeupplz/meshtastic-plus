@@ -451,4 +451,8 @@
     <plurals name="seconds">
         <item quantity="other">%1$d giây</item>
     </plurals>
+    <string name="theme">Giao diện</string>
+    <string name="theme_system">Hệ thống</string>
+    <string name="theme_light">Sáng</string>
+    <string name="theme_dark">Tối</string>
 </resources>

@@ -481,4 +481,8 @@
         <item quantity="many">%1$d ثانية</item>
         <item quantity="other">%1$d ثانية</item>
     </plurals>
+    <string name="theme">المظهر</string>
+    <string name="theme_system">النظام</string>
+    <string name="theme_light">فاتح</string>
+    <string name="theme_dark">داكن</string>
 </resources>

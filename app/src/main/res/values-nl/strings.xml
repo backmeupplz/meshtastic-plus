@@ -457,4 +457,8 @@
         <item quantity="one">%1$d seconde</item>
         <item quantity="other">%1$d seconden</item>
     </plurals>
+    <string name="theme">Thema</string>
+    <string name="theme_system">Systeem</string>
+    <string name="theme_light">Licht</string>
+    <string name="theme_dark">Donker</string>
 </resources>

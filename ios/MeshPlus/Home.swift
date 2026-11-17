@@ -382,6 +382,7 @@ struct ProfileSheet: View {
 struct SettingsSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
+    @AppStorage("theme") private var theme = 0
 
     var body: some View {
         let mesh = Mesh.shared
@@ -411,6 +412,11 @@ struct SettingsSheet: View {
                         LabeledContent("Blocked nodes", value: mesh.blocked.isEmpty ? String(localized: "None") : "\(mesh.blocked.count)")
                     }
                     Toggle("Filter objectionable words", isOn: Binding(get: { mesh.filter }, set: { mesh.setFilter($0) }))
+                    Picker("Theme", selection: $theme) {
+                        Text("System").tag(0)
+                        Text("Light").tag(1)
+                        Text("Dark").tag(2)
+                    }
                     Link("Terms of use", destination: URL(string: "https://meshplus.app/terms.html")!)
                     Link("Privacy policy", destination: URL(string: "https://meshplus.app/privacy.html")!)
                     Button("Send feedback") {

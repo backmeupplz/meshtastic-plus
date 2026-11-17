@@ -119,6 +119,8 @@ object Mesh {
     private val muted = mutableStateListOf<String>() // "node/conversation" that don't notify
     val blocked = mutableStateListOf<Long>() // node numbers whose messages are hidden, on all your nodes
     var agreed by mutableStateOf(false) // accepted the terms of use (no objectionable content or abuse)
+    var theme by mutableIntStateOf(0) // Settings → Theme: 0 follows the system, 1 light, 2 dark
+        private set
     val saved = mutableStateListOf<Pair<String, String>>() // devices used before: Bluetooth address (or USB) to name
     var current by mutableStateOf<String?>(null) // key of the device we're on, as in [saved]
     private val statusState = mutableStateOf("")
@@ -172,6 +174,7 @@ object Mesh {
         muted += prefs().getStringSet("muted", emptySet())!!
         blocked += prefs().getStringSet("blocked", emptySet())!!.map { it.toLong() }
         agreed = prefs().getBoolean("terms", false)
+        theme = prefs().getInt("theme", 0)
         runCatching {
             val a = JSONArray(prefs().getString("saved", "[]"))
             for (i in 0 until a.length()) a.getJSONArray(i).run { saved += getString(0) to getString(1) }
@@ -518,6 +521,11 @@ object Mesh {
         if (!block) blocked.remove(num) else if (num !in blocked) blocked += num
         prefs().edit { putStringSet("blocked", blocked.map { it.toString() }.toSet()) }
         if (block) Notify.clear(convoKey(0, num))
+    }
+
+    fun pickTheme(t: Int) {
+        theme = t
+        prefs().edit { putInt("theme", t) }
     }
 
     fun agree() {

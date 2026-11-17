@@ -469,4 +469,8 @@
         <item quantity="many">%1$d секунд</item>
         <item quantity="other">%1$d секунды</item>
     </plurals>
+    <string name="theme">Тема</string>
+    <string name="theme_system">Системная</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
 </resources>
