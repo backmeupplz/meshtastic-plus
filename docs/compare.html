@@ -91,19 +91,24 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <p class="muted">How they differ, checked on October 27, 2026.</p>
 
   <p>
-    Mesh+ is a small, MIT-licensed app for Meshtastic radios on Android and iPhone, made to do one thing simply: chat with the people on your mesh.
-    It talks to the same radios on Meshtastic firmware 2.x as the official Meshtastic app, made by the Meshtastic project, so you can
-    switch between them at any time and keep using the official app for maps, telemetry and full device configuration.
+    I built Mesh+ as a small, MIT-licensed Android and iPhone client for one job: chatting over Meshtastic radios without digging through menus.
+    It talks to the same Meshtastic firmware 2.x radios as the official app, so you can
+    switch back anytime and keep the official app for maps, telemetry and full node configuration.
   </p>
 
   <h2>Why Mesh+</h2>
-  <ul>
-    <li>Setup in a few steps: plug the radio in with USB-C (the phone powers it) or connect over Bluetooth, then pick your region and a name.</li>
-    <li>All your chats in one list: the public channel, private encrypted rooms you invite people to with a QR code or a link, and direct messages, with unread badges.</li>
-    <li>An SMS relay: when one phone on the mesh has a SIM card, people in a private room can send and receive regular text messages through it. It's in the F-Droid build and the APK linked below; the Google Play build leaves it out because Play doesn't allow its permissions.</li>
-    <li>Firmware updates for nRF52 radios over USB (<a href="update-meshtastic-firmware.html">how it works, step by step</a>), with every version Meshtastic publishes for your board to choose from.</li>
-    <li>Every node setting explained in plain words, a demo mode for trying the app without a radio, and an app of about 3 MB that needs Android 12 or newer or iOS 17 or newer. The iPhone app connects over Bluetooth and leaves out the SMS relay and firmware updates.</li>
-  </ul>
+  <p>
+    Setup takes a few taps: plug a radio in over USB-C (the phone powers it) or pair over Bluetooth, pick your region and set a name.
+    Every chat sits in one list with unread badges, covering the public channel, private encrypted rooms shared by QR code or link, and direct messages.
+  </p>
+  <p>
+    Android adds two tools I wanted on the road. If one phone on your mesh has a SIM card, the SMS relay lets people in a private room send and receive regular texts through it (in the F-Droid build and direct APK below; Google Play blocks the SMS permissions).
+    You can also flash nRF52 radios over USB right from the app (<a href="update-meshtastic-firmware.html">step-by-step firmware guide</a>) with any release Meshtastic publishes for your board.
+  </p>
+  <p>
+    Node settings are in plain English, and demo mode lets you try the app without hardware.
+    It's about 3 MB on Android 12 or newer and iOS 17 or newer; the iPhone build uses Bluetooth and skips the SMS relay and USB flashing.
+  </p>
 
   <h2>Get them</h2>
   <ul>
