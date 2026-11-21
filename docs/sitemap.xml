@@ -2860,4 +2860,7 @@
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/update-meshtastic-firmware.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/update-meshtastic-firmware.html"/>
   </url>
+  <url>
+    <loc>https://meshplus.app/tools/range/</loc>
+  </url>
 </urlset>
