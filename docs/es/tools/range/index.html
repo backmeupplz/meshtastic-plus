@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de alcance y enlace Meshtastic | Mesh+</title>
+<meta name="description" content="Calcula el alcance LoRa de Meshtastic, presupuesto de enlace, margen y zona de Fresnel según perfil, potencia, antenas, cables y terreno en tu navegador.">
+<link rel="canonical" href="https://meshplus.app/es/tools/range/">
+<link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/">
+<link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/">
+<link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/">
+<link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/">
+<link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/">
+<link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/">
+<link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/">
+<link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/">
+<link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/">
+<link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/">
+<link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/">
+<link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/">
+<link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/">
+<link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/">
+<link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/">
+<link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/">
+<link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/">
+<link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/">
+<link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/">
+<link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/">
+<link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/">
+<link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/">
+<link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ar_AR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="hi_IN">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="nl_NL">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="sv_SE">
+<meta property="og:locale:alternate" content="th_TH">
+<meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:locale:alternate" content="uk_UA">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:site_name" content="Mesh+">
+<meta property="og:url" content="https://meshplus.app/es/tools/range/">
+<meta property="og:title" content="Calculadora de alcance y presupuesto de enlace Meshtastic">
+<meta property="og:description" content="Elige un perfil de Meshtastic, potencia, antenas, pérdida de cable y terreno para calcular presupuesto de enlace, margen y rango de alcance realista.">
+<meta property="og:image" content="https://meshplus.app/og/es/range.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Calculadora de alcance y presupuesto de enlace Meshtastic: 15 perfiles oficiales de módem, herramienta gratuita en el navegador en meshplus.app.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Calculadora de alcance y presupuesto de enlace Meshtastic">
+<meta name="twitter:description" content="Elige un perfil de Meshtastic, potencia, antenas, pérdida de cable y terreno para calcular presupuesto de enlace, margen y rango de alcance realista.">
+<meta name="twitter:image" content="https://meshplus.app/og/es/range.jpg">
+<meta name="twitter:image:alt" content="Calculadora de alcance y presupuesto de enlace Meshtastic: 15 perfiles oficiales de módem, herramienta gratuita en el navegador en meshplus.app.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+/* fonts served from this site; optional = they never swap in late and shift the page */
+@font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 700 800; font-display: optional; src: url(/fonts/bricolage-grotesque-normal-5bb66ad1.woff2) format('woff2'); unicode-range: U+0020-007E, U+00A0, U+00AE, U+00B7, U+2013-2014, U+2018-2019, U+201C-201D, U+2022, U+2026, U+2122, U+2190-2193; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: optional; src: url(/fonts/inter-normal-c37b8e5e.woff2) format('woff2'); unicode-range: U+0020-007E, U+00A0, U+00AE, U+00B7, U+2013-2014, U+2018-2019, U+201C-201D, U+2022, U+2026, U+2122, U+2190-2193; }
+</style>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #060b08;
+    --card: #0c1610;
+    --input: #08100b;
+    --line: #1d3225;
+    --fg: #eef5f0;
+    --muted: #a6b8ad;
+    --green: #67ea94;
+    --green-fg: #06130b;
+    --warn: #f5c451;
+    --err: #ff8a80;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1, h2, h3 { font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.02em; line-height: 1.15; }
+  h1 { font-size: clamp(32px, 6vw, 44px); margin: 8px 0 12px; }
+  h2 { font-size: clamp(22px, 4vw, 28px); margin: 40px 0 12px; }
+  h3 { font-size: 19px; margin: 24px 0 8px; }
+  p { margin: 0 0 16px; }
+  .lead { font-size: 18px; color: var(--muted); margin: 0 0 24px; }
+  .muted { color: var(--muted); }
+  a { color: var(--green); text-underline-offset: 3px; }
+  code { font-family: var(--mono); font-size: 0.9em; background: var(--card); border: 1px solid var(--line); padding: 1px 6px; border-radius: 5px; overflow-wrap: anywhere; }
+  .back { margin: 0 0 8px; }
+  .back a { display: inline-block; padding: 6px 0; min-height: 36px; text-decoration: none; font-weight: 600; }
+  .back a:hover { text-decoration: underline; }
+
+  .tool { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; margin: 0 0 28px; }
+  .presets-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; align-items: center; }
+  .presets-bar span { font-size: 14px; color: var(--muted); margin-right: 4px; }
+  .presets-bar button { font: 600 14px Inter, ui-sans-serif, system-ui, sans-serif; background: var(--input); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; min-height: 40px; cursor: pointer; }
+  .presets-bar button:hover { border-color: var(--green); color: var(--green); }
+  .presets-bar button[aria-pressed="true"] { background: var(--green); color: var(--green-fg); border-color: var(--green); }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+  label { font-size: 15px; font-weight: 600; color: var(--fg); }
+  .hint { font-size: 13.5px; color: var(--muted); margin-top: -2px; }
+  select, input[type="number"] {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    font: 16px/1.3 Inter, ui-sans-serif, system-ui, sans-serif;
+    background: var(--input);
+    color: var(--fg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  select:focus-visible, input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+
+  .terrain-group { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .terrain-group button {
+    min-height: 48px;
+    padding: 10px 8px;
+    font: 600 14.5px/1.25 Inter, ui-sans-serif, system-ui, sans-serif;
+    background: var(--input);
+    color: var(--fg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .terrain-group button:hover { border-color: var(--green); }
+  .terrain-group button[aria-pressed="true"] { background: var(--green); color: var(--green-fg); border-color: var(--green); }
+
+  .results { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .hero-out { background: var(--input); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+  .hero-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 4px; }
+  .hero-val { font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-size: clamp(28px, 5vw, 38px); font-weight: 800; color: var(--green); line-height: 1.15; }
+  .hero-sub { font-size: 15px; color: var(--muted); margin-top: 6px; }
+  .reality-note { background: rgba(245, 196, 81, 0.08); border: 1px solid rgba(245, 196, 81, 0.35); border-radius: 10px; padding: 12px 14px; font-size: 15px; color: var(--fg); margin-bottom: 14px; }
+  .reality-note strong { color: var(--warn); }
+  .warn-box { background: rgba(255, 138, 128, 0.08); border: 1px solid rgba(255, 138, 128, 0.4); border-radius: 10px; padding: 12px 14px; font-size: 15px; color: var(--fg); margin-bottom: 14px; }
+  .warn-box strong { color: var(--err); }
+
+  .metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .metric { background: var(--input); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .metric .k { font-size: 13.5px; color: var(--muted); margin-bottom: 4px; }
+  .metric .v { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--fg); }
+  .metric .s { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+
+  .margin-card { margin-top: 12px; background: var(--input); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .margin-card .title { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+  .margin-row { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 15px; }
+  .margin-row strong { font-family: var(--mono); }
+  .verdict { margin-top: 8px; font-size: 15px; color: var(--muted); }
+  .verdict.good { color: var(--green); }
+  .verdict.ok { color: var(--warn); }
+  .verdict.bad { color: var(--err); }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 15.5px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; }
+  tr.default-row { background: rgba(103, 234, 148, 0.07); }
+  td.num, th.num { font-family: var(--mono); }
+
+  .cta { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; margin: 36px 0 28px; }
+  .cta h2 { margin: 0 0 8px; font-size: 23px; }
+  .cta p { margin: 0 0 16px; color: var(--muted); }
+  .cta a.btn { display: inline-block; background: var(--green); color: var(--green-fg); font-weight: 700; text-decoration: none; padding: 12px 20px; min-height: 46px; border-radius: 10px; }
+  .cta a.btn:hover { opacity: 0.92; }
+
+  footer { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14.5px; color: var(--muted); }
+  footer p { margin: 0 0 10px; }
+
+  @media (max-width: 720px) {
+    table, thead, tbody, tr, td { display: block; width: 100%; }
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+    tr { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; }
+    tr.default-row { border-color: rgba(103, 234, 148, 0.45); }
+    td { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 6px 0; border-bottom: 1px solid rgba(29, 50, 37, 0.6); }
+    td:last-child { border-bottom: none; }
+    td::before { content: attr(data-label); font-size: 13.5px; color: var(--muted); font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-weight: 600; flex-shrink: 0; }
+    .terrain-group { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .metrics { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    main { padding: 20px 16px 48px; }
+    .tool { padding: 16px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0;padding:0;flex:0 0 100%}nav.langs a{display:inline-block;padding:4px 8px;min-height:32px;border-radius:6px}nav.langs a[aria-current]{font-weight:700;text-decoration:none;color:inherit}h1,h2,h3,p,li,summary{overflow-wrap:break-word;hyphens:auto}
+</style>
+<script defer src="https://lumen.borodutch.com/l.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Calculadora de alcance y presupuesto de enlace Meshtastic","url":"https://meshplus.app/es/tools/range/","inLanguage":"es","applicationCategory":"UtilitiesApplication","operatingSystem":"Cualquiera (funciona en el navegador)","description":"Calcula el presupuesto de enlace LoRa de Meshtastic, el margen de desvanecimiento, el radio de la zona de Fresnel y el rango de alcance estimado a partir de los perfiles de módem publicados por Meshtastic, la potencia de transmisión, las ganancias de antena, la pérdida de cable y el terreno.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isAccessibleForFree":true,"isPartOf":{"@type":"WebSite","name":"Mesh+","url":"https://meshplus.app/es/"},"author":{"@type":"Person","name":"Nikita Kolmogorov","url":"https://borodutch.com"}},{"@type":"FAQPage","inLanguage":"es","mainEntity":[{"@type":"Question","name":"¿Hasta dónde llega una radio Meshtastic en la vida real?","acceptedAnswer":{"@type":"Answer","text":"Con el perfil predeterminado Long Fast a 22 dBm y antenas de serie de 2 dBi, cabe esperar aproximadamente de 0,4 a 1,2 km en ciudades densas, de 1,5 a 3,8 km en zonas suburbanas, de 4 a 10 km en terreno rural abierto y más de 100 km de cima a cima con línea de visión despejada. La altura de la antena y los obstáculos del terreno pesan mucho más que la potencia de transmisión."}},{"@type":"Question","name":"¿Duplicar la potencia de transmisión duplica el alcance de Meshtastic?","acceptedAnswer":{"@type":"Answer","text":"No. Duplicar la potencia de transmisión añade 3 dB a tu presupuesto de enlace, lo que aumenta el alcance en espacio libre en torno a un 41 por ciento y el alcance suburbano en aproximadamente un 20 a 25 por ciento. Elevar una antena por encima de los tejados y árboles cercanos casi siempre añade más distancia que subir la potencia."}},{"@type":"Question","name":"¿Qué perfil de módem de Meshtastic ofrece el mayor alcance?","acceptedAnswer":{"@type":"Answer","text":"Entre los nueve perfiles de uso general de Meshtastic 2.8, Long Moderate ofrece el mayor presupuesto de enlace publicado con 156 dB (3 dB más que los 153 dB de Long Fast), aunque su velocidad de datos baja a 0,34 kbps. En redes mesh urbanas con mucho tráfico, Medium Fast (148 dB, 3,52 kbps) suele entregar más mensajes porque los paquetes pasan menos tiempo en el aire."}},{"@type":"Question","name":"¿Por qué una antena de mayor ganancia rinde a veces peor en interiores o entre colinas?","acceptedAnswer":{"@type":"Answer","text":"Las antenas omnidireccionales de alta ganancia aplanan su patrón de radiación hacia el horizonte. Si un nodo está en una ladera empinada por encima de otro, o la radio va inclinada dentro de una mochila, un haz estrecho puede pasar de largo por encima o debajo del otro nodo y perder señal frente a una antena de látigo de 2 a 3 dBi con patrón más abierto."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Mesh+","item":"https://meshplus.app/es/"},{"@type":"ListItem","position":2,"name":"Calculadora de alcance Meshtastic","item":"https://meshplus.app/es/tools/range/"}]}]}</script>
+</head>
+<body>
+<main>
+  <p class="back"><a href="/es/">← Mesh+</a></p>
+  <h1>Calculadora de alcance y presupuesto de enlace Meshtastic</h1>
+  <p class="lead">
+    Una radio Meshtastic con el perfil predeterminado Long Fast alcanza aproximadamente de 1,5 a 3,8 km en zonas suburbanas, de 4 a 10 km en terreno rural abierto y más de 100 km de cima a cima cuando nada bloquea el trayecto. Elige abajo tu perfil de módem, potencia de transmisión, antenas, pérdida de cable y terreno para calcular el presupuesto de enlace, el margen de desvanecimiento y un rango de alcance realista en tu navegador.
+  </p>
+
+  <section class="tool" aria-label="Calculadora de alcance Meshtastic">
+    <div class="presets-bar" role="group" aria-label="Configuraciones de ejemplo">
+      <span>Prueba una configuración:</span>
+      <button type="button" data-scene="suburb" aria-pressed="true">Portátiles en zona suburbana</button>
+      <button type="button" data-scene="city" aria-pressed="false">Ciudad densa (Medium Fast)</button>
+      <button type="button" data-scene="eu868" aria-pressed="false">Rural EU 868</button>
+      <button type="button" data-scene="hilltop" aria-pressed="false">Línea de visión desde cima</button>
+    </div>
+
+    <div class="grid">
+      <div class="field">
+        <label for="preset">Perfil de módem</label>
+        <select id="preset">
+          <optgroup label="Perfiles de uso general (Meshtastic 2.8)">
+            <option value="SHORT_TURBO">Short Turbo — 140 dB · 21.88 kbps · SF7 / 500 kHz</option>
+            <option value="SHORT_FAST">Short Fast — 143 dB · 10.94 kbps · SF7 / 250 kHz</option>
+            <option value="SHORT_SLOW">Short Slow — 145.5 dB · 6.25 kbps · SF8 / 250 kHz</option>
+            <option value="MEDIUM_TURBO">Medium Turbo — 145 dB · 7.03 kbps · SF9 / 500 kHz</option>
+            <option value="MEDIUM_FAST">Medium Fast — 148 dB · 3.52 kbps · SF9 / 250 kHz</option>
+            <option value="MEDIUM_SLOW">Medium Slow — 150.5 dB · 1.95 kbps · SF10 / 250 kHz</option>
+            <option value="LONG_TURBO">Long Turbo — 150 dB · 1.34 kbps · SF11 / 500 kHz</option>
+            <option value="LONG_FAST" selected>Long Fast (predeterminado) — 153 dB · 1.07 kbps · SF11 / 250 kHz</option>
+            <option value="LONG_MODERATE">Long Moderate — 156 dB · 0.34 kbps · SF11 / 125 kHz</option>
+          </optgroup>
+          <optgroup label="Perfiles de banda estrecha (bandas regionales)">
+            <option value="LITE_FAST">Lite Fast — 151 dB · 1.76 kbps · SF9 / 125 kHz</option>
+            <option value="LITE_SLOW">Lite Slow — 153.5 dB · 0.98 kbps · SF10 / 125 kHz</option>
+            <option value="NARROW_FAST">Narrow Fast — 149 dB · 2.28 kbps · SF7 / 62.5 kHz</option>
+            <option value="NARROW_SLOW">Narrow Slow — 151.5 dB · 1.30 kbps · SF8 / 62.5 kHz</option>
+            <option value="TINY_FAST">Tiny Fast — 155 dB · 0.68 kbps · SF7 / 15.6 kHz</option>
+            <option value="TINY_SLOW">Tiny Slow — 157.5 dB · 0.33 kbps · SF8 / 15.6 kHz</option>
+          </optgroup>
+        </select>
+        <span class="hint">La sensibilidad del receptor se calcula a partir de los presupuestos de enlace de referencia a 22 dBm de Meshtastic.</span>
+      </div>
+
+      <div class="field">
+        <label for="band">Banda de frecuencia</label>
+        <select id="band">
+          <option value="906.875" data-erp="30" data-eu868="0" selected>EE. UU. / América 915 MHz (906,875 MHz)</option>
+          <option value="869.525" data-erp="27" data-eu868="1">Europa 868 MHz (869,525 MHz)</option>
+          <option value="433.875" data-erp="10" data-eu868="0">Europa 433 MHz (433,875 MHz)</option>
+          <option value="2400" data-erp="20" data-eu868="0">2,4 GHz LoRa (2400 MHz)</option>
+        </select>
+        <span class="hint">Las frecuencias más bajas pierden menos señal a igual distancia en espacio libre.</span>
+      </div>
+
+      <div class="field">
+        <label for="tx">Potencia de transmisión (dBm)</label>
+        <input id="tx" type="number" min="0" max="30" step="1" value="22">
+        <span class="hint">La mayoría de las placas SX1262 (Heltec T114, RAK4631) emiten a 22 dBm; comprueba el límite legal de tu región.</span>
+      </div>
+
+      <div class="field">
+        <label for="loss">Pérdida total en cables y conectores (dB)</label>
+        <input id="loss" type="number" min="0" max="20" step="0.5" value="1">
+        <span class="hint">Ambos extremos combinados: alrededor de 0,5–1 dB para latiguillos cortos, 0 dB para una antena de látigo montada directamente.</span>
+      </div>
+
+      <div class="field">
+        <label for="txg">Ganancia de antena TX (dBi)</label>
+        <input id="txg" type="number" min="-5" max="20" step="0.5" value="2">
+        <span class="hint">Las antenas de serie rondan 1–2 dBi; las antenas de mástil de fibra de vidrio ofrecen 3–6 dBi.</span>
+      </div>
+
+      <div class="field">
+        <label for="rxg">Ganancia de antena RX (dBi)</label>
+        <input id="rxg" type="number" min="-5" max="20" step="0.5" value="2">
+        <span class="hint">Ambos extremos aportan lo mismo en un presupuesto de enlace bidireccional.</span>
+      </div>
+
+      <div class="field full">
+        <label id="terrain-label">Terreno y entorno</label>
+        <div class="terrain-group" role="group" aria-labelledby="terrain-label">
+          <button type="button" data-terrain="urban" aria-pressed="false">Urbano denso</button>
+          <button type="button" data-terrain="suburban" aria-pressed="true">Suburbano</button>
+          <button type="button" data-terrain="rural" aria-pressed="false">Rural / arbolado</button>
+          <button type="button" data-terrain="los" aria-pressed="false">Visión directa</button>
+        </div>
+        <span class="hint">Estima un rango de alcance mediante exponentes de pérdida de trayecto; las colinas sólidas o los edificios detienen las señales UHF independientemente de la potencia.</span>
+      </div>
+
+      <div class="field full">
+        <label for="dist">Comprobar el margen de desvanecimiento a una distancia concreta (km)</label>
+        <input id="dist" type="number" min="0.1" max="500" step="0.1" value="3">
+        <span class="hint">Calcula la pérdida en espacio libre, el margen de desvanecimiento y el despeje de la primera zona de Fresnel en el punto medio.</span>
+      </div>
+    </div>
+
+    <div class="results" aria-live="polite">
+      <div class="hero-out">
+        <div class="hero-label" id="band-label">Rango de alcance estimado · Suburbano</div>
+        <div class="hero-val" id="range-out">1.5 – 3.8 km (0.9 – 2.3 mi)</div>
+        <div class="hero-sub" id="range-sub">Requiere al menos 10 dB de margen de desvanecimiento sobre la pérdida de trayecto (exponente log-distancia n = 3,2 a 3,6).</div>
+      </div>
+
+      <div class="reality-note">
+        <strong>El terreno importa más que la fórmula.</strong> El LoRa en UHF viaja sobre todo en línea recta: una sola cresta, un aparcamiento de hormigón o una ladera húmeda cortan un enlace que parece holgado sobre el papel, mientras que subir ambas antenas por encima de los tejados suele triplicar el alcance real sin tocar ni un ajuste de la radio.
+      </div>
+
+      <div class="warn-box" id="warnings" hidden></div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="k">Presupuesto de enlace total</div>
+          <div class="v" id="lb-out">156.0 dB</div>
+          <div class="s" id="lb-sub">Ref. del perfil: 153 dB a 22 dBm</div>
+        </div>
+        <div class="metric">
+          <div class="k">Sensibilidad del receptor</div>
+          <div class="v" id="rx-out">-131.0 dBm</div>
+          <div class="s" id="rx-sub">SF11 · 250 kHz · 1.07 kbps</div>
+        </div>
+        <div class="metric">
+          <div class="k">Radio de Fresnel medio</div>
+          <div class="v" id="fresnel-out">15.8 m</div>
+          <div class="s" id="fresnel-sub">Despeje de 52 ft a 3.0 km</div>
+        </div>
+      </div>
+
+      <div class="margin-card">
+        <div class="title" id="margin-title">Margen de desvanecimiento a 3.0 km (1.9 mi)</div>
+        <div class="margin-row">
+          <span>Pérdida en espacio libre: <strong id="fspl-out">101.1 dB</strong></span>
+          <span>Margen en espacio libre: <strong id="fsm-out">+54.9 dB</strong></span>
+          <span id="tm-wrap">Margen con terreno: <strong id="tm-out">-0.8 a +13.1 dB</strong></span>
+        </div>
+        <div class="verdict" id="verdict">De justo a viable en entorno suburbano: sube un nodo más arriba o aléjalo de los edificios si se pierden paquetes.</div>
+      </div>
+    </div>
+  </section>
+
+  <h2>Por qué el terreno pesa más que cualquier fórmula de presupuesto de enlace</h2>
+  <p>
+    Un receptor LoRa puede rescatar un paquete de Long Fast por debajo del ruido a -131 dBm, lo que da a una radio estándar de 22 dBm más de 150 dB de presupuesto de enlace. En el vacío a 906,875 MHz, 150 dB bastan para recorrer cientos de kilómetros. Así se logró el récord terrestre de 331 km de Meshtastic documentado en <a href="https://meshtastic.org/docs/overview/range-tests/">meshtastic.org</a>: dos nodos RAK4631 en cimas elevadas con línea de visión despejada a través del aire libre.
+  </p>
+  <p>
+    A pie de calle, tres límites físicos se imponen mucho antes de que te quedes sin decibelios. El primero es la curvatura de la Tierra: dos personas que sostienen radios a 1,8 m de altura sobre terreno llano solo tienen un horizonte de radio de unos 11 km antes de que el propio suelo se interponga entre ellas. El segundo es la primera zona de Fresnel, el volumen con forma de balón de rugby alrededor de la línea directa entre antenas; a 906,875 MHz en un trayecto de 3 km, su radio en el punto medio es de 15,8 m, y obstruir más de un 40 por ciento de esa zona resta señal adicional incluso cuando ves la colina lejana a simple vista. El tercero son los obstáculos: muros de ladrillo, tejados metálicos, lomas densas y follaje húmedo absorben rápido las señales de 868 y 915 MHz, y por eso la misma radio que cubre 40 km desde una torre de vigilancia puede quedarse corta al cruzar 800 metros de bloques de viviendas en el centro.
+  </p>
+
+  <h2>Perfiles de módem de Meshtastic y presupuestos de enlace publicados</h2>
+  <p>
+    Meshtastic 2.8 define nueve perfiles LoRa de uso general. Cada incremento en el factor de dispersión prácticamente duplica el tiempo en el aire de cada paquete a cambio de unos 2,5 dB más de presupuesto de enlace, y reducir a la mitad el ancho de banda añade casi 3 dB. La tabla siguiente recoge las cifras publicadas en la <a href="https://meshtastic.org/docs/overview/radio-settings/">documentación de ajustes de radio de Meshtastic</a> (consultada el 21 de noviembre de 2026), que asumen 22 dBm de potencia de transmisión y antenas de 0 dBi, junto con la sensibilidad implícita del receptor que utiliza esta calculadora.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Perfil</th>
+        <th class="num">Velocidad</th>
+        <th class="num">SF / CR</th>
+        <th class="num">Ancho de banda</th>
+        <th class="num">Presupuesto</th>
+        <th class="num">Sensibilidad RX</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td data-label="Perfil">Short Turbo*</td><td class="num" data-label="Velocidad">21.88 kbps</td><td class="num" data-label="SF / CR">SF7 · 4/5</td><td class="num" data-label="Ancho de banda">500 kHz</td><td class="num" data-label="Presupuesto">140 dB</td><td class="num" data-label="Sensibilidad RX">-118.0 dBm</td></tr>
+      <tr><td data-label="Perfil">Short Fast</td><td class="num" data-label="Velocidad">10.94 kbps</td><td class="num" data-label="SF / CR">SF7 · 4/5</td><td class="num" data-label="Ancho de banda">250 kHz</td><td class="num" data-label="Presupuesto">143 dB</td><td class="num" data-label="Sensibilidad RX">-121.0 dBm</td></tr>
+      <tr><td data-label="Perfil">Short Slow</td><td class="num" data-label="Velocidad">6.25 kbps</td><td class="num" data-label="SF / CR">SF8 · 4/5</td><td class="num" data-label="Ancho de banda">250 kHz</td><td class="num" data-label="Presupuesto">145.5 dB</td><td class="num" data-label="Sensibilidad RX">-123.5 dBm</td></tr>
+      <tr><td data-label="Perfil">Medium Turbo*</td><td class="num" data-label="Velocidad">7.03 kbps</td><td class="num" data-label="SF / CR">SF9 · 4/5</td><td class="num" data-label="Ancho de banda">500 kHz</td><td class="num" data-label="Presupuesto">145 dB</td><td class="num" data-label="Sensibilidad RX">-123.0 dBm</td></tr>
+      <tr><td data-label="Perfil">Medium Fast</td><td class="num" data-label="Velocidad">3.52 kbps</td><td class="num" data-label="SF / CR">SF9 · 4/5</td><td class="num" data-label="Ancho de banda">250 kHz</td><td class="num" data-label="Presupuesto">148 dB</td><td class="num" data-label="Sensibilidad RX">-126.0 dBm</td></tr>
+      <tr><td data-label="Perfil">Medium Slow</td><td class="num" data-label="Velocidad">1.95 kbps</td><td class="num" data-label="SF / CR">SF10 · 4/5</td><td class="num" data-label="Ancho de banda">250 kHz</td><td class="num" data-label="Presupuesto">150.5 dB</td><td class="num" data-label="Sensibilidad RX">-128.5 dBm</td></tr>
+      <tr><td data-label="Perfil">Long Turbo*</td><td class="num" data-label="Velocidad">1.34 kbps</td><td class="num" data-label="SF / CR">SF11 · 4/8</td><td class="num" data-label="Ancho de banda">500 kHz</td><td class="num" data-label="Presupuesto">150 dB</td><td class="num" data-label="Sensibilidad RX">-128.0 dBm</td></tr>
+      <tr class="default-row"><td data-label="Perfil"><strong>Long Fast (predeterminado)</strong></td><td class="num" data-label="Velocidad">1.07 kbps</td><td class="num" data-label="SF / CR">SF11 · 4/5</td><td class="num" data-label="Ancho de banda">250 kHz</td><td class="num" data-label="Presupuesto">153 dB</td><td class="num" data-label="Sensibilidad RX">-131.0 dBm</td></tr>
+      <tr><td data-label="Perfil">Long Moderate</td><td class="num" data-label="Velocidad">0.34 kbps</td><td class="num" data-label="SF / CR">SF11 · 4/8</td><td class="num" data-label="Ancho de banda">125 kHz</td><td class="num" data-label="Presupuesto">156 dB</td><td class="num" data-label="Sensibilidad RX">-134.0 dBm</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">
+    *Los tres perfiles Turbo de 500 kHz no son legales en todas las regiones y no están disponibles en EU_868 (869,40–869,65 MHz). El desplegable superior incluye también los seis perfiles de banda estrecha de Meshtastic (Lite, Narrow y Tiny, de 15,6 a 125 kHz) para bandas que exigen canales más estrechos.
+  </p>
+
+  <h2>Cómo se calculan las cifras y qué parte es aproximada</h2>
+  <p>
+    La parte exacta de RF sale directamente de la ecuación del presupuesto de enlace. Como los presupuestos publicados por Meshtastic asumen 22 dBm de potencia de transmisión y antenas de 0 dBi, la calculadora obtiene la sensibilidad del receptor de cada perfil como <code>RX_sens = 22 - LinkBudget_ref</code> y luego calcula el presupuesto de tu montaje como <code>TX_dBm + TX_gain + RX_gain - Cable_loss - RX_sens</code>. La pérdida de trayecto en espacio libre a distancia <code>d</code> (km) y frecuencia <code>f</code> (MHz) es <code>32.44 + 20 * log10(d) + 20 * log10(f)</code>, y el radio de la primera zona de Fresnel en el punto medio, en metros, es <code>17.32 * sqrt(d / (4 * f_GHz))</code>.
+  </p>
+  <p>
+    El rango de alcance según el terreno es explícitamente una aproximación. Con línea de visión despejada, la calculadora resuelve la ecuación de espacio libre con 20 dB (conservador) y 10 dB (optimista) de margen de desvanecimiento, lo que indica hasta dónde llega la radio solo si ambos nodos están lo bastante altos para librar el horizonte y la zona de Fresnel. Para entornos rurales, suburbanos y urbanos densos emplea un modelo estándar de pérdida log-distancia referenciado a la pérdida en espacio libre a 1 metro (<code>L0</code>) con 10 dB de margen y estas bandas de exponente: <code>n = 2.8 to 3.1</code> para terreno rural con árboles dispersos, <code>n = 3.2 to 3.6</code> para zonas suburbanas y <code>n = 3.7 to 4.2</code> para edificios urbanos densos. No modela tu perfil altimétrico concreto, el suelo de ruido local de RF, un desajuste de SWR de la antena ni el desvanecimiento por multitrayecto, así que toma cualquier rango sin línea de visión como una horquilla orientativa y revisa los perfiles de elevación antes de instalar un nodo fijo en un tejado o una cresta.
+  </p>
+
+  <h2>Ejemplos resueltos</h2>
+  <p>
+    Pasar cuatro montajes habituales por la calculadora muestra cuánto más influye el entorno en la distancia que unos pocos decibelios de potencia:
+  </p>
+  <ul>
+    <li><strong>Dos radios portátiles suburbanas en Long Fast (EE. UU. 906,875 MHz):</strong> 22 dBm, antenas de 2 dBi en ambos extremos y 1 dB de pérdida combinada dan un presupuesto de enlace de 156,0 dB (sensibilidad de -131,0 dBm). A 3 km, la pérdida en espacio libre es de 101,1 dB (+54,9 dB de margen en espacio libre), el radio de Fresnel es de 15,8 m y los obstáculos suburbanos reducen el alcance previsto a 1,5–3,8 km (margen de -0,8 a +13,1 dB a 3 km).</li>
+    <li><strong>Red mesh urbana saturada en Medium Fast (EE. UU. 906,875 MHz):</strong> pasar de Long Fast a Medium Fast cede 5 dB de presupuesto de enlace (151,0 dB en total, sensibilidad de -126,0 dBm) a cambio de más del triple de velocidad de datos (3,52 kbps frente a 1,07 kbps). Entre edificios urbanos densos, el rango estimado es de 0,4–0,9 km.</li>
+    <li><strong>Europa rural en Long Moderate (EU 869,525 MHz):</strong> 22 dBm con antenas de 3 dBi y 1,5 dB de pérdida generan un presupuesto de enlace de 160,5 dB (sensibilidad de -134,0 dBm), lo que arroja un rango rural de 7,0–18,2 km y un margen de +8,3 a +20,0 dB a 8 km.</li>
+    <li><strong>Repetidor en una cima a una radio portátil (Long Fast, 906,875 MHz, visión directa):</strong> 22 dBm con una antena de mástil de 5,8 dBi en la cima, un látigo de 2 dBi en la portátil y 2 dB de pérdida en el coaxial dan un presupuesto de 158,8 dB. A 40 km con línea de visión despejada, la pérdida en espacio libre es de 123,6 dB, lo que deja +35,2 dB de margen siempre que el trayecto libre el radio de Fresnel de 57,5 m en el punto medio.</li>
+  </ul>
+
+  <h2>Preguntas frecuentes</h2>
+  <h3>¿Hasta dónde llega una radio Meshtastic en la vida real?</h3>
+  <p>Con Long Fast a 22 dBm y antenas de serie de 2 dBi, la mayoría obtiene en torno a 0,4 a 1,2 km en ciudades densas, 1,5 a 3,8 km en zonas suburbanas, 4 a 10 km en áreas rurales abiertas y decenas o cientos de kilómetros desde crestas altas con línea de visión despejada.</p>
+
+  <h3>¿Duplicar la potencia de transmisión duplica el alcance de Meshtastic?</h3>
+  <p>No. Duplicar la potencia de transmisión suma 3 dB al presupuesto de enlace, lo que aumenta la distancia en espacio libre en torno a un 41 por ciento y la distancia en zonas suburbanas con obstáculos alrededor de un 20 a 25 por ciento. Colocar la antena más alta y despejada casi siempre rinde más que subir la potencia.</p>
+
+  <h3>¿Qué perfil de módem de Meshtastic ofrece el mayor alcance?</h3>
+  <p>Entre los nueve perfiles de uso general de Meshtastic 2.8, Long Moderate tiene el presupuesto de enlace publicado más alto con 156 dB (3 dB por encima de Long Fast), a costa de una transmisión más lenta de 0,34 kbps. En redes metropolitanas concurridas, Medium Fast (148 dB, 3,52 kbps) suele entregar más mensajes porque los paquetes ocupan el canal menos tiempo.</p>
+
+  <h3>¿Por qué una antena de mayor ganancia rinde a veces peor en interiores o entre colinas?</h3>
+  <p>Las antenas omnidireccionales de mayor ganancia concentran la energía en un disco más plano hacia el horizonte. Si subes una ladera pronunciada por debajo de un repetidor, o llevas la radio inclinada en la mochila, un haz estrecho puede pasar sin alcanzar al otro nodo donde una antena de 2 a 3 dBi todavía conecta.</p>
+
+  <aside class="cta">
+    <h2>Chatea con tu radio Meshtastic usando Mesh+</h2>
+    <p>
+      Mesh+ es una app gratuita de Meshtastic con licencia MIT para Android y iPhone, de unos 3 MB y sin anuncios. Reúne tu canal público, salas cifradas y mensajes directos en una sola lista, configura perfiles de radio en lenguaje sencillo y actualiza el firmware nRF52 por USB desde Android.
+    </p>
+    <a class="btn" href="https://meshplus.app/es/?utm_source=tool&amp;utm_campaign=meshtastic-range">Consigue Mesh+</a>
+  </aside>
+
+  <footer>
+    <p>
+      Fuentes: <a href="https://meshtastic.org/docs/overview/radio-settings/">Ajustes de radio de Meshtastic (documentación 2.8)</a> para los 15 perfiles de módem, anchos de banda, velocidades de datos, frecuencias predeterminadas y presupuestos de enlace de referencia a 22 dBm, y <a href="https://meshtastic.org/docs/overview/range-tests/">Pruebas de alcance de Meshtastic</a> para el récord terrestre de 331 km, consultados el 21 de noviembre de 2026. Todo en esta calculadora se ejecuta en local en tu navegador.
+    </p>
+    <p>
+      Mesh+ es un proyecto independiente de código abierto y no está afiliado a Meshtastic LLC ni cuenta con su respaldo. Meshtastic® es una marca registrada de Meshtastic LLC.
+    </p>
+    <nav class="langs" aria-label="Idioma"><a href="/tools/range/" hreflang="en" lang="en">English</a> <a href="/ar/tools/range/" hreflang="ar" lang="ar">العربية</a> <a href="/de/tools/range/" hreflang="de" lang="de">Deutsch</a> <a href="/es/tools/range/" hreflang="es" lang="es" aria-current="page">Español</a> <a href="/fr/tools/range/" hreflang="fr" lang="fr">Français</a> <a href="/hi/tools/range/" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/tools/range/" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/tools/range/" hreflang="it" lang="it">Italiano</a> <a href="/ja/tools/range/" hreflang="ja" lang="ja">日本語</a> <a href="/ko/tools/range/" hreflang="ko" lang="ko">한국어</a> <a href="/nl/tools/range/" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/tools/range/" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/tools/range/" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/tools/range/" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/tools/range/" hreflang="ru" lang="ru">Русский</a> <a href="/sv/tools/range/" hreflang="sv" lang="sv">Svenska</a> <a href="/th/tools/range/" hreflang="th" lang="th">ไทย</a> <a href="/tr/tools/range/" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/tools/range/" hreflang="uk" lang="uk">Українська</a> <a href="/vi/tools/range/" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/tools/range/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/tools/range/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>
+  </footer>
+</main>
+<script>
+(function () {
+  var T = {"js_ter_urban_label": "Urbano denso", "js_ter_urban_note": "10 dB de margen de desvanecimiento, exponente log-distancia n = 3,7 a 4,2 (fuerte atenuación por edificios).", "js_ter_suburban_label": "Suburbano", "js_ter_suburban_note": "10 dB de margen de desvanecimiento, exponente log-distancia n = 3,2 a 3,6 (casas y árboles).", "js_ter_rural_label": "Rural / arbolado", "js_ter_rural_note": "10 dB de margen de desvanecimiento, exponente log-distancia n = 2,8 a 3,1 (campo abierto, vegetación ligera).", "js_ter_los_label": "Línea de visión despejada", "js_ter_los_note": "Pérdida en espacio libre con 20 dB (conservador) a 10 dB (optimista) de margen; la elevación sigue marcando el horizonte de radio.", "js_band_label": "Rango de alcance estimado · {terrain}", "js_range_out": "{low_km} – {high_km} km ({low_mi} – {high_mi} mi)", "js_lb_sub": "Ref. {preset}: {lb} dB a 22 dBm", "js_fresnel_sub": "Despeje de {ft} ft a {dist} km", "js_margin_title": "Margen de desvanecimiento a {km} km ({mi} mi)", "js_tm_range": "{low} a {high}", "js_v_los_good": "Margen sólido en espacio libre ({margin}). Siempre que ambas antenas libren el horizonte y la zona de Fresnel de {fresnel} m, este enlace va sobrado.", "js_v_los_ok": "Margen viable en espacio libre ({margin}), aunque el tiempo o las obstrucciones parciales de la zona de Fresnel podrían provocar cortes.", "js_v_los_bad": "Margen en espacio libre justo o negativo ({margin}): cambia a un perfil más lento o a antenas de mayor ganancia.", "js_v_ter_good": "Margen holgado frente a los obstáculos típicos de un entorno {terrain}, salvo que una colina sólida o un edificio grande se interpongan en el trayecto.", "js_v_ter_ok": "De justo a viable en un entorno {terrain}: subir una antena por encima de tejados o árboles cercanos ayudará más que añadir potencia TX.", "js_v_ter_bad": "Probablemente por debajo del suelo de ruido a esta distancia en un entorno {terrain}. Añade un nodo repetidor elevado o acércate más.", "js_warn_prefix": "Comprueba antes de desplegar:", "js_warn_eu868": "Los perfiles Turbo de 500 kHz no están permitidos en EU_868 (869,40–869,65 MHz). Elige en su lugar un perfil de 250 kHz o 125 kHz.", "js_warn_erp": "La potencia TX más la ganancia de antena (~{erp} dBm ERP antes de la pérdida de cable) supera el límite de +{max} dBm ERP de esta banda. Reduce la potencia TX para cumplir la normativa.", "js_warn_horizon": "La curvatura de la Tierra limita dos radios portátiles a 1,8 m de altura a unos 11 km sobre terreno llano. Las distancias mayores requieren elevación en al menos un extremo."};
+  function fmt(s, map) {
+    return s.replace(/\{([a-z0-9_]+)\}/g, function (_, k) { return map[k] !== undefined ? String(map[k]) : ""; });
+  }
+  var PRESETS = {
+    SHORT_TURBO:   { name: "Short Turbo",   lb: 140.0, bw: 500,  sf: 7,  cr: "4/5", rate: 21.88, turbo: true },
+    SHORT_FAST:    { name: "Short Fast",    lb: 143.0, bw: 250,  sf: 7,  cr: "4/5", rate: 10.94, turbo: false },
+    SHORT_SLOW:    { name: "Short Slow",    lb: 145.5, bw: 250,  sf: 8,  cr: "4/5", rate: 6.25,  turbo: false },
+    MEDIUM_TURBO:  { name: "Medium Turbo",  lb: 145.0, bw: 500,  sf: 9,  cr: "4/5", rate: 7.03,  turbo: true },
+    MEDIUM_FAST:   { name: "Medium Fast",   lb: 148.0, bw: 250,  sf: 9,  cr: "4/5", rate: 3.52,  turbo: false },
+    MEDIUM_SLOW:   { name: "Medium Slow",   lb: 150.5, bw: 250,  sf: 10, cr: "4/5", rate: 1.95,  turbo: false },
+    LONG_TURBO:    { name: "Long Turbo",    lb: 150.0, bw: 500,  sf: 11, cr: "4/8", rate: 1.34,  turbo: true },
+    LONG_FAST:     { name: "Long Fast",     lb: 153.0, bw: 250,  sf: 11, cr: "4/5", rate: 1.07,  turbo: false },
+    LONG_MODERATE: { name: "Long Moderate", lb: 156.0, bw: 125,  sf: 11, cr: "4/8", rate: 0.34,  turbo: false },
+    LITE_FAST:     { name: "Lite Fast",     lb: 151.0, bw: 125,  sf: 9,  cr: "4/5", rate: 1.76,  turbo: false },
+    LITE_SLOW:     { name: "Lite Slow",     lb: 153.5, bw: 125,  sf: 10, cr: "4/5", rate: 0.98,  turbo: false },
+    NARROW_FAST:   { name: "Narrow Fast",   lb: 149.0, bw: 62.5, sf: 7,  cr: "4/6", rate: 2.28,  turbo: false },
+    NARROW_SLOW:   { name: "Narrow Slow",   lb: 151.5, bw: 62.5, sf: 8,  cr: "4/6", rate: 1.30,  turbo: false },
+    TINY_FAST:     { name: "Tiny Fast",     lb: 155.0, bw: 15.6, sf: 7,  cr: "4/5", rate: 0.68,  turbo: false },
+    TINY_SLOW:     { name: "Tiny Slow",     lb: 157.5, bw: 15.6, sf: 8,  cr: "4/6", rate: 0.33,  turbo: false }
+  };
+
+  var TERRAINS = {
+    urban:    { label: T.js_ter_urban_label,    nLow: 3.7, nHigh: 4.2, margin: 10, note: T.js_ter_urban_note },
+    suburban: { label: T.js_ter_suburban_label, nLow: 3.2, nHigh: 3.6, margin: 10, note: T.js_ter_suburban_note },
+    rural:    { label: T.js_ter_rural_label,    nLow: 2.8, nHigh: 3.1, margin: 10, note: T.js_ter_rural_note },
+    los:      { label: T.js_ter_los_label,      nLow: 2.0, nHigh: 2.0, marginLow: 20, marginHigh: 10, note: T.js_ter_los_note }
+  };
+
+  var SCENES = {
+    suburb:  { preset: "LONG_FAST",     band: "906.875", tx: 22, txg: 2,   rxg: 2, loss: 1,   terrain: "suburban", dist: 3 },
+    city:    { preset: "MEDIUM_FAST",   band: "906.875", tx: 22, txg: 2,   rxg: 2, loss: 1,   terrain: "urban",    dist: 1 },
+    eu868:   { preset: "LONG_MODERATE", band: "869.525", tx: 22, txg: 3,   rxg: 3, loss: 1.5, terrain: "rural",    dist: 8 },
+    hilltop: { preset: "LONG_FAST",     band: "906.875", tx: 22, txg: 5.8, rxg: 2, loss: 2,   terrain: "los",      dist: 40 }
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var terrain = "suburban";
+  var used = false;
+
+  function trackUse() {
+    if (!used) {
+      used = true;
+      if (window.lumen) window.lumen("tool-use");
+    }
+  }
+
+  function num(id, fallback, lo, hi) {
+    var v = parseFloat($(id).value);
+    if (!isFinite(v)) return fallback;
+    return Math.min(hi, Math.max(lo, v));
+  }
+
+  function fmtDist(km) {
+    if (km < 1) return km.toFixed(2);
+    if (km < 10) return km.toFixed(1);
+    return String(Math.round(km));
+  }
+
+  function fmtSigned(v) {
+    return (v >= 0 ? "+" : "") + v.toFixed(1) + " dB";
+  }
+
+  function update(fromUser) {
+    if (fromUser) trackUse();
+
+    var pKey = $("preset").value;
+    var p = PRESETS[pKey] || PRESETS.LONG_FAST;
+    var bandOpt = $("band").options[$("band").selectedIndex];
+    var freq = parseFloat(bandOpt.value) || 906.875;
+    var erpMax = parseFloat(bandOpt.dataset.erp) || 30;
+    var isEu868 = bandOpt.dataset.eu868 === "1";
+
+    var tx = num("tx", 22, 0, 30);
+    var txg = num("txg", 2, -5, 20);
+    var rxg = num("rxg", 2, -5, 20);
+    var loss = num("loss", 1, 0, 20);
+    var dist = num("dist", 3, 0.1, 500);
+    var t = TERRAINS[terrain];
+
+    var rxSens = 22 - p.lb;
+    var lb = tx + txg + rxg - loss - rxSens;
+    var l0 = 32.44 + 20 * Math.log10(freq) - 60;
+
+    var dLow, dHigh;
+    if (terrain === "los") {
+      dLow = Math.pow(10, (lb - t.marginLow - 32.44 - 20 * Math.log10(freq)) / 20);
+      dHigh = Math.pow(10, (lb - t.marginHigh - 32.44 - 20 * Math.log10(freq)) / 20);
+    } else {
+      dLow = 0.001 * Math.pow(10, (lb - t.margin - l0) / (10 * t.nHigh));
+      dHigh = 0.001 * Math.pow(10, (lb - t.margin - l0) / (10 * t.nLow));
+    }
+
+    var fspl = 32.44 + 20 * Math.log10(dist) + 20 * Math.log10(freq);
+    var fsMargin = lb - fspl;
+    var plLow = l0 + 10 * t.nLow * Math.log10(dist * 1000);
+    var plHigh = l0 + 10 * t.nHigh * Math.log10(dist * 1000);
+    var tMarginLow = lb - plHigh;
+    var tMarginHigh = lb - plLow;
+    var fresnelM = 17.32 * Math.sqrt(dist / (4 * (freq / 1000)));
+    var fresnelFt = fresnelM * 3.28084;
+
+    $("band-label").textContent = fmt(T.js_band_label, { terrain: t.label });
+    $("range-out").textContent = fmt(T.js_range_out, {
+      low_km: fmtDist(dLow), high_km: fmtDist(dHigh),
+      low_mi: fmtDist(dLow * 0.621371), high_mi: fmtDist(dHigh * 0.621371)
+    });
+    $("range-sub").textContent = t.note;
+
+    $("lb-out").textContent = lb.toFixed(1) + " dB";
+    $("lb-sub").textContent = fmt(T.js_lb_sub, { preset: p.name, lb: p.lb });
+    $("rx-out").textContent = rxSens.toFixed(1) + " dBm";
+    $("rx-sub").textContent = "SF" + p.sf + " · " + p.bw + " kHz · " + p.rate + " kbps";
+    $("fresnel-out").textContent = fresnelM.toFixed(1) + " m";
+    $("fresnel-sub").textContent = fmt(T.js_fresnel_sub, { ft: Math.round(fresnelFt), dist: dist.toFixed(1) });
+
+    $("margin-title").textContent = fmt(T.js_margin_title, { km: dist.toFixed(1), mi: (dist * 0.621371).toFixed(1) });
+    $("fspl-out").textContent = fspl.toFixed(1) + " dB";
+    $("fsm-out").textContent = fmtSigned(fsMargin);
+
+    var tmWrap = $("tm-wrap");
+    var verdict = $("verdict");
+    if (terrain === "los") {
+      tmWrap.hidden = true;
+      if (fsMargin >= 20) {
+        verdict.className = "verdict good";
+        verdict.textContent = fmt(T.js_v_los_good, { margin: fmtSigned(fsMargin), fresnel: fresnelM.toFixed(1) });
+      } else if (fsMargin >= 10) {
+        verdict.className = "verdict ok";
+        verdict.textContent = fmt(T.js_v_los_ok, { margin: fmtSigned(fsMargin) });
+      } else {
+        verdict.className = "verdict bad";
+        verdict.textContent = fmt(T.js_v_los_bad, { margin: fmtSigned(fsMargin) });
+      }
+    } else {
+      tmWrap.hidden = false;
+      $("tm-out").textContent = fmt(T.js_tm_range, { low: fmtSigned(tMarginLow), high: fmtSigned(tMarginHigh) });
+      if (tMarginLow >= 10) {
+        verdict.className = "verdict good";
+        verdict.textContent = fmt(T.js_v_ter_good, { terrain: t.label.toLowerCase() });
+      } else if (tMarginHigh >= 5) {
+        verdict.className = "verdict ok";
+        verdict.textContent = fmt(T.js_v_ter_ok, { terrain: t.label.toLowerCase() });
+      } else {
+        verdict.className = "verdict bad";
+        verdict.textContent = fmt(T.js_v_ter_bad, { terrain: t.label.toLowerCase() });
+      }
+    }
+
+    var warns = [];
+    if (isEu868 && p.turbo) {
+      warns.push(T.js_warn_eu868);
+    }
+    var approxErp = tx + txg - 2.15;
+    if (approxErp > erpMax + 0.5) {
+      warns.push(fmt(T.js_warn_erp, { erp: approxErp.toFixed(1), max: erpMax }));
+    }
+    if (terrain === "los" && dHigh > 20) {
+      warns.push(T.js_warn_horizon);
+    }
+    var wb = $("warnings");
+    if (warns.length) {
+      wb.hidden = false;
+      wb.textContent = "";
+      var st = document.createElement("strong");
+      st.textContent = T.js_warn_prefix;
+      wb.appendChild(st);
+      wb.appendChild(document.createTextNode(" " + warns.join(" ")));
+    } else {
+      wb.hidden = true;
+      wb.textContent = "";
+    }
+  }
+
+  function clearSceneButtons() {
+    document.querySelectorAll("[data-scene]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+  }
+
+  ["preset", "band", "tx", "txg", "rxg", "loss", "dist"].forEach(function (id) {
+    $(id).addEventListener("input", function () { clearSceneButtons(); update(true); });
+    $(id).addEventListener("change", function () { clearSceneButtons(); update(true); });
+  });
+
+  document.querySelectorAll("[data-terrain]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      terrain = b.dataset.terrain;
+      document.querySelectorAll("[data-terrain]").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      clearSceneButtons();
+      update(true);
+    });
+  });
+
+  document.querySelectorAll("[data-scene]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var s = SCENES[b.dataset.scene];
+      if (!s) return;
+      $("preset").value = s.preset;
+      $("band").value = s.band;
+      $("tx").value = s.tx;
+      $("txg").value = s.txg;
+      $("rxg").value = s.rxg;
+      $("loss").value = s.loss;
+      $("dist").value = s.dist;
+      terrain = s.terrain;
+      document.querySelectorAll("[data-terrain]").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x.dataset.terrain === terrain));
+      });
+      document.querySelectorAll("[data-scene]").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      update(true);
+    });
+  });
+
+  update(false);
+})();
+</script>
+</body>
+</html>

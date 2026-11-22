@@ -6,8 +6,52 @@
 <title>Meshtastic range and link budget calculator | Mesh+</title>
 <meta name="description" content="Estimate Meshtastic LoRa range, link budget, fade margin and Fresnel zone clearance by modem preset, transmit power, antennas, cable loss and terrain. Runs in your browser.">
 <link rel="canonical" href="https://meshplus.app/tools/range/">
+<link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/">
+<link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/">
+<link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/">
+<link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/">
+<link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/">
+<link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/">
+<link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/">
+<link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/">
+<link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/">
+<link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/">
+<link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/">
+<link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/">
+<link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/">
+<link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/">
+<link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/">
+<link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/">
+<link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/">
+<link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/">
+<link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/">
+<link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/">
+<link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/">
+<link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/">
+<link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ar_AR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="hi_IN">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="nl_NL">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="sv_SE">
+<meta property="og:locale:alternate" content="th_TH">
+<meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:locale:alternate" content="uk_UA">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="zh_TW">
 <meta property="og:site_name" content="Mesh+">
 <meta property="og:url" content="https://meshplus.app/tools/range/">
 <meta property="og:title" content="Meshtastic range and link budget calculator">
@@ -156,6 +200,7 @@
     .tool { padding: 16px; }
     .grid { grid-template-columns: 1fr; }
   }
+nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0;padding:0;flex:0 0 100%}nav.langs a{display:inline-block;padding:4px 8px;min-height:32px;border-radius:6px}nav.langs a[aria-current]{font-weight:700;text-decoration:none;color:inherit}
 </style>
 <script defer src="https://lumen.borodutch.com/l.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Meshtastic range and link budget calculator","url":"https://meshplus.app/tools/range/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (runs in the browser)","description":"Calculate Meshtastic LoRa link budget, fade margin, Fresnel zone radius and estimated range band from Meshtastic's published modem presets, transmit power, antenna gains, cable loss and terrain.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isAccessibleForFree":true,"isPartOf":{"@type":"WebSite","name":"Mesh+","url":"https://meshplus.app/"},"author":{"@type":"Person","name":"Nikita Kolmogorov","url":"https://borodutch.com"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How far does a Meshtastic radio reach in real life?","acceptedAnswer":{"@type":"Answer","text":"On the default Long Fast preset at 22 dBm with stock 2 dBi antennas, expect roughly 0.4 to 1.2 km in dense cities, 1.5 to 3.8 km in suburbs, 4 to 10 km across open rural land, and over 100 km hilltop to hilltop with clear line of sight. Antenna height and terrain obstructions decide far more than transmit power."}},{"@type":"Question","name":"Does doubling transmit power double Meshtastic range?","acceptedAnswer":{"@type":"Answer","text":"No. Doubling transmit power adds 3 dB to your link budget, which increases free-space range by about 41 percent and suburban range by roughly 20 to 25 percent. Raising an antenna above nearby roofs and trees almost always adds more distance than turning up power."}},{"@type":"Question","name":"Which Meshtastic modem preset gives the best range?","acceptedAnswer":{"@type":"Answer","text":"Among the nine general-purpose presets in Meshtastic 2.8, Long Moderate has the highest published link budget at 156 dB (3 dB more than Long Fast's 153 dB), though its data rate drops to 0.34 kbps. In crowded urban meshes, Medium Fast (148 dB, 3.52 kbps) often delivers more messages because packets spend less time on the air."}},{"@type":"Question","name":"Why does a higher-gain antenna sometimes perform worse indoors or in hills?","acceptedAnswer":{"@type":"Answer","text":"High-gain omnidirectional antennas flatten their radiation pattern toward the horizon. If one node is on a steep hill above another, or the radio tilts inside a backpack, a narrow beam can shoot past the other node and lose signal compared with a wider-pattern 2 to 3 dBi whip."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Mesh+","item":"https://meshplus.app/"},{"@type":"ListItem","position":2,"name":"Meshtastic range calculator","item":"https://meshplus.app/tools/range/"}]}]}</script>
@@ -402,6 +447,7 @@
     <p>
       Mesh+ is an independent open-source project and is not affiliated with or endorsed by Meshtastic LLC. Meshtastic® is a registered trademark of Meshtastic LLC.
     </p>
+    <nav class="langs" aria-label="Language"><a href="/tools/range/" hreflang="en" lang="en" aria-current="page">English</a> <a href="/ar/tools/range/" hreflang="ar" lang="ar">العربية</a> <a href="/de/tools/range/" hreflang="de" lang="de">Deutsch</a> <a href="/es/tools/range/" hreflang="es" lang="es">Español</a> <a href="/fr/tools/range/" hreflang="fr" lang="fr">Français</a> <a href="/hi/tools/range/" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/tools/range/" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/tools/range/" hreflang="it" lang="it">Italiano</a> <a href="/ja/tools/range/" hreflang="ja" lang="ja">日本語</a> <a href="/ko/tools/range/" hreflang="ko" lang="ko">한국어</a> <a href="/nl/tools/range/" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/tools/range/" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/tools/range/" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/tools/range/" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/tools/range/" hreflang="ru" lang="ru">Русский</a> <a href="/sv/tools/range/" hreflang="sv" lang="sv">Svenska</a> <a href="/th/tools/range/" hreflang="th" lang="th">ไทย</a> <a href="/tr/tools/range/" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/tools/range/" hreflang="uk" lang="uk">Українська</a> <a href="/vi/tools/range/" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/tools/range/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/tools/range/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>
   </footer>
 </main>
 <script>

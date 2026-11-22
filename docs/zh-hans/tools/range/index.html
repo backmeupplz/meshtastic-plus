@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meshtastic 通信距离与链路预算计算器 | Mesh+</title>
+<meta name="description" content="按调制解调器预设、发射功率、天线、线缆损耗和地形估算 Meshtastic LoRa 通信距离、链路预算、衰落余量和菲涅尔区净空。直接在浏览器中运行。">
+<link rel="canonical" href="https://meshplus.app/zh-hans/tools/range/">
+<link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/">
+<link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/">
+<link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/">
+<link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/">
+<link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/">
+<link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/">
+<link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/">
+<link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/">
+<link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/">
+<link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/">
+<link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/">
+<link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/">
+<link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/">
+<link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/">
+<link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/">
+<link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/">
+<link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/">
+<link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/">
+<link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/">
+<link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/">
+<link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/">
+<link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/">
+<link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ar_AR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="hi_IN">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="nl_NL">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="sv_SE">
+<meta property="og:locale:alternate" content="th_TH">
+<meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:locale:alternate" content="uk_UA">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:site_name" content="Mesh+">
+<meta property="og:url" content="https://meshplus.app/zh-hans/tools/range/">
+<meta property="og:title" content="Meshtastic 通信距离与链路预算计算器">
+<meta property="og:description" content="选择 Meshtastic 调制解调器预设、发射功率、天线、线缆损耗和地形，即可计算你的链路预算、衰落余量和切合实际的通信距离区间。">
+<meta property="og:image" content="https://meshplus.app/og/zh-hans/range.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Meshtastic 通信距离与链路预算计算器：涵盖 15 个官方调制解调器预设，meshplus.app 上的免费浏览器工具。">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Meshtastic 通信距离与链路预算计算器">
+<meta name="twitter:description" content="选择 Meshtastic 调制解调器预设、发射功率、天线、线缆损耗和地形，即可计算你的链路预算、衰落余量和切合实际的通信距离区间。">
+<meta name="twitter:image" content="https://meshplus.app/og/zh-hans/range.jpg">
+<meta name="twitter:image:alt" content="Meshtastic 通信距离与链路预算计算器：涵盖 15 个官方调制解调器预设，meshplus.app 上的免费浏览器工具。">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #060b08;
+    --card: #0c1610;
+    --input: #08100b;
+    --line: #1d3225;
+    --fg: #eef5f0;
+    --muted: #a6b8ad;
+    --green: #67ea94;
+    --green-fg: #06130b;
+    --warn: #f5c451;
+    --err: #ff8a80;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1, h2, h3 { font-family: ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.02em; line-height: 1.15; }
+  h1 { font-size: clamp(32px, 6vw, 44px); margin: 8px 0 12px; }
+  h2 { font-size: clamp(22px, 4vw, 28px); margin: 40px 0 12px; }
+  h3 { font-size: 19px; margin: 24px 0 8px; }
+  p { margin: 0 0 16px; }
+  .lead { font-size: 18px; color: var(--muted); margin: 0 0 24px; }
+  .muted { color: var(--muted); }
+  a { color: var(--green); text-underline-offset: 3px; }
+  code { font-family: var(--mono); font-size: 0.9em; background: var(--card); border: 1px solid var(--line); padding: 1px 6px; border-radius: 5px; overflow-wrap: anywhere; }
+  .back { margin: 0 0 8px; }
+  .back a { display: inline-block; padding: 6px 0; min-height: 36px; text-decoration: none; font-weight: 600; }
+  .back a:hover { text-decoration: underline; }
+
+  .tool { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; margin: 0 0 28px; }
+  .presets-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; align-items: center; }
+  .presets-bar span { font-size: 14px; color: var(--muted); margin-right: 4px; }
+  .presets-bar button { font: 600 14px ui-sans-serif, system-ui, sans-serif; background: var(--input); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; min-height: 40px; cursor: pointer; }
+  .presets-bar button:hover { border-color: var(--green); color: var(--green); }
+  .presets-bar button[aria-pressed="true"] { background: var(--green); color: var(--green-fg); border-color: var(--green); }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+  label { font-size: 15px; font-weight: 600; color: var(--fg); }
+  .hint { font-size: 13.5px; color: var(--muted); margin-top: -2px; }
+  select, input[type="number"] {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    font: 16px/1.3 ui-sans-serif, system-ui, sans-serif;
+    background: var(--input);
+    color: var(--fg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  select:focus-visible, input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+
+  .terrain-group { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .terrain-group button {
+    min-height: 48px;
+    padding: 10px 8px;
+    font: 600 14.5px/1.25 ui-sans-serif, system-ui, sans-serif;
+    background: var(--input);
+    color: var(--fg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .terrain-group button:hover { border-color: var(--green); }
+  .terrain-group button[aria-pressed="true"] { background: var(--green); color: var(--green-fg); border-color: var(--green); }
+
+  .results { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .hero-out { background: var(--input); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+  .hero-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 4px; }
+  .hero-val { font-family: ui-sans-serif, system-ui, sans-serif; font-size: clamp(28px, 5vw, 38px); font-weight: 800; color: var(--green); line-height: 1.15; }
+  .hero-sub { font-size: 15px; color: var(--muted); margin-top: 6px; }
+  .reality-note { background: rgba(245, 196, 81, 0.08); border: 1px solid rgba(245, 196, 81, 0.35); border-radius: 10px; padding: 12px 14px; font-size: 15px; color: var(--fg); margin-bottom: 14px; }
+  .reality-note strong { color: var(--warn); }
+  .warn-box { background: rgba(255, 138, 128, 0.08); border: 1px solid rgba(255, 138, 128, 0.4); border-radius: 10px; padding: 12px 14px; font-size: 15px; color: var(--fg); margin-bottom: 14px; }
+  .warn-box strong { color: var(--err); }
+
+  .metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .metric { background: var(--input); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .metric .k { font-size: 13.5px; color: var(--muted); margin-bottom: 4px; }
+  .metric .v { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--fg); }
+  .metric .s { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+
+  .margin-card { margin-top: 12px; background: var(--input); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .margin-card .title { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+  .margin-row { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 15px; }
+  .margin-row strong { font-family: var(--mono); }
+  .verdict { margin-top: 8px; font-size: 15px; color: var(--muted); }
+  .verdict.good { color: var(--green); }
+  .verdict.ok { color: var(--warn); }
+  .verdict.bad { color: var(--err); }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 15.5px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; }
+  tr.default-row { background: rgba(103, 234, 148, 0.07); }
+  td.num, th.num { font-family: var(--mono); }
+
+  .cta { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; margin: 36px 0 28px; }
+  .cta h2 { margin: 0 0 8px; font-size: 23px; }
+  .cta p { margin: 0 0 16px; color: var(--muted); }
+  .cta a.btn { display: inline-block; background: var(--green); color: var(--green-fg); font-weight: 700; text-decoration: none; padding: 12px 20px; min-height: 46px; border-radius: 10px; }
+  .cta a.btn:hover { opacity: 0.92; }
+
+  footer { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14.5px; color: var(--muted); }
+  footer p { margin: 0 0 10px; }
+
+  @media (max-width: 720px) {
+    table, thead, tbody, tr, td { display: block; width: 100%; }
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+    tr { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; }
+    tr.default-row { border-color: rgba(103, 234, 148, 0.45); }
+    td { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 6px 0; border-bottom: 1px solid rgba(29, 50, 37, 0.6); }
+    td:last-child { border-bottom: none; }
+    td::before { content: attr(data-label); font-size: 13.5px; color: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 600; flex-shrink: 0; }
+    .terrain-group { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .metrics { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    main { padding: 20px 16px 48px; }
+    .tool { padding: 16px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0;padding:0;flex:0 0 100%}nav.langs a{display:inline-block;padding:4px 8px;min-height:32px;border-radius:6px}nav.langs a[aria-current]{font-weight:700;text-decoration:none;color:inherit}h1,h2,h3,p,li,summary{overflow-wrap:break-word;hyphens:auto}h1,h2,h3,.kicker{letter-spacing:0}h1,h2,h3{line-height:1.3}h1,h2{max-width:none}
+</style>
+<script defer src="https://lumen.borodutch.com/l.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Meshtastic 通信距离与链路预算计算器","url":"https://meshplus.app/zh-hans/tools/range/","inLanguage":"zh-Hans","applicationCategory":"UtilitiesApplication","operatingSystem":"任意系统（在浏览器中运行）","description":"根据 Meshtastic 官方公布的调制解调器预设、发射功率、天线增益、线缆损耗和地形，计算 Meshtastic LoRa 链路预算、衰落余量、菲涅尔区半径和估算通信距离区间。","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isAccessibleForFree":true,"isPartOf":{"@type":"WebSite","name":"Mesh+","url":"https://meshplus.app/zh-hans/"},"author":{"@type":"Person","name":"Nikita Kolmogorov","url":"https://borodutch.com"}},{"@type":"FAQPage","inLanguage":"zh-Hans","mainEntity":[{"@type":"Question","name":"Meshtastic 电台在现实中到底能传多远？","acceptedAnswer":{"@type":"Answer","text":"使用默认的 Long Fast 预设、22 dBm 发射功率和 2 dBi 原装天线时，密集城区通常能达到约 0.4 到 1.2 km，郊区约 1.5 到 3.8 km，开阔乡村约 4 到 10 km，山顶对山顶且视距无遮挡时可超过 100 km。天线架设高度和地形遮挡比发射功率重要得多。"}},{"@type":"Question","name":"把发射功率翻倍，Meshtastic 的通信距离会翻倍吗？","acceptedAnswer":{"@type":"Answer","text":"不会。发射功率翻倍只为链路预算增加 3 dB，在自由空间里约增加 41% 的距离，在郊区环境下大约只增加 20% 到 25%。把天线架高到周围屋顶和树冠之上，几乎总比调高功率更能增加通信距离。"}},{"@type":"Question","name":"哪个 Meshtastic 调制解调器预设的通信距离最远？","acceptedAnswer":{"@type":"Answer","text":"在 Meshtastic 2.8 的九个通用预设中，Long Moderate 的公布链路预算最高，为 156 dB（比 Long Fast 的 153 dB 高 3 dB），代价是数据速率降到 0.34 kbps。在繁忙的城市 Mesh 网络中，Medium Fast（148 dB，3.52 kbps）往往能让更多消息成功送达，因为数据包占用空口的时间更短。"}},{"@type":"Question","name":"为什么增益更高的天线在室内或山地有时表现更差？","acceptedAnswer":{"@type":"Answer","text":"高增益全向天线会把辐射方向图压扁，集中到水平方向。如果一个节点在陡坡高处、另一个在山下，或者电台在背包里倾斜放置，过窄的波束可能会越过对方节点，信号反而不如辐射角更宽的 2 到 3 dBi 鞭状天线。"}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Mesh+","item":"https://meshplus.app/zh-hans/"},{"@type":"ListItem","position":2,"name":"Meshtastic 距离计算器","item":"https://meshplus.app/zh-hans/tools/range/"}]}]}</script>
+</head>
+<body>
+<main>
+  <p class="back"><a href="/zh-hans/">← Mesh+</a></p>
+  <h1>Meshtastic 通信距离与链路预算计算器</h1>
+  <p class="lead">
+    使用默认 Long Fast 预设的 Meshtastic 电台，在郊区大约能通联 1.5 到 3.8 km，在开阔乡村为 4 到 10 km，而当路径没有任何遮挡时，山顶对山顶可以超过 100 km。在下方选择你的调制解调器预设、发射功率、天线、线缆损耗和地形，即可直接在浏览器里算出链路预算、衰落余量和切合实际的距离区间。
+  </p>
+
+  <section class="tool" aria-label="Meshtastic 距离计算器">
+    <div class="presets-bar" role="group" aria-label="示例配置">
+      <span>试试示例配置：</span>
+      <button type="button" data-scene="suburb" aria-pressed="true">郊区手持电台</button>
+      <button type="button" data-scene="city" aria-pressed="false">繁忙城市（Medium Fast）</button>
+      <button type="button" data-scene="eu868" aria-pressed="false">欧洲 868 乡村</button>
+      <button type="button" data-scene="hilltop" aria-pressed="false">山顶无遮挡视距</button>
+    </div>
+
+    <div class="grid">
+      <div class="field">
+        <label for="preset">调制解调器预设</label>
+        <select id="preset">
+          <optgroup label="通用预设（Meshtastic 2.8）">
+            <option value="SHORT_TURBO">Short Turbo — 140 dB · 21.88 kbps · SF7 / 500 kHz</option>
+            <option value="SHORT_FAST">Short Fast — 143 dB · 10.94 kbps · SF7 / 250 kHz</option>
+            <option value="SHORT_SLOW">Short Slow — 145.5 dB · 6.25 kbps · SF8 / 250 kHz</option>
+            <option value="MEDIUM_TURBO">Medium Turbo — 145 dB · 7.03 kbps · SF9 / 500 kHz</option>
+            <option value="MEDIUM_FAST">Medium Fast — 148 dB · 3.52 kbps · SF9 / 250 kHz</option>
+            <option value="MEDIUM_SLOW">Medium Slow — 150.5 dB · 1.95 kbps · SF10 / 250 kHz</option>
+            <option value="LONG_TURBO">Long Turbo — 150 dB · 1.34 kbps · SF11 / 500 kHz</option>
+            <option value="LONG_FAST" selected>Long Fast（默认）— 153 dB · 1.07 kbps · SF11 / 250 kHz</option>
+            <option value="LONG_MODERATE">Long Moderate — 156 dB · 0.34 kbps · SF11 / 125 kHz</option>
+          </optgroup>
+          <optgroup label="窄带预设（地区频段）">
+            <option value="LITE_FAST">Lite Fast — 151 dB · 1.76 kbps · SF9 / 125 kHz</option>
+            <option value="LITE_SLOW">Lite Slow — 153.5 dB · 0.98 kbps · SF10 / 125 kHz</option>
+            <option value="NARROW_FAST">Narrow Fast — 149 dB · 2.28 kbps · SF7 / 62.5 kHz</option>
+            <option value="NARROW_SLOW">Narrow Slow — 151.5 dB · 1.30 kbps · SF8 / 62.5 kHz</option>
+            <option value="TINY_FAST">Tiny Fast — 155 dB · 0.68 kbps · SF7 / 15.6 kHz</option>
+            <option value="TINY_SLOW">Tiny Slow — 157.5 dB · 0.33 kbps · SF8 / 15.6 kHz</option>
+          </optgroup>
+        </select>
+        <span class="hint">接收灵敏度由 Meshtastic 在 22 dBm 下的参考链路预算推导得出。</span>
+      </div>
+
+      <div class="field">
+        <label for="band">频段</label>
+        <select id="band">
+          <option value="906.875" data-erp="30" data-eu868="0" selected>美国 / 美洲 915 MHz (906.875 MHz)</option>
+          <option value="869.525" data-erp="27" data-eu868="1">欧洲 868 MHz (869.525 MHz)</option>
+          <option value="433.875" data-erp="10" data-eu868="0">欧洲 433 MHz (433.875 MHz)</option>
+          <option value="2400" data-erp="20" data-eu868="0">2.4 GHz LoRa (2400 MHz)</option>
+        </select>
+        <span class="hint">在自由空间中，相同距离下频率越低，信号损耗越小。</span>
+      </div>
+
+      <div class="field">
+        <label for="tx">发射功率 (dBm)</label>
+        <input id="tx" type="number" min="0" max="30" step="1" value="22">
+        <span class="hint">大多数 SX1262 开发板（Heltec T114、RAK4631）输出为 22 dBm；请核对你所在地区的法规限值。</span>
+      </div>
+
+      <div class="field">
+        <label for="loss">线缆与接头总损耗 (dB)</label>
+        <input id="loss" type="number" min="0" max="20" step="0.5" value="1">
+        <span class="hint">两端合计：短跳线约 0.5–1 dB，直插鞭状天线为 0 dB。</span>
+      </div>
+
+      <div class="field">
+        <label for="txg">发射天线增益 (dBi)</label>
+        <input id="txg" type="number" min="-5" max="20" step="0.5" value="2">
+        <span class="hint">原装鞭状天线约 1–2 dBi；玻璃钢杆状天线通常为 3–6 dBi。</span>
+      </div>
+
+      <div class="field">
+        <label for="rxg">接收天线增益 (dBi)</label>
+        <input id="rxg" type="number" min="-5" max="20" step="0.5" value="2">
+        <span class="hint">在双向链路预算中，收发两端的天线增益同等重要。</span>
+      </div>
+
+      <div class="field full">
+        <label id="terrain-label">地形与环境</label>
+        <div class="terrain-group" role="group" aria-labelledby="terrain-label">
+          <button type="button" data-terrain="urban" aria-pressed="false">密集城区</button>
+          <button type="button" data-terrain="suburban" aria-pressed="true">郊区</button>
+          <button type="button" data-terrain="rural" aria-pressed="false">乡村 / 林地</button>
+          <button type="button" data-terrain="los" aria-pressed="false">清晰视距</button>
+        </div>
+        <span class="hint">使用路径损耗指数估算距离区间；无论功率多大，实心山体或建筑物都会阻断 UHF 信号。</span>
+      </div>
+
+      <div class="field full">
+        <label for="dist">检查指定距离处的衰落余量 (km)</label>
+        <input id="dist" type="number" min="0.1" max="500" step="0.1" value="3">
+        <span class="hint">计算该距离下的自由空间路径损耗、衰落余量以及路径中点的第一菲涅尔区净空。</span>
+      </div>
+    </div>
+
+    <div class="results" aria-live="polite">
+      <div class="hero-out">
+        <div class="hero-label" id="band-label">估算距离区间 · 郊区</div>
+        <div class="hero-val" id="range-out">1.5 – 3.8 km (0.9 – 2.3 mi)</div>
+        <div class="hero-sub" id="range-sub">要求在路径损耗之上保留至少 10 dB 衰落余量（对数距离指数 n = 3.2 到 3.6）。</div>
+      </div>
+
+      <div class="reality-note">
+        <strong>地形比公式更决定成败。</strong>UHF LoRa 信号主要沿直线传播：哪怕只隔着一道山脊、一座混凝土停车楼或一片潮湿的山坡，纸面上看起来很充裕的链路也会中断；而把两根天线都架高到屋顶之上，常常不需要改动任何电台设置就能让实际通信距离翻三倍。
+      </div>
+
+      <div class="warn-box" id="warnings" hidden></div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="k">总链路预算</div>
+          <div class="v" id="lb-out">156.0 dB</div>
+          <div class="s" id="lb-sub">预设参考值 153 dB（22 dBm）</div>
+        </div>
+        <div class="metric">
+          <div class="k">接收灵敏度</div>
+          <div class="v" id="rx-out">-131.0 dBm</div>
+          <div class="s" id="rx-sub">SF11 · 250 kHz · 1.07 kbps</div>
+        </div>
+        <div class="metric">
+          <div class="k">中点菲涅尔半径</div>
+          <div class="v" id="fresnel-out">15.8 m</div>
+          <div class="s" id="fresnel-sub">3.0 km 处净空要求 52 ft</div>
+        </div>
+      </div>
+
+      <div class="margin-card">
+        <div class="title" id="margin-title">3.0 km (1.9 mi) 处的衰落余量</div>
+        <div class="margin-row">
+          <span>自由空间路径损耗： <strong id="fspl-out">101.1 dB</strong></span>
+          <span>自由空间余量： <strong id="fsm-out">+54.9 dB</strong></span>
+          <span id="tm-wrap">地形余量： <strong id="tm-out">-0.8 到 +13.1 dB</strong></span>
+        </div>
+        <div class="verdict" id="verdict">在郊区遮挡环境下处于临界到可用区间：如果出现丢包，请把其中一个节点架高或避开建筑物。</div>
+      </div>
+    </div>
+  </section>
+
+  <h2>为什么地形胜过一切链路预算公式</h2>
+  <p>
+    一台 LoRa 接收机能在 -131 dBm 的微弱电平下从噪声中解出 Long Fast 数据包，让一台标准的 22 dBm 电台拥有超过 150 dB 的链路预算。在 906.875 MHz 的空旷自由空间里，150 dB 足以跨越几百公里。这正是 <a href="https://meshtastic.org/docs/overview/range-tests/">meshtastic.org</a> 上记录的 Meshtastic 331 km 地面通联纪录的由来：两台 RAK4631 节点架在高耸山峰上，中间隔着毫无遮挡的开阔空域。
+  </p>
+  <p>
+    回到地面街道，还没等你用完这些分贝，三个物理限制就会先起作用。第一是地球曲率：两个人在平地上以 1.8 m 眼高手持电台，无线电地平线大约只有 11 km，再远就会被地面本身挡住。第二是第一菲涅尔区，也就是两根天线直线连线周围那个橄榄球状的空间区域；在 906.875 MHz、3 km 路径上，其中点半径为 15.8 m，只要该区域被遮挡超过约 40%，即使肉眼能直接看到远处的山头，信号也会产生额外损耗。第三是地物遮挡：砖墙、钢结构屋顶、茂密山丘和潮湿树叶会迅速吸收 868 和 915 MHz 信号，这就是为什么同一台在瞭望塔上能打通 40 km 的电台，到了市中心公寓楼群里跨过 800 m 都很吃力。
+  </p>
+
+  <h2>Meshtastic 调制解调器预设与公布的链路预算</h2>
+  <p>
+    Meshtastic 2.8 定义了九个通用 LoRa 预设。扩频因子每提高一级，数据包占用空口的时间大约翻倍，同时增加约 2.5 dB 的链路预算；带宽减半则会增加接近 3 dB。下表整理自 <a href="https://meshtastic.org/docs/overview/radio-settings/">Meshtastic Radio Settings 文档</a>（2026 年 11 月 21 日查阅）公布的数值，均基于 22 dBm 发射功率和 0 dBi 天线，同时列出本计算器据此推算的接收灵敏度。
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>预设</th>
+        <th class="num">数据速率</th>
+        <th class="num">SF / CR</th>
+        <th class="num">带宽</th>
+        <th class="num">链路预算</th>
+        <th class="num">接收灵敏度</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td data-label="预设">Short Turbo*</td><td class="num" data-label="数据速率">21.88 kbps</td><td class="num" data-label="SF / CR">SF7 · 4/5</td><td class="num" data-label="带宽">500 kHz</td><td class="num" data-label="链路预算">140 dB</td><td class="num" data-label="接收灵敏度">-118.0 dBm</td></tr>
+      <tr><td data-label="预设">Short Fast</td><td class="num" data-label="数据速率">10.94 kbps</td><td class="num" data-label="SF / CR">SF7 · 4/5</td><td class="num" data-label="带宽">250 kHz</td><td class="num" data-label="链路预算">143 dB</td><td class="num" data-label="接收灵敏度">-121.0 dBm</td></tr>
+      <tr><td data-label="预设">Short Slow</td><td class="num" data-label="数据速率">6.25 kbps</td><td class="num" data-label="SF / CR">SF8 · 4/5</td><td class="num" data-label="带宽">250 kHz</td><td class="num" data-label="链路预算">145.5 dB</td><td class="num" data-label="接收灵敏度">-123.5 dBm</td></tr>
+      <tr><td data-label="预设">Medium Turbo*</td><td class="num" data-label="数据速率">7.03 kbps</td><td class="num" data-label="SF / CR">SF9 · 4/5</td><td class="num" data-label="带宽">500 kHz</td><td class="num" data-label="链路预算">145 dB</td><td class="num" data-label="接收灵敏度">-123.0 dBm</td></tr>
+      <tr><td data-label="预设">Medium Fast</td><td class="num" data-label="数据速率">3.52 kbps</td><td class="num" data-label="SF / CR">SF9 · 4/5</td><td class="num" data-label="带宽">250 kHz</td><td class="num" data-label="链路预算">148 dB</td><td class="num" data-label="接收灵敏度">-126.0 dBm</td></tr>
+      <tr><td data-label="预设">Medium Slow</td><td class="num" data-label="数据速率">1.95 kbps</td><td class="num" data-label="SF / CR">SF10 · 4/5</td><td class="num" data-label="带宽">250 kHz</td><td class="num" data-label="链路预算">150.5 dB</td><td class="num" data-label="接收灵敏度">-128.5 dBm</td></tr>
+      <tr><td data-label="预设">Long Turbo*</td><td class="num" data-label="数据速率">1.34 kbps</td><td class="num" data-label="SF / CR">SF11 · 4/8</td><td class="num" data-label="带宽">500 kHz</td><td class="num" data-label="链路预算">150 dB</td><td class="num" data-label="接收灵敏度">-128.0 dBm</td></tr>
+      <tr class="default-row"><td data-label="预设"><strong>Long Fast（默认）</strong></td><td class="num" data-label="数据速率">1.07 kbps</td><td class="num" data-label="SF / CR">SF11 · 4/5</td><td class="num" data-label="带宽">250 kHz</td><td class="num" data-label="链路预算">153 dB</td><td class="num" data-label="接收灵敏度">-131.0 dBm</td></tr>
+      <tr><td data-label="预设">Long Moderate</td><td class="num" data-label="数据速率">0.34 kbps</td><td class="num" data-label="SF / CR">SF11 · 4/8</td><td class="num" data-label="带宽">125 kHz</td><td class="num" data-label="链路预算">156 dB</td><td class="num" data-label="接收灵敏度">-134.0 dBm</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">
+    *三个 500 kHz 的 Turbo 预设并非在所有地区合法，在 EU_868（869.40–869.65 MHz）中不可用。上方下拉菜单还包含 Meshtastic 的六个窄带预设（Lite、Narrow 和 Tiny，15.6 到 125 kHz），适用于需要更窄信道的频段。
+  </p>
+
+  <h2>这些数字是怎么算出来的，哪些属于估算</h2>
+  <p>
+    精确的射频部分直接来自链路预算方程。由于 Meshtastic 公布的预设链路预算假定发射功率为 22 dBm、天线增益为 0 dBi，计算器按 <code>RX_sens = 22 - LinkBudget_ref</code> 推导每个预设的接收灵敏度，再按 <code>TX_dBm + TX_gain + RX_gain - Cable_loss - RX_sens</code> 算出你这套配置的链路预算。距离 <code>d</code>（km）、频率 <code>f</code>（MHz）下的自由空间路径损耗为 <code>32.44 + 20 * log10(d) + 20 * log10(f)</code>，第一菲涅尔区中点半径（单位 m）为 <code>17.32 * sqrt(d / (4 * f_GHz))</code>。
+  </p>
+  <p>
+    地形距离区间明确是一个近似估算。在无遮挡视距模式下，计算器分别按 20 dB（保守）和 10 dB（乐观）的衰落余量反解自由空间方程，只有在两端节点都架设得足够高、越过地平线并留出菲涅尔区净空时，电台才可能达到这个距离。对于乡村、郊区和密集城区环境，它采用以 1 m 处自由空间损耗（<code>L0</code>）为基准的标准对数距离路径损耗模型，保留 10 dB 衰落余量，并采用不同环境的路径损耗指数区间：零星树木的乡村地形取 <code>n = 2.8 to 3.1</code>，郊区取 <code>n = 3.2 to 3.6</code>，密集城区建筑群取 <code>n = 3.7 to 4.2</code>。它不会对你所在位置的具体高程剖面、当地射频底噪、天线 SWR 失配或多径衰落建模，因此请把所有非视距距离区间当作粗略规划参考；在屋顶或山脊永久架设节点前，务必先核查地形高程剖面。
+  </p>
+
+  <h2>计算示例</h2>
+  <p>
+    把四种常见配置代入计算器，就能看出环境对通信距离的影响远比几分贝发射功率大得多：
+  </p>
+  <ul>
+    <li><strong>两台郊区手持电台，Long Fast（美国 906.875 MHz）：</strong>22 dBm 功率、两端均为 2 dBi 天线、合计 1 dB 损耗，得到 156.0 dB 链路预算（接收灵敏度 -131.0 dBm）。在 3 km 处，自由空间路径损耗为 101.1 dB（自由空间余量 +54.9 dB），菲涅尔半径 15.8 m，郊区遮挡把预期距离区间收窄到 1.5–3.8 km（3 km 处余量为 -0.8 到 +13.1 dB）。</li>
+    <li><strong>繁忙城市 Mesh，Medium Fast（美国 906.875 MHz）：</strong>从 Long Fast 切换到 Medium Fast，牺牲 5 dB 链路预算（总计 151.0 dB，灵敏度 -126.0 dBm），换来三倍以上的数据速率（3.52 kbps 对比 1.07 kbps）。在密集城区建筑环境中，估算距离区间为 0.4–0.9 km。</li>
+    <li><strong>欧洲乡村，Long Moderate（欧洲 869.525 MHz）：</strong>22 dBm 配 3 dBi 天线与 1.5 dB 损耗，得到 160.5 dB 链路预算（灵敏度 -134.0 dBm），乡村估算区间为 7.0–18.2 km，在 8 km 处余量为 +8.3 到 +20.0 dB。</li>
+    <li><strong>山顶中继到手持电台（Long Fast，906.875 MHz，清晰视距）：</strong>22 dBm 功率，山顶用 5.8 dBi 杆状天线，手持机用 2 dBi 鞭状天线，同轴线缆损耗 2 dB，链路预算为 158.8 dB。在 40 km 无遮挡视距下，自由空间路径损耗为 123.6 dB，只要路径避开 57.5 m 的中点菲涅尔半径，就还有 +35.2 dB 的余量。</li>
+  </ul>
+
+  <h2>常见问题</h2>
+  <h3>Meshtastic 电台在现实中到底能传多远？</h3>
+  <p>使用 Long Fast、22 dBm 和 2 dBi 原装天线时，大多数人在密集城区能通联约 0.4 到 1.2 km，郊区 1.5 到 3.8 km，开阔乡村 4 到 10 km，而在高处山脊且视距无遮挡的情况下，可以达到几十甚至上百公里。</p>
+
+  <h3>把发射功率翻倍，Meshtastic 的通信距离会翻倍吗？</h3>
+  <p>不会。发射功率翻倍只能增加 3 dB 链路预算，让自由空间距离增加约 41%，在有遮挡的郊区只增加约 20% 到 25%。把天线架到视野开阔的高处，几乎总比调大功率管用。</p>
+
+  <h3>哪个 Meshtastic 调制解调器预设的通信距离最远？</h3>
+  <p>在 Meshtastic 2.8 的九个通用预设中，Long Moderate 的公布链路预算最高，达到 156 dB（比 Long Fast 高 3 dB），代价是 0.34 kbps 的较慢空口速率。在繁忙的大城市 Mesh 网络中，Medium Fast（148 dB，3.52 kbps）反而常常送达率更高，因为数据包占用信道的时间更短。</p>
+
+  <h3>为什么增益更高的天线在室内或山地有时表现更差？</h3>
+  <p>高增益全向天线会把能量压成一张贴近水平面的扁平辐射面。如果你正在中继站下方的陡坡上徒步，或者电台在背包里歪斜着放，狭窄的波束可能会错过对方节点，而 2 到 3 dBi 天线在这种角度下依然能连上。</p>
+
+  <aside class="cta">
+    <h2>用 Mesh+ 在你的 Meshtastic 电台上聊天</h2>
+    <p>
+      Mesh+ 是一款采用 MIT 许可证的免费 Meshtastic App，支持 Android 和 iPhone，体积约 3 MB，没有任何广告。它把公开频道、加密房间和私信放进同一个列表，用大白话配置无线电预设，并支持在 Android 上通过 USB 更新 nRF52 固件。
+    </p>
+    <a class="btn" href="https://meshplus.app/zh-hans/?utm_source=tool&amp;utm_campaign=meshtastic-range">获取 Mesh+</a>
+  </aside>
+
+  <footer>
+    <p>
+      资料来源：<a href="https://meshtastic.org/docs/overview/radio-settings/">Meshtastic Radio Settings（2.8 文档）</a>提供的全部 15 个调制解调器预设、带宽、数据速率、默认频率和 22 dBm 参考链路预算，以及 <a href="https://meshtastic.org/docs/overview/range-tests/">Meshtastic Range Tests</a> 记录的 331 km 地面通联纪录，均于 2026 年 11 月 21 日核对。本计算器的所有计算均在你的浏览器本地完成。
+    </p>
+    <p>
+      Mesh+ 是一个独立的开源项目，与 Meshtastic LLC 没有关联，也未获其认可。Meshtastic® 是 Meshtastic LLC 的注册商标。
+    </p>
+    <nav class="langs" aria-label="语言"><a href="/tools/range/" hreflang="en" lang="en">English</a> <a href="/ar/tools/range/" hreflang="ar" lang="ar">العربية</a> <a href="/de/tools/range/" hreflang="de" lang="de">Deutsch</a> <a href="/es/tools/range/" hreflang="es" lang="es">Español</a> <a href="/fr/tools/range/" hreflang="fr" lang="fr">Français</a> <a href="/hi/tools/range/" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/tools/range/" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/tools/range/" hreflang="it" lang="it">Italiano</a> <a href="/ja/tools/range/" hreflang="ja" lang="ja">日本語</a> <a href="/ko/tools/range/" hreflang="ko" lang="ko">한국어</a> <a href="/nl/tools/range/" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/tools/range/" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/tools/range/" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/tools/range/" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/tools/range/" hreflang="ru" lang="ru">Русский</a> <a href="/sv/tools/range/" hreflang="sv" lang="sv">Svenska</a> <a href="/th/tools/range/" hreflang="th" lang="th">ไทย</a> <a href="/tr/tools/range/" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/tools/range/" hreflang="uk" lang="uk">Українська</a> <a href="/vi/tools/range/" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/tools/range/" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">简体中文</a> <a href="/zh-hant/tools/range/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>
+  </footer>
+</main>
+<script>
+(function () {
+  var T = {"js_ter_urban_label": "密集城区", "js_ter_urban_note": "10 dB 衰落余量，对数距离指数 n = 3.7 到 4.2（建筑衰减严重）。", "js_ter_suburban_label": "郊区", "js_ter_suburban_note": "10 dB 衰落余量，对数距离指数 n = 3.2 到 3.6（房屋与树木）。", "js_ter_rural_label": "乡村 / 林地", "js_ter_rural_note": "10 dB 衰落余量，对数距离指数 n = 2.8 到 3.1（开阔地面，少量植被）。", "js_ter_los_label": "无遮挡视距", "js_ter_los_note": "自由空间路径损耗，衰落余量取 20 dB（保守）到 10 dB（乐观）；无线电地平线仍取决于架设高度。", "js_band_label": "估算距离区间 · {terrain}", "js_range_out": "{low_km} – {high_km} km ({low_mi} – {high_mi} mi)", "js_lb_sub": "{preset} 参考值 {lb} dB（22 dBm）", "js_fresnel_sub": "{dist} km 处净空要求 {ft} ft", "js_margin_title": "{km} km ({mi} mi) 处的衰落余量", "js_tm_range": "{low} 到 {high}", "js_v_los_good": "自由空间余量充足（{margin}）。只要两端天线都越过地平线并避开 {fresnel} m 菲涅尔区，这条链路就有充足余地。", "js_v_los_ok": "自由空间余量基本可用（{margin}），但天气变化或菲涅尔区被部分遮挡仍可能导致丢包。", "js_v_los_bad": "自由空间余量吃紧或为负值（{margin}）：请改用更慢的预设或更高增益的天线。", "js_v_ter_good": "在典型的{terrain}遮挡环境下余量充裕，除非路径正中间有山体或大型建筑遮挡。", "js_v_ter_ok": "在{terrain}遮挡环境下处于临界到可用区间：把其中一根天线架高到周围屋顶或树冠之上，比单纯提高发射功率更有帮助。", "js_v_ter_bad": "在{terrain}地形的这个距离上，信号很可能低于底噪。请在高处增加中继节点或拉近距离。", "js_warn_prefix": "部署前请检查：", "js_warn_eu868": "EU_868（869.40–869.65 MHz）不允许使用 500 kHz 的 Turbo 预设，请改选 250 kHz 或 125 kHz 预设。", "js_warn_erp": "发射功率加上天线增益（扣除线损前约 {erp} dBm ERP）已超过该频段的 +{max} dBm ERP 上限，请调低发射功率以符合法规。", "js_warn_horizon": "受地球曲率限制，两台 1.8 m 眼高的手持电台在平地上的无线电地平线约 11 km。超过这一距离时，至少需要抬高其中一端的海拔高度。"};
+  function fmt(s, map) {
+    return s.replace(/\{([a-z0-9_]+)\}/g, function (_, k) { return map[k] !== undefined ? String(map[k]) : ""; });
+  }
+  var PRESETS = {
+    SHORT_TURBO:   { name: "Short Turbo",   lb: 140.0, bw: 500,  sf: 7,  cr: "4/5", rate: 21.88, turbo: true },
+    SHORT_FAST:    { name: "Short Fast",    lb: 143.0, bw: 250,  sf: 7,  cr: "4/5", rate: 10.94, turbo: false },
+    SHORT_SLOW:    { name: "Short Slow",    lb: 145.5, bw: 250,  sf: 8,  cr: "4/5", rate: 6.25,  turbo: false },
+    MEDIUM_TURBO:  { name: "Medium Turbo",  lb: 145.0, bw: 500,  sf: 9,  cr: "4/5", rate: 7.03,  turbo: true },
+    MEDIUM_FAST:   { name: "Medium Fast",   lb: 148.0, bw: 250,  sf: 9,  cr: "4/5", rate: 3.52,  turbo: false },
+    MEDIUM_SLOW:   { name: "Medium Slow",   lb: 150.5, bw: 250,  sf: 10, cr: "4/5", rate: 1.95,  turbo: false },
+    LONG_TURBO:    { name: "Long Turbo",    lb: 150.0, bw: 500,  sf: 11, cr: "4/8", rate: 1.34,  turbo: true },
+    LONG_FAST:     { name: "Long Fast",     lb: 153.0, bw: 250,  sf: 11, cr: "4/5", rate: 1.07,  turbo: false },
+    LONG_MODERATE: { name: "Long Moderate", lb: 156.0, bw: 125,  sf: 11, cr: "4/8", rate: 0.34,  turbo: false },
+    LITE_FAST:     { name: "Lite Fast",     lb: 151.0, bw: 125,  sf: 9,  cr: "4/5", rate: 1.76,  turbo: false },
+    LITE_SLOW:     { name: "Lite Slow",     lb: 153.5, bw: 125,  sf: 10, cr: "4/5", rate: 0.98,  turbo: false },
+    NARROW_FAST:   { name: "Narrow Fast",   lb: 149.0, bw: 62.5, sf: 7,  cr: "4/6", rate: 2.28,  turbo: false },
+    NARROW_SLOW:   { name: "Narrow Slow",   lb: 151.5, bw: 62.5, sf: 8,  cr: "4/6", rate: 1.30,  turbo: false },
+    TINY_FAST:     { name: "Tiny Fast",     lb: 155.0, bw: 15.6, sf: 7,  cr: "4/5", rate: 0.68,  turbo: false },
+    TINY_SLOW:     { name: "Tiny Slow",     lb: 157.5, bw: 15.6, sf: 8,  cr: "4/6", rate: 0.33,  turbo: false }
+  };
+
+  var TERRAINS = {
+    urban:    { label: T.js_ter_urban_label,    nLow: 3.7, nHigh: 4.2, margin: 10, note: T.js_ter_urban_note },
+    suburban: { label: T.js_ter_suburban_label, nLow: 3.2, nHigh: 3.6, margin: 10, note: T.js_ter_suburban_note },
+    rural:    { label: T.js_ter_rural_label,    nLow: 2.8, nHigh: 3.1, margin: 10, note: T.js_ter_rural_note },
+    los:      { label: T.js_ter_los_label,      nLow: 2.0, nHigh: 2.0, marginLow: 20, marginHigh: 10, note: T.js_ter_los_note }
+  };
+
+  var SCENES = {
+    suburb:  { preset: "LONG_FAST",     band: "906.875", tx: 22, txg: 2,   rxg: 2, loss: 1,   terrain: "suburban", dist: 3 },
+    city:    { preset: "MEDIUM_FAST",   band: "906.875", tx: 22, txg: 2,   rxg: 2, loss: 1,   terrain: "urban",    dist: 1 },
+    eu868:   { preset: "LONG_MODERATE", band: "869.525", tx: 22, txg: 3,   rxg: 3, loss: 1.5, terrain: "rural",    dist: 8 },
+    hilltop: { preset: "LONG_FAST",     band: "906.875", tx: 22, txg: 5.8, rxg: 2, loss: 2,   terrain: "los",      dist: 40 }
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var terrain = "suburban";
+  var used = false;
+
+  function trackUse() {
+    if (!used) {
+      used = true;
+      if (window.lumen) window.lumen("tool-use");
+    }
+  }
+
+  function num(id, fallback, lo, hi) {
+    var v = parseFloat($(id).value);
+    if (!isFinite(v)) return fallback;
+    return Math.min(hi, Math.max(lo, v));
+  }
+
+  function fmtDist(km) {
+    if (km < 1) return km.toFixed(2);
+    if (km < 10) return km.toFixed(1);
+    return String(Math.round(km));
+  }
+
+  function fmtSigned(v) {
+    return (v >= 0 ? "+" : "") + v.toFixed(1) + " dB";
+  }
+
+  function update(fromUser) {
+    if (fromUser) trackUse();
+
+    var pKey = $("preset").value;
+    var p = PRESETS[pKey] || PRESETS.LONG_FAST;
+    var bandOpt = $("band").options[$("band").selectedIndex];
+    var freq = parseFloat(bandOpt.value) || 906.875;
+    var erpMax = parseFloat(bandOpt.dataset.erp) || 30;
+    var isEu868 = bandOpt.dataset.eu868 === "1";
+
+    var tx = num("tx", 22, 0, 30);
+    var txg = num("txg", 2, -5, 20);
+    var rxg = num("rxg", 2, -5, 20);
+    var loss = num("loss", 1, 0, 20);
+    var dist = num("dist", 3, 0.1, 500);
+    var t = TERRAINS[terrain];
+
+    var rxSens = 22 - p.lb;
+    var lb = tx + txg + rxg - loss - rxSens;
+    var l0 = 32.44 + 20 * Math.log10(freq) - 60;
+
+    var dLow, dHigh;
+    if (terrain === "los") {
+      dLow = Math.pow(10, (lb - t.marginLow - 32.44 - 20 * Math.log10(freq)) / 20);
+      dHigh = Math.pow(10, (lb - t.marginHigh - 32.44 - 20 * Math.log10(freq)) / 20);
+    } else {
+      dLow = 0.001 * Math.pow(10, (lb - t.margin - l0) / (10 * t.nHigh));
+      dHigh = 0.001 * Math.pow(10, (lb - t.margin - l0) / (10 * t.nLow));
+    }
+
+    var fspl = 32.44 + 20 * Math.log10(dist) + 20 * Math.log10(freq);
+    var fsMargin = lb - fspl;
+    var plLow = l0 + 10 * t.nLow * Math.log10(dist * 1000);
+    var plHigh = l0 + 10 * t.nHigh * Math.log10(dist * 1000);
+    var tMarginLow = lb - plHigh;
+    var tMarginHigh = lb - plLow;
+    var fresnelM = 17.32 * Math.sqrt(dist / (4 * (freq / 1000)));
+    var fresnelFt = fresnelM * 3.28084;
+
+    $("band-label").textContent = fmt(T.js_band_label, { terrain: t.label });
+    $("range-out").textContent = fmt(T.js_range_out, {
+      low_km: fmtDist(dLow), high_km: fmtDist(dHigh),
+      low_mi: fmtDist(dLow * 0.621371), high_mi: fmtDist(dHigh * 0.621371)
+    });
+    $("range-sub").textContent = t.note;
+
+    $("lb-out").textContent = lb.toFixed(1) + " dB";
+    $("lb-sub").textContent = fmt(T.js_lb_sub, { preset: p.name, lb: p.lb });
+    $("rx-out").textContent = rxSens.toFixed(1) + " dBm";
+    $("rx-sub").textContent = "SF" + p.sf + " · " + p.bw + " kHz · " + p.rate + " kbps";
+    $("fresnel-out").textContent = fresnelM.toFixed(1) + " m";
+    $("fresnel-sub").textContent = fmt(T.js_fresnel_sub, { ft: Math.round(fresnelFt), dist: dist.toFixed(1) });
+
+    $("margin-title").textContent = fmt(T.js_margin_title, { km: dist.toFixed(1), mi: (dist * 0.621371).toFixed(1) });
+    $("fspl-out").textContent = fspl.toFixed(1) + " dB";
+    $("fsm-out").textContent = fmtSigned(fsMargin);
+
+    var tmWrap = $("tm-wrap");
+    var verdict = $("verdict");
+    if (terrain === "los") {
+      tmWrap.hidden = true;
+      if (fsMargin >= 20) {
+        verdict.className = "verdict good";
+        verdict.textContent = fmt(T.js_v_los_good, { margin: fmtSigned(fsMargin), fresnel: fresnelM.toFixed(1) });
+      } else if (fsMargin >= 10) {
+        verdict.className = "verdict ok";
+        verdict.textContent = fmt(T.js_v_los_ok, { margin: fmtSigned(fsMargin) });
+      } else {
+        verdict.className = "verdict bad";
+        verdict.textContent = fmt(T.js_v_los_bad, { margin: fmtSigned(fsMargin) });
+      }
+    } else {
+      tmWrap.hidden = false;
+      $("tm-out").textContent = fmt(T.js_tm_range, { low: fmtSigned(tMarginLow), high: fmtSigned(tMarginHigh) });
+      if (tMarginLow >= 10) {
+        verdict.className = "verdict good";
+        verdict.textContent = fmt(T.js_v_ter_good, { terrain: t.label.toLowerCase() });
+      } else if (tMarginHigh >= 5) {
+        verdict.className = "verdict ok";
+        verdict.textContent = fmt(T.js_v_ter_ok, { terrain: t.label.toLowerCase() });
+      } else {
+        verdict.className = "verdict bad";
+        verdict.textContent = fmt(T.js_v_ter_bad, { terrain: t.label.toLowerCase() });
+      }
+    }
+
+    var warns = [];
+    if (isEu868 && p.turbo) {
+      warns.push(T.js_warn_eu868);
+    }
+    var approxErp = tx + txg - 2.15;
+    if (approxErp > erpMax + 0.5) {
+      warns.push(fmt(T.js_warn_erp, { erp: approxErp.toFixed(1), max: erpMax }));
+    }
+    if (terrain === "los" && dHigh > 20) {
+      warns.push(T.js_warn_horizon);
+    }
+    var wb = $("warnings");
+    if (warns.length) {
+      wb.hidden = false;
+      wb.textContent = "";
+      var st = document.createElement("strong");
+      st.textContent = T.js_warn_prefix;
+      wb.appendChild(st);
+      wb.appendChild(document.createTextNode(" " + warns.join(" ")));
+    } else {
+      wb.hidden = true;
+      wb.textContent = "";
+    }
+  }
+
+  function clearSceneButtons() {
+    document.querySelectorAll("[data-scene]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+  }
+
+  ["preset", "band", "tx", "txg", "rxg", "loss", "dist"].forEach(function (id) {
+    $(id).addEventListener("input", function () { clearSceneButtons(); update(true); });
+    $(id).addEventListener("change", function () { clearSceneButtons(); update(true); });
+  });
+
+  document.querySelectorAll("[data-terrain]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      terrain = b.dataset.terrain;
+      document.querySelectorAll("[data-terrain]").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      clearSceneButtons();
+      update(true);
+    });
+  });
+
+  document.querySelectorAll("[data-scene]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var s = SCENES[b.dataset.scene];
+      if (!s) return;
+      $("preset").value = s.preset;
+      $("band").value = s.band;
+      $("tx").value = s.tx;
+      $("txg").value = s.txg;
+      $("rxg").value = s.rxg;
+      $("loss").value = s.loss;
+      $("dist").value = s.dist;
+      terrain = s.terrain;
+      document.querySelectorAll("[data-terrain]").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x.dataset.terrain === terrain));
+      });
+      document.querySelectorAll("[data-scene]").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      update(true);
+    });
+  });
+
+  update(false);
+})();
+</script>
+</body>
+</html>

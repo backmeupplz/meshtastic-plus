@@ -86,17 +86,19 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <p class="muted">Czym się różnią, sprawdzone 27 października 2026.</p>
 
   <p>
-    Mesh+ to mała aplikacja na Androida i iPhone'a na licencji MIT do radiotelefonów Meshtastic, stworzona po to, by robić jedną rzecz prosto: czatować z osobami w Twojej sieci. Łączy się z tymi samymi radiami z firmware'em Meshtastic 2.x co oficjalna aplikacja Meshtastic, tworzona przez projekt Meshtastic, więc możesz przełączać się między nimi w każdej chwili i dalej używać oficjalnej aplikacji do map, telemetrii i pełnej konfiguracji urządzenia.
+    Zbudowałem Mesh+ jako małego klienta na Androida i iPhone'a na licencji MIT, stworzonego do jednego zadania: czatowania przez radia Meshtastic bez przekopywania się przez menu. Łączy się z tymi samymi radiami z firmware'em Meshtastic 2.x co oficjalna aplikacja, więc w każdej chwili możesz do niej wrócić i dalej używać jej do map, telemetrii i pełnej konfiguracji węzła.
   </p>
 
   <h2>Dlaczego Mesh+</h2>
-  <ul>
-    <li>Konfiguracja w kilku krokach: podłącz radio kablem USB-C (telefon je zasila) albo połącz się przez Bluetooth, a potem wybierz region i nazwę.</li>
-    <li>Wszystkie czaty na jednej liście: kanał publiczny, prywatne szyfrowane pokoje, do których zapraszasz osoby kodem QR lub linkiem, oraz wiadomości prywatne, z licznikami nieprzeczytanych.</li>
-    <li>Przekaźnik SMS: gdy jeden telefon w sieci ma kartę SIM, osoby w pokoju prywatnym mogą przez niego wysyłać i odbierać zwykłe SMS-y. Jest w kompilacji z F-Droid i w pliku APK podlinkowanym poniżej; kompilacja z Google Play go nie ma, ponieważ Google Play nie zezwala na jego uprawnienia.</li>
-    <li>Aktualizacje firmware'u radiów nRF52 przez USB (<a href="/pl/update-meshtastic-firmware.html">jak to działa, krok po kroku</a>), z możliwością wyboru dowolnej wersji, którą Meshtastic publikuje dla Twojej płytki.</li>
-    <li>Każde ustawienie węzła wyjaśnione prostymi słowami, tryb demo do wypróbowania aplikacji bez radia oraz aplikacja o rozmiarze około 3 MB, która wymaga Androida 12 lub nowszego albo iOS 17 lub nowszego. Aplikacja na iPhone'a łączy się przez Bluetooth i nie ma przekaźnika SMS ani aktualizacji firmware'u.</li>
-  </ul>
+  <p>
+    Konfiguracja zajmuje kilka stuknięć: podłącz radio kablem USB-C (telefon je zasila) albo sparuj je przez Bluetooth, wybierz region i ustaw nazwę. Wszystkie czaty są na jednej liście z licznikami nieprzeczytanych: kanał publiczny, prywatne szyfrowane pokoje udostępniane kodem QR lub linkiem oraz wiadomości prywatne.
+  </p>
+  <p>
+    Android dokłada dwa narzędzia, których potrzebowałem w drodze. Gdy jeden telefon w Twojej sieci ma kartę SIM, przekaźnik SMS pozwala osobom w pokoju prywatnym wysyłać i odbierać przez niego zwykłe SMS-y (jest w wersji z F-Droid i w bezpośrednim pliku APK poniżej; Google Play blokuje uprawnienia SMS). Prosto z aplikacji możesz też wgrać firmware na radia nRF52 przez USB (<a href="/pl/update-meshtastic-firmware.html">instrukcja aktualizacji firmware'u krok po kroku</a>), wybierając dowolne wydanie, które Meshtastic publikuje dla Twojej płytki.
+  </p>
+  <p>
+    Ustawienia węzła są opisane prostym językiem, a tryb demo pozwala wypróbować aplikację bez sprzętu. Aplikacja waży około 3 MB na Androidzie 12 lub nowszym oraz iOS 17 lub nowszym; wersja na iPhone'a korzysta z Bluetooth i nie ma przekaźnika SMS ani wgrywania firmware'u przez USB.
+  </p>
 
   <h2>Gdzie je znaleźć</h2>
   <ul>

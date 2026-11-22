@@ -2862,5 +2862,574 @@
   </url>
   <url>
     <loc>https://meshplus.app/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/ar/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/de/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/es/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/fr/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/hi/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/id/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/it/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/ja/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/ko/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/nl/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/pl/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/pt-br/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/pt-pt/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/ru/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/sv/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/th/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/tr/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/uk/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/vi/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/zh-hans/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
+  </url>
+  <url>
+    <loc>https://meshplus.app/zh-hant/tools/range/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/"/>
   </url>
 </urlset>

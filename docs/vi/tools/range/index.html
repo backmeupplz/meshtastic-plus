@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tính tầm phủ sóng và quỹ đường truyền Meshtastic | Mesh+</title>
+<meta name="description" content="Tính tầm phủ sóng LoRa Meshtastic, quỹ đường truyền, dự trữ pha-đinh, vùng Fresnel theo cấu hình, công suất, ăng-ten, suy hao cáp và địa hình trên trình duyệt.">
+<link rel="canonical" href="https://meshplus.app/vi/tools/range/">
+<link rel="alternate" hreflang="en" href="https://meshplus.app/tools/range/">
+<link rel="alternate" hreflang="ar" href="https://meshplus.app/ar/tools/range/">
+<link rel="alternate" hreflang="de" href="https://meshplus.app/de/tools/range/">
+<link rel="alternate" hreflang="es" href="https://meshplus.app/es/tools/range/">
+<link rel="alternate" hreflang="fr" href="https://meshplus.app/fr/tools/range/">
+<link rel="alternate" hreflang="hi" href="https://meshplus.app/hi/tools/range/">
+<link rel="alternate" hreflang="id" href="https://meshplus.app/id/tools/range/">
+<link rel="alternate" hreflang="it" href="https://meshplus.app/it/tools/range/">
+<link rel="alternate" hreflang="ja" href="https://meshplus.app/ja/tools/range/">
+<link rel="alternate" hreflang="ko" href="https://meshplus.app/ko/tools/range/">
+<link rel="alternate" hreflang="nl" href="https://meshplus.app/nl/tools/range/">
+<link rel="alternate" hreflang="pl" href="https://meshplus.app/pl/tools/range/">
+<link rel="alternate" hreflang="pt-BR" href="https://meshplus.app/pt-br/tools/range/">
+<link rel="alternate" hreflang="pt-PT" href="https://meshplus.app/pt-pt/tools/range/">
+<link rel="alternate" hreflang="ru" href="https://meshplus.app/ru/tools/range/">
+<link rel="alternate" hreflang="sv" href="https://meshplus.app/sv/tools/range/">
+<link rel="alternate" hreflang="th" href="https://meshplus.app/th/tools/range/">
+<link rel="alternate" hreflang="tr" href="https://meshplus.app/tr/tools/range/">
+<link rel="alternate" hreflang="uk" href="https://meshplus.app/uk/tools/range/">
+<link rel="alternate" hreflang="vi" href="https://meshplus.app/vi/tools/range/">
+<link rel="alternate" hreflang="zh-Hans" href="https://meshplus.app/zh-hans/tools/range/">
+<link rel="alternate" hreflang="zh-Hant" href="https://meshplus.app/zh-hant/tools/range/">
+<link rel="alternate" hreflang="x-default" href="https://meshplus.app/tools/range/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ar_AR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="hi_IN">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="nl_NL">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="sv_SE">
+<meta property="og:locale:alternate" content="th_TH">
+<meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:locale:alternate" content="uk_UA">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:site_name" content="Mesh+">
+<meta property="og:url" content="https://meshplus.app/vi/tools/range/">
+<meta property="og:title" content="Công cụ tính tầm phủ sóng và quỹ đường truyền Meshtastic">
+<meta property="og:description" content="Chọn cấu hình modem Meshtastic, công suất phát, ăng-ten, suy hao cáp và địa hình để tính quỹ đường truyền, dự trữ pha-đinh và khoảng tầm phủ sóng thực tế.">
+<meta property="og:image" content="https://meshplus.app/og/vi/range.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Công cụ tính tầm phủ sóng và quỹ đường truyền Meshtastic: 15 cấu hình modem chính thức, công cụ trình duyệt miễn phí trên meshplus.app.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Công cụ tính tầm phủ sóng và quỹ đường truyền Meshtastic">
+<meta name="twitter:description" content="Chọn cấu hình modem Meshtastic, công suất phát, ăng-ten, suy hao cáp và địa hình để tính quỹ đường truyền, dự trữ pha-đinh và khoảng tầm phủ sóng thực tế.">
+<meta name="twitter:image" content="https://meshplus.app/og/vi/range.jpg">
+<meta name="twitter:image:alt" content="Công cụ tính tầm phủ sóng và quỹ đường truyền Meshtastic: 15 cấu hình modem chính thức, công cụ trình duyệt miễn phí trên meshplus.app.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #060b08;
+    --card: #0c1610;
+    --input: #08100b;
+    --line: #1d3225;
+    --fg: #eef5f0;
+    --muted: #a6b8ad;
+    --green: #67ea94;
+    --green-fg: #06130b;
+    --warn: #f5c451;
+    --err: #ff8a80;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1, h2, h3 { font-family: ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.02em; line-height: 1.15; }
+  h1 { font-size: clamp(32px, 6vw, 44px); margin: 8px 0 12px; }
+  h2 { font-size: clamp(22px, 4vw, 28px); margin: 40px 0 12px; }
+  h3 { font-size: 19px; margin: 24px 0 8px; }
+  p { margin: 0 0 16px; }
+  .lead { font-size: 18px; color: var(--muted); margin: 0 0 24px; }
+  .muted { color: var(--muted); }
+  a { color: var(--green); text-underline-offset: 3px; }
+  code { font-family: var(--mono); font-size: 0.9em; background: var(--card); border: 1px solid var(--line); padding: 1px 6px; border-radius: 5px; overflow-wrap: anywhere; }
+  .back { margin: 0 0 8px; }
+  .back a { display: inline-block; padding: 6px 0; min-height: 36px; text-decoration: none; font-weight: 600; }
+  .back a:hover { text-decoration: underline; }
+
+  .tool { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; margin: 0 0 28px; }
+  .presets-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; align-items: center; }
+  .presets-bar span { font-size: 14px; color: var(--muted); margin-right: 4px; }
+  .presets-bar button { font: 600 14px ui-sans-serif, system-ui, sans-serif; background: var(--input); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; min-height: 40px; cursor: pointer; }
+  .presets-bar button:hover { border-color: var(--green); color: var(--green); }
+  .presets-bar button[aria-pressed="true"] { background: var(--green); color: var(--green-fg); border-color: var(--green); }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+  label { font-size: 15px; font-weight: 600; color: var(--fg); }
+  .hint { font-size: 13.5px; color: var(--muted); margin-top: -2px; }
+  select, input[type="number"] {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    font: 16px/1.3 ui-sans-serif, system-ui, sans-serif;
+    background: var(--input);
+    color: var(--fg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  select:focus-visible, input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+
+  .terrain-group { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .terrain-group button {
+    min-height: 48px;
+    padding: 10px 8px;
+    font: 600 14.5px/1.25 ui-sans-serif, system-ui, sans-serif;
+    background: var(--input);
+    color: var(--fg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .terrain-group button:hover { border-color: var(--green); }
+  .terrain-group button[aria-pressed="true"] { background: var(--green); color: var(--green-fg); border-color: var(--green); }
+
+  .results { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .hero-out { background: var(--input); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+  .hero-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 4px; }
+  .hero-val { font-family: ui-sans-serif, system-ui, sans-serif; font-size: clamp(28px, 5vw, 38px); font-weight: 800; color: var(--green); line-height: 1.15; }
+  .hero-sub { font-size: 15px; color: var(--muted); margin-top: 6px; }
+  .reality-note { background: rgba(245, 196, 81, 0.08); border: 1px solid rgba(245, 196, 81, 0.35); border-radius: 10px; padding: 12px 14px; font-size: 15px; color: var(--fg); margin-bottom: 14px; }
+  .reality-note strong { color: var(--warn); }
+  .warn-box { background: rgba(255, 138, 128, 0.08); border: 1px solid rgba(255, 138, 128, 0.4); border-radius: 10px; padding: 12px 14px; font-size: 15px; color: var(--fg); margin-bottom: 14px; }
+  .warn-box strong { color: var(--err); }
+
+  .metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .metric { background: var(--input); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .metric .k { font-size: 13.5px; color: var(--muted); margin-bottom: 4px; }
+  .metric .v { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--fg); }
+  .metric .s { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+
+  .margin-card { margin-top: 12px; background: var(--input); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .margin-card .title { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+  .margin-row { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 15px; }
+  .margin-row strong { font-family: var(--mono); }
+  .verdict { margin-top: 8px; font-size: 15px; color: var(--muted); }
+  .verdict.good { color: var(--green); }
+  .verdict.ok { color: var(--warn); }
+  .verdict.bad { color: var(--err); }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 15.5px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; }
+  tr.default-row { background: rgba(103, 234, 148, 0.07); }
+  td.num, th.num { font-family: var(--mono); }
+
+  .cta { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; margin: 36px 0 28px; }
+  .cta h2 { margin: 0 0 8px; font-size: 23px; }
+  .cta p { margin: 0 0 16px; color: var(--muted); }
+  .cta a.btn { display: inline-block; background: var(--green); color: var(--green-fg); font-weight: 700; text-decoration: none; padding: 12px 20px; min-height: 46px; border-radius: 10px; }
+  .cta a.btn:hover { opacity: 0.92; }
+
+  footer { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14.5px; color: var(--muted); }
+  footer p { margin: 0 0 10px; }
+
+  @media (max-width: 720px) {
+    table, thead, tbody, tr, td { display: block; width: 100%; }
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+    tr { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; }
+    tr.default-row { border-color: rgba(103, 234, 148, 0.45); }
+    td { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 6px 0; border-bottom: 1px solid rgba(29, 50, 37, 0.6); }
+    td:last-child { border-bottom: none; }
+    td::before { content: attr(data-label); font-size: 13.5px; color: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 600; flex-shrink: 0; }
+    .terrain-group { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .metrics { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    main { padding: 20px 16px 48px; }
+    .tool { padding: 16px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0;padding:0;flex:0 0 100%}nav.langs a{display:inline-block;padding:4px 8px;min-height:32px;border-radius:6px}nav.langs a[aria-current]{font-weight:700;text-decoration:none;color:inherit}h1,h2,h3,p,li,summary{overflow-wrap:break-word;hyphens:auto}
+</style>
+<script defer src="https://lumen.borodutch.com/l.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Công cụ tính tầm phủ sóng và quỹ đường truyền Meshtastic","url":"https://meshplus.app/vi/tools/range/","inLanguage":"vi","applicationCategory":"UtilitiesApplication","operatingSystem":"Bất kỳ (chạy trong trình duyệt)","description":"Tính quỹ đường truyền LoRa Meshtastic, dự trữ pha-đinh, bán kính vùng Fresnel và khoảng tầm phủ sóng ước tính dựa trên các cấu hình modem Meshtastic đã công bố, công suất phát, độ lợi ăng-ten, suy hao cáp và địa hình.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isAccessibleForFree":true,"isPartOf":{"@type":"WebSite","name":"Mesh+","url":"https://meshplus.app/vi/"},"author":{"@type":"Person","name":"Nikita Kolmogorov","url":"https://borodutch.com"}},{"@type":"FAQPage","inLanguage":"vi","mainEntity":[{"@type":"Question","name":"Một radio Meshtastic truyền xa được bao nhiêu trong thực tế?","acceptedAnswer":{"@type":"Answer","text":"Với cấu hình mặc định Long Fast ở 22 dBm cùng ăng-ten tiêu chuẩn 2 dBi, bạn có thể kỳ vọng khoảng 0.4 đến 1.2 km trong đô thị dày đặc, 1.5 đến 3.8 km ở ngoại ô, 4 đến 10 km trên vùng nông thôn thoáng đãng, và hơn 100 km từ đỉnh đồi này sang đỉnh đồi khác khi có tầm nhìn thẳng thông thoáng. Độ cao ăng-ten và vật cản địa hình quyết định nhiều hơn hẳn công suất phát."}},{"@type":"Question","name":"Tăng gấp đôi công suất phát có làm tầm phủ sóng Meshtastic tăng gấp đôi không?","acceptedAnswer":{"@type":"Answer","text":"Không. Tăng gấp đôi công suất phát chỉ cộng thêm 3 dB vào quỹ đường truyền, giúp tăng khoảng cách trong không gian tự do khoảng 41% và ở ngoại ô khoảng 20 đến 25%. Đưa ăng-ten lên cao hơn mái nhà và tán cây xung quanh hầu như luôn mang lại thêm khoảng cách hơn là tăng công suất."}},{"@type":"Question","name":"Cấu hình modem Meshtastic nào cho tầm phủ sóng tốt nhất?","acceptedAnswer":{"@type":"Answer","text":"Trong chín cấu hình đa dụng của Meshtastic 2.8, Long Moderate có quỹ đường truyền công bố cao nhất là 156 dB (nhiều hơn 3 dB so với mức 153 dB của Long Fast), dù tốc độ dữ liệu giảm xuống còn 0.34 kbps. Trong các mạng mesh đô thị đông đúc, Medium Fast (148 dB, 3.52 kbps) thường chuyển được nhiều tin nhắn hơn vì mỗi gói tin chiếm kênh ít thời gian hơn."}},{"@type":"Question","name":"Vì sao ăng-ten có độ lợi cao hơn đôi khi lại kém hơn trong nhà hoặc ở vùng đồi núi?","acceptedAnswer":{"@type":"Answer","text":"Ăng-ten đẳng hướng có độ lợi cao ép dẹt giản đồ bức xạ về phía đường chân trời. Nếu một node nằm trên sườn đồi dốc cao hơn node kia, hoặc radio bị nghiêng trong ba lô, chùm sóng hẹp có thể bắn trượt qua node còn lại và mất tín hiệu so với ăng-ten roi 2 đến 3 dBi có góc phủ rộng hơn."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Mesh+","item":"https://meshplus.app/vi/"},{"@type":"ListItem","position":2,"name":"Công cụ tính tầm phủ sóng Meshtastic","item":"https://meshplus.app/vi/tools/range/"}]}]}</script>
+</head>
+<body>
+<main>
+  <p class="back"><a href="/vi/">← Mesh+</a></p>
+  <h1>Công cụ tính tầm phủ sóng và quỹ đường truyền Meshtastic</h1>
+  <p class="lead">
+    Một radio Meshtastic dùng cấu hình mặc định Long Fast đạt khoảng 1.5 đến 3.8 km ở ngoại ô, 4 đến 10 km trên vùng nông thôn thoáng đãng, và hơn 100 km từ đỉnh đồi này sang đỉnh đồi khác khi không có gì chắn đường truyền. Chọn cấu hình modem, công suất phát, ăng-ten, suy hao cáp và địa hình bên dưới để tính quỹ đường truyền, dự trữ pha-đinh và một khoảng tầm phủ sóng thực tế ngay trong trình duyệt của bạn.
+  </p>
+
+  <section class="tool" aria-label="Công cụ tính tầm phủ sóng Meshtastic">
+    <div class="presets-bar" role="group" aria-label="Cấu hình mẫu">
+      <span>Thử cấu hình mẫu:</span>
+      <button type="button" data-scene="suburb" aria-pressed="true">Cầm tay ở ngoại ô</button>
+      <button type="button" data-scene="city" aria-pressed="false">Đô thị đông đúc (Medium Fast)</button>
+      <button type="button" data-scene="eu868" aria-pressed="false">Nông thôn EU 868</button>
+      <button type="button" data-scene="hilltop" aria-pressed="false">Tầm nhìn thẳng trên đỉnh đồi</button>
+    </div>
+
+    <div class="grid">
+      <div class="field">
+        <label for="preset">Cấu hình modem</label>
+        <select id="preset">
+          <optgroup label="Cấu hình đa dụng (Meshtastic 2.8)">
+            <option value="SHORT_TURBO">Short Turbo — 140 dB · 21.88 kbps · SF7 / 500 kHz</option>
+            <option value="SHORT_FAST">Short Fast — 143 dB · 10.94 kbps · SF7 / 250 kHz</option>
+            <option value="SHORT_SLOW">Short Slow — 145.5 dB · 6.25 kbps · SF8 / 250 kHz</option>
+            <option value="MEDIUM_TURBO">Medium Turbo — 145 dB · 7.03 kbps · SF9 / 500 kHz</option>
+            <option value="MEDIUM_FAST">Medium Fast — 148 dB · 3.52 kbps · SF9 / 250 kHz</option>
+            <option value="MEDIUM_SLOW">Medium Slow — 150.5 dB · 1.95 kbps · SF10 / 250 kHz</option>
+            <option value="LONG_TURBO">Long Turbo — 150 dB · 1.34 kbps · SF11 / 500 kHz</option>
+            <option value="LONG_FAST" selected>Long Fast (mặc định) — 153 dB · 1.07 kbps · SF11 / 250 kHz</option>
+            <option value="LONG_MODERATE">Long Moderate — 156 dB · 0.34 kbps · SF11 / 125 kHz</option>
+          </optgroup>
+          <optgroup label="Cấu hình băng hẹp (băng tần khu vực)">
+            <option value="LITE_FAST">Lite Fast — 151 dB · 1.76 kbps · SF9 / 125 kHz</option>
+            <option value="LITE_SLOW">Lite Slow — 153.5 dB · 0.98 kbps · SF10 / 125 kHz</option>
+            <option value="NARROW_FAST">Narrow Fast — 149 dB · 2.28 kbps · SF7 / 62.5 kHz</option>
+            <option value="NARROW_SLOW">Narrow Slow — 151.5 dB · 1.30 kbps · SF8 / 62.5 kHz</option>
+            <option value="TINY_FAST">Tiny Fast — 155 dB · 0.68 kbps · SF7 / 15.6 kHz</option>
+            <option value="TINY_SLOW">Tiny Slow — 157.5 dB · 0.33 kbps · SF8 / 15.6 kHz</option>
+          </optgroup>
+        </select>
+        <span class="hint">Độ nhạy máy thu được suy ra từ quỹ đường truyền tham chiếu ở mức 22 dBm của Meshtastic.</span>
+      </div>
+
+      <div class="field">
+        <label for="band">Băng tần</label>
+        <select id="band">
+          <option value="906.875" data-erp="30" data-eu868="0" selected>Mỹ / Châu Mỹ 915 MHz (906.875 MHz)</option>
+          <option value="869.525" data-erp="27" data-eu868="1">Châu Âu 868 MHz (869.525 MHz)</option>
+          <option value="433.875" data-erp="10" data-eu868="0">Châu Âu 433 MHz (433.875 MHz)</option>
+          <option value="2400" data-erp="20" data-eu868="0">LoRa 2.4 GHz (2400 MHz)</option>
+        </select>
+        <span class="hint">Tần số thấp hơn bị suy hao tín hiệu ít hơn trên cùng một khoảng cách trong không gian tự do.</span>
+      </div>
+
+      <div class="field">
+        <label for="tx">Công suất phát (dBm)</label>
+        <input id="tx" type="number" min="0" max="30" step="1" value="22">
+        <span class="hint">Hầu hết bo mạch SX1262 (Heltec T114, RAK4631) phát 22 dBm; hãy kiểm tra giới hạn tại khu vực của bạn.</span>
+      </div>
+
+      <div class="field">
+        <label for="loss">Tổng suy hao cáp và đầu nối (dB)</label>
+        <input id="loss" type="number" min="0" max="20" step="0.5" value="1">
+        <span class="hint">Cộng cả hai đầu: khoảng 0.5–1 dB cho dây nối ngắn, 0 dB cho ăng-ten roi gắn trực tiếp.</span>
+      </div>
+
+      <div class="field">
+        <label for="txg">Độ lợi ăng-ten phát TX (dBi)</label>
+        <input id="txg" type="number" min="-5" max="20" step="0.5" value="2">
+        <span class="hint">Ăng-ten roi theo máy khoảng 1–2 dBi; ăng-ten cột sợi thủy tinh đạt 3–6 dBi.</span>
+      </div>
+
+      <div class="field">
+        <label for="rxg">Độ lợi ăng-ten thu RX (dBi)</label>
+        <input id="rxg" type="number" min="-5" max="20" step="0.5" value="2">
+        <span class="hint">Cả hai đầu đều đóng góp như nhau vào quỹ đường truyền hai chiều.</span>
+      </div>
+
+      <div class="field full">
+        <label id="terrain-label">Địa hình và môi trường</label>
+        <div class="terrain-group" role="group" aria-labelledby="terrain-label">
+          <button type="button" data-terrain="urban" aria-pressed="false">Đô thị dày đặc</button>
+          <button type="button" data-terrain="suburban" aria-pressed="true">Ngoại ô</button>
+          <button type="button" data-terrain="rural" aria-pressed="false">Nông thôn / cây cối</button>
+          <button type="button" data-terrain="los" aria-pressed="false">Tầm nhìn thẳng</button>
+        </div>
+        <span class="hint">Ước tính khoảng tầm phủ sóng bằng hệ số suy hao đường truyền; đồi núi hoặc tòa nhà đặc sẽ chặn sóng UHF bất kể công suất.</span>
+      </div>
+
+      <div class="field full">
+        <label for="dist">Kiểm tra dự trữ pha-đinh ở khoảng cách cụ thể (km)</label>
+        <input id="dist" type="number" min="0.1" max="500" step="0.1" value="3">
+        <span class="hint">Tính suy hao đường truyền không gian tự do, dự trữ pha-đinh và khoảng thoáng vùng Fresnel thứ nhất tại điểm giữa.</span>
+      </div>
+    </div>
+
+    <div class="results" aria-live="polite">
+      <div class="hero-out">
+        <div class="hero-label" id="band-label">Khoảng tầm phủ sóng ước tính · Ngoại ô</div>
+        <div class="hero-val" id="range-out">1.5 – 3.8 km (0.9 – 2.3 mi)</div>
+        <div class="hero-sub" id="range-sub">Cần ít nhất 10 dB dự trữ pha-đinh trên mức suy hao đường truyền (số mũ log-distance n = 3.2 đến 3.6).</div>
+      </div>
+
+      <div class="reality-note">
+        <strong>Địa hình quan trọng hơn mọi công thức.</strong> Sóng LoRa băng UHF truyền gần như theo đường thẳng: chỉ một sống núi, nhà xe bê tông hay sườn đồi ẩm ướt cũng đủ làm đứt một tuyến trông rất dư dả trên giấy, trong khi đưa cả hai ăng-ten lên cao hơn mái nhà thường tăng gấp ba tầm phủ sóng thực tế mà không cần đổi một cài đặt radio nào.
+      </div>
+
+      <div class="warn-box" id="warnings" hidden></div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="k">Tổng quỹ đường truyền</div>
+          <div class="v" id="lb-out">156.0 dB</div>
+          <div class="s" id="lb-sub">Tham chiếu cấu hình 153 dB ở 22 dBm</div>
+        </div>
+        <div class="metric">
+          <div class="k">Độ nhạy máy thu</div>
+          <div class="v" id="rx-out">-131.0 dBm</div>
+          <div class="s" id="rx-sub">SF11 · 250 kHz · 1.07 kbps</div>
+        </div>
+        <div class="metric">
+          <div class="k">Bán kính Fresnel điểm giữa</div>
+          <div class="v" id="fresnel-out">15.8 m</div>
+          <div class="s" id="fresnel-sub">Khoảng thoáng 52 ft ở 3.0 km</div>
+        </div>
+      </div>
+
+      <div class="margin-card">
+        <div class="title" id="margin-title">Dự trữ pha-đinh ở 3.0 km (1.9 mi)</div>
+        <div class="margin-row">
+          <span>Suy hao không gian tự do: <strong id="fspl-out">101.1 dB</strong></span>
+          <span>Dự trữ không gian tự do: <strong id="fsm-out">+54.9 dB</strong></span>
+          <span id="tm-wrap">Dự trữ theo địa hình: <strong id="tm-out">-0.8 đến +13.1 dB</strong></span>
+        </div>
+        <div class="verdict" id="verdict">Mức sát ngưỡng đến dùng được trong vật cản ngoại ô: hãy đưa một node lên cao hơn hoặc tránh xa các tòa nhà nếu gói tin bị rơi.</div>
+      </div>
+    </div>
+  </section>
+
+  <h2>Vì sao địa hình thắng mọi công thức quỹ đường truyền</h2>
+  <p>
+    Một máy thu LoRa có thể tách gói tin Long Fast khỏi nền nhiễu ở mức -131 dBm, giúp một radio tiêu chuẩn 22 dBm có hơn 150 dB quỹ đường truyền. Trong không gian trống ở tần số 906.875 MHz, 150 dB đủ để vượt qua hàng trăm kilômét. Đó là cách kỷ lục Meshtastic mặt đất 331 km được ghi nhận trên <a href="https://meshtastic.org/docs/overview/range-tests/">meshtastic.org</a> ra đời: hai node RAK4631 đặt trên các đỉnh núi cao với tầm nhìn thẳng hoàn toàn thông thoáng qua không trung.
+  </p>
+  <p>
+    Xuống đến mặt đường, ba giới hạn vật lý sẽ chi phối từ rất lâu trước khi bạn dùng hết số decibel. Thứ nhất là độ cong của Trái Đất: hai người cầm radio ngang tầm mắt 1.8 m trên mặt đất phẳng chỉ có đường chân trời vô tuyến khoảng 11 km trước khi chính mặt đất chắn giữa họ. Thứ hai là vùng Fresnel thứ nhất, khối không gian hình quả bóng bầu dục bao quanh đường thẳng nối hai ăng-ten; ở 906.875 MHz trên tuyến 3 km, bán kính của nó tại điểm giữa là 15.8 m, và việc che khuất quá khoảng 40% vùng này sẽ làm mất thêm tín hiệu ngay cả khi mắt thường vẫn nhìn thấy ngọn đồi phía xa. Thứ ba là vật cản: tường gạch, mái thép, đồi rậm và tán lá ướt hấp thụ sóng 868 và 915 MHz rất nhanh, đó là lý do cùng một chiếc radio phủ được 40 km từ chòi quan sát nhưng lại chật vật qua 800 m khu chung cư trung tâm thành phố.
+  </p>
+
+  <h2>Các cấu hình modem Meshtastic và quỹ đường truyền công bố</h2>
+  <p>
+    Meshtastic 2.8 định nghĩa chín cấu hình LoRa đa dụng. Mỗi bậc tăng hệ số trải phổ làm thời gian chiếm sóng của gói tin tăng gần gấp đôi đồng thời cộng thêm khoảng 2.5 dB quỹ đường truyền, còn giảm một nửa băng thông sẽ cộng thêm gần 3 dB. Bảng dưới đây trình bày lại các số liệu đã công bố từ <a href="https://meshtastic.org/docs/overview/radio-settings/">tài liệu Radio Settings của Meshtastic</a> (đọc ngày 21 tháng 11 năm 2026), với giả định công suất phát 22 dBm và ăng-ten 0 dBi, kèm theo độ nhạy máy thu suy ra được công cụ này sử dụng.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Cấu hình</th>
+        <th class="num">Tốc độ dữ liệu</th>
+        <th class="num">SF / CR</th>
+        <th class="num">Băng thông</th>
+        <th class="num">Quỹ đường truyền</th>
+        <th class="num">Độ nhạy thu</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td data-label="Cấu hình">Short Turbo*</td><td class="num" data-label="Tốc độ dữ liệu">21.88 kbps</td><td class="num" data-label="SF / CR">SF7 · 4/5</td><td class="num" data-label="Băng thông">500 kHz</td><td class="num" data-label="Quỹ đường truyền">140 dB</td><td class="num" data-label="Độ nhạy thu">-118.0 dBm</td></tr>
+      <tr><td data-label="Cấu hình">Short Fast</td><td class="num" data-label="Tốc độ dữ liệu">10.94 kbps</td><td class="num" data-label="SF / CR">SF7 · 4/5</td><td class="num" data-label="Băng thông">250 kHz</td><td class="num" data-label="Quỹ đường truyền">143 dB</td><td class="num" data-label="Độ nhạy thu">-121.0 dBm</td></tr>
+      <tr><td data-label="Cấu hình">Short Slow</td><td class="num" data-label="Tốc độ dữ liệu">6.25 kbps</td><td class="num" data-label="SF / CR">SF8 · 4/5</td><td class="num" data-label="Băng thông">250 kHz</td><td class="num" data-label="Quỹ đường truyền">145.5 dB</td><td class="num" data-label="Độ nhạy thu">-123.5 dBm</td></tr>
+      <tr><td data-label="Cấu hình">Medium Turbo*</td><td class="num" data-label="Tốc độ dữ liệu">7.03 kbps</td><td class="num" data-label="SF / CR">SF9 · 4/5</td><td class="num" data-label="Băng thông">500 kHz</td><td class="num" data-label="Quỹ đường truyền">145 dB</td><td class="num" data-label="Độ nhạy thu">-123.0 dBm</td></tr>
+      <tr><td data-label="Cấu hình">Medium Fast</td><td class="num" data-label="Tốc độ dữ liệu">3.52 kbps</td><td class="num" data-label="SF / CR">SF9 · 4/5</td><td class="num" data-label="Băng thông">250 kHz</td><td class="num" data-label="Quỹ đường truyền">148 dB</td><td class="num" data-label="Độ nhạy thu">-126.0 dBm</td></tr>
+      <tr><td data-label="Cấu hình">Medium Slow</td><td class="num" data-label="Tốc độ dữ liệu">1.95 kbps</td><td class="num" data-label="SF / CR">SF10 · 4/5</td><td class="num" data-label="Băng thông">250 kHz</td><td class="num" data-label="Quỹ đường truyền">150.5 dB</td><td class="num" data-label="Độ nhạy thu">-128.5 dBm</td></tr>
+      <tr><td data-label="Cấu hình">Long Turbo*</td><td class="num" data-label="Tốc độ dữ liệu">1.34 kbps</td><td class="num" data-label="SF / CR">SF11 · 4/8</td><td class="num" data-label="Băng thông">500 kHz</td><td class="num" data-label="Quỹ đường truyền">150 dB</td><td class="num" data-label="Độ nhạy thu">-128.0 dBm</td></tr>
+      <tr class="default-row"><td data-label="Cấu hình"><strong>Long Fast (mặc định)</strong></td><td class="num" data-label="Tốc độ dữ liệu">1.07 kbps</td><td class="num" data-label="SF / CR">SF11 · 4/5</td><td class="num" data-label="Băng thông">250 kHz</td><td class="num" data-label="Quỹ đường truyền">153 dB</td><td class="num" data-label="Độ nhạy thu">-131.0 dBm</td></tr>
+      <tr><td data-label="Cấu hình">Long Moderate</td><td class="num" data-label="Tốc độ dữ liệu">0.34 kbps</td><td class="num" data-label="SF / CR">SF11 · 4/8</td><td class="num" data-label="Băng thông">125 kHz</td><td class="num" data-label="Quỹ đường truyền">156 dB</td><td class="num" data-label="Độ nhạy thu">-134.0 dBm</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">
+    *Ba cấu hình Turbo 500 kHz không hợp pháp ở mọi khu vực và không khả dụng tại EU_868 (869.40–869.65 MHz). Danh sách thả xuống phía trên còn có sáu cấu hình băng hẹp của Meshtastic (Lite, Narrow và Tiny, từ 15.6 đến 125 kHz) cho những băng tần yêu cầu kênh hẹp hơn.
+  </p>
+
+  <h2>Cách tính các con số, và phần nào là ước lượng</h2>
+  <p>
+    Phần RF chính xác đi thẳng từ phương trình quỹ đường truyền. Vì các quỹ đường truyền cấu hình do Meshtastic công bố giả định công suất phát 22 dBm và ăng-ten 0 dBi, công cụ tính suy ra độ nhạy máy thu của từng cấu hình theo công thức <code>RX_sens = 22 - LinkBudget_ref</code>, rồi tính quỹ đường truyền cho hệ thống của bạn là <code>TX_dBm + TX_gain + RX_gain - Cable_loss - RX_sens</code>. Suy hao đường truyền không gian tự do ở khoảng cách <code>d</code> (km) và tần số <code>f</code> (MHz) là <code>32.44 + 20 * log10(d) + 20 * log10(f)</code>, và bán kính điểm giữa của vùng Fresnel thứ nhất tính bằng mét là <code>17.32 * sqrt(d / (4 * f_GHz))</code>.
+  </p>
+  <p>
+    Khoảng tầm phủ sóng theo địa hình rõ ràng chỉ là một phép ước lượng. Với tầm nhìn thẳng thông thoáng, công cụ giải phương trình không gian tự do với mức dự trữ pha-đinh 20 dB (thận trọng) và 10 dB (lạc quan), cho bạn biết radio có thể vươn tới đâu chỉ khi cả hai node đặt đủ cao để vượt qua đường chân trời và vùng Fresnel. Với môi trường nông thôn, ngoại ô và đô thị dày đặc, công cụ dùng mô hình suy hao đường truyền log-distance tiêu chuẩn tham chiếu theo suy hao không gian tự do ở 1 m (<code>L0</code>) với dự trữ pha-đinh 10 dB và các dải hệ số suy hao đường truyền: <code>n = 2.8 to 3.1</code> cho địa hình nông thôn có cây rải rác, <code>n = 3.2 to 3.6</code> cho ngoại ô, và <code>n = 3.7 to 4.2</code> cho các tòa nhà đô thị dày đặc. Công cụ không mô phỏng mặt cắt độ cao cụ thể của bạn, mức nhiễu nền RF tại chỗ, lệch SWR ăng-ten hay pha-đinh đa đường, vì vậy hãy coi mọi khoảng tầm phủ sóng không có tầm nhìn thẳng là khung dự trù sơ bộ và kiểm tra mặt cắt địa hình trước khi lắp đặt cố định node trên mái nhà hay sống núi.
+  </p>
+
+  <h2>Ví dụ tính toán thực tế</h2>
+  <p>
+    Chạy bốn cấu hình phổ biến qua công cụ cho thấy môi trường làm thay đổi khoảng cách nhiều hơn vài decibel công suất radio đến mức nào:
+  </p>
+  <ul>
+    <li><strong>Hai máy cầm tay ngoại ô dùng Long Fast (Mỹ 906.875 MHz):</strong> 22 dBm, ăng-ten 2 dBi ở cả hai đầu và tổng suy hao 1 dB cho quỹ đường truyền 156.0 dB (độ nhạy -131.0 dBm). Ở 3 km, suy hao không gian tự do là 101.1 dB (dự trữ không gian tự do +54.9 dB), bán kính Fresnel là 15.8 m, và vật cản ngoại ô thu hẹp khoảng tầm phủ sóng kỳ vọng xuống 1.5–3.8 km (dự trữ từ -0.8 đến +13.1 dB ở 3 km).</li>
+    <li><strong>Mạng mesh đô thị đông đúc dùng Medium Fast (Mỹ 906.875 MHz):</strong> chuyển từ Long Fast sang Medium Fast đánh đổi 5 dB quỹ đường truyền (tổng 151.0 dB, độ nhạy -126.0 dBm) để lấy tốc độ dữ liệu cao hơn gấp ba lần (3.52 kbps so với 1.07 kbps). Giữa các tòa nhà đô thị dày đặc, khoảng ước tính là 0.4–0.9 km.</li>
+    <li><strong>Nông thôn châu Âu dùng Long Moderate (EU 869.525 MHz):</strong> 22 dBm với ăng-ten 3 dBi và suy hao 1.5 dB tạo ra quỹ đường truyền 160.5 dB (độ nhạy -134.0 dBm), cho khoảng tầm phủ sóng nông thôn 7.0–18.2 km và dự trữ +8.3 đến +20.0 dB ở 8 km.</li>
+    <li><strong>Trạm chuyển tiếp trên đỉnh đồi tới máy cầm tay (Long Fast, 906.875 MHz, tầm nhìn thẳng):</strong> 22 dBm với ăng-ten cột 5.8 dBi trên đồi, ăng-ten roi 2 dBi trên máy cầm tay và suy hao cáp đồng trục 2 dB cho quỹ 158.8 dB. Ở 40 km có tầm nhìn thẳng thông thoáng, suy hao không gian tự do là 123.6 dB, còn dư +35.2 dB miễn là đường truyền không chạm bán kính Fresnel điểm giữa 57.5 m.</li>
+  </ul>
+
+  <h2>Câu hỏi thường gặp</h2>
+  <h3>Một radio Meshtastic truyền xa được bao nhiêu trong thực tế?</h3>
+  <p>Với Long Fast ở 22 dBm và ăng-ten tiêu chuẩn 2 dBi, hầu hết mọi người đạt khoảng 0.4 đến 1.2 km trong đô thị dày đặc, 1.5 đến 3.8 km ở ngoại ô, 4 đến 10 km tại vùng nông thôn thoáng, và từ vài chục đến hàng trăm kilômét từ các sống núi cao có tầm nhìn thẳng thông thoáng.</p>
+
+  <h3>Tăng gấp đôi công suất phát có làm tầm phủ sóng Meshtastic tăng gấp đôi không?</h3>
+  <p>Không. Tăng gấp đôi công suất phát cộng thêm 3 dB vào quỹ đường truyền, chỉ giúp tăng khoảng cách không gian tự do khoảng 41% và khoảng cách ở ngoại ô có vật cản khoảng 20 đến 25%. Đặt ăng-ten cao hơn với tầm nhìn thoáng hầu như luôn hiệu quả hơn tăng công suất.</p>
+
+  <h3>Cấu hình modem Meshtastic nào cho tầm phủ sóng tốt nhất?</h3>
+  <p>Trong chín cấu hình đa dụng của Meshtastic 2.8, Long Moderate có quỹ đường truyền công bố cao nhất là 156 dB (cao hơn Long Fast 3 dB), đổi lại tốc độ phát chậm hơn ở mức 0.34 kbps. Trong các mạng mesh đô thị đông đúc, Medium Fast (148 dB, 3.52 kbps) thường chuyển được nhiều tin nhắn hơn vì gói tin chiếm kênh ngắn hơn.</p>
+
+  <h3>Vì sao ăng-ten có độ lợi cao hơn đôi khi lại kém hơn trong nhà hoặc ở vùng đồi núi?</h3>
+  <p>Ăng-ten đẳng hướng độ lợi cao tập trung năng lượng thành một đĩa phẳng hơn hướng về đường chân trời. Nếu bạn đang leo sườn dốc phía dưới một trạm chuyển tiếp, hoặc đeo radio hơi nghiêng trong ba lô, chùm sóng hẹp có thể lướt qua node kia ở đúng nơi mà ăng-ten 2 đến 3 dBi vẫn kết nối được.</p>
+
+  <aside class="cta">
+    <h2>Trò chuyện trên radio Meshtastic của bạn bằng Mesh+</h2>
+    <p>
+      Mesh+ là ứng dụng Meshtastic miễn phí theo giấy phép MIT cho Android và iPhone, nặng khoảng 3 MB và không có quảng cáo. Ứng dụng gom kênh công khai, các phòng mã hóa và tin nhắn riêng vào cùng một danh sách, thiết lập cấu hình radio bằng lời dễ hiểu và cập nhật firmware nRF52 qua USB từ Android.
+    </p>
+    <a class="btn" href="https://meshplus.app/vi/?utm_source=tool&amp;utm_campaign=meshtastic-range">Tải Mesh+</a>
+  </aside>
+
+  <footer>
+    <p>
+      Nguồn: <a href="https://meshtastic.org/docs/overview/radio-settings/">Meshtastic Radio Settings (tài liệu 2.8)</a> cho toàn bộ 15 cấu hình modem, băng thông, tốc độ dữ liệu, tần số mặc định và quỹ đường truyền tham chiếu ở 22 dBm, cùng <a href="https://meshtastic.org/docs/overview/range-tests/">Meshtastic Range Tests</a> cho kỷ lục mặt đất 331 km, kiểm tra ngày 21 tháng 11 năm 2026. Mọi phép tính trong công cụ này đều chạy cục bộ trên trình duyệt của bạn.
+    </p>
+    <p>
+      Mesh+ là một dự án mã nguồn mở độc lập, không liên kết hay được bảo trợ bởi Meshtastic LLC. Meshtastic® là nhãn hiệu đã đăng ký của Meshtastic LLC.
+    </p>
+    <nav class="langs" aria-label="Ngôn ngữ"><a href="/tools/range/" hreflang="en" lang="en">English</a> <a href="/ar/tools/range/" hreflang="ar" lang="ar">العربية</a> <a href="/de/tools/range/" hreflang="de" lang="de">Deutsch</a> <a href="/es/tools/range/" hreflang="es" lang="es">Español</a> <a href="/fr/tools/range/" hreflang="fr" lang="fr">Français</a> <a href="/hi/tools/range/" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/tools/range/" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/tools/range/" hreflang="it" lang="it">Italiano</a> <a href="/ja/tools/range/" hreflang="ja" lang="ja">日本語</a> <a href="/ko/tools/range/" hreflang="ko" lang="ko">한국어</a> <a href="/nl/tools/range/" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/tools/range/" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/tools/range/" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/tools/range/" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/tools/range/" hreflang="ru" lang="ru">Русский</a> <a href="/sv/tools/range/" hreflang="sv" lang="sv">Svenska</a> <a href="/th/tools/range/" hreflang="th" lang="th">ไทย</a> <a href="/tr/tools/range/" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/tools/range/" hreflang="uk" lang="uk">Українська</a> <a href="/vi/tools/range/" hreflang="vi" lang="vi" aria-current="page">Tiếng Việt</a> <a href="/zh-hans/tools/range/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/tools/range/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>
+  </footer>
+</main>
+<script>
+(function () {
+  var T = {"js_ter_urban_label": "Đô thị dày đặc", "js_ter_urban_note": "Dự trữ pha-đinh 10 dB, số mũ log-distance n = 3.7 đến 4.2 (suy hao mạnh do tòa nhà).", "js_ter_suburban_label": "Ngoại ô", "js_ter_suburban_note": "Dự trữ pha-đinh 10 dB, số mũ log-distance n = 3.2 đến 3.6 (nhà cửa và cây cối).", "js_ter_rural_label": "Nông thôn / cây cối", "js_ter_rural_note": "Dự trữ pha-đinh 10 dB, số mũ log-distance n = 2.8 đến 3.1 (đất thoáng, tán cây thưa).", "js_ter_los_label": "Tầm nhìn thẳng thông thoáng", "js_ter_los_note": "Suy hao đường truyền không gian tự do với dự trữ pha-đinh 20 dB (thận trọng) đến 10 dB (lạc quan); độ cao vẫn quyết định đường chân trời vô tuyến.", "js_band_label": "Khoảng tầm phủ sóng ước tính · {terrain}", "js_range_out": "{low_km} – {high_km} km ({low_mi} – {high_mi} mi)", "js_lb_sub": "Tham chiếu {preset} {lb} dB ở 22 dBm", "js_fresnel_sub": "Khoảng thoáng {ft} ft ở {dist} km", "js_margin_title": "Dự trữ pha-đinh ở {km} km ({mi} mi)", "js_tm_range": "{low} đến {high}", "js_v_los_good": "Dự trữ không gian tự do rất tốt ({margin}). Miễn là cả hai ăng-ten vượt qua đường chân trời và vùng Fresnel {fresnel} m, tuyến này vẫn còn dư dả.", "js_v_los_ok": "Dự trữ không gian tự do dùng được ({margin}), nhưng thời tiết hoặc vật cản che một phần vùng Fresnel có thể gây rớt gói tin.", "js_v_los_bad": "Dự trữ không gian tự do quá sát hoặc âm ({margin}): hãy chuyển sang cấu hình chậm hơn hoặc dùng ăng-ten độ lợi cao hơn.", "js_v_ter_good": "Dự trữ thoải mái trong môi trường {terrain} điển hình, trừ khi có đồi núi hoặc tòa nhà lớn chắn trực tiếp trên đường truyền.", "js_v_ter_ok": "Mức sát ngưỡng đến dùng được trong khu vực {terrain}: đưa một ăng-ten lên cao hơn mái nhà hoặc tán cây xung quanh sẽ giúp ích nhiều hơn tăng công suất phát.", "js_v_ter_bad": "Nhiều khả năng dưới mức nhiễu nền ở khoảng cách này trong địa hình {terrain}. Hãy thêm một node chuyển tiếp đặt trên cao hoặc di chuyển lại gần hơn.", "js_warn_prefix": "Kiểm tra trước khi triển khai:", "js_warn_eu868": "Các cấu hình Turbo 500 kHz không được phép dùng tại EU_868 (869.40–869.65 MHz). Hãy chọn cấu hình 250 kHz hoặc 125 kHz thay thế.", "js_warn_erp": "Công suất phát cộng độ lợi ăng-ten (~{erp} dBm ERP trước suy hao cáp) vượt giới hạn +{max} dBm ERP của băng tần này. Hãy giảm công suất phát để đúng quy định.", "js_warn_horizon": "Độ cong Trái Đất giới hạn hai máy cầm tay ngang tầm mắt 1.8 m ở khoảng 11 km trên mặt đất phẳng. Khoảng cách xa hơn cần nâng độ cao ở ít nhất một đầu."};
+  function fmt(s, map) {
+    return s.replace(/\{([a-z0-9_]+)\}/g, function (_, k) { return map[k] !== undefined ? String(map[k]) : ""; });
+  }
+  var PRESETS = {
+    SHORT_TURBO:   { name: "Short Turbo",   lb: 140.0, bw: 500,  sf: 7,  cr: "4/5", rate: 21.88, turbo: true },
+    SHORT_FAST:    { name: "Short Fast",    lb: 143.0, bw: 250,  sf: 7,  cr: "4/5", rate: 10.94, turbo: false },
+    SHORT_SLOW:    { name: "Short Slow",    lb: 145.5, bw: 250,  sf: 8,  cr: "4/5", rate: 6.25,  turbo: false },
+    MEDIUM_TURBO:  { name: "Medium Turbo",  lb: 145.0, bw: 500,  sf: 9,  cr: "4/5", rate: 7.03,  turbo: true },
+    MEDIUM_FAST:   { name: "Medium Fast",   lb: 148.0, bw: 250,  sf: 9,  cr: "4/5", rate: 3.52,  turbo: false },
+    MEDIUM_SLOW:   { name: "Medium Slow",   lb: 150.5, bw: 250,  sf: 10, cr: "4/5", rate: 1.95,  turbo: false },
+    LONG_TURBO:    { name: "Long Turbo",    lb: 150.0, bw: 500,  sf: 11, cr: "4/8", rate: 1.34,  turbo: true },
+    LONG_FAST:     { name: "Long Fast",     lb: 153.0, bw: 250,  sf: 11, cr: "4/5", rate: 1.07,  turbo: false },
+    LONG_MODERATE: { name: "Long Moderate", lb: 156.0, bw: 125,  sf: 11, cr: "4/8", rate: 0.34,  turbo: false },
+    LITE_FAST:     { name: "Lite Fast",     lb: 151.0, bw: 125,  sf: 9,  cr: "4/5", rate: 1.76,  turbo: false },
+    LITE_SLOW:     { name: "Lite Slow",     lb: 153.5, bw: 125,  sf: 10, cr: "4/5", rate: 0.98,  turbo: false },
+    NARROW_FAST:   { name: "Narrow Fast",   lb: 149.0, bw: 62.5, sf: 7,  cr: "4/6", rate: 2.28,  turbo: false },
+    NARROW_SLOW:   { name: "Narrow Slow",   lb: 151.5, bw: 62.5, sf: 8,  cr: "4/6", rate: 1.30,  turbo: false },
+    TINY_FAST:     { name: "Tiny Fast",     lb: 155.0, bw: 15.6, sf: 7,  cr: "4/5", rate: 0.68,  turbo: false },
+    TINY_SLOW:     { name: "Tiny Slow",     lb: 157.5, bw: 15.6, sf: 8,  cr: "4/6", rate: 0.33,  turbo: false }
+  };
+
+  var TERRAINS = {
+    urban:    { label: T.js_ter_urban_label,    nLow: 3.7, nHigh: 4.2, margin: 10, note: T.js_ter_urban_note },
+    suburban: { label: T.js_ter_suburban_label, nLow: 3.2, nHigh: 3.6, margin: 10, note: T.js_ter_suburban_note },
+    rural:    { label: T.js_ter_rural_label,    nLow: 2.8, nHigh: 3.1, margin: 10, note: T.js_ter_rural_note },
+    los:      { label: T.js_ter_los_label,      nLow: 2.0, nHigh: 2.0, marginLow: 20, marginHigh: 10, note: T.js_ter_los_note }
+  };
+
+  var SCENES = {
+    suburb:  { preset: "LONG_FAST",     band: "906.875", tx: 22, txg: 2,   rxg: 2, loss: 1,   terrain: "suburban", dist: 3 },
+    city:    { preset: "MEDIUM_FAST",   band: "906.875", tx: 22, txg: 2,   rxg: 2, loss: 1,   terrain: "urban",    dist: 1 },
+    eu868:   { preset: "LONG_MODERATE", band: "869.525", tx: 22, txg: 3,   rxg: 3, loss: 1.5, terrain: "rural",    dist: 8 },
+    hilltop: { preset: "LONG_FAST",     band: "906.875", tx: 22, txg: 5.8, rxg: 2, loss: 2,   terrain: "los",      dist: 40 }
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var terrain = "suburban";
+  var used = false;
+
+  function trackUse() {
+    if (!used) {
+      used = true;
+      if (window.lumen) window.lumen("tool-use");
+    }
+  }
+
+  function num(id, fallback, lo, hi) {
+    var v = parseFloat($(id).value);
+    if (!isFinite(v)) return fallback;
+    return Math.min(hi, Math.max(lo, v));
+  }
+
+  function fmtDist(km) {
+    if (km < 1) return km.toFixed(2);
+    if (km < 10) return km.toFixed(1);
+    return String(Math.round(km));
+  }
+
+  function fmtSigned(v) {
+    return (v >= 0 ? "+" : "") + v.toFixed(1) + " dB";
+  }
+
+  function update(fromUser) {
+    if (fromUser) trackUse();
+
+    var pKey = $("preset").value;
+    var p = PRESETS[pKey] || PRESETS.LONG_FAST;
+    var bandOpt = $("band").options[$("band").selectedIndex];
+    var freq = parseFloat(bandOpt.value) || 906.875;
+    var erpMax = parseFloat(bandOpt.dataset.erp) || 30;
+    var isEu868 = bandOpt.dataset.eu868 === "1";
+
+    var tx = num("tx", 22, 0, 30);
+    var txg = num("txg", 2, -5, 20);
+    var rxg = num("rxg", 2, -5, 20);
+    var loss = num("loss", 1, 0, 20);
+    var dist = num("dist", 3, 0.1, 500);
+    var t = TERRAINS[terrain];
+
+    var rxSens = 22 - p.lb;
+    var lb = tx + txg + rxg - loss - rxSens;
+    var l0 = 32.44 + 20 * Math.log10(freq) - 60;
+
+    var dLow, dHigh;
+    if (terrain === "los") {
+      dLow = Math.pow(10, (lb - t.marginLow - 32.44 - 20 * Math.log10(freq)) / 20);
+      dHigh = Math.pow(10, (lb - t.marginHigh - 32.44 - 20 * Math.log10(freq)) / 20);
+    } else {
+      dLow = 0.001 * Math.pow(10, (lb - t.margin - l0) / (10 * t.nHigh));
+      dHigh = 0.001 * Math.pow(10, (lb - t.margin - l0) / (10 * t.nLow));
+    }
+
+    var fspl = 32.44 + 20 * Math.log10(dist) + 20 * Math.log10(freq);
+    var fsMargin = lb - fspl;
+    var plLow = l0 + 10 * t.nLow * Math.log10(dist * 1000);
+    var plHigh = l0 + 10 * t.nHigh * Math.log10(dist * 1000);
+    var tMarginLow = lb - plHigh;
+    var tMarginHigh = lb - plLow;
+    var fresnelM = 17.32 * Math.sqrt(dist / (4 * (freq / 1000)));
+    var fresnelFt = fresnelM * 3.28084;
+
+    $("band-label").textContent = fmt(T.js_band_label, { terrain: t.label });
+    $("range-out").textContent = fmt(T.js_range_out, {
+      low_km: fmtDist(dLow), high_km: fmtDist(dHigh),
+      low_mi: fmtDist(dLow * 0.621371), high_mi: fmtDist(dHigh * 0.621371)
+    });
+    $("range-sub").textContent = t.note;
+
+    $("lb-out").textContent = lb.toFixed(1) + " dB";
+    $("lb-sub").textContent = fmt(T.js_lb_sub, { preset: p.name, lb: p.lb });
+    $("rx-out").textContent = rxSens.toFixed(1) + " dBm";
+    $("rx-sub").textContent = "SF" + p.sf + " · " + p.bw + " kHz · " + p.rate + " kbps";
+    $("fresnel-out").textContent = fresnelM.toFixed(1) + " m";
+    $("fresnel-sub").textContent = fmt(T.js_fresnel_sub, { ft: Math.round(fresnelFt), dist: dist.toFixed(1) });
+
+    $("margin-title").textContent = fmt(T.js_margin_title, { km: dist.toFixed(1), mi: (dist * 0.621371).toFixed(1) });
+    $("fspl-out").textContent = fspl.toFixed(1) + " dB";
+    $("fsm-out").textContent = fmtSigned(fsMargin);
+
+    var tmWrap = $("tm-wrap");
+    var verdict = $("verdict");
+    if (terrain === "los") {
+      tmWrap.hidden = true;
+      if (fsMargin >= 20) {
+        verdict.className = "verdict good";
+        verdict.textContent = fmt(T.js_v_los_good, { margin: fmtSigned(fsMargin), fresnel: fresnelM.toFixed(1) });
+      } else if (fsMargin >= 10) {
+        verdict.className = "verdict ok";
+        verdict.textContent = fmt(T.js_v_los_ok, { margin: fmtSigned(fsMargin) });
+      } else {
+        verdict.className = "verdict bad";
+        verdict.textContent = fmt(T.js_v_los_bad, { margin: fmtSigned(fsMargin) });
+      }
+    } else {
+      tmWrap.hidden = false;
+      $("tm-out").textContent = fmt(T.js_tm_range, { low: fmtSigned(tMarginLow), high: fmtSigned(tMarginHigh) });
+      if (tMarginLow >= 10) {
+        verdict.className = "verdict good";
+        verdict.textContent = fmt(T.js_v_ter_good, { terrain: t.label.toLowerCase() });
+      } else if (tMarginHigh >= 5) {
+        verdict.className = "verdict ok";
+        verdict.textContent = fmt(T.js_v_ter_ok, { terrain: t.label.toLowerCase() });
+      } else {
+        verdict.className = "verdict bad";
+        verdict.textContent = fmt(T.js_v_ter_bad, { terrain: t.label.toLowerCase() });
+      }
+    }
+
+    var warns = [];
+    if (isEu868 && p.turbo) {
+      warns.push(T.js_warn_eu868);
+    }
+    var approxErp = tx + txg - 2.15;
+    if (approxErp > erpMax + 0.5) {
+      warns.push(fmt(T.js_warn_erp, { erp: approxErp.toFixed(1), max: erpMax }));
+    }
+    if (terrain === "los" && dHigh > 20) {
+      warns.push(T.js_warn_horizon);
+    }
+    var wb = $("warnings");
+    if (warns.length) {
+      wb.hidden = false;
+      wb.textContent = "";
+      var st = document.createElement("strong");
+      st.textContent = T.js_warn_prefix;
+      wb.appendChild(st);
+      wb.appendChild(document.createTextNode(" " + warns.join(" ")));
+    } else {
+      wb.hidden = true;
+      wb.textContent = "";
+    }
+  }
+
+  function clearSceneButtons() {
+    document.querySelectorAll("[data-scene]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+  }
+
+  ["preset", "band", "tx", "txg", "rxg", "loss", "dist"].forEach(function (id) {
+    $(id).addEventListener("input", function () { clearSceneButtons(); update(true); });
+    $(id).addEventListener("change", function () { clearSceneButtons(); update(true); });
+  });
+
+  document.querySelectorAll("[data-terrain]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      terrain = b.dataset.terrain;
+      document.querySelectorAll("[data-terrain]").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      clearSceneButtons();
+      update(true);
+    });
+  });
+
+  document.querySelectorAll("[data-scene]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var s = SCENES[b.dataset.scene];
+      if (!s) return;
+      $("preset").value = s.preset;
+      $("band").value = s.band;
+      $("tx").value = s.tx;
+      $("txg").value = s.txg;
+      $("rxg").value = s.rxg;
+      $("loss").value = s.loss;
+      $("dist").value = s.dist;
+      terrain = s.terrain;
+      document.querySelectorAll("[data-terrain]").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x.dataset.terrain === terrain));
+      });
+      document.querySelectorAll("[data-scene]").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      update(true);
+    });
+  });
+
+  update(false);
+})();
+</script>
+</body>
+</html>
