@@ -92,66 +92,64 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <p class="muted">Checked against the Mesh+ source and Meshtastic's release list on November 3, 2026.</p>
 
   <p>
-    If your Meshtastic radio has an nRF52840 chip, such as the Heltec Mesh Node T114, the RAK WisBlock 4631 or the LILYGO T-Echo,
-    you can update its firmware from an Android phone with Mesh+: open Node settings, pick a version, tap Install and wait about
-    a minute and a half over a USB-C cable. Your settings, rooms and messages stay on the node. Boards with an ESP32 chip,
-    like the Heltec V3, are updated from a computer at <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>.
+    You can update any nRF52840 Meshtastic radio (like a Heltec Mesh Node T114, RAK WisBlock 4631, or LILYGO T-Echo) straight from an Android phone with Mesh+.
+    Open Node settings, pick a version, tap Install, and wait about a minute and a half over a USB-C cable. Your settings, rooms, and messages stay intact.
+    ESP32 boards like the Heltec V3 still need a computer and <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>.
   </p>
 
   <h2>What you need</h2>
   <ul>
-    <li>Mesh+ for Android (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> or the <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>), on Android 12 or newer, with internet access for the download.</li>
-    <li>A radio running Meshtastic firmware 2.x on one of the 39 nRF52 boards in Mesh+'s hardware list (118 boards in total).</li>
-    <li>A USB-C cable that carries data, or the radio paired over Bluetooth.</li>
+    <li>Mesh+ for Android (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> or the <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>) on Android 12 or newer, plus internet access to fetch the firmware.</li>
+    <li>A radio on Meshtastic 2.x using one of the 39 nRF52 boards in Mesh+'s hardware table (118 boards total).</li>
+    <li>A USB-C data cable, or the node already paired over Bluetooth.</li>
   </ul>
 
   <h2>Update Meshtastic firmware step by step</h2>
   <ol>
-    <li><strong>Open Node settings.</strong> Connect your radio in Mesh+ and open Node settings. The board card at the top shows which board Mesh+ recognizes, its chip and the installed firmware, for example nRF52840 · Firmware 2.7.15.</li>
-    <li><strong>Tap Update or open Firmware options.</strong> When Meshtastic has published a newer stable release for your exact board, the card shows Update to followed by the version. Otherwise it reads Up to date · firmware options, which opens the same screen.</li>
-    <li><strong>Choose the version.</strong> The Firmware screen lists every version Meshtastic publishes for the board, newest first, tagged newest and installed. Switch on pre-releases if you want alpha builds. Picking an older version shows a warning first.</li>
-    <li><strong>Tap Install.</strong> Mesh+ downloads the board's update package from Meshtastic's firmware site, restarts the node into update mode, asks for USB permission, erases the old firmware and installs the new one with a progress bar.</li>
-    <li><strong>Wait for the restart.</strong> When the bar finishes, Mesh+ says the node is restarting with the new version and reconnects by itself. Your settings, rooms and messages are still there.</li>
+    <li><strong>Open Node settings.</strong> Connect your radio in Mesh+ and head to Node settings. The board card at the top displays the detected board, its chip, and the running firmware, like nRF52840 · Firmware 2.7.15.</li>
+    <li><strong>Tap Update or open Firmware options.</strong> If Meshtastic has a newer stable build for your board, the card says Update to followed by the version number. Otherwise it says Up to date · firmware options, which takes you to the same picker.</li>
+    <li><strong>Choose the version.</strong> The Firmware screen lists every release Meshtastic publishes for your board, newest first, tagged newest and installed. Flip on pre-releases for alpha builds; picking an older build brings up a warning first.</li>
+    <li><strong>Tap Install.</strong> Mesh+ grabs the zip from Meshtastic's firmware site, reboots the node into update mode, asks for USB permission, wipes the old firmware, and flashes the new build with a progress bar.</li>
+    <li><strong>Wait for the restart.</strong> Once the bar fills, the node reboots onto the new version and Mesh+ reconnects on its own. Your settings, rooms, and messages stay put.</li>
   </ol>
 
   <h2>Which version you get today</h2>
   <p>
-    On November 3, 2026, Meshtastic's firmware list at api.meshtastic.org offered 2.7.26.54e0d8d and 2.7.15.567b8ea as stable releases,
-    and 2.8.2.4c89b69 as the newest alpha. Mesh+ compares only the x.y.z part, so a rebuild with a different commit hash never shows up as an update.
-    The update package it downloads for a Heltec Mesh Node T114 is <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> from Meshtastic's firmware site,
-    which answered with status 200 when we checked. How the bytes reach the bootloader is the subject of
-    <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>.
+    On November 3, 2026, api.meshtastic.org listed 2.7.26.54e0d8d and 2.7.15.567b8ea as stable releases and 2.8.2.4c89b69 as the newest alpha.
+    Mesh+ only compares the x.y.z digits, so a rebuild with a new commit hash won't nag you to update.
+    For a Heltec Mesh Node T114, it downloads <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> directly from Meshtastic's firmware site (it returned status 200 when I checked).
+    If you want the low-level bootloader protocol details, read <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>.
   </p>
 
   <h2>USB or Bluetooth</h2>
   <p>
-    A cable is the fast way: about a minute and a half. Over Bluetooth the same update takes about 10 minutes, the app has to stay open and the phone has to stay close to the node,
-    and it needs a phone the node is already paired with. If a Bluetooth update is interrupted, the node waits in update mode; plug it in and tap Try again, or Install if you've left the Firmware screen.
-    If the USB transfer hiccups after the node has entered update mode, Mesh+ starts over by itself and makes up to three attempts in all before it shows an error.
+    Use a cable if you have one: USB finishes in about a minute and a half, while Bluetooth takes roughly 10 minutes, needs an already-paired phone sitting next to the radio, and forces you to keep the app open.
+    If Bluetooth drops mid-flash, the node sits in update mode; plug it in and tap Try again, or tap Install if you left the Firmware screen.
+    Over USB, if the transfer stutters after entering update mode, Mesh+ retries on its own up to three times before giving up.
   </p>
 
   <h2>If the update stops halfway</h2>
   <p>
-    An interrupted update leaves the node waiting in update mode, and the app can finish it. On Mesh+'s connect screen, tap <em>Node stuck in update mode?</em>,
-    plug the node in and tap <em>Install</em>. If the node doesn't enter update mode at all, unplug it, double-press its reset button, plug it in and try again.
-    Without a connected radio, the demo mode shows the screens but can't install anything.
+    A dropped flash won't brick the board; the node just waits in update mode for you to finish. Open Mesh+'s connect screen, tap <em>Node stuck in update mode?</em>, plug the radio in, and hit <em>Install</em>.
+    If the board refuses to enter update mode, unplug it, double-press its reset button, plug it back in, and retry.
+    Demo mode lets you browse the screens without a radio, though it won't flash anything.
   </p>
 
   <h2>Questions</h2>
   <h3>Can I update an ESP32 Meshtastic radio with Mesh+?</h3>
-  <p>No. Mesh+ updates nRF52840 boards, such as the Heltec Mesh Node T114, the RAK WisBlock 4631 and the LILYGO T-Echo. For ESP32 boards such as the Heltec V3, use flasher.meshtastic.org from a computer.</p>
+  <p>No. Mesh+ only flashes nRF52840 boards like the Heltec Mesh Node T114, RAK WisBlock 4631, and LILYGO T-Echo. For ESP32 boards like the Heltec V3, plug into a computer and use flasher.meshtastic.org.</p>
   <h3>Will an update erase my messages and settings?</h3>
-  <p>No. Your settings, rooms and messages stay on the node. If an update is interrupted, the node waits in update mode and you can try again.</p>
+  <p>No. Your settings, rooms, and messages stay on the node. Even if a flash cuts out halfway, the node waits in update mode so you can run it again.</p>
   <h3>What if the node is stuck in update mode?</h3>
-  <p>On the connect screen, tap Node stuck in update mode?, plug the node in (or keep the phone close if the update was running over Bluetooth) and tap Install. If the node never enters update mode, unplug it, double-press its reset button, plug it in and try again.</p>
+  <p>Tap Node stuck in update mode? on the connect screen, plug the radio in (or keep the phone right beside it for Bluetooth), and tap Install. If it never enters update mode, unplug it, double-press the reset button, plug it back in, and try again.</p>
   <h3>Can I go back to an older Meshtastic firmware?</h3>
-  <p>Yes. Firmware options lists every version Meshtastic publishes for your board, and you can pick an older one. Mesh+ warns you that older firmware may not understand newer settings, and suggests Reset settings if the node acts up.</p>
+  <p>Yes. Firmware options shows every version Meshtastic publishes for your board, including older ones. Mesh+ warns you that older firmware might choke on newer settings, and points you to Reset settings if the node acts weird.</p>
   <h3>How long does a Meshtastic firmware update take?</h3>
-  <p>About a minute and a half over a USB cable. Over Bluetooth it takes about 10 minutes, and the app has to stay open with the phone close to the node.</p>
+  <p>About a minute and a half over USB, or around 10 minutes over Bluetooth with the app kept open next to the radio.</p>
 
   <p class="muted">
-    Sources: <a href="https://github.com/backmeupplz/meshtastic-plus">the Mesh+ source</a> (the Firmware screen and updater, main at commit 0993c10), its README, and
-    Meshtastic's firmware list at api.meshtastic.org, all read on November 3, 2026. Mesh+ is an independent project, not affiliated with Meshtastic LLC.
+    Sources: <a href="https://github.com/backmeupplz/meshtastic-plus">the Mesh+ source</a> (Firmware screen and updater, main at commit 0993c10), its README, and
+    Meshtastic's release feed at api.meshtastic.org, all checked on November 3, 2026. Mesh+ is an independent project, not affiliated with Meshtastic LLC.
     Meshtastic® is a registered trademark of Meshtastic LLC.
   </p>
 </main>
