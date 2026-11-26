@@ -87,54 +87,54 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <p class="muted">Mesh+ kaynak koduyla ve Meshtastic'in sürüm listesiyle 3 Kasım 2026'da karşılaştırılarak kontrol edildi.</p>
 
   <p>
-    Meshtastic telsizinde Heltec Mesh Node T114, RAK WisBlock 4631 ya da LILYGO T-Echo gibi bir nRF52840 yongası varsa donanım yazılımını Android telefondan Mesh+ ile güncelleyebilirsin: Düğüm ayarlarını aç, bir sürüm seç, Yükle'ye dokun ve USB-C kabloyla yaklaşık bir buçuk dakika bekle. Ayarların, odaların ve mesajların düğümde kalır. Heltec V3 gibi ESP32 yongalı kartlar ise bir bilgisayardan <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a> adresinde güncellenir.
+    Heltec Mesh Node T114, RAK WisBlock 4631 veya LILYGO T-Echo gibi herhangi bir nRF52840 Meshtastic telsizini doğrudan bir Android telefondan Mesh+ ile güncelleyebilirsin. Düğüm ayarlarını aç, bir sürüm seç, Yükle'ye dokun ve USB-C kabloyla yaklaşık bir buçuk dakika bekle. Ayarların, odaların ve mesajların olduğu gibi kalır. Heltec V3 gibi ESP32 kartlar için hâlâ bir bilgisayar ve <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a> gerekir.
   </p>
 
   <h2>Neye ihtiyacın var</h2>
   <ul>
-    <li>Android için Mesh+ (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> ya da <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>), Android 12 veya daha yenisinde, indirme için internet erişimiyle.</li>
-    <li>Mesh+'ın donanım listesindeki 39 nRF52 karttan birinde Meshtastic donanım yazılımı 2.x çalıştıran bir telsiz (listede toplam 118 kart var).</li>
-    <li>Veri taşıyan bir USB-C kablo ya da Bluetooth ile eşleşmiş telsiz.</li>
+    <li>Android 12 veya daha yenisinde Android için Mesh+ (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> veya <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>) ve donanım yazılımını indirmek için internet erişimi.</li>
+    <li>Mesh+'ın donanım tablosundaki 39 nRF52 karttan birini kullanan (toplam 118 kart) ve Meshtastic 2.x çalıştıran bir telsiz.</li>
+    <li>Bir USB-C veri kablosu ya da Bluetooth ile zaten eşleştirilmiş düğüm.</li>
   </ul>
 
   <h2>Meshtastic donanım yazılımını adım adım güncelle</h2>
   <ol>
-    <li><strong>Düğüm ayarlarını aç.</strong> Telsizini Mesh+'ta bağla ve Düğüm ayarlarını aç. En üstteki kart bilgisi, Mesh+'ın hangi kartı tanıdığını, yongasını ve yüklü donanım yazılımını gösterir; örneğin nRF52840 · Firmware 2.7.15.</li>
-    <li><strong>Güncelle'ye dokun ya da donanım yazılımı seçeneklerini aç.</strong> Meshtastic tam olarak senin kartın için daha yeni bir kararlı sürüm yayımladıysa kartta sürüm numarasının ardından “sürümüne güncelle” yazar. Aksi halde “Güncel · donanım yazılımı seçenekleri” yazar ve dokununca aynı ekran açılır.</li>
-    <li><strong>Sürümü seç.</strong> Donanım yazılımı ekranı, Meshtastic'in kart için yayımladığı her sürümü en yeniden başlayarak listeler; sürümler en yeni ve yüklü etiketleriyle işaretlenir. Alfa sürümlerini istersen ön sürümleri dahil et. Daha eski bir sürüm seçersen önce bir uyarı görürsün.</li>
-    <li><strong>Yükle'ye dokun.</strong> Mesh+, kartın güncelleme paketini Meshtastic'in donanım yazılımı sitesinden indirir, düğümü güncelleme moduna yeniden başlatır, USB izni ister, eski donanım yazılımını siler ve yenisini bir ilerleme çubuğuyla yükler.</li>
-    <li><strong>Yeniden başlatmayı bekle.</strong> Çubuk dolunca Mesh+, düğümün yeni sürümle yeniden başladığını söyler ve kendiliğinden yeniden bağlanır. Ayarların, odaların ve mesajların yerinde durur.</li>
+    <li><strong>Düğüm ayarlarını aç.</strong> Telsizini Mesh+'ta bağla ve Düğüm ayarlarına gir. En üstteki kart bilgisi, algılanan kartı, yongasını ve çalışan donanım yazılımını gösterir; örneğin nRF52840 · Donanım yazılımı 2.7.15.</li>
+    <li><strong>Güncelle'ye dokun ya da Donanım yazılımı seçeneklerini aç.</strong> Meshtastic'in kartın için daha yeni bir kararlı sürümü varsa kartta sürüm numarasının ardından “sürümüne güncelle” yazar. Aksi halde “Güncel · donanım yazılımı seçenekleri” görünür ve aynı seçiciyi açar.</li>
+    <li><strong>Sürümü seç.</strong> Donanım yazılımı ekranı, Meshtastic'in kartın için yayımladığı her sürümü en yeniden başlayarak listeler; sürümler en yeni ve yüklü etiketleriyle işaretlenir. Alfa derlemeleri için ön sürümleri aç; daha eski bir sürüm seçersen önce bir uyarı çıkar.</li>
+    <li><strong>Yükle'ye dokun.</strong> Mesh+ zip paketini Meshtastic'in donanım yazılımı sitesinden çeker, düğümü güncelleme modunda yeniden başlatır, USB izni ister, eski donanım yazılımını siler ve yenisini ilerleme çubuğu eşliğinde yazar.</li>
+    <li><strong>Yeniden başlatmayı bekle.</strong> Çubuk dolduğunda düğüm yeni sürümle yeniden başlar ve Mesh+ kendiliğinden tekrar bağlanır. Ayarların, odaların ve mesajların yerinde kalır.</li>
   </ol>
 
   <h2>Bugün hangi sürümü alırsın</h2>
   <p>
-    3 Kasım 2026'da Meshtastic'in api.meshtastic.org adresindeki donanım yazılımı listesinde kararlı sürüm olarak 2.7.26.54e0d8d ile 2.7.15.567b8ea, en yeni alfa olarak da 2.8.2.4c89b69 yer alıyordu. Mesh+ yalnızca x.y.z bölümünü karşılaştırır; bu yüzden farklı bir commit karmasıyla yeniden derlenen bir sürüm hiçbir zaman güncelleme olarak görünmez. Heltec Mesh Node T114 için indirdiği güncelleme paketi, Meshtastic'in donanım yazılımı sitesindeki <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> dosyasıdır; kontrol ettiğimizde site 200 durum koduyla yanıt verdi. Verinin önyükleyiciye nasıl ulaştığı ise <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a> yazısının konusudur.
+    3 Kasım 2026'da api.meshtastic.org, kararlı sürümler olarak 2.7.26.54e0d8d ile 2.7.15.567b8ea'yı, en yeni alfa olarak da 2.8.2.4c89b69'u listeliyordu. Mesh+ yalnızca x.y.z basamaklarını karşılaştırır; bu yüzden yeni bir commit karmasıyla yeniden derlenen bir sürüm güncelleme için seni rahatsız etmez. Heltec Mesh Node T114 için <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> dosyasını doğrudan Meshtastic'in donanım yazılımı sitesinden indirir (kontrol ettiğimde 200 durum kodu döndürdü). Düşük seviye önyükleyici protokolünün ayrıntılarını merak ediyorsan <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a> yazısını okuyabilirsin.
   </p>
 
   <h2>USB mi, Bluetooth mu</h2>
   <p>
-    Hızlı yol kablodur: yaklaşık bir buçuk dakika. Bluetooth ile aynı güncelleme yaklaşık 10 dakika sürer, uygulamanın açık kalması ve telefonun düğüme yakın durması gerekir; ayrıca düğümün zaten eşleşmiş olduğu bir telefon gerekir. Bluetooth güncellemesi kesintiye uğrarsa düğüm güncelleme modunda bekler; kabloyla bağla ve Yeniden dene'ye dokun, Donanım yazılımı ekranından çıktıysan Yükle'ye dokun. Düğüm güncelleme moduna geçtikten sonra USB aktarımı takılırsa Mesh+ kendiliğinden baştan başlar ve hata göstermeden önce toplam üç defaya kadar dener.
+    Elinde varsa kablo kullan: USB yaklaşık bir buçuk dakikada biterken Bluetooth kabaca 10 dakika sürer, telsizin yanında duran önceden eşleştirilmiş bir telefon ister ve uygulamayı açık tutmanı zorunlu kılar. Bluetooth yazma sırasında koparsa düğüm güncelleme modunda bekler; kabloyla bağla ve Yeniden dene'ye dokun, Donanım yazılımı ekranından ayrıldıysan Yükle'ye dokun. USB üzerinden güncelleme moduna geçtikten sonra aktarım takılırsa Mesh+ pes etmeden önce kendiliğinden üç defaya kadar yeniden dener.
   </p>
 
   <h2>Güncelleme yarıda kalırsa</h2>
   <p>
-    Kesintiye uğrayan bir güncelleme düğümü güncelleme modunda bekletir ve uygulama onu tamamlayabilir. Mesh+'ın bağlanma ekranında <em>Düğüm güncelleme modunda mı kaldı?</em> seçeneğine dokun, düğümü kabloyla bağla ve <em>Yükle</em>'ye dokun. Düğüm güncelleme moduna hiç geçmiyorsa kabloyu çıkar, sıfırlama düğmesine iki kez bas, yeniden tak ve tekrar dene. Bağlı bir telsiz yokken demo modu ekranları gösterir ama hiçbir şey yükleyemez.
+    Yarıda kalan bir yazma işlemi kartı bozmaz; düğüm sadece tamamlaman için güncelleme modunda bekler. Mesh+'ın bağlanma ekranını aç, <em>Düğüm güncelleme modunda mı kaldı?</em> seçeneğine dokun, telsizi tak ve <em>Yükle</em>'ye bas. Kart güncelleme moduna geçmiyorsa kabloyu çıkar, sıfırlama düğmesine iki kez bas, yeniden tak ve tekrar dene. Demo modu telsiz olmadan ekranlara göz atmanı sağlar ama hiçbir şey yazmaz.
   </p>
 
   <h2>Sorular</h2>
   <h3>Mesh+ ile ESP32'li bir Meshtastic telsizini güncelleyebilir miyim?</h3>
-  <p>Hayır. Mesh+, Heltec Mesh Node T114, RAK WisBlock 4631 ve LILYGO T-Echo gibi nRF52840 kartlarını günceller. Heltec V3 gibi ESP32 kartlar için bir bilgisayardan flasher.meshtastic.org adresini kullan.</p>
+  <p>Hayır. Mesh+ yalnızca Heltec Mesh Node T114, RAK WisBlock 4631 ve LILYGO T-Echo gibi nRF52840 kartlarına yazılım yazar. Heltec V3 gibi ESP32 kartları için bir bilgisayara bağla ve flasher.meshtastic.org adresini kullan.</p>
   <h3>Güncelleme mesajlarımı ve ayarlarımı siler mi?</h3>
-  <p>Hayır. Ayarların, odaların ve mesajların düğümde kalır. Güncelleme kesintiye uğrarsa düğüm güncelleme modunda bekler ve yeniden deneyebilirsin.</p>
+  <p>Hayır. Ayarların, odaların ve mesajların düğümde kalır. Yazma işlemi yarıda kesilse bile düğüm güncelleme modunda bekler, böylece yeniden çalıştırabilirsin.</p>
   <h3>Düğüm güncelleme modunda takılı kalırsa ne yapmalı?</h3>
-  <p>Bağlanma ekranında Düğüm güncelleme modunda mı kaldı? seçeneğine dokun, düğümü kabloyla bağla (güncelleme Bluetooth ile sürüyorduysa telefonu yakında tut) ve Yükle'ye dokun. Düğüm hiç güncelleme moduna geçmiyorsa kabloyu çıkar, sıfırlama düğmesine iki kez bas, yeniden tak ve tekrar dene.</p>
+  <p>Bağlanma ekranında Düğüm güncelleme modunda mı kaldı? seçeneğine dokun, telsizi tak (Bluetooth için telefonu hemen yanında tut) ve Yükle'ye dokun. Hiç güncelleme moduna geçmiyorsa çıkar, sıfırlama düğmesine iki kez bas, yeniden tak ve tekrar dene.</p>
   <h3>Eski bir Meshtastic donanım yazılımına geri dönebilir miyim?</h3>
-  <p>Evet. Donanım yazılımı seçenekleri, Meshtastic'in kartın için yayımladığı her sürümü listeler ve daha eski birini seçebilirsin. Mesh+, eski donanım yazılımının yeni ayarları anlamayabileceği konusunda seni uyarır; düğüm sorun çıkarırsa Ayarları sıfırla'yı önerir.</p>
+  <p>Evet. Donanım yazılımı seçenekleri, Meshtastic'in kartın için yayımladığı eski sürümler dahil her sürümü gösterir. Mesh+ eski donanım yazılımının yeni ayarlarda takılabileceği konusunda uyarır ve düğüm garip davranırsa seni Ayarları sıfırla seçeneğine yönlendirir.</p>
   <h3>Meshtastic donanım yazılımı güncellemesi ne kadar sürer?</h3>
-  <p>USB kabloyla yaklaşık bir buçuk dakika. Bluetooth ile yaklaşık 10 dakika sürer; uygulamanın açık kalması ve telefonun düğüme yakın durması gerekir.</p>
+  <p>USB ile yaklaşık bir buçuk dakika ya da telsizin yanında uygulama açık tutulurken Bluetooth ile kabaca 10 dakika.</p>
 
   <p class="muted">
-    Kaynaklar: <a href="https://github.com/backmeupplz/meshtastic-plus">Mesh+ kaynak kodu</a> (Donanım yazılımı ekranı ve güncelleyici, 0993c10 commit'indeki main), README dosyası ve Meshtastic'in api.meshtastic.org adresindeki donanım yazılımı listesi; hepsi 3 Kasım 2026'da okundu. Mesh+ bağımsız bir projedir ve Meshtastic LLC ile bağlantısı yoktur. Meshtastic®, Meshtastic LLC'nin tescilli ticari markasıdır.
+    Kaynaklar: <a href="https://github.com/backmeupplz/meshtastic-plus">Mesh+ kaynak kodu</a> (Donanım yazılımı ekranı ve güncelleyici, 0993c10 commit'indeki main), README dosyası ve api.meshtastic.org adresindeki Meshtastic sürüm akışı; hepsi 3 Kasım 2026'da kontrol edildi. Mesh+ bağımsız bir projedir, Meshtastic LLC ile bağlantısı yoktur. Meshtastic®, Meshtastic LLC'nin tescilli ticari markasıdır.
   </p>
 </main>
 <nav class="langs" aria-label="Dil"><a href="/update-meshtastic-firmware.html" hreflang="en" lang="en">English</a> <a href="/ar/update-meshtastic-firmware.html" hreflang="ar" lang="ar">العربية</a> <a href="/de/update-meshtastic-firmware.html" hreflang="de" lang="de">Deutsch</a> <a href="/es/update-meshtastic-firmware.html" hreflang="es" lang="es">Español</a> <a href="/fr/update-meshtastic-firmware.html" hreflang="fr" lang="fr">Français</a> <a href="/hi/update-meshtastic-firmware.html" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/update-meshtastic-firmware.html" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/update-meshtastic-firmware.html" hreflang="it" lang="it">Italiano</a> <a href="/ja/update-meshtastic-firmware.html" hreflang="ja" lang="ja">日本語</a> <a href="/ko/update-meshtastic-firmware.html" hreflang="ko" lang="ko">한국어</a> <a href="/nl/update-meshtastic-firmware.html" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/update-meshtastic-firmware.html" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/update-meshtastic-firmware.html" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/update-meshtastic-firmware.html" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/update-meshtastic-firmware.html" hreflang="ru" lang="ru">Русский</a> <a href="/sv/update-meshtastic-firmware.html" hreflang="sv" lang="sv">Svenska</a> <a href="/th/update-meshtastic-firmware.html" hreflang="th" lang="th">ไทย</a> <a href="/tr/update-meshtastic-firmware.html" hreflang="tr" lang="tr" aria-current="page">Türkçe</a> <a href="/uk/update-meshtastic-firmware.html" hreflang="uk" lang="uk">Українська</a> <a href="/vi/update-meshtastic-firmware.html" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/update-meshtastic-firmware.html" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/update-meshtastic-firmware.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>

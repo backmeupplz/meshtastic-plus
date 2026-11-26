@@ -87,54 +87,54 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <p class="muted">已對照 Mesh+ 原始碼與 Meshtastic 的版本列表查證，日期為 2026 年 11 月 3 日。</p>
 
   <p>
-    如果你的 Meshtastic 無線電採用 nRF52840 晶片，例如 Heltec Mesh Node T114、RAK WisBlock 4631 或 LILYGO T-Echo，就能用 Mesh+ 在 Android 手機上更新韌體：開啟節點設定、選擇版本、點選「安裝」，再透過 USB-C 線等待約一分半鐘即可。你的設定、聊天室和訊息都會留在節點上。採用 ESP32 晶片的開發板（例如 Heltec V3），則請用電腦到 <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a> 更新。
+    你可以用 Mesh+ 直接在 Android 手機上更新任何採用 nRF52840 晶片的 Meshtastic 無線電（例如 Heltec Mesh Node T114、RAK WisBlock 4631 或 LILYGO T-Echo）。開啟「節點設定」、選擇版本、點選「安裝」，接上 USB-C 線等大約一分半鐘就行。你的設定、聊天室和訊息都會完整保留。像 Heltec V3 這樣的 ESP32 開發板仍然需要電腦和 <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>。
   </p>
 
   <h2>你需要準備什麼</h2>
   <ul>
-    <li>Android 版 Mesh+（<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> 或 <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>），手機需為 Android 12 或更新版本，並能連上網際網路以便下載。</li>
-    <li>一台執行 Meshtastic 韌體 2.x 的無線電，且屬於 Mesh+ 硬體列表中 39 款 nRF52 開發板之一（列表共有 118 款開發板）。</li>
-    <li>一條可傳輸資料的 USB-C 線，或是已透過藍牙配對的無線電。</li>
+    <li>Android 12 或更新版本上的 Android 版 Mesh+（<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> 或 <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>），以及用來擷取韌體的網際網路連線。</li>
+    <li>一台執行 Meshtastic 2.x 的無線電，採用 Mesh+ 硬體表中的 39 款 nRF52 開發板之一（硬體表共有 118 款開發板）。</li>
+    <li>一條可傳輸資料的 USB-C 線，或是已透過藍牙配對好的節點。</li>
   </ul>
 
   <h2>逐步更新 Meshtastic 韌體</h2>
   <ol>
-    <li><strong>開啟節點設定。</strong>在 Mesh+ 中連接你的無線電並開啟節點設定。頂端的開發板卡片會顯示 Mesh+ 辨識出的開發板、晶片和目前安裝的韌體，例如 nRF52840 · 韌體 2.7.15。</li>
-    <li><strong>點選「更新」或開啟「韌體選項」。</strong>當 Meshtastic 為你的這款開發板發布了較新的穩定版時，卡片會顯示「更新至」加上版本號碼。否則會顯示「已是最新版本 · 韌體選項」，點進去會開啟同一個畫面。</li>
-    <li><strong>選擇版本。</strong>「韌體」畫面會由新到舊列出 Meshtastic 為這款開發板發布的每個版本，並標示「最新」和「已安裝」。如果想用 alpha 版本，請開啟預先發行版。選擇較舊的版本時，會先顯示警告。</li>
-    <li><strong>點選「安裝」。</strong>Mesh+ 會從 Meshtastic 的韌體網站下載這款開發板的更新套件，讓節點重新啟動進入更新模式，詢問 USB 權限，清除舊韌體，再安裝新韌體，並以進度列顯示進度。</li>
-    <li><strong>等待重新啟動。</strong>進度列跑完後，Mesh+ 會告訴你節點正以新版本重新啟動，並自動重新連線。你的設定、聊天室和訊息都還在。</li>
+    <li><strong>開啟「節點設定」。</strong>在 Mesh+ 中連接你的無線電，接著前往「節點設定」。頂端的開發板卡片會顯示偵測到的開發板、晶片以及目前執行的韌體，例如 nRF52840 · 韌體 2.7.15。</li>
+    <li><strong>點選「更新」或開啟「韌體選項」。</strong>如果 Meshtastic 為你的開發板發布了較新的穩定版，卡片會顯示「更新至」加上版本號碼。否則會顯示「已是最新版本 · 韌體選項」，點進去同樣會帶你到版本選擇畫面。</li>
+    <li><strong>選擇版本。</strong>「韌體」畫面會由新到舊列出 Meshtastic 為你的開發板發布的每個版本，並標示「最新」與「已安裝」。需要 alpha 版本請開啟「預先發行版」；選擇較舊版本時會先跳出警告。</li>
+    <li><strong>點選「安裝」。</strong>Mesh+ 會從 Meshtastic 的韌體網站下載 zip 檔，讓節點重新啟動進入更新模式，請求 USB 權限，清除舊韌體，並搭配進度列寫入新版本。</li>
+    <li><strong>等待重新啟動。</strong>進度列跑滿後，節點會重新啟動至新版本，Mesh+ 也會自動重新連線。你的設定、聊天室和訊息都會留在原處。</li>
   </ol>
 
   <h2>你現在會拿到哪個版本</h2>
   <p>
-    2026 年 11 月 3 日，Meshtastic 在 api.meshtastic.org 的韌體列表提供 2.7.26.54e0d8d 和 2.7.15.567b8ea 兩個穩定版，以及最新的 alpha 版 2.8.2.4c89b69。Mesh+ 只比較 x.y.z 的部分，所以僅提交雜湊值不同的重新建置版本，不會被當成更新。它為 Heltec Mesh Node T114 下載的更新套件是 <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code>，來自 Meshtastic 的韌體網站，我們檢查時該網站回應的狀態為 200。資料如何送進啟動載入程式，請見 <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">Mesh+ 如何透過 USB 線把 Meshtastic 韌體寫入 nRF52 節點</a>。
+    2026 年 11 月 3 日，api.meshtastic.org 將 2.7.26.54e0d8d 和 2.7.15.567b8ea 列為穩定版，最新的 alpha 版則是 2.8.2.4c89b69。Mesh+ 只比對 x.y.z 這幾碼數字，所以換了新 commit 雜湊值的重建版本不會一直催你更新。針對 Heltec Mesh Node T114，它會直接從 Meshtastic 的韌體網站下載 <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code>（我檢查時回應狀態碼 200）。如果你想看底層啟動載入程式協定的細節，請閱讀 <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">Mesh+ 如何透過 USB 線把 Meshtastic 韌體寫入 nRF52 節點</a>。
   </p>
 
   <h2>USB 還是藍牙</h2>
   <p>
-    用線最快，大約一分半鐘。透過藍牙進行同樣的更新大約需要 10 分鐘，App 必須保持開啟，手機也要靠近節點，而且需要使用已和該節點配對過的手機。如果藍牙更新中斷，節點會停在更新模式等待；請接上線，再點選「再試一次」，如果你已離開韌體畫面，則點選「安裝」。如果節點進入更新模式後 USB 傳輸出了狀況，Mesh+ 會自動重新開始，最多嘗試三次，之後才會顯示錯誤。
+    手邊有線就盡量用線：USB 大約一分半鐘就能完成，而藍牙大概要花 10 分鐘，除了需要已配對好的手機緊靠在無線電旁，還必須一直保持 App 開啟。如果藍牙在刷寫途中斷線，節點會停在更新模式；請接上線並點選「再試一次」，如果已經離開「韌體」畫面則點選「安裝」。透過 USB 刷寫時，如果進入更新模式後傳輸出現卡頓，Mesh+ 會在放棄前自動重試最多三次。
   </p>
 
   <h2>如果更新進行到一半停了</h2>
   <p>
-    更新中斷時，節點會停在更新模式等待，App 可以幫你完成。在 Mesh+ 的連線畫面點選<em>節點卡在更新模式？</em>，接上節點，再點選<em>安裝</em>。如果節點完全沒有進入更新模式，請拔掉它，快速按兩下重置按鈕，接上線後再試一次。沒有連接無線電時，示範模式只能瀏覽這些畫面，無法安裝任何東西。
+    刷寫中斷不會讓開發板變磚，節點只是停在更新模式等你完成。開啟 Mesh+ 的連線畫面，點選<em>節點卡在更新模式？</em>，接上無線電，再按<em>安裝</em>。如果開發板不願進入更新模式，請拔掉它，連按兩下重置按鈕，重新接上再試一次。示範模式讓你在沒有無線電的情況下瀏覽畫面，但不會真的寫入任何東西。
   </p>
 
   <h2>常見問題</h2>
   <h3>可以用 Mesh+ 更新 ESP32 的 Meshtastic 無線電嗎？</h3>
-  <p>不行。Mesh+ 只能更新 nRF52840 開發板，例如 Heltec Mesh Node T114、RAK WisBlock 4631 和 LILYGO T-Echo。ESP32 開發板（例如 Heltec V3）請用電腦到 flasher.meshtastic.org 更新。</p>
+  <p>不行。Mesh+ 只會刷寫 nRF52840 開發板，例如 Heltec Mesh Node T114、RAK WisBlock 4631 和 LILYGO T-Echo。像 Heltec V3 這樣的 ESP32 開發板，請接上電腦並使用 flasher.meshtastic.org。</p>
   <h3>更新會清除我的訊息和設定嗎？</h3>
-  <p>不會。你的設定、聊天室和訊息都會留在節點上。如果更新中斷，節點會停在更新模式等待，你可以再試一次。</p>
+  <p>不會。你的設定、聊天室和訊息都會留在節點上。即使刷寫進行到一半中斷，節點也會在更新模式等待，方便你再執行一次。</p>
   <h3>節點卡在更新模式怎麼辦？</h3>
-  <p>在連線畫面點選「節點卡在更新模式？」，接上節點（如果更新是透過藍牙進行，則讓手機保持在節點附近），再點選「安裝」。如果節點始終沒有進入更新模式，請拔掉它，快速按兩下重置按鈕，接上線後再試一次。</p>
+  <p>在連線畫面點選「節點卡在更新模式？」，接上無線電（若使用藍牙，則讓手機緊靠在無線電旁），然後點選「安裝」。如果始終沒有進入更新模式，請拔掉它，連按兩下重置按鈕，重新接上後再試一次。</p>
   <h3>可以退回較舊的 Meshtastic 韌體嗎？</h3>
-  <p>可以。「韌體選項」會列出 Meshtastic 為你的開發板發布的每個版本，你可以選擇較舊的版本。Mesh+ 會提醒你，較舊的韌體可能無法理解較新的設定；如果節點之後運作不正常，建議使用「重置設定」。</p>
+  <p>可以。「韌體選項」會顯示 Meshtastic 為你的開發板發布的每個版本，包括較舊的版本。Mesh+ 會提醒你舊版韌體可能難以處理較新的設定，並在節點運作異常時引導你使用「重置設定」。</p>
   <h3>更新 Meshtastic 韌體要多久？</h3>
-  <p>用 USB 線大約一分半鐘。透過藍牙大約需要 10 分鐘，App 必須保持開啟，手機也要靠近節點。</p>
+  <p>透過 USB 大約一分半鐘，或是在無線電旁保持 App 開啟的情況下，透過藍牙大約需要 10 分鐘。</p>
 
   <p class="muted">
-    資料來源：<a href="https://github.com/backmeupplz/meshtastic-plus">Mesh+ 原始碼</a>（韌體畫面與更新程式，main 分支 commit 0993c10）、其 README，以及 Meshtastic 在 api.meshtastic.org 的韌體列表，均於 2026 年 11 月 3 日讀取。Mesh+ 是獨立專案，與 Meshtastic LLC 無關。Meshtastic® 是 Meshtastic LLC 的註冊商標。
+    資料來源：<a href="https://github.com/backmeupplz/meshtastic-plus">Mesh+ 原始碼</a>（「韌體」畫面與更新程式，main 分支 commit 0993c10）、其 README，以及 api.meshtastic.org 上的 Meshtastic 發布清單，均於 2026 年 11 月 3 日查證。Mesh+ 是獨立專案，與 Meshtastic LLC 無關。Meshtastic® 是 Meshtastic LLC 的註冊商標。
   </p>
 </main>
 <nav class="langs" aria-label="語言"><a href="/update-meshtastic-firmware.html" hreflang="en" lang="en">English</a> <a href="/ar/update-meshtastic-firmware.html" hreflang="ar" lang="ar">العربية</a> <a href="/de/update-meshtastic-firmware.html" hreflang="de" lang="de">Deutsch</a> <a href="/es/update-meshtastic-firmware.html" hreflang="es" lang="es">Español</a> <a href="/fr/update-meshtastic-firmware.html" hreflang="fr" lang="fr">Français</a> <a href="/hi/update-meshtastic-firmware.html" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/update-meshtastic-firmware.html" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/update-meshtastic-firmware.html" hreflang="it" lang="it">Italiano</a> <a href="/ja/update-meshtastic-firmware.html" hreflang="ja" lang="ja">日本語</a> <a href="/ko/update-meshtastic-firmware.html" hreflang="ko" lang="ko">한국어</a> <a href="/nl/update-meshtastic-firmware.html" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/update-meshtastic-firmware.html" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/update-meshtastic-firmware.html" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/update-meshtastic-firmware.html" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/update-meshtastic-firmware.html" hreflang="ru" lang="ru">Русский</a> <a href="/sv/update-meshtastic-firmware.html" hreflang="sv" lang="sv">Svenska</a> <a href="/th/update-meshtastic-firmware.html" hreflang="th" lang="th">ไทย</a> <a href="/tr/update-meshtastic-firmware.html" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/update-meshtastic-firmware.html" hreflang="uk" lang="uk">Українська</a> <a href="/vi/update-meshtastic-firmware.html" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/update-meshtastic-firmware.html" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/update-meshtastic-firmware.html" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></nav>

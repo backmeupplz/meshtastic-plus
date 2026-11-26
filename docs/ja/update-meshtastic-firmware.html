@@ -87,54 +87,54 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <p class="muted">Mesh+のソースコードとMeshtasticのリリース一覧で、2026年11月3日に確認しました。</p>
 
   <p>
-    お使いのMeshtastic無線機がnRF52840チップを搭載している場合（Heltec Mesh Node T114、RAK WisBlock 4631、LILYGO T-Echoなど）は、AndroidスマートフォンのMesh+からファームウェアを更新できます。ノード設定を開いてバージョンを選び、「インストール」をタップして、USB-Cケーブルで約1分半待つだけです。設定、ルーム、メッセージはノードに残ります。Heltec V3のようにESP32チップを搭載したボードは、パソコンから<a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>で更新します。
+    nRF52840を搭載したMeshtastic無線機（Heltec Mesh Node T114、RAK WisBlock 4631、LILYGO T-Echoなど）なら、AndroidスマートフォンのMesh+から直接ファームウェアを更新できます。ノード設定を開いてバージョンを選び、「インストール」をタップして、USB-Cケーブルで1分半ほど待つだけです。設定、ルーム、メッセージはそのまま残ります。Heltec V3のようなESP32ボードには、引き続きパソコンと<a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>が必要です。
   </p>
 
   <h2>用意するもの</h2>
   <ul>
-    <li>Android向けのMesh+（<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a>または<a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>）。Android 12以降で、ダウンロード用にインターネットに接続できる環境が必要です。</li>
-    <li>Meshtasticファームウェア2.xが動作し、Mesh+のハードウェア一覧（全118ボード）にある39のnRF52ボードのいずれかである無線機。</li>
-    <li>データ通信に対応したUSB-Cケーブル、またはBluetoothでペアリング済みの無線機。</li>
+    <li>Android 12以降で動くAndroid版Mesh+（<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a>または<a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>）と、ファームウェアを取得するためのインターネット接続。</li>
+    <li>Meshtastic 2.xで動作し、Mesh+のハードウェア一覧（全118ボード）に含まれる39種類のnRF52ボードのいずれかを搭載した無線機。</li>
+    <li>データ通信に対応したUSB-Cケーブル、またはBluetoothでペアリング済みのノード。</li>
   </ul>
 
   <h2>Meshtasticファームウェアを更新する手順</h2>
   <ol>
-    <li><strong>ノード設定を開きます。</strong>Mesh+で無線機に接続し、ノード設定を開きます。上部のボードカードには、Mesh+が認識したボード、そのチップ、インストール済みのファームウェアが表示されます（例：nRF52840 · ファームウェア 2.7.15）。</li>
-    <li><strong>「アップデート」またはファームウェアのオプションをタップします。</strong>お使いのボード専用に、Meshtasticがより新しい安定版を公開しているときは、カードに「にアップデート」とバージョンが表示されます。そうでないときは「最新です · ファームウェアのオプション」と表示され、これをタップすると同じ画面が開きます。</li>
-    <li><strong>バージョンを選びます。</strong>ファームウェア画面には、そのボード向けにMeshtasticが公開しているすべてのバージョンが新しい順に並び、「最新」や「インストール済み」のタグが付きます。アルファ版を使いたいときは、プレリリースをオンにします。古いバージョンを選ぶと、先に警告が表示されます。</li>
-    <li><strong>「インストール」をタップします。</strong>Mesh+は、Meshtasticのファームウェアサイトからそのボード用のアップデートパッケージをダウンロードし、ノードをアップデートモードで再起動して、USBの許可を求め、古いファームウェアを消去してから、進行状況バーを表示しながら新しいファームウェアをインストールします。</li>
-    <li><strong>再起動を待ちます。</strong>バーが最後まで進むと、Mesh+に、ノードが新しいバージョンで再起動していることが表示され、自動的に再接続されます。設定、ルーム、メッセージはそのまま残っています。</li>
+    <li><strong>ノード設定を開きます。</strong>Mesh+で無線機に接続してノード設定を開きます。上部のボードカードに、認識されたボード、チップ、動作中のファームウェアが表示されます（例：nRF52840 · ファームウェア 2.7.15）。</li>
+    <li><strong>アップデートをタップするか、ファームウェアのオプションを開きます。</strong>お使いのボード向けにMeshtasticの新しい安定版が出ている場合、カードにはバージョン番号と「〜にアップデート」が表示されます。そうでない場合は「最新です · ファームウェアのオプション」と表示され、タップすると同じ選択画面が開きます。</li>
+    <li><strong>バージョンを選びます。</strong>ファームウェア画面には、お使いのボード向けにMeshtasticが公開しているすべてのリリースが新しい順に並び、「最新」や「インストール済み」のタグが付きます。アルファ版を使いたいときはプレリリースをオンにしてください。古いバージョンを選ぶと、先に警告が表示されます。</li>
+    <li><strong>「インストール」をタップします。</strong>Mesh+がMeshtasticのファームウェアサイトからzipファイルを取得し、ノードをアップデートモードで再起動してUSBの許可を求め、古いファームウェアを消去したあと、進行状況バーを表示しながら新しいビルドを書き込みます。</li>
+    <li><strong>再起動を待ちます。</strong>バーが最後まで進むと、ノードが新しいバージョンで再起動し、Mesh+が自動で再接続します。設定、ルーム、メッセージはそのまま残ります。</li>
   </ol>
 
   <h2>今、入手できるバージョン</h2>
   <p>
-    2026年11月3日の時点で、api.meshtastic.orgにあるMeshtasticのファームウェア一覧では、安定版として2.7.26.54e0d8dと2.7.15.567b8ea、最新のアルファ版として2.8.2.4c89b69が公開されていました。Mesh+が比較するのはx.y.zの部分だけなので、コミットハッシュが違うだけの再ビルドが更新として表示されることはありません。Heltec Mesh Node T114用にダウンロードするアップデートパッケージは、Meshtasticのファームウェアサイトにある<code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code>で、確認した時点ではステータス200が返ってきました。このデータがどのようにブートローダーへ届くのかは、<a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>で解説しています。
+    2026年11月3日の時点で、api.meshtastic.orgには安定版として2.7.26.54e0d8dと2.7.15.567b8ea、最新のアルファ版として2.8.2.4c89b69が掲載されていました。Mesh+はx.y.zの数字だけを比較するため、コミットハッシュが変わっただけの再ビルドで更新を促されることはありません。Heltec Mesh Node T114の場合、Meshtasticのファームウェアサイトから<code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code>を直接ダウンロードします（私が確認した時点ではステータス200が返りました）。ブートローダーの低レベルなプロトコルの詳細を知りたい方は、<a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>をご覧ください。
   </p>
 
   <h2>USBかBluetoothか</h2>
   <p>
-    速いのはケーブルで、約1分半です。Bluetoothでは同じ更新に約10分かかり、アプリを開いたままスマートフォンをノードの近くに置いておく必要があり、ノードがすでにペアリングされているスマートフォンでなければ行えません。Bluetoothでの更新が中断された場合、ノードはアップデートモードで待機します。ケーブルをつないで「再試行」をタップしてください。ファームウェア画面を離れてしまった場合は「インストール」をタップします。ノードがアップデートモードに入ったあとでUSBの転送が途切れても、Mesh+は自動的にやり直し、エラーを表示するまでに合計で最大3回まで試みます。
+    ケーブルがあるならUSBを使うのがおすすめです。USBなら1分半ほどで終わりますが、Bluetoothでは約10分かかり、ペアリング済みのスマートフォンを無線機のすぐそばに置いてアプリを開いたままにする必要があります。書き込みの途中でBluetoothが切れても、ノードはアップデートモードで待機するので、ケーブルをつないで「再試行」をタップしてください（ファームウェア画面を離れた場合は「インストール」をタップします）。USBでは、アップデートモードに入ったあとに転送がつまずいても、Mesh+が自動で最大3回までやり直してからエラーにします。
   </p>
 
   <h2>更新が途中で止まったときは</h2>
   <p>
-    更新が中断されると、ノードはアップデートモードで待機したままになりますが、アプリで最後まで完了できます。Mesh+の接続画面で<em>ノードがアップデートモードのままですか？</em>をタップし、ノードをケーブルでつないで<em>インストール</em>をタップしてください。ノードがアップデートモードにまったく入らない場合は、ケーブルを抜き、リセットボタンを2回すばやく押してから、ケーブルをつないで、もう一度お試しください。無線機を接続していないときは、デモモードで画面を見られますが、何かをインストールすることはできません。
+    書き込みが途中で止まってもボードが壊れることはなく、ノードはアップデートモードで続きを待っています。Mesh+の接続画面を開いて<em>ノードがアップデートモードのままですか？</em>をタップし、無線機をケーブルでつないで<em>インストール</em>をタップしてください。ボードがアップデートモードに入らないときは、ケーブルを抜き、リセットボタンを2回すばやく押してから、もう一度つないでやり直してください。無線機がなくてもデモモードで画面を見て回れますが、書き込みは行われません。
   </p>
 
   <h2>よくある質問</h2>
   <h3>ESP32のMeshtastic無線機をMesh+で更新できますか？</h3>
-  <p>いいえ。Mesh+で更新できるのは、Heltec Mesh Node T114、RAK WisBlock 4631、LILYGO T-EchoなどのnRF52840ボードです。Heltec V3のようなESP32ボードは、パソコンからflasher.meshtastic.orgを使ってください。</p>
+  <p>いいえ。Mesh+で書き込めるのは、Heltec Mesh Node T114、RAK WisBlock 4631、LILYGO T-EchoといったnRF52840ボードだけです。Heltec V3のようなESP32ボードは、パソコンにつないでflasher.meshtastic.orgを使ってください。</p>
   <h3>更新すると、メッセージや設定は消えますか？</h3>
-  <p>いいえ。設定、ルーム、メッセージはノードに残ります。更新が中断された場合、ノードはアップデートモードで待機するので、もう一度お試しいただけます。</p>
+  <p>いいえ。設定、ルーム、メッセージはノードに残ります。書き込みが途中で切れても、ノードはアップデートモードで待機しているので、そのままやり直せます。</p>
   <h3>ノードがアップデートモードのままになったときは？</h3>
-  <p>接続画面で「ノードがアップデートモードのままですか？」をタップし、ノードをケーブルでつないで（Bluetoothで更新していた場合は、スマートフォンを近くに置いたまま）「インストール」をタップしてください。ノードがアップデートモードに入らない場合は、ケーブルを抜き、リセットボタンを2回すばやく押してから、ケーブルをつないで、もう一度お試しください。</p>
+  <p>接続画面で「ノードがアップデートモードのままですか？」をタップし、無線機をケーブルでつないで（Bluetoothの場合はスマートフォンをすぐそばに置いて）「インストール」をタップしてください。アップデートモードに入らない場合は、ケーブルを抜き、リセットボタンを2回すばやく押してから、もう一度つないで再試行してください。</p>
   <h3>古いMeshtasticファームウェアに戻せますか？</h3>
-  <p>はい。ファームウェアのオプションには、お使いのボード向けにMeshtasticが公開しているすべてのバージョンが並ぶので、古いものも選べます。古いファームウェアは新しい設定を認識できない場合があることをMesh+がお知らせし、ノードの動作がおかしいときは「設定をリセット」を使うよう案内します。</p>
+  <p>はい。ファームウェアのオプションには、お使いのボード向けにMeshtasticが公開しているすべてのバージョンが古いものも含めて表示されます。Mesh+からは、古いファームウェアは新しい設定をうまく扱えない場合があるとの警告が出て、ノードの動作がおかしいときは「設定をリセット」を使うよう案内されます。</p>
   <h3>Meshtasticファームウェアの更新にはどのくらいかかりますか？</h3>
-  <p>USBケーブルなら約1分半です。Bluetoothでは約10分かかり、アプリを開いたまま、スマートフォンをノードの近くに置いておく必要があります。</p>
+  <p>USBなら約1分半、Bluetoothなら無線機のそばでアプリを開いたままにして約10分かかります。</p>
 
   <p class="muted">
-    出典：<a href="https://github.com/backmeupplz/meshtastic-plus">Mesh+のソースコード</a>（ファームウェア画面とアップデーター、コミット0993c10時点のmain）とそのREADME、およびapi.meshtastic.orgにあるMeshtasticのファームウェア一覧。いずれも2026年11月3日に確認しました。Mesh+は独立したプロジェクトであり、Meshtastic LLCとは提携していません。Meshtastic®はMeshtastic LLCの登録商標です。
+    出典：<a href="https://github.com/backmeupplz/meshtastic-plus">Mesh+のソースコード</a>（ファームウェア画面とアップデーター、コミット0993c10のmain）、そのREADME、api.meshtastic.orgにあるMeshtasticのリリース一覧。いずれも2026年11月3日に確認しました。Mesh+は独立したプロジェクトであり、Meshtastic LLCとは提携していません。Meshtastic®はMeshtastic LLCの登録商標です。
   </p>
 </main>
 <nav class="langs" aria-label="言語"><a href="/update-meshtastic-firmware.html" hreflang="en" lang="en">English</a> <a href="/ar/update-meshtastic-firmware.html" hreflang="ar" lang="ar">العربية</a> <a href="/de/update-meshtastic-firmware.html" hreflang="de" lang="de">Deutsch</a> <a href="/es/update-meshtastic-firmware.html" hreflang="es" lang="es">Español</a> <a href="/fr/update-meshtastic-firmware.html" hreflang="fr" lang="fr">Français</a> <a href="/hi/update-meshtastic-firmware.html" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/update-meshtastic-firmware.html" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/update-meshtastic-firmware.html" hreflang="it" lang="it">Italiano</a> <a href="/ja/update-meshtastic-firmware.html" hreflang="ja" lang="ja" aria-current="page">日本語</a> <a href="/ko/update-meshtastic-firmware.html" hreflang="ko" lang="ko">한국어</a> <a href="/nl/update-meshtastic-firmware.html" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/update-meshtastic-firmware.html" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/update-meshtastic-firmware.html" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/update-meshtastic-firmware.html" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/update-meshtastic-firmware.html" hreflang="ru" lang="ru">Русский</a> <a href="/sv/update-meshtastic-firmware.html" hreflang="sv" lang="sv">Svenska</a> <a href="/th/update-meshtastic-firmware.html" hreflang="th" lang="th">ไทย</a> <a href="/tr/update-meshtastic-firmware.html" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/update-meshtastic-firmware.html" hreflang="uk" lang="uk">Українська</a> <a href="/vi/update-meshtastic-firmware.html" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/update-meshtastic-firmware.html" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/update-meshtastic-firmware.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>

@@ -92,54 +92,54 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <p class="muted">Verificado no código-fonte do Mesh+ e na lista de versões do Meshtastic em 3 de novembro de 2026.</p>
 
   <p>
-    Se o seu rádio Meshtastic tem um chip nRF52840, como o Heltec Mesh Node T114, o RAK WisBlock 4631 ou o LILYGO T-Echo, você pode atualizar o firmware dele por um celular Android com o Mesh+: abra Configurações do nó, escolha uma versão, toque em Instalar e aguarde cerca de um minuto e meio com um cabo USB-C. Suas configurações, salas e mensagens permanecem no nó. As placas com chip ESP32, como a Heltec V3, são atualizadas em um computador pelo <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>.
+    Você pode atualizar qualquer rádio Meshtastic com nRF52840 (como um Heltec Mesh Node T114, RAK WisBlock 4631 ou LILYGO T-Echo) direto de um celular Android com o Mesh+. Abra Configurações do nó, escolha uma versão, toque em Instalar e aguarde cerca de um minuto e meio com um cabo USB-C. Suas configurações, salas e mensagens ficam intactas. Placas ESP32 como a Heltec V3 ainda precisam de um computador e do <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>.
   </p>
 
   <h2>O que você precisa</h2>
   <ul>
-    <li>O Mesh+ para Android (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> ou o <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>), no Android 12 ou mais recente, com acesso à internet para o download.</li>
-    <li>Um rádio com firmware Meshtastic 2.x em uma das 39 placas nRF52 da lista de hardware do Mesh+ (118 placas no total).</li>
-    <li>Um cabo USB-C que transmita dados, ou o rádio pareado por Bluetooth.</li>
+    <li>O Mesh+ para Android (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> ou o <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>) no Android 12 ou mais recente, além de acesso à internet para baixar o firmware.</li>
+    <li>Um rádio com Meshtastic 2.x em uma das 39 placas nRF52 da tabela de hardware do Mesh+ (118 placas no total).</li>
+    <li>Um cabo USB-C de dados, ou o nó já pareado por Bluetooth.</li>
   </ul>
 
   <h2>Atualizar o firmware do Meshtastic passo a passo</h2>
   <ol>
-    <li><strong>Abra Configurações do nó.</strong> Conecte o seu rádio no Mesh+ e abra Configurações do nó. O cartão da placa, no topo, mostra qual placa o Mesh+ reconheceu, o chip dela e o firmware instalado, por exemplo nRF52840 · Firmware 2.7.15.</li>
-    <li><strong>Toque em Atualizar ou abra as opções de firmware.</strong> Quando o Meshtastic publicou uma versão estável mais nova para a sua placa exata, o cartão mostra Atualizar para seguido da versão. Caso contrário, ele mostra Atualizado · opções de firmware, que abre a mesma tela.</li>
-    <li><strong>Escolha a versão.</strong> A tela Firmware lista todas as versões que o Meshtastic publica para a placa, da mais nova para a mais antiga, com as etiquetas mais recente e instalada. Ative as versões de pré-lançamento se quiser as builds alfa. Ao escolher uma versão mais antiga, um aviso aparece primeiro.</li>
-    <li><strong>Toque em Instalar.</strong> O Mesh+ baixa o pacote de atualização da placa no site de firmware do Meshtastic, reinicia o nó no modo de atualização, pede permissão de USB, apaga o firmware antigo e instala o novo com uma barra de progresso.</li>
-    <li><strong>Aguarde a reinicialização.</strong> Quando a barra termina, o Mesh+ avisa que o nó está reiniciando com a nova versão e se reconecta sozinho. Suas configurações, salas e mensagens continuam lá.</li>
+    <li><strong>Abra Configurações do nó.</strong> Conecte o rádio no Mesh+ e vá até Configurações do nó. O cartão da placa no topo mostra a placa detectada, o chip dela e o firmware em execução, como nRF52840 · Firmware 2.7.15.</li>
+    <li><strong>Toque em Atualizar ou abra as opções de firmware.</strong> Se o Meshtastic tiver uma versão estável mais nova para a sua placa, o cartão exibe Atualizar para seguido do número da versão. Caso contrário, mostra Atualizado · opções de firmware, que leva à mesma lista de seleção.</li>
+    <li><strong>Escolha a versão.</strong> A tela Firmware lista todas as versões que o Meshtastic publica para a sua placa, da mais recente para a mais antiga, com as etiquetas mais recente e instalada. Ative versões de pré-lançamento para ver as builds alfa; escolher uma build mais antiga exibe um aviso antes.</li>
+    <li><strong>Toque em Instalar.</strong> O Mesh+ baixa o arquivo zip do site de firmware do Meshtastic, reinicia o nó no modo de atualização, pede permissão de USB, apaga o firmware antigo e grava a nova versão com uma barra de progresso.</li>
+    <li><strong>Aguarde a reinicialização.</strong> Assim que a barra se completa, o nó reinicia na nova versão e o Mesh+ se reconecta sozinho. Suas configurações, salas e mensagens continuam lá.</li>
   </ol>
 
   <h2>Qual versão você recebe hoje</h2>
   <p>
-    Em 3 de novembro de 2026, a lista de firmware do Meshtastic em api.meshtastic.org oferecia 2.7.26.54e0d8d e 2.7.15.567b8ea como versões estáveis, e 2.8.2.4c89b69 como a alfa mais recente. O Mesh+ compara apenas a parte x.y.z, então uma recompilação com outro hash de commit nunca aparece como atualização. O pacote de atualização que ele baixa para um Heltec Mesh Node T114 é o <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code>, do site de firmware do Meshtastic, que respondeu com o status 200 quando verificamos. O caminho dos bytes até o bootloader é o assunto de <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>.
+    Em 3 de novembro de 2026, o api.meshtastic.org listava 2.7.26.54e0d8d e 2.7.15.567b8ea como versões estáveis e 2.8.2.4c89b69 como a alfa mais recente. O Mesh+ compara apenas os números x.y.z, então uma recompilação com um novo hash de commit não fica incomodando você para atualizar. Para um Heltec Mesh Node T114, ele baixa <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> diretamente do site de firmware do Meshtastic (retornou status 200 quando verifiquei). Se quiser os detalhes de baixo nível do protocolo do bootloader, leia <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>.
   </p>
 
   <h2>USB ou Bluetooth</h2>
   <p>
-    O cabo é o jeito rápido: cerca de um minuto e meio. Por Bluetooth, a mesma atualização leva cerca de 10 minutos, o app precisa ficar aberto, o celular precisa ficar perto do nó e é preciso usar um celular com o qual o nó já esteja pareado. Se uma atualização por Bluetooth for interrompida, o nó fica aguardando no modo de atualização; conecte-o ao cabo e toque em Tentar novamente, ou em Instalar se você já saiu da tela de firmware. Se a transferência por USB falhar depois que o nó entrou no modo de atualização, o Mesh+ recomeça sozinho e faz até três tentativas no total antes de mostrar um erro.
+    Use um cabo se tiver um por perto: por USB termina em cerca de um minuto e meio, enquanto por Bluetooth leva uns 10 minutos, exige um celular já pareado ao lado do rádio e obriga você a manter o app aberto. Se o Bluetooth cair no meio da gravação, o nó fica aguardando no modo de atualização; conecte o cabo e toque em Tentar novamente, ou toque em Instalar se já tiver saído da tela Firmware. Por USB, se a transferência falhar depois de entrar no modo de atualização, o Mesh+ tenta de novo sozinho até três vezes antes de desistir.
   </p>
 
   <h2>Se a atualização parar no meio</h2>
   <p>
-    Uma atualização interrompida deixa o nó aguardando no modo de atualização, e o app consegue concluí-la. Na tela de conexão do Mesh+, toque em <em>Nó travado no modo de atualização?</em>, conecte o nó ao cabo e toque em <em>Instalar</em>. Se o nó não entrar no modo de atualização, desconecte-o, pressione duas vezes o botão de reset, conecte-o de novo e tente outra vez. Sem um rádio conectado, a demonstração mostra as telas, mas não instala nada.
+    Uma gravação interrompida não inutiliza a placa; o nó apenas aguarda no modo de atualização para você terminar. Abra a tela de conexão do Mesh+, toque em <em>Nó travado no modo de atualização?</em>, conecte o rádio ao cabo e toque em <em>Instalar</em>. Se a placa se recusar a entrar no modo de atualização, desconecte-a, aperte duas vezes o botão de reset, conecte de novo e tente novamente. O modo de demonstração permite navegar pelas telas sem um rádio, mas não grava nada.
   </p>
 
   <h2>Perguntas</h2>
   <h3>Posso atualizar um rádio Meshtastic ESP32 com o Mesh+?</h3>
-  <p>Não. O Mesh+ atualiza placas nRF52840, como o Heltec Mesh Node T114, o RAK WisBlock 4631 e o LILYGO T-Echo. Para placas ESP32, como a Heltec V3, use o flasher.meshtastic.org em um computador.</p>
+  <p>Não. O Mesh+ só grava placas nRF52840, como o Heltec Mesh Node T114, o RAK WisBlock 4631 e o LILYGO T-Echo. Para placas ESP32 como a Heltec V3, conecte a um computador e use o flasher.meshtastic.org.</p>
   <h3>A atualização apaga as minhas mensagens e configurações?</h3>
-  <p>Não. Suas configurações, salas e mensagens permanecem no nó. Se uma atualização for interrompida, o nó fica aguardando no modo de atualização e você pode tentar de novo.</p>
+  <p>Não. Suas configurações, salas e mensagens ficam no nó. Mesmo que uma gravação caia no meio, o nó espera no modo de atualização para você tentar de novo.</p>
   <h3>E se o nó ficar travado no modo de atualização?</h3>
-  <p>Na tela de conexão, toque em Nó travado no modo de atualização?, conecte o nó ao cabo (ou mantenha o celular por perto se a atualização estava sendo feita por Bluetooth) e toque em Instalar. Se o nó nunca entrar no modo de atualização, desconecte-o, pressione duas vezes o botão de reset, conecte-o de novo e tente outra vez.</p>
+  <p>Toque em Nó travado no modo de atualização? na tela de conexão, conecte o rádio ao cabo (ou mantenha o celular bem ao lado para Bluetooth) e toque em Instalar. Se ele não entrar no modo de atualização, desconecte-o, aperte duas vezes o botão de reset, conecte de volta e tente novamente.</p>
   <h3>Posso voltar para um firmware Meshtastic mais antigo?</h3>
-  <p>Sim. As opções de firmware listam todas as versões que o Meshtastic publica para a sua placa, e você pode escolher uma mais antiga. O Mesh+ avisa que um firmware mais antigo pode não entender configurações mais novas e sugere Redefinir configurações se o nó se comportar de forma estranha.</p>
+  <p>Sim. As opções de firmware mostram todas as versões que o Meshtastic publica para a sua placa, incluindo as mais antigas. O Mesh+ avisa que um firmware mais antigo pode engasgar com configurações mais novas e indica Redefinir configurações se o nó agir de forma estranha.</p>
   <h3>Quanto tempo leva uma atualização de firmware do Meshtastic?</h3>
-  <p>Cerca de um minuto e meio com um cabo USB. Por Bluetooth leva cerca de 10 minutos, e o app precisa ficar aberto com o celular perto do nó.</p>
+  <p>Cerca de um minuto e meio por USB, ou em torno de 10 minutos por Bluetooth mantendo o app aberto ao lado do rádio.</p>
 
   <p class="muted">
-    Fontes: <a href="https://github.com/backmeupplz/meshtastic-plus">o código-fonte do Mesh+</a> (a tela Firmware e o atualizador, main no commit 0993c10), o README dele e a lista de firmware do Meshtastic em api.meshtastic.org, tudo lido em 3 de novembro de 2026. O Mesh+ é um projeto independente, não afiliado à Meshtastic LLC. Meshtastic® é uma marca registrada da Meshtastic LLC.
+    Fontes: <a href="https://github.com/backmeupplz/meshtastic-plus">o código-fonte do Mesh+</a> (tela Firmware e atualizador, main no commit 0993c10), o README e o feed de versões do Meshtastic em api.meshtastic.org, todos verificados em 3 de novembro de 2026. O Mesh+ é um projeto independente, não afiliado à Meshtastic LLC. Meshtastic® é uma marca registrada da Meshtastic LLC.
   </p>
 </main>
 <nav class="langs" aria-label="Idioma"><a href="/update-meshtastic-firmware.html" hreflang="en" lang="en">English</a> <a href="/ar/update-meshtastic-firmware.html" hreflang="ar" lang="ar">العربية</a> <a href="/de/update-meshtastic-firmware.html" hreflang="de" lang="de">Deutsch</a> <a href="/es/update-meshtastic-firmware.html" hreflang="es" lang="es">Español</a> <a href="/fr/update-meshtastic-firmware.html" hreflang="fr" lang="fr">Français</a> <a href="/hi/update-meshtastic-firmware.html" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/update-meshtastic-firmware.html" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/update-meshtastic-firmware.html" hreflang="it" lang="it">Italiano</a> <a href="/ja/update-meshtastic-firmware.html" hreflang="ja" lang="ja">日本語</a> <a href="/ko/update-meshtastic-firmware.html" hreflang="ko" lang="ko">한국어</a> <a href="/nl/update-meshtastic-firmware.html" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/update-meshtastic-firmware.html" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/update-meshtastic-firmware.html" hreflang="pt-BR" lang="pt-BR" aria-current="page">Português (Brasil)</a> <a href="/pt-pt/update-meshtastic-firmware.html" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/update-meshtastic-firmware.html" hreflang="ru" lang="ru">Русский</a> <a href="/sv/update-meshtastic-firmware.html" hreflang="sv" lang="sv">Svenska</a> <a href="/th/update-meshtastic-firmware.html" hreflang="th" lang="th">ไทย</a> <a href="/tr/update-meshtastic-firmware.html" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/update-meshtastic-firmware.html" hreflang="uk" lang="uk">Українська</a> <a href="/vi/update-meshtastic-firmware.html" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/update-meshtastic-firmware.html" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/update-meshtastic-firmware.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>

@@ -87,54 +87,54 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <p class="muted">ตรวจเทียบกับซอร์สของ Mesh+ และรายการรุ่นของ Meshtastic เมื่อ 3 พฤศจิกายน 2026</p>
 
   <p>
-    หากวิทยุ Meshtastic ของคุณใช้ชิป nRF52840 เช่น Heltec Mesh Node T114, RAK WisBlock 4631 หรือ LILYGO T-Echo คุณอัปเดตเฟิร์มแวร์จากโทรศัพท์ Android ด้วย Mesh+ ได้ โดยเปิดการตั้งค่าโหนด เลือกเวอร์ชัน แตะติดตั้ง แล้วรอประมาณหนึ่งนาทีครึ่งผ่านสาย USB-C การตั้งค่า ห้อง และข้อความของคุณจะยังอยู่ในโหนด ส่วนบอร์ดที่ใช้ชิป ESP32 เช่น Heltec V3 ให้อัปเดตจากคอมพิวเตอร์ที่ <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>
+    คุณอัปเดตวิทยุ Meshtastic ที่ใช้ชิป nRF52840 เครื่องไหนก็ได้ (เช่น Heltec Mesh Node T114, RAK WisBlock 4631 หรือ LILYGO T-Echo) จากโทรศัพท์ Android โดยตรงด้วย Mesh+ เพียงเปิด การตั้งค่าโหนด เลือกเวอร์ชัน แตะ ติดตั้ง แล้วรอประมาณหนึ่งนาทีครึ่งผ่านสาย USB-C การตั้งค่า ห้อง และข้อความของคุณจะอยู่ครบเหมือนเดิม ส่วนบอร์ด ESP32 อย่าง Heltec V3 ยังคงต้องใช้คอมพิวเตอร์และ <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>
   </p>
 
   <h2>สิ่งที่ต้องมี</h2>
   <ul>
-    <li>Mesh+ สำหรับ Android (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> หรือ <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>) บน Android 12 ขึ้นไป และอินเทอร์เน็ตสำหรับดาวน์โหลด</li>
-    <li>วิทยุที่รันเฟิร์มแวร์ Meshtastic 2.x บนบอร์ด nRF52 หนึ่งใน 39 รุ่นในรายการฮาร์ดแวร์ของ Mesh+ (รวมทั้งหมด 118 บอร์ด)</li>
-    <li>สาย USB-C ที่ส่งข้อมูลได้ หรือวิทยุที่จับคู่ผ่าน Bluetooth ไว้แล้ว</li>
+    <li>Mesh+ สำหรับ Android (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> หรือ <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>) บน Android 12 ขึ้นไป พร้อมการเชื่อมต่ออินเทอร์เน็ตสำหรับดึงไฟล์เฟิร์มแวร์</li>
+    <li>วิทยุที่ใช้ Meshtastic 2.x บนบอร์ด nRF52 หนึ่งใน 39 รุ่นที่อยู่ในตารางฮาร์ดแวร์ของ Mesh+ (รวมทั้งหมด 118 บอร์ด)</li>
+    <li>สาย USB-C สำหรับรับส่งข้อมูล หรือโหนดที่จับคู่ผ่าน Bluetooth ไว้แล้ว</li>
   </ul>
 
   <h2>อัปเดตเฟิร์มแวร์ Meshtastic ทีละขั้นตอน</h2>
   <ol>
-    <li><strong>เปิดการตั้งค่าโหนด</strong> เชื่อมต่อวิทยุของคุณใน Mesh+ แล้วเปิดการตั้งค่าโหนด การ์ดบอร์ดด้านบนจะแสดงว่า Mesh+ จำบอร์ดรุ่นไหนได้ ชิปอะไร และติดตั้งเฟิร์มแวร์เวอร์ชันใดอยู่ เช่น nRF52840 · Firmware 2.7.15</li>
-    <li><strong>แตะอัปเดต หรือเปิดตัวเลือกเฟิร์มแวร์</strong> เมื่อ Meshtastic ปล่อยรุ่นเสถียรที่ใหม่กว่าสำหรับบอร์ดรุ่นนี้พอดี การ์ดจะแสดง อัปเดตเป็น ตามด้วยเวอร์ชัน หากไม่มี จะแสดง เป็นเวอร์ชันล่าสุด · ตัวเลือกเฟิร์มแวร์ ซึ่งเปิดหน้าจอเดียวกัน</li>
-    <li><strong>เลือกเวอร์ชัน</strong> หน้าจอเฟิร์มแวร์แสดงทุกเวอร์ชันที่ Meshtastic ปล่อยให้บอร์ดนี้ โดยเรียงจากใหม่สุด และติดป้าย ล่าสุด และ ติดตั้งแล้ว หากต้องการรุ่นอัลฟา ให้เปิดรวมเวอร์ชันทดสอบ ถ้าเลือกเวอร์ชันที่เก่ากว่า จะมีคำเตือนขึ้นก่อน</li>
-    <li><strong>แตะติดตั้ง</strong> Mesh+ จะดาวน์โหลดแพ็กเกจอัปเดตของบอร์ดจากเว็บไซต์เฟิร์มแวร์ของ Meshtastic รีสตาร์ทโหนดเข้าสู่โหมดอัปเดต ขอสิทธิ์ USB ลบเฟิร์มแวร์เก่า แล้วติดตั้งเฟิร์มแวร์ใหม่พร้อมแถบความคืบหน้า</li>
-    <li><strong>รอการรีสตาร์ท</strong> เมื่อแถบเต็ม Mesh+ จะแจ้งว่าโหนดกำลังรีสตาร์ทด้วยเวอร์ชันใหม่ และเชื่อมต่อกลับเองโดยอัตโนมัติ การตั้งค่า ห้อง และข้อความของคุณยังอยู่ครบ</li>
+    <li><strong>เปิด การตั้งค่าโหนด</strong> เชื่อมต่อวิทยุใน Mesh+ แล้วไปที่ การตั้งค่าโหนด การ์ดบอร์ดด้านบนจะแสดงบอร์ดที่ตรวจพบ ชิป และเฟิร์มแวร์ที่รันอยู่ เช่น nRF52840 · เฟิร์มแวร์ 2.7.15</li>
+    <li><strong>แตะ อัปเดต หรือเปิด ตัวเลือกเฟิร์มแวร์</strong> หาก Meshtastic มีบิลด์เสถียรที่ใหม่กว่าสำหรับบอร์ดของคุณ การ์ดจะแสดง อัปเดตเป็น ตามด้วยเลขเวอร์ชัน แต่ถ้าไม่มี จะแสดง เป็นเวอร์ชันล่าสุด · ตัวเลือกเฟิร์มแวร์ ซึ่งพาไปหน้าเลือกเวอร์ชันเดียวกัน</li>
+    <li><strong>เลือกเวอร์ชัน</strong> หน้าจอ เฟิร์มแวร์ จะแสดงทุกเวอร์ชันที่ Meshtastic เผยแพร่ให้บอร์ดของคุณ โดยเรียงจากใหม่สุด พร้อมป้าย ล่าสุด และ ติดตั้งแล้ว หากต้องการบิลด์อัลฟา ให้เปิด รวมเวอร์ชันทดสอบ ส่วนการเลือกเวอร์ชันที่เก่ากว่าจะมีคำเตือนขึ้นก่อน</li>
+    <li><strong>แตะ ติดตั้ง</strong> Mesh+ จะดึงไฟล์ zip จากเว็บไซต์เฟิร์มแวร์ของ Meshtastic รีสตาร์ทโหนดเข้าสู่โหมดอัปเดต ขอสิทธิ์ USB ลบเฟิร์มแวร์เก่า แล้วแฟลชบิลด์ใหม่พร้อมแถบความคืบหน้า</li>
+    <li><strong>รอการรีสตาร์ท</strong> เมื่อแถบเต็ม โหนดจะรีสตาร์ทเข้าสู่เวอร์ชันใหม่และ Mesh+ จะเชื่อมต่อกลับเองโดยอัตโนมัติ การตั้งค่า ห้อง และข้อความของคุณจะยังคงอยู่ครบ</li>
   </ol>
 
   <h2>วันนี้จะได้เวอร์ชันไหน</h2>
   <p>
-    เมื่อ 3 พฤศจิกายน 2026 รายการเฟิร์มแวร์ของ Meshtastic ที่ api.meshtastic.org มี 2.7.26.54e0d8d และ 2.7.15.567b8ea เป็นรุ่นเสถียร และ 2.8.2.4c89b69 เป็นรุ่นอัลฟาล่าสุด Mesh+ เปรียบเทียบเฉพาะส่วน x.y.z ดังนั้นการสร้างรุ่นใหม่ที่ใช้ commit hash ต่างกันจะไม่ปรากฏเป็นการอัปเดต แพ็กเกจอัปเดตที่แอปดาวน์โหลดสำหรับ Heltec Mesh Node T114 คือ <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> จากเว็บไซต์เฟิร์มแวร์ของ Meshtastic ซึ่งตอบกลับด้วยสถานะ 200 ตอนที่เราตรวจ ส่วนข้อมูลไปถึงบูตโหลดเดอร์ด้วยวิธีใดนั้น อธิบายไว้ใน<a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>
+    เมื่อวันที่ 3 พฤศจิกายน 2026 api.meshtastic.org แสดง 2.7.26.54e0d8d และ 2.7.15.567b8ea เป็นรุ่นเสถียร และ 2.8.2.4c89b69 เป็นรุ่นอัลฟาใหม่สุด Mesh+ เปรียบเทียบเฉพาะตัวเลข x.y.z ดังนั้นบิลด์ที่คอมไพล์ใหม่พร้อม commit hash ใหม่จะไม่ขึ้นเตือนให้คุณอัปเดต สำหรับ Heltec Mesh Node T114 แอปจะดาวน์โหลด <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> จากเว็บไซต์เฟิร์มแวร์ของ Meshtastic โดยตรง (ได้สถานะ 200 ตอนที่ผมตรวจสอบ) หากอยากอ่านรายละเอียดโปรโตคอลระดับล่างของบูตโหลดเดอร์ อ่านต่อได้ที่ <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>
   </p>
 
   <h2>USB หรือ Bluetooth</h2>
   <p>
-    สายเป็นวิธีที่เร็วที่สุด ใช้เวลาประมาณหนึ่งนาทีครึ่ง ส่วนผ่าน Bluetooth การอัปเดตแบบเดียวกันใช้เวลาประมาณ 10 นาที ต้องเปิดแอปค้างไว้ และโทรศัพท์ต้องอยู่ใกล้โหนด อีกทั้งต้องใช้โทรศัพท์ที่จับคู่กับโหนดไว้แล้ว หากการอัปเดตผ่าน Bluetooth ถูกขัดจังหวะ โหนดจะรออยู่ในโหมดอัปเดต ให้เสียบสายแล้วแตะลองอีกครั้ง หรือแตะติดตั้งหากคุณออกจากหน้าเฟิร์มแวร์แล้ว หากการส่งข้อมูลผ่าน USB สะดุดหลังจากโหนดเข้าสู่โหมดอัปเดตแล้ว Mesh+ จะเริ่มใหม่เองและลองรวมสูงสุดสามครั้งก่อนแสดงข้อผิดพลาด
+    ใช้สายดีกว่าถ้ามี เพราะ USB เสร็จในประมาณหนึ่งนาทีครึ่ง ส่วน Bluetooth ใช้เวลาราว 10 นาที ต้องใช้โทรศัพท์ที่จับคู่ไว้แล้ววางติดกับวิทยุ และต้องเปิดแอปค้างไว้ตลอด หาก Bluetooth หลุดกลางคัน โหนดจะค้างรออยู่ในโหมดอัปเดต แค่เสียบสายแล้วแตะ ลองอีกครั้ง หรือแตะ ติดตั้ง หากคุณออกจากหน้าจอ เฟิร์มแวร์ ไปแล้ว ส่วนผ่าน USB หากการส่งข้อมูลสะดุดหลังจากเข้าโหมดอัปเดต Mesh+ จะลองใหม่เองสูงสุดสามครั้งก่อนยอมแพ้
   </p>
 
   <h2>หากการอัปเดตหยุดกลางคัน</h2>
   <p>
-    การอัปเดตที่ถูกขัดจังหวะจะทิ้งให้โหนดรออยู่ในโหมดอัปเดต และแอปทำให้เสร็จได้ ที่หน้าเชื่อมต่อของ Mesh+ ให้แตะ <em>โหนดค้างอยู่ในโหมดอัปเดตใช่ไหม</em> เสียบโหนด แล้วแตะ <em>ติดตั้ง</em> หากโหนดไม่เข้าสู่โหมดอัปเดตเลย ให้ถอดสาย กดปุ่มรีเซ็ตของโหนดสองครั้งติดกัน เสียบสาย แล้วลองอีกครั้ง หากไม่มีวิทยุเชื่อมต่ออยู่ โหมดสาธิตจะแสดงหน้าจอต่างๆ ให้ดูได้ แต่ติดตั้งอะไรไม่ได้
+    การแฟลชที่ขาดกลางคันไม่ทำให้บอร์ดพัง โหนดแค่รออยู่ในโหมดอัปเดตเพื่อให้คุณทำต่อจนเสร็จ เปิดหน้าจอเชื่อมต่อของ Mesh+ แตะ <em>โหนดค้างอยู่ในโหมดอัปเดตใช่ไหม</em> เสียบสายวิทยุ แล้วกด <em>ติดตั้ง</em> หากบอร์ดไม่ยอมเข้าโหมดอัปเดต ให้ถอดสาย กดปุ่มรีเซ็ตสองครั้งติดกัน เสียบกลับเข้าไปแล้วลองใหม่ โหมดสาธิตให้คุณเปิดดูหน้าจอต่างๆ ได้โดยไม่ต้องมีวิทยุ แต่จะไม่แฟลชอะไรทั้งสิ้น
   </p>
 
   <h2>คำถาม</h2>
   <h3>อัปเดตวิทยุ Meshtastic แบบ ESP32 ด้วย Mesh+ ได้ไหม</h3>
-  <p>ไม่ได้ Mesh+ อัปเดตบอร์ด nRF52840 เช่น Heltec Mesh Node T114, RAK WisBlock 4631 และ LILYGO T-Echo ส่วนบอร์ด ESP32 เช่น Heltec V3 ให้ใช้ flasher.meshtastic.org จากคอมพิวเตอร์</p>
+  <p>ไม่ได้ Mesh+ แฟลชได้เฉพาะบอร์ด nRF52840 อย่าง Heltec Mesh Node T114, RAK WisBlock 4631 และ LILYGO T-Echo สำหรับบอร์ด ESP32 อย่าง Heltec V3 ให้เสียบเข้าคอมพิวเตอร์แล้วใช้ flasher.meshtastic.org</p>
   <h3>การอัปเดตจะลบข้อความและการตั้งค่าของฉันไหม</h3>
-  <p>ไม่ลบ การตั้งค่า ห้อง และข้อความของคุณจะยังอยู่ในโหนด หากการอัปเดตถูกขัดจังหวะ โหนดจะรออยู่ในโหมดอัปเดต และคุณลองอีกครั้งได้</p>
+  <p>ไม่ลบ การตั้งค่า ห้อง และข้อความของคุณจะยังคงอยู่ในโหนด ต่อให้การแฟลชขาดไปกลางทาง โหนดก็จะรออยู่ในโหมดอัปเดตเพื่อให้คุณสั่งแฟลชใหม่ได้</p>
   <h3>ถ้าโหนดค้างอยู่ในโหมดอัปเดตต้องทำอย่างไร</h3>
-  <p>ที่หน้าเชื่อมต่อ ให้แตะ โหนดค้างอยู่ในโหมดอัปเดตใช่ไหม เสียบโหนด (หรือถือโทรศัพท์ไว้ใกล้ๆ หากการอัปเดตทำงานผ่าน Bluetooth) แล้วแตะ ติดตั้ง หากโหนดไม่เข้าสู่โหมดอัปเดตเลย ให้ถอดสาย กดปุ่มรีเซ็ตของโหนดสองครั้งติดกัน เสียบสาย แล้วลองอีกครั้ง</p>
+  <p>แตะ โหนดค้างอยู่ในโหมดอัปเดตใช่ไหม ที่หน้าจอเชื่อมต่อ เสียบสายวิทยุ (หรือวางโทรศัพท์ไว้ติดกันหากใช้ Bluetooth) แล้วแตะ ติดตั้ง หากไม่ยอมเข้าโหมดอัปเดต ให้ถอดสาย กดปุ่มรีเซ็ตสองครั้งติดกัน เสียบสายกลับเข้าไปแล้วลองอีกครั้ง</p>
   <h3>ย้อนกลับไปใช้เฟิร์มแวร์ Meshtastic รุ่นเก่าได้ไหม</h3>
-  <p>ได้ ตัวเลือกเฟิร์มแวร์แสดงทุกเวอร์ชันที่ Meshtastic ปล่อยให้บอร์ดของคุณ และคุณเลือกเวอร์ชันที่เก่ากว่าได้ Mesh+ จะเตือนว่าเฟิร์มแวร์รุ่นเก่าอาจไม่เข้าใจการตั้งค่าที่ใหม่กว่า และแนะนำให้ใช้ รีเซ็ตการตั้งค่า หากโหนดทำงานผิดปกติ</p>
+  <p>ได้ ตัวเลือกเฟิร์มแวร์ แสดงทุกเวอร์ชันที่ Meshtastic เผยแพร่ให้บอร์ดของคุณ รวมถึงเวอร์ชันเก่าด้วย Mesh+ จะเตือนว่าเฟิร์มแวร์รุ่นเก่าอาจติดขัดกับการตั้งค่าที่ใหม่กว่า และชี้ให้คุณใช้ รีเซ็ตการตั้งค่า หากโหนดทำงานแปลกๆ</p>
   <h3>การอัปเดตเฟิร์มแวร์ Meshtastic ใช้เวลานานแค่ไหน</h3>
-  <p>ประมาณหนึ่งนาทีครึ่งผ่านสาย USB ส่วนผ่าน Bluetooth ใช้เวลาประมาณ 10 นาที และต้องเปิดแอปค้างไว้โดยให้โทรศัพท์อยู่ใกล้โหนด</p>
+  <p>ประมาณหนึ่งนาทีครึ่งผ่านสาย USB หรือราว 10 นาทีผ่าน Bluetooth โดยเปิดแอปค้างไว้ข้างๆ วิทยุ</p>
 
   <p class="muted">
-    แหล่งข้อมูล: <a href="https://github.com/backmeupplz/meshtastic-plus">ซอร์สของ Mesh+</a> (หน้าจอเฟิร์มแวร์และตัวอัปเดต สาขา main ที่ commit 0993c10) ไฟล์ README และรายการเฟิร์มแวร์ของ Meshtastic ที่ api.meshtastic.org ซึ่งอ่านทั้งหมดเมื่อ 3 พฤศจิกายน 2026 Mesh+ เป็นโปรเจกต์อิสระ ไม่มีส่วนเกี่ยวข้องกับ Meshtastic LLC Meshtastic® เป็นเครื่องหมายการค้าจดทะเบียนของ Meshtastic LLC
+    แหล่งข้อมูล: <a href="https://github.com/backmeupplz/meshtastic-plus">ซอร์สโค้ดของ Mesh+</a> (หน้าจอเฟิร์มแวร์และตัวอัปเดต สาขา main ที่ commit 0993c10) ไฟล์ README และฟีดรุ่นเผยแพร่ของ Meshtastic ที่ api.meshtastic.org ทั้งหมดตรวจสอบเมื่อวันที่ 3 พฤศจิกายน 2026 Mesh+ เป็นโปรเจกต์อิสระ ไม่มีส่วนเกี่ยวข้องกับ Meshtastic LLC Meshtastic® เป็นเครื่องหมายการค้าจดทะเบียนของ Meshtastic LLC
   </p>
 </main>
 <nav class="langs" aria-label="ภาษา"><a href="/update-meshtastic-firmware.html" hreflang="en" lang="en">English</a> <a href="/ar/update-meshtastic-firmware.html" hreflang="ar" lang="ar">العربية</a> <a href="/de/update-meshtastic-firmware.html" hreflang="de" lang="de">Deutsch</a> <a href="/es/update-meshtastic-firmware.html" hreflang="es" lang="es">Español</a> <a href="/fr/update-meshtastic-firmware.html" hreflang="fr" lang="fr">Français</a> <a href="/hi/update-meshtastic-firmware.html" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/update-meshtastic-firmware.html" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/update-meshtastic-firmware.html" hreflang="it" lang="it">Italiano</a> <a href="/ja/update-meshtastic-firmware.html" hreflang="ja" lang="ja">日本語</a> <a href="/ko/update-meshtastic-firmware.html" hreflang="ko" lang="ko">한국어</a> <a href="/nl/update-meshtastic-firmware.html" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/update-meshtastic-firmware.html" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/update-meshtastic-firmware.html" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/update-meshtastic-firmware.html" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/update-meshtastic-firmware.html" hreflang="ru" lang="ru">Русский</a> <a href="/sv/update-meshtastic-firmware.html" hreflang="sv" lang="sv">Svenska</a> <a href="/th/update-meshtastic-firmware.html" hreflang="th" lang="th" aria-current="page">ไทย</a> <a href="/tr/update-meshtastic-firmware.html" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/update-meshtastic-firmware.html" hreflang="uk" lang="uk">Українська</a> <a href="/vi/update-meshtastic-firmware.html" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/update-meshtastic-firmware.html" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/update-meshtastic-firmware.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>

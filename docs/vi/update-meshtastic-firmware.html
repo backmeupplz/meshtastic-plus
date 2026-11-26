@@ -87,54 +87,54 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <p class="muted">Đối chiếu với mã nguồn Mesh+ và danh sách phát hành của Meshtastic vào ngày 3 tháng 11 năm 2026.</p>
 
   <p>
-    Nếu radio Meshtastic của bạn dùng chip nRF52840, chẳng hạn Heltec Mesh Node T114, RAK WisBlock 4631 hay LILYGO T-Echo, bạn có thể cập nhật firmware cho nó từ điện thoại Android bằng Mesh+: mở Cài đặt node, chọn một phiên bản, chạm Cài và chờ khoảng một phút rưỡi qua cáp USB-C. Cài đặt, phòng và tin nhắn của bạn vẫn nằm trên node. Các bo mạch dùng chip ESP32, như Heltec V3, được cập nhật từ máy tính tại <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>.
+    Bạn có thể cập nhật mọi radio Meshtastic dùng chip nRF52840 (như Heltec Mesh Node T114, RAK WisBlock 4631 hay LILYGO T-Echo) trực tiếp từ điện thoại Android bằng Mesh+. Mở Cài đặt node, chọn phiên bản, chạm Cài và đợi khoảng một phút rưỡi qua cáp USB-C. Cài đặt, phòng và tin nhắn của bạn vẫn nguyên vẹn. Các bo mạch ESP32 như Heltec V3 vẫn cần máy tính và <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>.
   </p>
 
   <h2>Bạn cần chuẩn bị gì</h2>
   <ul>
-    <li>Mesh+ cho Android (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> hoặc <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>), trên Android 12 trở lên, có kết nối internet để tải về.</li>
-    <li>Một radio chạy firmware Meshtastic 2.x, thuộc một trong 39 bo mạch nRF52 trong danh sách phần cứng của Mesh+ (tổng cộng 118 bo mạch).</li>
-    <li>Một cáp USB-C có truyền dữ liệu, hoặc radio đã ghép nối qua Bluetooth.</li>
+    <li>Mesh+ cho Android (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> hoặc <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>) trên Android 12 trở lên, kèm kết nối internet để tải firmware.</li>
+    <li>Một radio chạy Meshtastic 2.x thuộc một trong 39 bo mạch nRF52 trong bảng phần cứng của Mesh+ (tổng cộng 118 bo mạch).</li>
+    <li>Một cáp dữ liệu USB-C, hoặc node đã được ghép nối sẵn qua Bluetooth.</li>
   </ul>
 
   <h2>Cập nhật firmware Meshtastic từng bước</h2>
   <ol>
-    <li><strong>Mở Cài đặt node.</strong> Kết nối radio của bạn trong Mesh+ rồi mở Cài đặt node. Thẻ bo mạch ở đầu trang cho biết Mesh+ nhận ra bo mạch nào, chip của nó và firmware đang cài, ví dụ nRF52840 · Firmware 2.7.15.</li>
-    <li><strong>Chạm Cập nhật hoặc mở tùy chọn firmware.</strong> Khi Meshtastic đã phát hành một bản ổn định mới hơn cho đúng bo mạch của bạn, thẻ hiện Cập nhật lên kèm theo số phiên bản. Nếu không, thẻ hiện Đã cập nhật · tùy chọn firmware, và mở ra cùng màn hình đó.</li>
-    <li><strong>Chọn phiên bản.</strong> Màn hình Firmware liệt kê mọi phiên bản Meshtastic phát hành cho bo mạch, bản mới nhất ở trên cùng, có gắn nhãn mới nhất và đã cài. Hãy bật bản phát hành trước nếu bạn muốn dùng các bản alpha. Khi chọn một phiên bản cũ hơn, một cảnh báo sẽ hiện ra trước.</li>
-    <li><strong>Chạm Cài.</strong> Mesh+ tải gói cập nhật của bo mạch từ trang firmware của Meshtastic, khởi động lại node vào chế độ cập nhật, xin quyền USB, xóa firmware cũ và cài firmware mới, với một thanh tiến trình.</li>
-    <li><strong>Chờ khởi động lại.</strong> Khi thanh tiến trình chạy xong, Mesh+ báo node đang khởi động lại với phiên bản mới và tự kết nối lại. Cài đặt, phòng và tin nhắn của bạn vẫn còn nguyên.</li>
+    <li><strong>Mở Cài đặt node.</strong> Kết nối radio trong Mesh+ rồi vào Cài đặt node. Thẻ bo mạch ở đầu trang hiển thị bo mạch được nhận diện, chip của nó và firmware đang chạy, chẳng hạn nRF52840 · Firmware 2.7.15.</li>
+    <li><strong>Chạm Cập nhật hoặc mở Tùy chọn firmware.</strong> Nếu Meshtastic có bản ổn định mới hơn cho bo mạch của bạn, thẻ sẽ hiển thị Cập nhật lên kèm số phiên bản. Ngược lại, thẻ hiển thị Đã cập nhật · tùy chọn firmware, cũng dẫn tới cùng bộ chọn đó.</li>
+    <li><strong>Chọn phiên bản.</strong> Màn hình Firmware liệt kê mọi bản phát hành mà Meshtastic công bố cho bo mạch của bạn, bản mới nhất ở trên cùng, gắn nhãn mới nhất và đã cài. Bật bản phát hành trước nếu cần các bản alpha; chọn bản cũ hơn sẽ hiện cảnh báo trước.</li>
+    <li><strong>Chạm Cài.</strong> Mesh+ lấy tệp zip từ trang firmware của Meshtastic, khởi động lại node vào chế độ cập nhật, xin quyền USB, xóa firmware cũ rồi nạp bản mới kèm thanh tiến trình.</li>
+    <li><strong>Chờ khởi động lại.</strong> Khi thanh tiến trình chạy đầy, node khởi động lại vào phiên bản mới và Mesh+ tự kết nối lại. Cài đặt, phòng và tin nhắn của bạn vẫn giữ nguyên.</li>
   </ol>
 
   <h2>Hôm nay bạn nhận được phiên bản nào</h2>
   <p>
-    Vào ngày 3 tháng 11 năm 2026, danh sách firmware của Meshtastic tại api.meshtastic.org đưa ra 2.7.26.54e0d8d và 2.7.15.567b8ea là các bản ổn định, và 2.8.2.4c89b69 là bản alpha mới nhất. Mesh+ chỉ so sánh phần x.y.z, nên một bản dựng lại với mã băm commit khác sẽ không bao giờ hiện thành bản cập nhật. Gói cập nhật mà nó tải cho Heltec Mesh Node T114 là <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> từ trang firmware của Meshtastic, trang này đã trả về trạng thái 200 khi chúng tôi kiểm tra. Cách các byte đến được bootloader là chủ đề của bài <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>.
+    Ngày 3 tháng 11 năm 2026, api.meshtastic.org liệt kê 2.7.26.54e0d8d và 2.7.15.567b8ea là các bản ổn định và 2.8.2.4c89b69 là bản alpha mới nhất. Mesh+ chỉ so sánh các chữ số x.y.z, nên một bản dựng lại với mã băm commit mới sẽ không giục bạn cập nhật. Với Heltec Mesh Node T114, ứng dụng tải trực tiếp <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> từ trang firmware của Meshtastic (khi tôi kiểm tra, trang trả về mã trạng thái 200). Nếu bạn muốn xem chi tiết giao thức bootloader ở tầng thấp, hãy đọc <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>.
   </p>
 
   <h2>USB hay Bluetooth</h2>
   <p>
-    Dùng cáp là cách nhanh: khoảng một phút rưỡi. Qua Bluetooth, cùng bản cập nhật đó mất khoảng 10 phút, ứng dụng phải luôn mở, điện thoại phải ở gần node, và cần một điện thoại đã được ghép nối sẵn với node. Nếu bản cập nhật qua Bluetooth bị gián đoạn, node sẽ chờ ở chế độ cập nhật; hãy cắm cáp và chạm Thử lại, hoặc chạm Cài nếu bạn đã rời khỏi màn hình Firmware. Nếu việc truyền qua USB bị trục trặc sau khi node đã vào chế độ cập nhật, Mesh+ sẽ tự bắt đầu lại và thử tối đa ba lần tất cả trước khi báo lỗi.
+    Hãy dùng cáp nếu có: USB hoàn tất trong khoảng một phút rưỡi, trong khi Bluetooth mất chừng 10 phút, cần điện thoại đã ghép nối sẵn đặt ngay cạnh radio và buộc bạn phải giữ ứng dụng luôn mở. Nếu Bluetooth bị ngắt giữa chừng khi đang nạp, node sẽ chờ ở chế độ cập nhật; hãy cắm cáp vào rồi chạm Thử lại, hoặc chạm Cài nếu bạn đã rời khỏi màn hình Firmware. Qua USB, nếu đường truyền bị khựng lại sau khi vào chế độ cập nhật, Mesh+ sẽ tự thử lại tối đa ba lần trước khi dừng hẳn.
   </p>
 
   <h2>Nếu bản cập nhật dừng giữa chừng</h2>
   <p>
-    Một bản cập nhật bị gián đoạn sẽ để node chờ ở chế độ cập nhật, và ứng dụng có thể hoàn tất nó. Trên màn hình kết nối của Mesh+, chạm <em>Node bị kẹt ở chế độ cập nhật?</em>, cắm node vào rồi chạm <em>Cài</em>. Nếu node hoàn toàn không vào chế độ cập nhật, hãy rút nó ra, nhấn đúp nút reset, cắm lại rồi thử lại. Khi không có radio nào được kết nối, chế độ demo hiển thị các màn hình nhưng không cài được gì.
+    Quá trình nạp bị gián đoạn sẽ không làm hỏng bo mạch; node chỉ nằm chờ ở chế độ cập nhật để bạn tiếp tục hoàn tất. Mở màn hình kết nối của Mesh+, chạm <em>Node bị kẹt ở chế độ cập nhật?</em>, cắm radio vào rồi bấm <em>Cài</em>. Nếu bo mạch không chịu vào chế độ cập nhật, hãy rút cáp ra, nhấn đúp nút reset, cắm lại rồi thử lại. Chế độ demo cho phép bạn xem qua các màn hình mà không cần radio, nhưng sẽ không nạp gì cả.
   </p>
 
   <h2>Câu hỏi thường gặp</h2>
   <h3>Mesh+ có cập nhật được radio Meshtastic ESP32 không?</h3>
-  <p>Không. Mesh+ cập nhật các bo mạch nRF52840, chẳng hạn Heltec Mesh Node T114, RAK WisBlock 4631 và LILYGO T-Echo. Với các bo mạch ESP32 như Heltec V3, hãy dùng flasher.meshtastic.org từ máy tính.</p>
+  <p>Không. Mesh+ chỉ nạp cho các bo mạch nRF52840 như Heltec Mesh Node T114, RAK WisBlock 4631 và LILYGO T-Echo. Với các bo mạch ESP32 như Heltec V3, hãy cắm vào máy tính và dùng flasher.meshtastic.org.</p>
   <h3>Cập nhật có xóa tin nhắn và cài đặt của tôi không?</h3>
-  <p>Không. Cài đặt, phòng và tin nhắn của bạn vẫn nằm trên node. Nếu bản cập nhật bị gián đoạn, node sẽ chờ ở chế độ cập nhật và bạn có thể thử lại.</p>
+  <p>Không. Cài đặt, phòng và tin nhắn của bạn vẫn nằm trên node. Ngay cả khi quá trình nạp bị ngắt giữa chừng, node vẫn chờ ở chế độ cập nhật để bạn chạy lại.</p>
   <h3>Làm gì khi node bị kẹt ở chế độ cập nhật?</h3>
-  <p>Trên màn hình kết nối, chạm Node bị kẹt ở chế độ cập nhật?, cắm node vào (hoặc để điện thoại ở gần nếu bản cập nhật đang chạy qua Bluetooth) rồi chạm Cài. Nếu node không bao giờ vào chế độ cập nhật, hãy rút nó ra, nhấn đúp nút reset, cắm lại rồi thử lại.</p>
+  <p>Chạm Node bị kẹt ở chế độ cập nhật? trên màn hình kết nối, cắm radio vào (hoặc để điện thoại ngay bên cạnh nếu dùng Bluetooth) rồi chạm Cài. Nếu node không vào được chế độ cập nhật, hãy rút cáp ra, nhấn đúp nút reset, cắm lại rồi thử lại.</p>
   <h3>Tôi có thể quay lại firmware Meshtastic cũ hơn không?</h3>
-  <p>Có. Tùy chọn firmware liệt kê mọi phiên bản Meshtastic phát hành cho bo mạch của bạn, và bạn có thể chọn một bản cũ hơn. Mesh+ cảnh báo rằng firmware cũ có thể không hiểu các cài đặt mới hơn, và gợi ý dùng Đặt lại cài đặt nếu node hoạt động bất thường.</p>
+  <p>Có. Tùy chọn firmware hiển thị mọi phiên bản Meshtastic phát hành cho bo mạch của bạn, bao gồm cả các bản cũ. Mesh+ cảnh báo rằng firmware cũ có thể gặp trục trặc với các cài đặt mới hơn, và hướng dẫn bạn dùng Đặt lại cài đặt nếu node hoạt động bất thường.</p>
   <h3>Cập nhật firmware Meshtastic mất bao lâu?</h3>
-  <p>Khoảng một phút rưỡi qua cáp USB. Qua Bluetooth mất khoảng 10 phút, và ứng dụng phải luôn mở, điện thoại để gần node.</p>
+  <p>Khoảng một phút rưỡi qua USB, hoặc chừng 10 phút qua Bluetooth khi giữ ứng dụng luôn mở ngay cạnh radio.</p>
 
   <p class="muted">
-    Nguồn: <a href="https://github.com/backmeupplz/meshtastic-plus">mã nguồn Mesh+</a> (màn hình Firmware và trình cập nhật, nhánh main tại commit 0993c10), tệp README của nó, và danh sách firmware của Meshtastic tại api.meshtastic.org, tất cả được đọc vào ngày 3 tháng 11 năm 2026. Mesh+ là một dự án độc lập, không liên kết với Meshtastic LLC. Meshtastic® là nhãn hiệu đã đăng ký của Meshtastic LLC.
+    Nguồn: <a href="https://github.com/backmeupplz/meshtastic-plus">mã nguồn Mesh+</a> (màn hình Firmware và trình cập nhật, nhánh main tại commit 0993c10), tệp README và danh sách phát hành của Meshtastic tại api.meshtastic.org, tất cả được kiểm tra vào ngày 3 tháng 11 năm 2026. Mesh+ là dự án độc lập, không liên kết với Meshtastic LLC. Meshtastic® là nhãn hiệu đã đăng ký của Meshtastic LLC.
   </p>
 </main>
 <nav class="langs" aria-label="Ngôn ngữ"><a href="/update-meshtastic-firmware.html" hreflang="en" lang="en">English</a> <a href="/ar/update-meshtastic-firmware.html" hreflang="ar" lang="ar">العربية</a> <a href="/de/update-meshtastic-firmware.html" hreflang="de" lang="de">Deutsch</a> <a href="/es/update-meshtastic-firmware.html" hreflang="es" lang="es">Español</a> <a href="/fr/update-meshtastic-firmware.html" hreflang="fr" lang="fr">Français</a> <a href="/hi/update-meshtastic-firmware.html" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/update-meshtastic-firmware.html" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/update-meshtastic-firmware.html" hreflang="it" lang="it">Italiano</a> <a href="/ja/update-meshtastic-firmware.html" hreflang="ja" lang="ja">日本語</a> <a href="/ko/update-meshtastic-firmware.html" hreflang="ko" lang="ko">한국어</a> <a href="/nl/update-meshtastic-firmware.html" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/update-meshtastic-firmware.html" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/update-meshtastic-firmware.html" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/update-meshtastic-firmware.html" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/update-meshtastic-firmware.html" hreflang="ru" lang="ru">Русский</a> <a href="/sv/update-meshtastic-firmware.html" hreflang="sv" lang="sv">Svenska</a> <a href="/th/update-meshtastic-firmware.html" hreflang="th" lang="th">ไทย</a> <a href="/tr/update-meshtastic-firmware.html" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/update-meshtastic-firmware.html" hreflang="uk" lang="uk">Українська</a> <a href="/vi/update-meshtastic-firmware.html" hreflang="vi" lang="vi" aria-current="page">Tiếng Việt</a> <a href="/zh-hans/update-meshtastic-firmware.html" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/update-meshtastic-firmware.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>

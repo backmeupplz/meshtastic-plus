@@ -87,54 +87,54 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <p class="muted">已于 2026 年 11 月 3 日对照 Mesh+ 源代码和 Meshtastic 的发布列表核对。</p>
 
   <p>
-    如果你的 Meshtastic 电台采用 nRF52840 芯片，例如 Heltec Mesh Node T114、RAK WisBlock 4631 或 LILYGO T-Echo，就可以用 Mesh+ 在 Android 手机上更新它的固件：打开节点设置，选好版本，轻点“安装”，再通过 USB-C 线等待大约一分半钟。你的设置、房间和消息都会保留在节点上。采用 ESP32 芯片的板子，例如 Heltec V3，则需要在电脑上通过 <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a> 更新。
+    你可以用 Mesh+ 直接在 Android 手机上更新任何采用 nRF52840 芯片的 Meshtastic 电台（例如 Heltec Mesh Node T114、RAK WisBlock 4631 或 LILYGO T-Echo）。打开“节点设置”，选好版本，轻点“安装”，接上 USB-C 线等待大约一分半钟就行。你的设置、房间和消息都会完整保留。像 Heltec V3 这样的 ESP32 板子仍然需要电脑和 <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>。
   </p>
 
   <h2>你需要准备什么</h2>
   <ul>
-    <li>Android 版 Mesh+（<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> 或 <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>），系统为 Android 12 或更高版本，并且要能上网以便下载固件。</li>
-    <li>一台运行 Meshtastic 固件 2.x 的电台，且属于 Mesh+ 硬件列表中 39 款 nRF52 板子之一（列表共有 118 款板子）。</li>
-    <li>一根能传输数据的 USB-C 线，或者已通过 Bluetooth 配对的电台。</li>
+    <li>Android 12 或更高版本上的 Android 版 Mesh+（<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> 或 <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>），以及用于获取固件的互联网连接。</li>
+    <li>一台运行 Meshtastic 2.x 的电台，使用 Mesh+ 硬件表中的 39 款 nRF52 板子之一（硬件表共有 118 款板子）。</li>
+    <li>一根支持数据传输的 USB-C 线，或者已通过 Bluetooth 配对好的节点。</li>
   </ul>
 
   <h2>一步步更新 Meshtastic 固件</h2>
   <ol>
-    <li><strong>打开节点设置。</strong>在 Mesh+ 中连接你的电台，然后打开节点设置。顶部的板子卡片会显示 Mesh+ 识别出的板子型号、芯片和已安装的固件，例如 nRF52840 · 固件 2.7.15。</li>
-    <li><strong>轻点“更新”或打开固件选项。</strong>如果 Meshtastic 已为你的这款板子发布了更新的稳定版，卡片上会显示“更新到”和版本号。否则它显示的是“已是最新 · 固件选项”，轻点后会打开同一个页面。</li>
-    <li><strong>选择版本。</strong>“固件”页面会按从新到旧的顺序列出 Meshtastic 为这块板子发布的每个版本，并标上“最新”和“已安装”。如果想用 alpha 版本，请打开预发布版本的开关。选择较旧的版本时，会先弹出警告。</li>
-    <li><strong>轻点“安装”。</strong>Mesh+ 会从 Meshtastic 的固件网站下载这块板子的更新包，让节点重启进入更新模式，请求 USB 权限，擦除旧固件，然后安装新固件，并显示进度条。</li>
-    <li><strong>等待重启。</strong>进度条走完后，Mesh+ 会提示节点正以新版本重启，并自动重新连接。你的设置、房间和消息都还在。</li>
+    <li><strong>打开“节点设置”。</strong>在 Mesh+ 中连接你的电台，然后进入“节点设置”。顶部的板子卡片会显示识别到的板子、芯片以及当前运行的固件，例如 nRF52840 · 固件 2.7.15。</li>
+    <li><strong>轻点“更新”或打开“固件选项”。</strong>如果 Meshtastic 为你的板子发布了更新的稳定版，卡片上会显示“更新到”加上版本号。否则会显示“已是最新 · 固件选项”，轻点同样会进入版本选择页面。</li>
+    <li><strong>选择版本。</strong>“固件”页面会按从新到旧的顺序列出 Meshtastic 为你的板子发布的每一个版本，并标明“最新”和“已安装”。要查看 alpha 构建请打开“预发布版本”；选择较旧版本时会先弹出警告。</li>
+    <li><strong>轻点“安装”。</strong>Mesh+ 会从 Meshtastic 的固件网站下载 zip 包，将节点重启进入更新模式，请求 USB 权限，擦除旧固件，然后带进度条刷入新版本。</li>
+    <li><strong>等待重启。</strong>进度条走满后，节点会自动重启到新版本，Mesh+ 也会自行重新连接。你的设置、房间和消息都会原封不动。</li>
   </ol>
 
   <h2>目前能装到哪个版本</h2>
   <p>
-    2026 年 11 月 3 日，Meshtastic 在 api.meshtastic.org 上的固件列表提供了 2.7.26.54e0d8d 和 2.7.15.567b8ea 两个稳定版，最新的 alpha 版本是 2.8.2.4c89b69。Mesh+ 只比较 x.y.z 这一部分，所以仅提交哈希不同的重新构建不会被当作更新。它为 Heltec Mesh Node T114 下载的更新包是来自 Meshtastic 固件网站的 <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code>，我们检查时它返回的状态码是 200。数据如何送到引导程序，请看<a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">Mesh+ 如何通过 USB 线把 Meshtastic 固件刷入 nRF52 节点</a>。
+    2026 年 11 月 3 日，api.meshtastic.org 将 2.7.26.54e0d8d 和 2.7.15.567b8ea 列为稳定版，最新的 alpha 版为 2.8.2.4c89b69。Mesh+ 只比较 x.y.z 这几位数字，所以换了新提交哈希的重新构建不会反复催你更新。针对 Heltec Mesh Node T114，它会直接从 Meshtastic 固件网站下载 <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code>（我检查时返回状态码 200）。如果你想了解底层引导程序协议的细节，请阅读<a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">Mesh+ 如何通过 USB 线把 Meshtastic 固件刷入 nRF52 节点</a>。
   </p>
 
   <h2>USB 还是 Bluetooth</h2>
   <p>
-    用线缆是更快的方式：大约一分半钟。通过 Bluetooth 完成同样的更新大约需要 10 分钟，期间 App 必须保持打开，手机也要一直靠近节点，而且手机必须是已经与该节点配对过的。如果 Bluetooth 更新被中断，节点会停留在更新模式：插上线缆，然后轻点“重试”；如果你已经离开了“固件”页面，则轻点“安装”。如果节点进入更新模式之后 USB 传输出了小故障，Mesh+ 会自动重新开始，最多尝试三次，之后才会显示错误。
+    手边有线就尽量用线：USB 大约一分半钟就能刷完，而 Bluetooth 大概需要 10 分钟，不仅要求手机已配对并紧挨着电台，还必须全程保持 App 打开。如果 Bluetooth 在刷写中途断开，节点会停留在更新模式；此时插上线缆轻点“重试”即可，如果已经离开了“固件”页面就轻点“安装”。通过 USB 刷写时，如果进入更新模式后传输出现卡顿，Mesh+ 会在放弃前自动重试最多三次。
   </p>
 
   <h2>如果更新中途停了</h2>
   <p>
-    更新被中断时，节点会停在更新模式等待，App 可以帮你完成它。在 Mesh+ 的连接页面上，轻点<em>节点卡在更新模式？</em>，插上节点，再轻点<em>安装</em>。如果节点根本无法进入更新模式，请拔下它，连按两下它的复位按钮，再插上并重试。没有连接电台时，演示模式可以展示这些页面，但无法安装任何东西。
+    刷写中断不会把板子刷成砖，节点只是留在更新模式等你完成。打开 Mesh+ 的连接页面，轻点<em>节点卡在更新模式？</em>，插上电台，再点<em>安装</em>。如果板子不肯进入更新模式，请拔下线缆，连按两下重置按钮，重新插上后再试。没有电台时，演示模式可以让你浏览各个页面，但不会真的刷写任何内容。
   </p>
 
   <h2>常见问题</h2>
   <h3>可以用 Mesh+ 更新 ESP32 的 Meshtastic 电台吗？</h3>
-  <p>不可以。Mesh+ 更新的是 nRF52840 板子，例如 Heltec Mesh Node T114、RAK WisBlock 4631 和 LILYGO T-Echo。对于 Heltec V3 这样的 ESP32 板子，请在电脑上使用 flasher.meshtastic.org。</p>
+  <p>不可以。Mesh+ 只支持刷写 nRF52840 板子，例如 Heltec Mesh Node T114、RAK WisBlock 4631 和 LILYGO T-Echo。像 Heltec V3 这样的 ESP32 板子，请连接到电脑并使用 flasher.meshtastic.org。</p>
   <h3>更新会清除我的消息和设置吗？</h3>
-  <p>不会。你的设置、房间和消息都会保留在节点上。如果更新被中断，节点会停在更新模式等待，你可以重试。</p>
+  <p>不会。你的设置、房间和消息都保留在节点上。就算刷写中途断开，节点也会停留在更新模式，方便你重新刷一次。</p>
   <h3>节点卡在更新模式怎么办？</h3>
-  <p>在连接页面上轻点“节点卡在更新模式？”，插上节点（如果更新原本是通过 Bluetooth 进行的，则让手机靠近节点），再轻点“安装”。如果节点始终无法进入更新模式，请拔下它，连按两下它的复位按钮，再插上并重试。</p>
+  <p>在连接页面轻点“节点卡在更新模式？”，插上电台（如果用 Bluetooth，则让手机紧挨着电台），然后轻点“安装”。如果节点始终进不去更新模式，请拔下线缆，连按两下重置按钮，重新插上后再试。</p>
   <h3>可以退回到较旧的 Meshtastic 固件吗？</h3>
-  <p>可以。“固件选项”会列出 Meshtastic 为你的板子发布的每个版本，你可以选择较旧的一个。Mesh+ 会提醒你旧版固件可能无法识别较新的设置，并建议在节点运行异常时使用“重置设置”。</p>
+  <p>可以。“固件选项”会显示 Meshtastic 为你的板子发布的所有版本，包括旧版本。Mesh+ 会提醒你旧版固件可能难以兼容较新的设置，并在节点运行异常时引导你使用“重置设置”。</p>
   <h3>更新 Meshtastic 固件需要多久？</h3>
-  <p>使用 USB 线大约一分半钟。通过 Bluetooth 大约需要 10 分钟，期间 App 必须保持打开，手机要靠近节点。</p>
+  <p>通过 USB 大约一分半钟，或者在 App 保持打开且紧挨着电台的情况下，通过 Bluetooth 大约需要 10 分钟。</p>
 
   <p class="muted">
-    资料来源：<a href="https://github.com/backmeupplz/meshtastic-plus">Mesh+ 源代码</a>（“固件”页面和更新程序，main 分支，提交 0993c10）、它的 README，以及 Meshtastic 在 api.meshtastic.org 上的固件列表，均于 2026 年 11 月 3 日查阅。Mesh+ 是一个独立项目，与 Meshtastic LLC 没有关联。Meshtastic® 是 Meshtastic LLC 的注册商标。
+    资料来源：<a href="https://github.com/backmeupplz/meshtastic-plus">Mesh+ 源代码</a>（“固件”页面和更新程序，main 分支 commit 0993c10）、它的 README，以及 api.meshtastic.org 上的 Meshtastic 发布订阅源，均于 2026 年 11 月 3 日核对。Mesh+ 是一个独立项目，与 Meshtastic LLC 没有关联。Meshtastic® 是 Meshtastic LLC 的注册商标。
   </p>
 </main>
 <nav class="langs" aria-label="语言"><a href="/update-meshtastic-firmware.html" hreflang="en" lang="en">English</a> <a href="/ar/update-meshtastic-firmware.html" hreflang="ar" lang="ar">العربية</a> <a href="/de/update-meshtastic-firmware.html" hreflang="de" lang="de">Deutsch</a> <a href="/es/update-meshtastic-firmware.html" hreflang="es" lang="es">Español</a> <a href="/fr/update-meshtastic-firmware.html" hreflang="fr" lang="fr">Français</a> <a href="/hi/update-meshtastic-firmware.html" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/update-meshtastic-firmware.html" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/update-meshtastic-firmware.html" hreflang="it" lang="it">Italiano</a> <a href="/ja/update-meshtastic-firmware.html" hreflang="ja" lang="ja">日本語</a> <a href="/ko/update-meshtastic-firmware.html" hreflang="ko" lang="ko">한국어</a> <a href="/nl/update-meshtastic-firmware.html" hreflang="nl" lang="nl">Nederlands</a> <a href="/pl/update-meshtastic-firmware.html" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/update-meshtastic-firmware.html" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/update-meshtastic-firmware.html" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/update-meshtastic-firmware.html" hreflang="ru" lang="ru">Русский</a> <a href="/sv/update-meshtastic-firmware.html" hreflang="sv" lang="sv">Svenska</a> <a href="/th/update-meshtastic-firmware.html" hreflang="th" lang="th">ไทย</a> <a href="/tr/update-meshtastic-firmware.html" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/update-meshtastic-firmware.html" hreflang="uk" lang="uk">Українська</a> <a href="/vi/update-meshtastic-firmware.html" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/update-meshtastic-firmware.html" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">简体中文</a> <a href="/zh-hant/update-meshtastic-firmware.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>

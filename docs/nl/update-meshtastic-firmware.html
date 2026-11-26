@@ -92,54 +92,54 @@ nav.langs{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;margin:24px 0 0
   <p class="muted">Gecontroleerd aan de hand van de broncode van Mesh+ en de releaselijst van Meshtastic op 3 november 2026.</p>
 
   <p>
-    Heeft je Meshtastic-radio een nRF52840-chip, zoals de Heltec Mesh Node T114, de RAK WisBlock 4631 of de LILYGO T-Echo, dan kun je de firmware bijwerken vanaf een Android-telefoon met Mesh+: open Node-instellingen, kies een versie, tik op Installeer en wacht ongeveer anderhalve minuut via een USB-C-kabel. Je instellingen, ruimtes en berichten blijven op de node. Borden met een ESP32-chip, zoals de Heltec V3, werk je bij vanaf een computer via <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a>.
+    Je kunt elke Meshtastic-radio met een nRF52840-chip (zoals een Heltec Mesh Node T114, RAK WisBlock 4631 of LILYGO T-Echo) rechtstreeks vanaf een Android-telefoon bijwerken met Mesh+. Open Node-instellingen, kies een versie, tik op Installeer en wacht ongeveer anderhalve minuut met een USB-C-kabel. Je instellingen, ruimtes en berichten blijven behouden. ESP32-borden zoals de Heltec V3 hebben nog steeds een computer en <a href="https://flasher.meshtastic.org">flasher.meshtastic.org</a> nodig.
   </p>
 
   <h2>Wat je nodig hebt</h2>
   <ul>
-    <li>Mesh+ voor Android (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> of de <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>), op Android 12 of nieuwer, met internettoegang voor de download.</li>
-    <li>Een radio met Meshtastic-firmware 2.x op een van de 39 nRF52-borden in de hardwarelijst van Mesh+ (in totaal 118 borden).</li>
-    <li>Een USB-C-kabel die ook gegevens doorgeeft, of de radio gekoppeld via Bluetooth.</li>
+    <li>Mesh+ voor Android (<a href="https://play.google.com/store/apps/details?id=com.borodutch.meshplus">Google Play</a> of de <a href="https://github.com/backmeupplz/meshtastic-plus/releases/latest/download/meshplus.apk">APK</a>) op Android 12 of nieuwer, plus internettoegang om de firmware op te halen.</li>
+    <li>Een radio met Meshtastic 2.x op een van de 39 nRF52-borden uit de hardwaretabel van Mesh+ (118 borden in totaal).</li>
+    <li>Een USB-C-datakabel, of de node al gekoppeld via Bluetooth.</li>
   </ul>
 
   <h2>Meshtastic-firmware bijwerken, stap voor stap</h2>
   <ol>
-    <li><strong>Open Node-instellingen.</strong> Verbind je radio in Mesh+ en open Node-instellingen. De bordkaart bovenaan laat zien welk bord Mesh+ herkent, welke chip het heeft en welke firmware erop staat, bijvoorbeeld nRF52840 · Firmware 2.7.15.</li>
-    <li><strong>Tik op Bijwerken of open de firmwareopties.</strong> Als Meshtastic een nieuwere stabiele release voor precies jouw bord heeft gepubliceerd, staat er op de kaart Bijwerken naar, gevolgd door de versie. Anders staat er Up-to-date · firmwareopties, en dat opent hetzelfde scherm.</li>
-    <li><strong>Kies de versie.</strong> Het scherm Firmware toont elke versie die Meshtastic voor het bord publiceert, de nieuwste bovenaan, met de labels nieuwste en geïnstalleerd. Zet testversies aan als je alfabuilds wilt. Kies je een oudere versie, dan krijg je eerst een waarschuwing.</li>
-    <li><strong>Tik op Installeer.</strong> Mesh+ downloadt het updatepakket van het bord van de firmwaresite van Meshtastic, start de node opnieuw op in updatemodus, vraagt om USB-toestemming, wist de oude firmware en installeert de nieuwe met een voortgangsbalk.</li>
-    <li><strong>Wacht op de herstart.</strong> Als de balk vol is, meldt Mesh+ dat de node herstart met de nieuwe versie en maakt vanzelf opnieuw verbinding. Je instellingen, ruimtes en berichten staan er nog.</li>
+    <li><strong>Open Node-instellingen.</strong> Verbind je radio in Mesh+ en ga naar Node-instellingen. De bordkaart bovenaan toont het herkende bord, de chip en de draaiende firmware, zoals nRF52840 · Firmware 2.7.15.</li>
+    <li><strong>Tik op Bijwerken of open de firmwareopties.</strong> Als Meshtastic een nieuwere stabiele build voor jouw bord heeft, staat er op de kaart Bijwerken naar gevolgd door het versienummer. Anders staat er Up-to-date · firmwareopties, waarmee je bij dezelfde keuzelijst uitkomt.</li>
+    <li><strong>Kies de versie.</strong> Het scherm Firmware toont elke release die Meshtastic voor jouw bord publiceert, nieuwste eerst, met de labels nieuwste en geïnstalleerd. Zet testversies aan voor alfabuilds; kies je een oudere build, dan krijg je eerst een waarschuwing.</li>
+    <li><strong>Tik op Installeer.</strong> Mesh+ haalt het zipbestand op van de firmwaresite van Meshtastic, herstart de node in updatemodus, vraagt om USB-toestemming, wist de oude firmware en flasht de nieuwe build met een voortgangsbalk.</li>
+    <li><strong>Wacht op de herstart.</strong> Zodra de balk vol is, start de node op met de nieuwe versie en maakt Mesh+ vanzelf opnieuw verbinding. Je instellingen, ruimtes en berichten blijven staan.</li>
   </ol>
 
   <h2>Welke versie je vandaag krijgt</h2>
   <p>
-    Op 3 november 2026 bood de firmwarelijst van Meshtastic op api.meshtastic.org 2.7.26.54e0d8d en 2.7.15.567b8ea aan als stabiele releases, en 2.8.2.4c89b69 als nieuwste alfa. Mesh+ vergelijkt alleen het x.y.z-deel, dus een nieuwe build met een andere commit-hash verschijnt nooit als update. Het updatepakket dat de app voor een Heltec Mesh Node T114 downloadt, is <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> van de firmwaresite van Meshtastic, die met status 200 antwoordde toen we het controleerden. Hoe de bytes bij de bootloader komen, lees je in <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>.
+    Op 3 november 2026 vermeldde api.meshtastic.org 2.7.26.54e0d8d en 2.7.15.567b8ea als stabiele releases en 2.8.2.4c89b69 als nieuwste alfa. Mesh+ vergelijkt alleen de cijfers x.y.z, dus een nieuwe build met een andere commit-hash blijft je niet lastigvallen met een update. Voor een Heltec Mesh Node T114 downloadt de app <code>firmware-heltec-mesh-node-t114-2.7.26.54e0d8d-ota.zip</code> rechtstreeks van de firmwaresite van Meshtastic (die gaf status 200 toen ik het controleerde). Wil je de technische details van het bootloaderprotocol lezen, kijk dan bij <a href="https://blog.meshplus.app/how-mesh-plus-updates-meshtastic-firmware-over-usb/">How Mesh+ flashes Meshtastic firmware onto an nRF52 node over a USB cable</a>.
   </p>
 
   <h2>USB of Bluetooth</h2>
   <p>
-    Een kabel is de snelle manier: ongeveer anderhalve minuut. Via Bluetooth duurt dezelfde update ongeveer 10 minuten, moet de app open blijven en moet de telefoon dicht bij de node blijven, en je hebt een telefoon nodig waarmee de node al is gekoppeld. Wordt een Bluetooth-update onderbroken, dan wacht de node in updatemodus: sluit hem aan en tik op Probeer opnieuw, of op Installeer als je het scherm Firmware hebt verlaten. Hapert de USB-overdracht nadat de node in updatemodus is gegaan, dan begint Mesh+ vanzelf opnieuw en doet in totaal tot drie pogingen voordat er een foutmelding verschijnt.
+    Gebruik een kabel als je er een hebt: via USB ben je in ongeveer anderhalve minuut klaar, terwijl Bluetooth ruwweg 10 minuten duurt, een al gekoppelde telefoon naast de radio vereist en je dwingt de app open te houden. Valt Bluetooth halverwege het flashen weg, dan blijft de node in updatemodus wachten; sluit hem aan en tik op Probeer opnieuw, of op Installeer als je het scherm Firmware hebt verlaten. Hapert de overdracht via USB nadat de node in updatemodus is gegaan, dan probeert Mesh+ het vanzelf tot drie keer opnieuw voordat hij het opgeeft.
   </p>
 
   <h2>Als de update halverwege stopt</h2>
   <p>
-    Een onderbroken update laat de node wachten in updatemodus, en de app kan hem afmaken. Tik op het verbindingsscherm van Mesh+ op <em>Node vast in updatemodus?</em>, sluit de node aan en tik op <em>Installeer</em>. Gaat de node helemaal niet in updatemodus, koppel hem dan los, druk twee keer kort op de resetknop, sluit hem weer aan en probeer het opnieuw. Zonder verbonden radio toont de demomodus de schermen, maar kan hij niets installeren.
+    Een afgebroken flash maakt het bord niet kapot; de node wacht gewoon in updatemodus tot je het afmaakt. Open het verbindingsscherm van Mesh+, tik op <em>Node vast in updatemodus?</em>, sluit de radio aan en tik op <em>Installeer</em>. Weigert het bord in updatemodus te gaan, koppel het dan los, druk twee keer kort op de resetknop, sluit het weer aan en probeer het opnieuw. Met de demomodus kun je de schermen bekijken zonder radio, al flasht die natuurlijk niets.
   </p>
 
   <h2>Veelgestelde vragen</h2>
   <h3>Kan ik een Meshtastic-radio met ESP32 bijwerken met Mesh+?</h3>
-  <p>Nee. Mesh+ werkt nRF52840-borden bij, zoals de Heltec Mesh Node T114, de RAK WisBlock 4631 en de LILYGO T-Echo. Gebruik voor ESP32-borden zoals de Heltec V3 flasher.meshtastic.org vanaf een computer.</p>
+  <p>Nee. Mesh+ flasht alleen nRF52840-borden zoals de Heltec Mesh Node T114, RAK WisBlock 4631 en LILYGO T-Echo. Voor ESP32-borden zoals de Heltec V3 sluit je hem aan op een computer en gebruik je flasher.meshtastic.org.</p>
   <h3>Worden mijn berichten en instellingen door een update gewist?</h3>
-  <p>Nee. Je instellingen, ruimtes en berichten blijven op de node. Wordt een update onderbroken, dan wacht de node in updatemodus en kun je het opnieuw proberen.</p>
+  <p>Nee. Je instellingen, ruimtes en berichten blijven op de node staan. Zelfs als een flash halverwege wegvalt, blijft de node in updatemodus wachten zodat je hem opnieuw kunt starten.</p>
   <h3>Wat als de node vastzit in updatemodus?</h3>
-  <p>Tik op het verbindingsscherm op Node vast in updatemodus?, sluit de node aan (of houd de telefoon dichtbij als de update via Bluetooth liep) en tik op Installeer. Gaat de node nooit in updatemodus, koppel hem dan los, druk twee keer kort op de resetknop, sluit hem weer aan en probeer het opnieuw.</p>
+  <p>Tik op Node vast in updatemodus? op het verbindingsscherm, sluit de radio aan (of houd de telefoon er direct naast voor Bluetooth) en tik op Installeer. Gaat hij helemaal niet in updatemodus, koppel hem dan los, druk twee keer kort op de resetknop, sluit hem weer aan en probeer het opnieuw.</p>
   <h3>Kan ik teruggaan naar oudere Meshtastic-firmware?</h3>
-  <p>Ja. Firmwareopties toont elke versie die Meshtastic voor jouw bord publiceert, en je kunt een oudere kiezen. Mesh+ waarschuwt je dat oudere firmware nieuwere instellingen misschien niet begrijpt, en raadt Reset instellingen aan als de node vreemd doet.</p>
+  <p>Ja. Firmwareopties toont elke versie die Meshtastic voor jouw bord publiceert, ook oudere. Mesh+ waarschuwt je dat oudere firmware zich kan verslikken in nieuwere instellingen, en verwijst je naar Reset instellingen als de node vreemd doet.</p>
   <h3>Hoe lang duurt een Meshtastic-firmware-update?</h3>
-  <p>Ongeveer anderhalve minuut via een USB-kabel. Via Bluetooth duurt het ongeveer 10 minuten, en moet de app open blijven met de telefoon dicht bij de node.</p>
+  <p>Ongeveer anderhalve minuut via USB, of rond de 10 minuten via Bluetooth met de app open naast de radio.</p>
 
   <p class="muted">
-    Bronnen: <a href="https://github.com/backmeupplz/meshtastic-plus">de broncode van Mesh+</a> (het scherm Firmware en de updater, main bij commit 0993c10), de README en de firmwarelijst van Meshtastic op api.meshtastic.org, allemaal gelezen op 3 november 2026. Mesh+ is een onafhankelijk project en is niet verbonden aan Meshtastic LLC. Meshtastic® is een gedeponeerd handelsmerk van Meshtastic LLC.
+    Bronnen: <a href="https://github.com/backmeupplz/meshtastic-plus">de broncode van Mesh+</a> (het scherm Firmware en de updater, main bij commit 0993c10), de README en de releasefeed van Meshtastic op api.meshtastic.org, allemaal gecontroleerd op 3 november 2026. Mesh+ is een onafhankelijk project, niet verbonden aan Meshtastic LLC. Meshtastic® is een gedeponeerd handelsmerk van Meshtastic LLC.
   </p>
 </main>
 <nav class="langs" aria-label="Taal"><a href="/update-meshtastic-firmware.html" hreflang="en" lang="en">English</a> <a href="/ar/update-meshtastic-firmware.html" hreflang="ar" lang="ar">العربية</a> <a href="/de/update-meshtastic-firmware.html" hreflang="de" lang="de">Deutsch</a> <a href="/es/update-meshtastic-firmware.html" hreflang="es" lang="es">Español</a> <a href="/fr/update-meshtastic-firmware.html" hreflang="fr" lang="fr">Français</a> <a href="/hi/update-meshtastic-firmware.html" hreflang="hi" lang="hi">हिन्दी</a> <a href="/id/update-meshtastic-firmware.html" hreflang="id" lang="id">Bahasa Indonesia</a> <a href="/it/update-meshtastic-firmware.html" hreflang="it" lang="it">Italiano</a> <a href="/ja/update-meshtastic-firmware.html" hreflang="ja" lang="ja">日本語</a> <a href="/ko/update-meshtastic-firmware.html" hreflang="ko" lang="ko">한국어</a> <a href="/nl/update-meshtastic-firmware.html" hreflang="nl" lang="nl" aria-current="page">Nederlands</a> <a href="/pl/update-meshtastic-firmware.html" hreflang="pl" lang="pl">Polski</a> <a href="/pt-br/update-meshtastic-firmware.html" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> <a href="/pt-pt/update-meshtastic-firmware.html" hreflang="pt-PT" lang="pt-PT">Português (Portugal)</a> <a href="/ru/update-meshtastic-firmware.html" hreflang="ru" lang="ru">Русский</a> <a href="/sv/update-meshtastic-firmware.html" hreflang="sv" lang="sv">Svenska</a> <a href="/th/update-meshtastic-firmware.html" hreflang="th" lang="th">ไทย</a> <a href="/tr/update-meshtastic-firmware.html" hreflang="tr" lang="tr">Türkçe</a> <a href="/uk/update-meshtastic-firmware.html" hreflang="uk" lang="uk">Українська</a> <a href="/vi/update-meshtastic-firmware.html" hreflang="vi" lang="vi">Tiếng Việt</a> <a href="/zh-hans/update-meshtastic-firmware.html" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> <a href="/zh-hant/update-meshtastic-firmware.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>
